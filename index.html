@@ -6012,6 +6012,28 @@
     if (urlRole === 'admin' || urlRole === 'member') {
       setRole(urlRole);
       roleSwitch.style.display = 'none';
+    } else {
+      /* No role in the URL — e.g. someone opened the bare site link instead
+         of a track-specific one. Block everything behind a simple chooser
+         instead of silently falling back to the default (admin) role with
+         the switch visible, which is exactly the confusing "shared
+         experience" this whole role-lock mechanism exists to avoid. */
+      var chooser = document.createElement('div');
+      chooser.style.cssText = 'position:fixed;inset:0;background:#fff;z-index:999999;'
+        + 'display:flex;flex-direction:column;align-items:center;justify-content:center;'
+        + 'font-family:Roboto,sans-serif;gap:16px;padding:24px;text-align:center;';
+      chooser.innerHTML = ''
+        + '<div style="font-size:20px;font-weight:600;color:#111827;">Which session is this?</div>'
+        + '<div style="font-size:14px;color:#6B7280;max-width:360px;">This link has no track set. Choose one to continue — use the direct manager/user links instead next time to skip this screen.</div>'
+        + '<div style="display:flex;gap:12px;">'
+        + '<button id="uxt-choose-admin" style="padding:14px 24px;border-radius:8px;border:1px solid #0168DD;'
+        + 'background:#0168DD;color:#fff;font-weight:600;font-size:14px;cursor:pointer;">Manager session</button>'
+        + '<button id="uxt-choose-member" style="padding:14px 24px;border-radius:8px;border:1px solid #0168DD;'
+        + 'background:#fff;color:#0168DD;font-weight:600;font-size:14px;cursor:pointer;">Regular user session</button>'
+        + '</div>';
+      document.body.appendChild(chooser);
+      document.getElementById('uxt-choose-admin').addEventListener('click', function() { window.location.search = 'role=admin'; });
+      document.getElementById('uxt-choose-member').addEventListener('click', function() { window.location.search = 'role=member'; });
     }
   })();
   </script>
@@ -6089,6 +6111,6 @@
   </script>
 
   <!-- ── Usability tracking (moderator-only, prototype tool) ── -->
-  <script src="assets/usability-tracking.js"></script>
+  <script src="assets/usability-tracking.js?v=3"></script>
 </body>
 </html>

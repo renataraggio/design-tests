@@ -5,18 +5,20 @@
    Logs every click plus a set of feature-specific milestones (announcement
    dismissed, filters opened, member drill-in, Add Time modal opened/closed,
    batch member selection changed, Save clicked, Daily/Weekly/Monthly view
-   switched) with millisecond timing relative to page load. Never touches
-   existing page logic — everything here is either a delegated document-level
-   click listener (capturing phase) or a MutationObserver on elements that
-   already exist in the markup.
+   switched) with millisecond timing relative to when the interviewer clicks
+   Start. Never touches existing page logic — everything here is either a
+   delegated document-level click listener (capturing phase) or a
+   MutationObserver on elements that already exist in the markup.
 
    This copy runs on whoever is actually demoing the prototype (e.g. an
-   interviewer on a call) and is intentionally hands-off: recording starts
-   the moment the page loads — no button to press — so it never depends on
-   them remembering a step. Scoring judgment (Success/Partial/Failed, prompt
-   counts) is NOT captured here; that lives in the separate scoring-companion
-   tool a moderator runs on their own machine while watching this screen.
-   Combine the two CSVs after the session using shared wall-clock timestamps.
+   interviewer on a call). It has exactly ONE button — Start — so elapsed
+   time and milestone timestamps are anchored to when the real session
+   actually begins, not to whenever the page happened to load (which usually
+   includes dead time: connecting the call, chatting, etc.). Scoring judgment
+   (Success/Partial/Failed, prompt counts) is NOT captured here; that lives
+   in the separate scoring-companion tool a moderator runs on their own
+   machine while watching this screen. Combine the two CSVs after the
+   session using shared wall-clock timestamps.
 
    The task list shown in the panel is driven by the same ?role= URL param
    that locks the prototype's role (see the role-switcher script in
@@ -32,14 +34,16 @@
   /* ── Track detection — mirrors the role-lock logic in index.html ── */
   var urlRole = new URLSearchParams(window.location.search).get('role');
   var track = urlRole === 'member' ? 'user' : 'manager'; /* default/admin → manager */
-  var trackLabel = track === 'manager' ? 'Manager track' : 'Regular user track';
+  var trackLabel = track === 'manager' ? 'Manager' : 'User';
   var trackTag = track === 'manager' ? 'MGR' : 'USER';
 
-  var sessionStart = Date.now();
+  var running = false;
+  var sessionStart = null;
   var log = [];
   var clickCount = 0;
 
   function record(type, label, detail) {
+    if (!running) return;
     log.push({
       tMs: Date.now() - sessionStart,
       tISO: new Date().toISOString(),
@@ -50,7 +54,6 @@
     if (type === 'click') clickCount++;
     renderStats();
   }
-  record('milestone', 'session_start', 'track=' + track);
 
   /* ── Best-effort human label for whatever was clicked ── */
   function describeElement(target) {
@@ -99,7 +102,11 @@
     }
   }, true);
 
-  /* ── Milestone: watch an overlay/drawer's `hidden` attribute ── */
+  /* ── Milestone: watch an overlay/drawer's `hidden` attribute ──
+     These observers are always attached (cheap), but record() itself is a
+     no-op until Start is clicked, so nothing before Start gets logged —
+     including the announcement modal, if the interviewer loads the page
+     before clicking Start. */
   function watchHidden(id, shownLabel, hiddenLabel, extraFn) {
     var el = document.getElementById(id);
     if (!el) return;
@@ -150,7 +157,7 @@
     var blocks = [];
     blocks.push(toRows([
       ['Participant', 'Track', 'Date', 'Duration (s)'],
-      [pid, track, new Date().toISOString().slice(0, 10), Math.round((Date.now() - sessionStart) / 1000)],
+      [pid, track, new Date().toISOString().slice(0, 10), sessionStart ? Math.round((Date.now() - sessionStart) / 1000) : 0],
     ]));
     var logRows = [['t_ms', 't_iso', 'type', 'label', 'detail']];
     log.forEach(function(r) { logRows.push([r.tMs, r.tISO, r.type, r.label, r.detail]); });
@@ -170,7 +177,7 @@
     URL.revokeObjectURL(a.href);
   }
 
-  /* ── Minimal floating status panel — passive, nothing to press ── */
+  /* ── Minimal floating status panel ── */
   var CSS = ''
     + '.uxt-pill{position:fixed;bottom:16px;right:16px;z-index:99999;background:#111827;color:#fff;'
     + 'font:12px/1.4 Roboto,sans-serif;border-radius:20px;padding:8px 14px;cursor:pointer;'
@@ -189,6 +196,7 @@
     + '.uxt-panel button:hover{background:#e5e7eb;}'
     + '.uxt-panel button.uxt-primary{background:#0168DD;color:#fff;border-color:#0168DD;font-weight:600;}'
     + '.uxt-panel button.uxt-primary:hover{background:#015bc0;}'
+    + '.uxt-panel button:disabled{opacity:.4;cursor:not-allowed;}'
     + '.uxt-stats{color:#6B7280;font-size:11px;margin-bottom:8px;}'
     + '.uxt-hint{color:#9ca3af;font-size:10px;margin-top:8px;line-height:1.4;}';
 
@@ -209,14 +217,20 @@
     + '<h4>Usability tracking <span class="uxt-close" id="uxt-close">&times;</span></h4>'
     + '<div class="uxt-track">' + trackLabel + '</div>'
     + '<div class="uxt-stats" id="uxt-stats"></div>'
-    + '<div class="uxt-row"><input type="text" id="uxt-pid" placeholder="Participant ID"></div>'
-    + '<button id="uxt-export" class="uxt-primary">Export CSV</button>'
-    + '<div class="uxt-hint">Recording started automatically on page load — nothing to press. Export at the end of the session.</div>';
+    + '<button id="uxt-startstop" class="uxt-primary">Start</button>'
+    + '<div class="uxt-row" style="margin-top:6px;"><input type="text" id="uxt-pid" placeholder="Participant name"></div>'
+    + '<button id="uxt-export" disabled>Export CSV</button>'
+    + '<div class="uxt-hint" id="uxt-hint">Click Start right when the real session begins — not on page load — so timing reflects the actual test, not the pre-session chat.</div>';
   document.body.appendChild(panel);
 
   function renderStats() {
     var stats = document.getElementById('uxt-stats');
     if (!stats) return;
+    if (!running) {
+      stats.textContent = 'Not started';
+      pill.textContent = '○ Idle · ' + trackTag;
+      return;
+    }
     var elapsed = Math.round((Date.now() - sessionStart) / 1000);
     stats.textContent = elapsed + 's elapsed · ' + clickCount + ' clicks · ' + log.length + ' events';
     pill.textContent = '⏱ ' + elapsed + 's / ' + clickCount + ' clicks · ' + trackTag;
@@ -227,6 +241,22 @@
   pill.addEventListener('click', function() { panel.hidden = false; pill.hidden = true; });
   document.getElementById('uxt-close').addEventListener('click', function() { panel.hidden = true; pill.hidden = false; });
   document.getElementById('uxt-export').addEventListener('click', exportCSV);
+
+  var startBtn = document.getElementById('uxt-startstop');
+  startBtn.addEventListener('click', function() {
+    if (running) {
+      if (!confirm('Restart tracking? This clears the current log — export first if you still need it.')) return;
+    }
+    log = [];
+    clickCount = 0;
+    sessionStart = Date.now();
+    running = true;
+    startBtn.textContent = 'Restart';
+    startBtn.classList.remove('uxt-primary');
+    document.getElementById('uxt-export').disabled = false;
+    document.getElementById('uxt-hint').textContent = 'Recording. Export at the end of the session.';
+    record('milestone', 'session_start', 'track=' + track);
+  });
 
   /* Exposed for console access / debugging */
   window._uxTracking = { record: record, exportCSV: exportCSV, getLog: function() { return log.slice(); }, track: track };

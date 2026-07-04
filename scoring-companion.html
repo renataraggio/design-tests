@@ -57,6 +57,13 @@
   .outcome-partial.active { background: #f59e0b; color: #fff; border-color: #f59e0b; font-weight: 600; }
   .outcome-failed { border: 1px solid #fecaca; background: #fff; }
   .outcome-failed.active { background: #dc2626; color: #fff; border-color: #dc2626; font-weight: 600; }
+  .seq-label { font-size: 11px; color: #6B7280; margin: 8px 0 4px; }
+  .seq-row { display: flex; gap: 4px; }
+  .seq-row button {
+    flex: 1; padding: 6px 0; border-radius: 6px; border: 1px solid #D6DBE6;
+    background: #F3F4F6; font-size: 12px; cursor: pointer;
+  }
+  .seq-row button.active { background: #0168DD; color: #fff; border-color: #0168DD; font-weight: 600; }
   button:disabled { opacity: .4; cursor: not-allowed; }
   .hint { color: #9ca3af; font-size: 12px; margin-top: 12px; line-height: 1.5; }
   .export-row { display: flex; gap: 8px; }
@@ -70,14 +77,13 @@
 
   <div class="card">
     <div class="track-tabs">
-      <button id="tab-manager" class="active">Manager track</button>
-      <button id="tab-user">Regular user track</button>
+      <button id="tab-manager" class="active">Manager</button>
+      <button id="tab-user">User</button>
     </div>
     <div id="stats">Not started</div>
     <button id="startstop" class="primary" style="width:100%;">Start session</button>
     <div class="row" style="margin-top:10px;">
-      <input type="text" id="pid" placeholder="Participant ID">
-      <input type="text" id="interviewer" placeholder="Interviewer name">
+      <input type="text" id="pid" placeholder="Participant name">
     </div>
   </div>
 
@@ -88,10 +94,11 @@
       <input type="text" id="custom-note" placeholder="Custom note (optional)">
     </div>
     <div class="export-row">
-      <button id="export" class="primary">Export CSV</button>
-      <button id="reset">Reset session</button>
+      <button id="copy-md" class="primary">Copy as Markdown</button>
+      <button id="export">Export CSV</button>
     </div>
-    <div class="hint">Export produces the same columns as the interviewer notes-and-scoring.md worksheet (Task, Outcome, Prompt count, Score) — paste straight in, or drop the CSV into that interviewer's folder.</div>
+    <button id="reset" style="margin-top:8px;">Reset session</button>
+    <div class="hint"><b>Copy as Markdown</b> puts a ready-to-paste block on your clipboard, formatted exactly like the notes-and-scoring.md worksheet — paste it straight in. <b>Export CSV</b> downloads the same data as a file instead, if you'd rather archive it or combine it with the interviewer's clickstream later.</div>
   </div>
 </div>
 
@@ -126,7 +133,7 @@
   }
 
   function resetTaskState() {
-    taskState = TASKS[track].map(function() { return { prompts: 0, outcome: null }; });
+    taskState = TASKS[track].map(function() { return { prompts: 0, outcome: null, seq: null }; });
   }
   resetTaskState();
 
@@ -148,6 +155,12 @@
       + '<button class="outcome-success" data-role="outcome" data-outcome="Success" data-n="' + n + '">Success</button>'
       + '<button class="outcome-partial" data-role="outcome" data-outcome="Partial" data-n="' + n + '">Partial</button>'
       + '<button class="outcome-failed" data-role="outcome" data-outcome="Failed" data-n="' + n + '">Failed</button>'
+      + '</div>'
+      + '<div class="seq-label">Ask: "How easy or difficult was that?" (1 = very difficult, 7 = very easy)</div>'
+      + '<div class="seq-row">'
+      + [1, 2, 3, 4, 5, 6, 7].map(function(v) {
+          return '<button data-role="seq" data-val="' + v + '" data-n="' + n + '">' + v + '</button>';
+        }).join('')
       + '</div>';
     return div;
   }
@@ -174,6 +187,16 @@
         taskState[n - 1].outcome = outcome;
         Array.prototype.forEach.call(tasksEl.querySelectorAll('[data-role="outcome"][data-n="' + n + '"]'), function(b) {
           b.classList.toggle('active', b.dataset.outcome === outcome);
+        });
+      });
+    });
+    Array.prototype.forEach.call(tasksEl.querySelectorAll('[data-role="seq"]'), function(btn) {
+      btn.addEventListener('click', function() {
+        var n = parseInt(btn.dataset.n, 10);
+        var val = parseInt(btn.dataset.val, 10);
+        taskState[n - 1].seq = val;
+        Array.prototype.forEach.call(tasksEl.querySelectorAll('[data-role="seq"][data-n="' + n + '"]'), function(b) {
+          b.classList.toggle('active', parseInt(b.dataset.val, 10) === val);
         });
       });
     });
@@ -236,18 +259,67 @@
     return rows.map(function(r) { return r.map(csvEscape).join(','); }).join('\n');
   }
 
+  function trackLabel() { return track === 'manager' ? 'Manager' : 'User'; }
+
+  function buildMarkdown() {
+    var pid = document.getElementById('pid').value || '______';
+    var date = new Date().toISOString().slice(0, 10);
+    var lines = [];
+    lines.push('### Participant: ' + pid + '&nbsp;&nbsp;&nbsp; Date: ' + date);
+    lines.push('');
+    lines.push('| Task | Outcome (Success / Partial / Failed) | Prompt count | Score | Ease (SEQ 1–7) |');
+    lines.push('|---|---|---|---|---|');
+    TASKS[track].forEach(function(label, i) {
+      var st = taskState[i];
+      lines.push('| ' + trackLabel() + ' Task ' + (i + 1) + ' — ' + label + ' | '
+        + (st.outcome || '') + ' | '
+        + (st.outcome ? st.prompts : '') + ' | '
+        + (st.outcome ? SCORE[st.outcome] : '') + ' | '
+        + (st.seq || '') + ' |');
+    });
+    lines.push('');
+    lines.push('**Notes:**');
+    TASKS[track].forEach(function(label, i) {
+      lines.push('- ' + trackLabel() + ' Task ' + (i + 1) + ':');
+    });
+    var note = document.getElementById('custom-note').value;
+    if (note) lines[lines.length - 1] += ' ' + note;
+    lines.push('');
+    lines.push('**Wrap-up answers:**');
+    if (track === 'manager') {
+      lines.push('- Explain-to-a-teammate quote:');
+      lines.push('- Clarity rating (1–5) + reason:');
+    } else {
+      lines.push('- Explain-to-a-coworker quote:');
+      lines.push('- "Felt like usual page" rating (1–5) + reason:');
+    }
+    lines.push('- Naming answer — fresh (Section 2):');
+    lines.push('- Naming answer — after use (Section 6):');
+    return lines.join('\n');
+  }
+
+  document.getElementById('copy-md').addEventListener('click', function() {
+    var btn = document.getElementById('copy-md');
+    var original = btn.textContent;
+    navigator.clipboard.writeText(buildMarkdown()).then(function() {
+      btn.textContent = 'Copied!';
+      setTimeout(function() { btn.textContent = original; }, 1500);
+    }, function() {
+      alert('Clipboard access was blocked by the browser. Try Export CSV instead.');
+    });
+  });
+
   document.getElementById('export').addEventListener('click', function() {
     var pid = document.getElementById('pid').value || '';
-    var interviewer = document.getElementById('interviewer').value || '';
     var note = document.getElementById('custom-note').value || '';
     var blocks = [];
 
     blocks.push(toRows([
-      ['Participant', 'Interviewer', 'Track', 'Date', 'Duration (s)', 'Note'],
-      [pid, interviewer, track, new Date().toISOString().slice(0, 10), Math.round(elapsedMs() / 1000), note],
+      ['Participant', 'Track', 'Date', 'Duration (s)', 'Note'],
+      [pid, track, new Date().toISOString().slice(0, 10), Math.round(elapsedMs() / 1000), note],
     ]));
 
-    var scoringRows = [['Task', 'Outcome', 'Prompt count', 'Score']];
+    var scoringRows = [['Task', 'Outcome', 'Prompt count', 'Score', 'Ease (SEQ 1-7)']];
     TASKS[track].forEach(function(label, i) {
       var st = taskState[i];
       scoringRows.push([
@@ -255,6 +327,7 @@
         st.outcome || '',
         st.outcome ? st.prompts : '',
         st.outcome ? SCORE[st.outcome] : '',
+        st.seq || '',
       ]);
     });
     blocks.push(toRows(scoringRows));
