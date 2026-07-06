@@ -6,7 +6,7 @@
 .drp-popover {
   position: absolute;
   top: calc(100% + 6px);
-  left: 0;
+  right: 0;
   z-index: 950;
   background: #fff;
   border: 1px solid #e5e7eb;
