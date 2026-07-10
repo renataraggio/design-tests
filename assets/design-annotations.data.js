@@ -8,8 +8,8 @@
  */
 window.DESIGN_ANNOTATIONS_DATA = {
   pages: [
-    { id: 'time-logged', label: 'Time logged' },
-    { id: 'timesheets',  label: 'Timesheets' },
+    { id: 'time-logged', label: 'Timesheets' },
+    { id: 'timesheets',  label: 'Approvals' },
   ],
 
   annotations: [
@@ -197,8 +197,8 @@ window.DESIGN_ANNOTATIONS_DATA = {
       kind: 'required',
       priority: 'high',
       group: 'Unified "Add time" modal experience',
-      title: 'Add time the same way from Time Logged as from Timesheets',
-      description: 'Clicking "Add time" here should open the same modal experience as clicking "Add time" on the Timesheets page. Previously the two pages opened different modals with different flows.',
+      title: 'Add time the same way from Timesheets as from Approvals',
+      description: 'Clicking "Add time" here should open the same modal experience as clicking "Add time" on the Approvals page. Previously the two pages opened different modals with different flows.',
       target: '#tl-add-time-btn',
     },
     {
@@ -207,8 +207,8 @@ window.DESIGN_ANNOTATIONS_DATA = {
       kind: 'required',
       priority: 'high',
       group: 'Unified "Add time" modal experience',
-      title: 'Add time the same way from Timesheets as from Time Logged',
-      description: 'Clicking "Add time" here should open the same modal experience as clicking "Add time" on the Time Logged page — one consistent flow regardless of which page you start from.',
+      title: 'Add time the same way from Approvals as from Timesheets',
+      description: 'Clicking "Add time" here should open the same modal experience as clicking "Add time" on the Timesheets page — one consistent flow regardless of which page you start from.',
       target: '#tsh-add-time-btn',
     },
     {
@@ -227,11 +227,12 @@ window.DESIGN_ANNOTATIONS_DATA = {
       kind: 'required',
       priority: 'high',
       group: 'Unified "Add time" modal experience',
-      title: 'One time entry per person when adding time for a single member',
-      description: '"Add time span" (multiple time entries in one save) is a multi-member-only capability. When the modal is scoped to one person — a manager viewing that one member, or a regular user adding their own time — only a single time entry is allowed, and "Add time span" is hidden. The "Total hours" footer is hidden too, since it would just repeat the single row\'s own Hours value. This is consistent for both roles.',
+      title: 'One time entry only for genuine self-service; managers can add multiple slots for anyone else',
+      description: '"Add time span" (multiple time entries in one save) is restricted only when a regular member is adding their own time ("locked" mode) — there, a single time entry is allowed and "Add time span"/"Total hours" are hidden. A manager adding time for someone else keeps "Add time span" available whether they\'re scoped to one specific member ("single" mode) or several ("multi"/"batch" mode), so they can log several time slots for that person in one save.',
       target: '#utm-add-span-btn',
       sub: [
-        'Multi-member mode (2+ members selected) keeps "Add time span" and the "Total hours" footer, and can add multiple entries per save',
+        '"Locked" mode (regular member, self-service) is the only mode limited to one entry',
+        '"Single" mode (manager viewing one specific member) and multi-member mode both keep "Add time span" and the "Total hours" footer',
       ],
     },
     {

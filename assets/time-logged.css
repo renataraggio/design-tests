@@ -91,6 +91,15 @@
 
 .tl-icon-btn:hover { background: #f9fafb; }
 
+.tl-icon-btn:disabled {
+  cursor: not-allowed;
+  background: #fff;
+}
+
+.tl-icon-btn:disabled .material-symbols-rounded {
+  color: #d1d5db;
+}
+
 /* ── Row 2: filters + date nav ── */
 .tl-header__filters {
   display: flex;

@@ -46,6 +46,19 @@
     };
   </script>
 
+  <!-- Shared Activity % color coding — same thresholds/classes everywhere
+       Activity shows up (individual timesheet rows, Daily/Weekly Timesheets,
+       and the Approvals pay-period table), so it reads consistently. -->
+  <script>
+    window._activityColorClass = function(pct) {
+      var n = parseFloat(pct);
+      if (isNaN(n)) return '';
+      if (n >= 60) return 'ts-activity--high';
+      if (n >= 30) return 'ts-activity--med';
+      return 'ts-activity--low';
+    };
+  </script>
+
   <!--
     The Hubstaff shell injects the top bar and sidebar into the page
     automatically. The only requirement is a wrapper with id="shell-content"
@@ -64,7 +77,7 @@
       <!-- Timesheets page header -->
       <header class="tsh-header">
         <div class="tsh-header__top">
-          <h1 class="tsh-page-title">Timesheets</h1>
+          <h1 class="tsh-page-title">Approvals</h1>
           <div class="tsh-page-actions">
             <button type="button" class="tsh-btn-primary" id="tsh-add-time-btn">Add time</button>
             <div class="tsh-icon-btns">
@@ -138,7 +151,7 @@
 
           <!-- Pay period table -->
           <div class="tsh-table-wrap">
-            <table class="tsh-table" aria-label="Timesheets pay periods">
+            <table class="tsh-table" aria-label="Approvals pay periods">
               <thead>
                 <tr>
                   <th class="tsh-col-check"><span class="tsh-cb" role="checkbox" aria-checked="false" tabindex="0"></span></th>
@@ -163,7 +176,7 @@
                   <td class="tsh-num"><strong>96:30</strong></td>
                   <td class="tsh-num"><strong>2:35</strong></td>
                   <td class="tsh-num"><strong>—</strong></td>
-                  <td class="tsh-num"><strong>47%</strong></td>
+                  <td class="tsh-num"><strong class="ts-activity--med">47%</strong></td>
                   <td class="tsh-amount"><strong>$6,875.35</strong></td>
                   <td></td>
                 </tr>
@@ -188,16 +201,19 @@
       <div class="tl-breadcrumb" id="tl-breadcrumb">
         <button type="button" class="tl-breadcrumb__back" id="tl-breadcrumb-btn">
           <span class="material-symbols-rounded">arrow_back</span>
-          <span class="tl-breadcrumb__label">Back</span>
+          <span class="tl-breadcrumb__label">All members</span>
         </button>
       </div>
 
       <!-- Row 1: page title + actions -->
       <div class="tl-header__top">
-        <h1 class="tl-page-title">Time logged</h1>
+        <h1 class="tl-page-title">Timesheets</h1>
         <div class="tl-page-actions">
           <button type="button" class="tl-btn-primary" id="tl-add-time-btn">Add time</button>
           <div class="tl-icon-btns">
+            <button type="button" class="tl-icon-btn" disabled title="Download — coming soon">
+              <span class="material-symbols-rounded" aria-hidden="true">download</span>
+            </button>
             <button type="button" class="tl-icon-btn" title="Settings">
               <span class="material-symbols-rounded" aria-hidden="true">settings</span>
             </button>
@@ -310,7 +326,7 @@
             </div>
             <div class="ts-stat">
               <span class="ts-stat__label">Activity</span>
-              <span class="ts-stat__value" id="ts-stat-activity">47%</span>
+              <span class="ts-stat__value ts-activity--med" id="ts-stat-activity">47%</span>
             </div>
             <div class="ts-stat">
               <span class="ts-stat__label">Overtime</span>
@@ -341,12 +357,11 @@
 
         <!-- Section header -->
         <div class="ts-daily__header">
-          <span class="ts-daily__title" id="ts-view-title">Daily time logged</span>
+          <span class="ts-daily__title" id="ts-view-title">Daily Timesheets</span>
           <div class="ts-daily__controls">
             <div class="ts-segmented" role="group" aria-label="View mode">
               <button type="button" class="ts-seg-btn ts-seg-btn--active">Daily</button>
               <button type="button" class="ts-seg-btn">Weekly</button>
-              <button type="button" class="ts-seg-btn">Monthly</button>
             </div>
             <button type="button" class="tsh-filter-btn" id="tl-member-filter-btn" aria-haspopup="true" aria-expanded="false">
               <span class="material-symbols-rounded" aria-hidden="true">filter_list</span>
@@ -432,8 +447,8 @@
                   <colgroup>
                     <col class="ts-col-check">
                     <col class="ts-col-project">
-                    <col class="ts-col-reason">
                     <col class="ts-col-num">
+                    <col class="ts-col-reason">
                     <col class="ts-col-num">
                     <col class="ts-col-num">
                     <col class="ts-col-num">
@@ -445,61 +460,53 @@
                     <tr>
                       <th class="ts-col-check"><span class="ts-cb" role="checkbox" aria-checked="false" tabindex="0"></span></th>
                       <th>Project / Work order</th>
+                      <th><div class="ts-th-inner">Time spent<span class="material-symbols-rounded ts-th-sort">arrow_upward_alt</span></div></th>
                       <th>Reason</th>
                       <th><div class="ts-th-inner">Activity<span class="material-symbols-rounded ts-th-sort">arrow_upward_alt</span></div></th>
                       <th><div class="ts-th-inner">Idle<span class="material-symbols-rounded ts-th-sort">arrow_upward_alt</span></div></th>
                       <th><div class="ts-th-inner">Manual<span class="material-symbols-rounded ts-th-sort">arrow_upward_alt</span></div></th>
-                      <th><div class="ts-th-inner">Duration<span class="material-symbols-rounded ts-th-sort">arrow_upward_alt</span></div></th>
                       <th><div class="ts-th-inner">Status<span class="material-symbols-rounded ts-th-sort">arrow_upward_alt</span></div></th>
                       <th><div class="ts-th-inner">Time span<span class="material-symbols-rounded ts-th-sort">arrow_upward_alt</span></div></th>
                       <th></th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td><span class="ts-cb" role="checkbox" aria-checked="false" tabindex="0"></span></td>
+                    <tr><td><span class="ts-cb" role="checkbox" aria-checked="false" tabindex="0"></span></td>
                       <td><div class="ts-project-cell"><span class="ts-avatar" style="background:#31c48d;">FE</span><span class="ts-project-name">Feldman enterprise</span></div></td>
-                      <td>--</td>
-                      <td>62%</td>
-                      <td>3%</td>
-                      <td>0%</td>
                       <td>2:12</td>
+                      <td>--</td>
+                      <td><span class="ts-activity--high">62%</span></td><td>3%</td>
+                      <td>0%</td>
                       <td><span class="ts-badge ts-badge--billable">Billable</span></td>
                       <td class="ts-time-span">8:00 am - 10:12 am</td>
                       <td><button type="button" class="ts-actions-btn">Actions<span class="material-symbols-rounded" aria-hidden="true">expand_more</span></button></td>
                     </tr>
-                    <tr>
-                      <td><span class="ts-cb" role="checkbox" aria-checked="false" tabindex="0"></span></td>
+                    <tr><td><span class="ts-cb" role="checkbox" aria-checked="false" tabindex="0"></span></td>
                       <td><div class="ts-project-cell"><span class="ts-avatar" style="background:#ff9725;">PH</span><span class="ts-project-name">Product home</span></div></td>
-                      <td>--</td>
-                      <td>71%</td>
-                      <td>1%</td>
-                      <td>0%</td>
                       <td>1:42</td>
+                      <td>--</td>
+                      <td><span class="ts-activity--high">71%</span></td><td>1%</td>
+                      <td>0%</td>
                       <td><span class="ts-badge ts-badge--billable">Billable</span></td>
                       <td class="ts-time-span">10:12 am - 11:54 am</td>
                       <td><button type="button" class="ts-actions-btn">Actions<span class="material-symbols-rounded" aria-hidden="true">expand_more</span></button></td>
                     </tr>
-                    <tr>
-                      <td><span class="ts-cb" role="checkbox" aria-checked="false" tabindex="0"></span></td>
+                    <tr><td><span class="ts-cb" role="checkbox" aria-checked="false" tabindex="0"></span></td>
                       <td><div class="ts-project-cell"><span class="ts-avatar" style="background:#2aa7ff;">NG</span><span class="ts-project-name">Nottingham Green</span></div></td>
-                      <td>--</td>
-                      <td>44%</td>
-                      <td>8%</td>
-                      <td>0%</td>
                       <td>1:06</td>
+                      <td>--</td>
+                      <td><span class="ts-activity--med">44%</span></td><td>8%</td>
+                      <td>0%</td>
                       <td><span class="ts-badge ts-badge--billable">Billable</span></td>
                       <td class="ts-time-span">11:54 am - 1:00 pm</td>
                       <td><button type="button" class="ts-actions-btn">Actions<span class="material-symbols-rounded" aria-hidden="true">expand_more</span></button></td>
                     </tr>
-                    <tr>
-                      <td><span class="ts-cb" role="checkbox" aria-checked="false" tabindex="0"></span></td>
+                    <tr><td><span class="ts-cb" role="checkbox" aria-checked="false" tabindex="0"></span></td>
                       <td><div class="ts-project-cell"><span class="ts-avatar" style="background:#8b1dff;">AG</span><span class="ts-project-name">Art Gnome</span></div></td>
-                      <td>--</td>
-                      <td>38%</td>
-                      <td>4%</td>
-                      <td>0%</td>
                       <td>3:08</td>
+                      <td>--</td>
+                      <td><span class="ts-activity--med">38%</span></td><td>4%</td>
+                      <td>0%</td>
                       <td><span class="ts-badge ts-badge--unbillable">Unbillable</span></td>
                       <td class="ts-time-span">1:00 pm - 4:08 pm</td>
                       <td><button type="button" class="ts-actions-btn">Actions<span class="material-symbols-rounded" aria-hidden="true">expand_more</span></button></td>
@@ -552,11 +559,11 @@
                   <colgroup>
                     <col class="ts-col-check">
                     <col class="ts-col-project">
+                    <col class="ts-col-num"><!-- Time spent (was Duration) -->
                     <col class="ts-col-reason">
                     <col class="ts-col-num"><!-- Activity -->
                     <col class="ts-col-num"><!-- Idle -->
                     <col class="ts-col-num"><!-- Manual -->
-                    <col class="ts-col-num"><!-- Duration -->
                     <col class="ts-col-status">
                     <col class="ts-col-time">
                     <col class="ts-col-actions">
@@ -565,11 +572,11 @@
                     <tr>
                       <th class="ts-col-check"><span class="ts-cb" role="checkbox" aria-checked="false" tabindex="0"></span></th>
                       <th>Project / Work order</th>
+                      <th><div class="ts-th-inner">Time spent<span class="material-symbols-rounded ts-th-sort">arrow_upward_alt</span></div></th>
                       <th>Reason</th>
                       <th><div class="ts-th-inner">Activity<span class="material-symbols-rounded ts-th-sort">arrow_upward_alt</span></div></th>
                       <th><div class="ts-th-inner">Idle<span class="material-symbols-rounded ts-th-sort">arrow_upward_alt</span></div></th>
                       <th><div class="ts-th-inner">Manual<span class="material-symbols-rounded ts-th-sort">arrow_upward_alt</span></div></th>
-                      <th><div class="ts-th-inner">Duration<span class="material-symbols-rounded ts-th-sort">arrow_upward_alt</span></div></th>
                       <th><div class="ts-th-inner">Status<span class="material-symbols-rounded ts-th-sort">arrow_upward_alt</span></div></th>
                       <th><div class="ts-th-inner">Time span<span class="material-symbols-rounded ts-th-sort">arrow_upward_alt</span></div></th>
                       <th></th>
@@ -577,127 +584,114 @@
                   </thead>
                   <tbody>
                     <!-- Row 1: Product home -->
-                    <tr>
-                      <td><span class="ts-cb" role="checkbox" aria-checked="false" tabindex="0"></span></td>
+                    <tr><td><span class="ts-cb" role="checkbox" aria-checked="false" tabindex="0"></span></td>
                       <td>
                         <div class="ts-project-cell">
                           <span class="ts-avatar" style="background:#ff9725;">PH</span>
                           <span class="ts-project-name">Product home</span>
                         </div>
                       </td>
-                      <td>--</td>
-                      <td>47%</td>
-                      <td>2%</td>
-                      <td>0%</td>
                       <td>2.55</td>
+                      <td>--</td>
+                      <td><span class="ts-activity--med">47%</span></td><td>2%</td>
+                      <td>0%</td>
                       <td><span class="ts-badge ts-badge--billable">Billable</span></td>
                       <td class="ts-time-span">9:01 am - 11:35 am</td>
                       <td><button type="button" class="ts-actions-btn ts-actions-btn--active">Actions<span class="material-symbols-rounded" aria-hidden="true">expand_more</span></button></td>
                     </tr>
                     <!-- Row 2: Feldman enterprise -->
-                    <tr>
-                      <td><span class="ts-cb" role="checkbox" aria-checked="false" tabindex="0"></span></td>
+                    <tr><td><span class="ts-cb" role="checkbox" aria-checked="false" tabindex="0"></span></td>
                       <td>
                         <div class="ts-project-cell">
                           <span class="ts-avatar" style="background:#31c48d;">FE</span>
                           <span class="ts-project-name">Feldman enterprise</span>
                         </div>
                       </td>
-                      <td>--</td>
-                      <td>28%</td>
-                      <td>2%</td>
-                      <td>0%</td>
                       <td>1:12</td>
+                      <td>--</td>
+                      <td><span class="ts-activity--low">28%</span></td><td>2%</td>
+                      <td>0%</td>
                       <td><span class="ts-badge ts-badge--billable">Billable</span></td>
                       <td class="ts-time-span">11:35 am - 12:47pm</td>
                       <td><button type="button" class="ts-actions-btn">Actions<span class="material-symbols-rounded" aria-hidden="true">expand_more</span></button></td>
                     </tr>
                     <!-- Row 3: Art Gnome (teal) -->
-                    <tr>
-                      <td><span class="ts-cb" role="checkbox" aria-checked="false" tabindex="0"></span></td>
+                    <tr><td><span class="ts-cb" role="checkbox" aria-checked="false" tabindex="0"></span></td>
                       <td>
                         <div class="ts-project-cell">
                           <span class="ts-avatar" style="background:#18d06b;">AG</span>
                           <span class="ts-project-name">Art Gnome</span>
                         </div>
                       </td>
-                      <td>--</td>
-                      <td>35%</td>
-                      <td>0%</td>
-                      <td>0%</td>
                       <td>1:55</td>
+                      <td>--</td>
+                      <td><span class="ts-activity--med">35%</span></td><td>0%</td>
+                      <td>0%</td>
                       <td><span class="ts-badge ts-badge--unbillable">Unbillable</span></td>
                       <td class="ts-time-span">1:40 pm - 3:35 pm</td>
                       <td><button type="button" class="ts-actions-btn">Actions<span class="material-symbols-rounded" aria-hidden="true">expand_more</span></button></td>
                     </tr>
                     <!-- Row 4: Nottingham Green -->
-                    <tr>
-                      <td><span class="ts-cb" role="checkbox" aria-checked="false" tabindex="0"></span></td>
+                    <tr><td><span class="ts-cb" role="checkbox" aria-checked="false" tabindex="0"></span></td>
                       <td>
                         <div class="ts-project-cell">
                           <span class="ts-avatar" style="background:#2aa7ff;">NG</span>
                           <span class="ts-project-name">Nottingham Green</span>
                         </div>
                       </td>
+                      <td>0:45</td>
                       <td>Forgot to start/stop timer</td>
                       <td>--</td>
                       <td>0%</td>
                       <td>100%</td>
-                      <td>0:45</td>
                       <td><span class="ts-badge ts-badge--billable">Billable</span></td>
                       <td class="ts-time-span">12:55 pm - 1:40 pm</td>
                       <td><button type="button" class="ts-actions-btn">Actions<span class="material-symbols-rounded" aria-hidden="true">expand_more</span></button></td>
                     </tr>
                     <!-- Row 5: Art Gnome (purple) -->
-                    <tr>
-                      <td><span class="ts-cb" role="checkbox" aria-checked="false" tabindex="0"></span></td>
+                    <tr><td><span class="ts-cb" role="checkbox" aria-checked="false" tabindex="0"></span></td>
                       <td>
                         <div class="ts-project-cell">
                           <span class="ts-avatar" style="background:#8b1dff;">AG</span>
                           <span class="ts-project-name">Art Gnome</span>
                         </div>
                       </td>
-                      <td>--</td>
-                      <td>31%</td>
-                      <td>5%</td>
-                      <td>0%</td>
                       <td>0:32</td>
+                      <td>--</td>
+                      <td><span class="ts-activity--med">31%</span></td><td>5%</td>
+                      <td>0%</td>
                       <td><span class="ts-badge ts-badge--unbillable">Unbillable</span></td>
                       <td class="ts-time-span">1:40 pm - 2:12 pm</td>
                       <td><button type="button" class="ts-actions-btn">Actions<span class="material-symbols-rounded" aria-hidden="true">expand_more</span></button></td>
                     </tr>
                     <!-- Row 6: Toronto Realty -->
-                    <tr>
-                      <td><span class="ts-cb" role="checkbox" aria-checked="false" tabindex="0"></span></td>
+                    <tr><td><span class="ts-cb" role="checkbox" aria-checked="false" tabindex="0"></span></td>
                       <td>
                         <div class="ts-project-cell">
                           <span class="ts-avatar" style="background:#ff9725;">TR</span>
                           <span class="ts-project-name">Toronto Realty</span>
                         </div>
                       </td>
-                      <td>--</td>
-                      <td>76%</td>
-                      <td>0%</td>
-                      <td>0%</td>
                       <td>2:56</td>
+                      <td>--</td>
+                      <td><span class="ts-activity--high">76%</span></td><td>0%</td>
+                      <td>0%</td>
                       <td><span class="ts-badge ts-badge--billable">Billable</span></td>
                       <td class="ts-time-span">2:12 pm - 5:08 pm</td>
                       <td><button type="button" class="ts-actions-btn">Actions<span class="material-symbols-rounded" aria-hidden="true">expand_more</span></button></td>
                     </tr>
                     <!-- Row 7: Product home (partial, cut off in design) -->
-                    <tr>
-                      <td><span class="ts-cb" role="checkbox" aria-checked="false" tabindex="0"></span></td>
+                    <tr><td><span class="ts-cb" role="checkbox" aria-checked="false" tabindex="0"></span></td>
                       <td>
                         <div class="ts-project-cell">
                           <span class="ts-avatar" style="background:#ff9725;">PH</span>
                           <span class="ts-project-name">Product home</span>
                         </div>
                       </td>
-                      <td>--</td>
-                      <td>47%</td>
-                      <td>0%</td>
-                      <td>0%</td>
                       <td>0:55</td>
+                      <td>--</td>
+                      <td><span class="ts-activity--med">47%</span></td><td>0%</td>
+                      <td>0%</td>
                       <td><span class="ts-badge ts-badge--billable">Billable</span></td>
                       <td class="ts-time-span">9:01 am -</td>
                       <td><button type="button" class="ts-actions-btn">Actions<span class="material-symbols-rounded" aria-hidden="true">expand_more</span></button></td>
@@ -750,25 +744,6 @@
 
   <script>
   (function () {
-    /* Monthly time logged isn't built yet — every "Monthly" segmented tab
-       (single-member, multi-member, and the calendar-mode header variants)
-       renders disabled with a "Soon" badge and tooltip instead of opening
-       the month calendar grid. The badge is a persistent, always-visible
-       signal (not just a hover tooltip) since disabled-looking controls
-       don't invite hovering, and hover doesn't exist on touch. Native
-       `disabled` blocks click handlers outright, so callers don't need
-       their own guards. */
-    window._markMonthlyDisabled = function(root) {
-      (root || document).querySelectorAll('.ts-seg-btn, .tl-seg-btn').forEach(function(btn) {
-        if (btn.textContent.trim() === 'Monthly') {
-          btn.disabled = true;
-          btn.title = 'Monthly view — coming soon';
-          btn.innerHTML = 'Monthly<span class="tl-tab-soon-badge">Soon</span>';
-        }
-      });
-    };
-    window._markMonthlyDisabled(document);
-
     /* ── Project registry ── */
     var PROJECTS = {
       fe: { name: 'Feldman enterprise', color: '#31c48d' },
@@ -1042,7 +1017,7 @@
       var segBtns = document.querySelectorAll('.ts-daily .ts-seg-btn');
 
       daily.classList.remove('ts-daily--calendar-mode', 'ts-daily--weekly-mode');
-      title.textContent = 'Daily time logged';
+      title.textContent = 'Daily Timesheets';
       segBtns.forEach(function (b) { b.classList.remove('ts-seg-btn--active'); });
       segBtns[0].classList.add('ts-seg-btn--active');
 
@@ -1361,7 +1336,7 @@
   </script>
 
   <!-- Shell library (top bar + sidebar + collapse/expand) -->
-  <script src="assets/hubstaff-shell.js?v=2"></script>
+  <script src="assets/hubstaff-shell.js?v=3"></script>
 
   <!-- Boot the shell -->
   <script src="assets/layout.js"></script>
@@ -1499,7 +1474,7 @@
           '<td class="tsh-num">' + m.regular + '</td>',
           '<td class="tsh-num">' + m.manual + '</td>',
           '<td class="tsh-num">' + m.overtime + '</td>',
-          '<td class="tsh-num">' + m.activity + '</td>',
+          '<td class="tsh-num"><span class="' + window._activityColorClass(m.activity) + '">' + m.activity + '</span></td>',
           '<td class="tsh-amount">' + m.amount + '</td>',
           '<td>' + statusHTML(m.status) + '</td>',
         ].join('');
@@ -1533,30 +1508,46 @@
   <!-- ── Sidebar sub-nav wiring: switch between page views ── -->
   <script>
   (function() {
+    /* Keyed off fixed DOM position rather than label text, so this doesn't
+       depend on the two sub-items' names staying distinct.
+       [0] = Timesheets (was "Time logged" — the feature this prototype tests)
+       [1] = Approvals (pay-period / approvals table) */
+    function timesheetsSubItems() {
+      var navBtn = document.querySelector('.hs-nav-item[data-key="timesheets"]');
+      var group = navBtn && navBtn.closest('.hs-nav-group');
+      return group ? group.querySelectorAll('.hs-sub-item') : [];
+    }
+    window._timesheetsSubItems = timesheetsSubItems;
+
+    function setActiveSubItem(target) {
+      timesheetsSubItems().forEach(function(s) { s.classList.remove('active'); });
+      if (target) target.classList.add('active');
+    }
+    window._setActiveTimesheetsSubItem = setActiveSubItem;
+
     /* Wire sub-nav clicks once the shell has rendered */
     function wireSidebarNav() {
-      document.querySelectorAll('#hs-sidebar .hs-sub-item').forEach(function(el) {
-        el.addEventListener('click', function(e) {
-          var label = el.textContent.trim();
+      var subs = timesheetsSubItems();
+      var timeLoggedItem = subs[0];
+      var payPeriodItem  = subs[1];
 
-          if (label === 'Timesheets') {
-            e.preventDefault();
-            window._navigateToTimesheets();
-            /* Update active state */
-            document.querySelectorAll('#hs-sidebar .hs-sub-item').forEach(function(s) { s.classList.remove('active'); });
-            el.classList.add('active');
-            if (window._daSetContext) window._daSetContext('timesheets');
-          } else if (label === 'Time logged') {
-            e.preventDefault();
-            document.getElementById('view-timesheets').classList.remove('ts-page--active');
-            document.getElementById('view-time-logged').classList.remove('ts-page--hidden');
-            /* Update active state */
-            document.querySelectorAll('#hs-sidebar .hs-sub-item').forEach(function(s) { s.classList.remove('active'); });
-            el.classList.add('active');
-            if (window._daSetContext) window._daSetContext('time-logged');
-          }
+      if (timeLoggedItem) {
+        timeLoggedItem.addEventListener('click', function(e) {
+          e.preventDefault();
+          document.getElementById('view-timesheets').classList.remove('ts-page--active');
+          document.getElementById('view-time-logged').classList.remove('ts-page--hidden');
+          setActiveSubItem(timeLoggedItem);
+          if (window._daSetContext) window._daSetContext('time-logged');
         });
-      });
+      }
+      if (payPeriodItem) {
+        payPeriodItem.addEventListener('click', function(e) {
+          e.preventDefault();
+          window._navigateToTimesheets();
+          setActiveSubItem(payPeriodItem);
+          if (window._daSetContext) window._daSetContext('timesheets');
+        });
+      }
     }
 
     /* Shell renders synchronously — wire immediately */
@@ -1576,6 +1567,20 @@
       header.addEventListener('keydown', function(e) {
         if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); header.click(); }
       });
+    });
+  </script>
+
+  <!-- ── Individual timesheet page: whole row is clickable (not just the
+       time span) — delegated on #view-time-logged so it also covers rows
+       rebuilt by renderSingleMemberDaily() when the member/date changes. ── -->
+  <script>
+    document.getElementById('view-time-logged').addEventListener('click', function(e) {
+      var row = e.target.closest('.ts-table tbody tr');
+      if (!row) return;
+      /* Checkbox keeps its own selection behaviour; the Actions button will
+         get its own menu later — neither should also fire the row click. */
+      if (e.target.closest('.ts-cb, .ts-actions-btn')) return;
+      if (window._showToast) window._showToast('Editing time entries is coming soon', 'success');
     });
   </script>
 
@@ -1612,7 +1617,7 @@
           <div class="fa-slide-body">
             <span class="fa-eyebrow">New</span>
             <h2 class="fa-title" id="fa-title">See and filter your whole team in one view</h2>
-            <p class="fa-desc">The multi-member table shows everyone's logged hours, activity, and screenshots side by side. Narrow it down to a specific team or one or more people using the filters at the top — updates instantly, right where you are.</p>
+            <p class="fa-desc">See everyone's logged hours, activity, and screenshots side by side — filter down to a team or specific people anytime.</p>
           </div>
         </div>
 
@@ -1641,7 +1646,7 @@
           <div class="fa-slide-body">
             <span class="fa-eyebrow">New</span>
             <h2 class="fa-title">Click a member for the full breakdown</h2>
-            <p class="fa-desc">Click a member's name to open their day-by-day time log — project splits, activity, and screenshots included. Click a specific date and it deep-links straight there.</p>
+            <p class="fa-desc">Click a member's name to open their day-by-day time log — project splits, activity, and screenshots included.</p>
           </div>
         </div>
       </div>
@@ -3005,20 +3010,26 @@
           /* Regular user, or manager viewing one specific member — this
              modal can only ever add time for that one person here, so show
              a read-only avatar+name instead of an editable member picker
-             (per Figma: node 7812:84151). A single person can only have one
-             time entry per "Add time" here — batch/multi-span add is a
-             multi-member-only capability — so hide "Add time span" and
-             collapse back to one row. */
+             (per Figma: node 7812:84151). */
           showMemberDisplay(memberData);
-          utmAddSpanBtn.hidden = true;
-          if (window._utmResetToSingleSpan) window._utmResetToSingleSpan();
         } else {
-          utmAddSpanBtn.hidden = false;
           /* multi — empty member selects */
           utmMemberDisp.hidden = true;
           utmMembersSec.hidden = false;
           utmBatchPill.hidden = false;
           utmMembersInner.innerHTML = '<span class="utm-select__placeholder">Select members</span>';
+        }
+
+        /* Only genuine self-service (a regular member adding their own time,
+           "locked" mode) is limited to one time entry. A manager adding time
+           for someone else — whether that's one specific person ("single")
+           or several ("multi"/"batch") — can add multiple time slots in one
+           save, so "Add time span" stays available. */
+        if (mode === 'locked') {
+          utmAddSpanBtn.hidden = true;
+          if (window._utmResetToSingleSpan) window._utmResetToSingleSpan();
+        } else {
+          utmAddSpanBtn.hidden = false;
         }
 
         /* Pre-fill WB member dropdown */
@@ -3056,14 +3067,15 @@
         utmTabTL.classList.add('utm-tab--active');
         utmTabWB.classList.remove('utm-tab--active');
         var isLockedOrSingleTL = (utmOverlay.dataset.mode === 'locked' || utmOverlay.dataset.mode === 'single');
+        var isSelfServiceTL = (utmOverlay.dataset.mode === 'locked');
         /* Time log sections */
         utmMembersSec.hidden = isLockedOrSingleTL;
         utmMemberDisp.hidden = !isLockedOrSingleTL;
-        /* One time entry only for a single member — "Add time span" is multi-member-only,
-           and "Total hours" is redundant with the single row's own Hours value, so hide
-           the whole footer rather than just the button. */
-        utmAddSpanBtn.hidden = isLockedOrSingleTL;
-        utmTimeFooter.hidden = isLockedOrSingleTL;
+        /* One time entry only for genuine self-service — a manager adding
+           time for someone else (single or multi) can add several slots,
+           so "Add time span"/"Total hours" only hide for "locked" mode. */
+        utmAddSpanBtn.hidden = isSelfServiceTL;
+        utmTimeFooter.hidden = isSelfServiceTL;
         utmAssignmentSec.hidden = false;
         utmNotesSec.hidden = false;
         /* Hide work break sections */
@@ -3251,9 +3263,11 @@
           if (teamSelectWrap) teamSelectWrap.hidden = isDrilledInView || isMemberRole;
           if (breadcrumb) breadcrumb.classList.toggle('tl-breadcrumb--visible', isDrilledInView && !isMemberRole);
 
-          /* Update breadcrumb label based on where the user came from */
+          /* Back always returns to a multi-member "all members" view, whether
+             that's the Approvals pay-period table or the all-members Time
+             Logged list — so the label just says where you're headed. */
           if (breadcrumbLabel) {
-            breadcrumbLabel.textContent = 'Back';
+            breadcrumbLabel.textContent = 'All members';
           }
 
           /* A regular team member only ever sees their own time — the member
@@ -3585,6 +3599,11 @@
           setVal('ts-stat-regular',      fmtHMSFromMinutes(regularMin));
           setVal('ts-stat-manual',       fmtHMSFromMinutes(manualMin));
           setVal('ts-stat-activity',     stats.act + '%');
+          var actEl = document.getElementById('ts-stat-activity');
+          if (actEl && window._activityColorClass) {
+            actEl.classList.remove('ts-activity--high', 'ts-activity--med', 'ts-activity--low');
+            actEl.classList.add(window._activityColorClass(stats.act));
+          }
           setVal('ts-stat-overtime',     t.overtime);
           setVal('ts-stat-pto',          ph.pto ? ph.pto.toFixed(1) : '-');
           setVal('ts-stat-holiday',      ph.holiday ? ph.holiday.toFixed(1) : '-');
@@ -3623,11 +3642,11 @@
               + '<td><span class="ts-cb" role="checkbox" aria-checked="false" tabindex="0"></span></td>'
               + '<td><div class="ts-project-cell"><span class="ts-avatar" style="background:' + pr.color + ';">' + pr.init + '</span>'
               +   '<span class="ts-project-name">' + pr.name + '</span></div></td>'
+              + '<td>' + fmtDuration(seg.mins) + '</td>'
               + '<td>--</td>'
-              + '<td>' + stats.act + '%</td>'
+              + '<td><span class="' + window._activityColorClass(stats.act) + '">' + stats.act + '%</span></td>'
               + '<td>' + stats.idle + '%</td>'
               + '<td>0%</td>'
-              + '<td>' + fmtDuration(seg.mins) + '</td>'
               + '<td><span class="ts-badge ts-badge--' + (billable ? 'billable' : 'unbillable') + '">' + (billable ? 'Billable' : 'Unbillable') + '</span></td>'
               + '<td class="ts-time-span">' + fmtClock(start) + ' - ' + fmtClock(end) + '</td>'
               + '<td><button type="button" class="ts-actions-btn">Actions<span class="material-symbols-rounded" aria-hidden="true">expand_more</span></button></td>'
@@ -3701,16 +3720,17 @@
               +   '</div>'
               +   '<div class="ts-table-wrap">'
               +     '<table class="ts-table" aria-label="Time entries for ' + label + '">'
-              +       '<colgroup><col class="ts-col-check"><col class="ts-col-project"><col class="ts-col-reason">'
-              +       '<col class="ts-col-num"><col class="ts-col-num"><col class="ts-col-num"><col class="ts-col-num">'
+              +       '<colgroup><col class="ts-col-check"><col class="ts-col-project"><col class="ts-col-num"><col class="ts-col-reason">'
+              +       '<col class="ts-col-num"><col class="ts-col-num"><col class="ts-col-num">'
               +       '<col class="ts-col-status"><col class="ts-col-time"><col class="ts-col-actions"></colgroup>'
               +       '<thead><tr>'
               +         '<th class="ts-col-check"><span class="ts-cb" role="checkbox" aria-checked="false" tabindex="0"></span></th>'
-              +         '<th>Project / Work order</th><th>Reason</th>'
+              +         '<th>Project / Work order</th>'
+              +         '<th><div class="ts-th-inner">Time spent<span class="material-symbols-rounded ts-th-sort">arrow_upward_alt</span></div></th>'
+              +         '<th>Reason</th>'
               +         '<th><div class="ts-th-inner">Activity<span class="material-symbols-rounded ts-th-sort">arrow_upward_alt</span></div></th>'
               +         '<th><div class="ts-th-inner">Idle<span class="material-symbols-rounded ts-th-sort">arrow_upward_alt</span></div></th>'
               +         '<th><div class="ts-th-inner">Manual<span class="material-symbols-rounded ts-th-sort">arrow_upward_alt</span></div></th>'
-              +         '<th><div class="ts-th-inner">Duration<span class="material-symbols-rounded ts-th-sort">arrow_upward_alt</span></div></th>'
               +         '<th><div class="ts-th-inner">Status<span class="material-symbols-rounded ts-th-sort">arrow_upward_alt</span></div></th>'
               +         '<th><div class="ts-th-inner">Time span<span class="material-symbols-rounded ts-th-sort">arrow_upward_alt</span></div></th>'
               +         '<th></th>'
@@ -3799,7 +3819,7 @@
           active.forEach(function(m) {
             var mins  = dayData[m.id] || 0;
             var stats = MEMBER_STATS[m.id] || { act: 70, idle: 5, screens: 10 };
-            var actPct = mins > 0 ? stats.act + '%' : '—';
+            var actPct = mins > 0 ? '<span class="' + window._activityColorClass(stats.act) + '">' + stats.act + '%</span>' : '—';
             var idlePct = mins > 0 ? stats.idle + '%' : '—';
             var screenCount = mins > 0 ? Math.round(mins / 60 * stats.screens) : 0;
             var screensCell = screenCount > 0
@@ -4084,12 +4104,11 @@
 
           /* ── Card header with Daily / Weekly / Monthly tabs ── */
           var cardHdr = '<div class="tl-daily-hdr">'
-            + '<span class="tl-daily-hdr__title">Weekly time logged</span>'
+            + '<span class="tl-daily-hdr__title">Weekly Timesheets</span>'
             + '<div class="tl-daily-hdr__actions">'
             +   '<div class="tl-seg-btns">'
             +     '<button class="tl-seg-btn" data-tab="Daily">Daily</button>'
             +     '<button class="tl-seg-btn tl-seg-btn--active" data-tab="Weekly">Weekly</button>'
-            +     '<button class="tl-seg-btn" data-tab="Monthly">Monthly</button>'
             +   '</div>'
             +   '<button class="tl-icon-btn tl-icon-btn--collapse" title="Collapse all"><span class="material-symbols-rounded">collapse_all</span></button>'
             + '</div>'
@@ -4137,7 +4156,6 @@
             + '</div>';
 
           wkMultiEl.innerHTML = '<div class="tl-daily-card">' + cardHdr + bodyHTML + '</div>';
-          window._markMonthlyDisabled(wkMultiEl);
 
           /* Tab switching: mirrors to outer tabs */
           wkMultiEl.querySelectorAll('.tl-seg-btn[data-tab]').forEach(function(btn) {
@@ -4249,16 +4267,15 @@
 
         function buildCalMultiHdr(el, activeTab) {
           el.innerHTML = '<div class="tl-daily-hdr">'
-            + '<span class="tl-daily-hdr__title">' + activeTab + ' time logged</span>'
+            + '<span class="tl-daily-hdr__title">' + activeTab + ' Timesheets</span>'
             + '<div class="tl-daily-hdr__actions">'
             +   '<div class="tl-seg-btns">'
-            +   ['Daily','Weekly','Monthly'].map(function(t) {
+            +   ['Daily','Weekly'].map(function(t) {
                   return '<button class="tl-seg-btn' + (t === activeTab ? ' tl-seg-btn--active' : '') + '" data-tab="' + t + '">' + t + '</button>';
                 }).join('')
             +   '</div>'
             + '</div>'
             + '</div>';
-          window._markMonthlyDisabled(el);
           el.querySelectorAll('.tl-seg-btn[data-tab]').forEach(function(btn) {
             btn.addEventListener('click', function() {
               var outerBtns = document.querySelectorAll('.ts-daily .ts-segmented .ts-seg-btn');
@@ -4366,10 +4383,10 @@
           var curTab = allEl.dataset.activeTab || 'Daily';
           var header = '<div class="tl-daily-hdr">'
             + '<span class="tl-daily-hdr__title" id="tl-card-title">'
-            + curTab + ' time logged</span>'
+            + curTab + ' Timesheets</span>'
             + '<div class="tl-daily-hdr__actions">'
             + '<div class="tl-seg-btns">'
-            + ['Daily','Weekly','Monthly'].map(function(t) {
+            + ['Daily','Weekly'].map(function(t) {
                 return '<button class="tl-seg-btn' + (t === curTab ? ' tl-seg-btn--active' : '') + '">' + t + '</button>';
               }).join('')
             + '</div>'
@@ -4379,7 +4396,6 @@
             + '</div>';
 
           allEl.innerHTML = '<div class="tl-daily-card">' + header + sectionsHtml + '</div>';
-          window._markMonthlyDisabled(allEl);
 
           /* Inner tab switching: Daily / Weekly / Monthly */
           allEl.querySelectorAll('.tl-seg-btn').forEach(function(btn) {
@@ -5163,7 +5179,7 @@
           var label = btn.textContent.trim();
           if (label === 'Daily') {
             daily.classList.remove('ts-daily--weekly-mode');
-            title.textContent = 'Daily time logged';
+            title.textContent = 'Daily Timesheets';
             segBtns.forEach(function(b) { b.classList.remove('ts-seg-btn--active'); });
             btn.classList.add('ts-seg-btn--active');
             var wkMultiEl = document.getElementById('ts-wk-multi');
@@ -5176,7 +5192,7 @@
             daily.classList.add('ts-daily--weekly-mode');
             daily.classList.add('ts-daily--wk-grid');
             daily.classList.remove('ts-daily--wk-table');
-            title.textContent = 'Weekly time logged';
+            title.textContent = 'Weekly Timesheets';
             segBtns.forEach(function(b) { b.classList.remove('ts-seg-btn--active'); });
             btn.classList.add('ts-seg-btn--active');
             var sel = window._getMemberSelection ? window._getMemberSelection() : new Set();
@@ -5970,9 +5986,9 @@
       var timeLoggedPage = document.getElementById('view-time-logged');
       if (timesheetsPage) timesheetsPage.classList.remove('ts-page--active');
       if (timeLoggedPage) timeLoggedPage.classList.remove('ts-page--hidden');
-      document.querySelectorAll('#hs-sidebar .hs-sub-item').forEach(function(s) {
-        s.classList.toggle('active', s.textContent.trim() === 'Time logged');
-      });
+      if (window._setActiveTimesheetsSubItem && window._timesheetsSubItems) {
+        window._setActiveTimesheetsSubItem(window._timesheetsSubItems()[0]);
+      }
       if (window._daSetContext) window._daSetContext('time-logged');
 
       /* A regular team member's default (and only) page is their own detail view */
@@ -6060,10 +6076,10 @@
         if (timesheetsPage) timesheetsPage.classList.remove('ts-page--active');
         if (timeLoggedPage) timeLoggedPage.classList.remove('ts-page--hidden');
       }
-      var label = pageId === 'timesheets' ? 'Timesheets' : 'Time logged';
-      document.querySelectorAll('#hs-sidebar .hs-sub-item').forEach(function(s) {
-        s.classList.toggle('active', s.textContent.trim() === label);
-      });
+      if (window._setActiveTimesheetsSubItem && window._timesheetsSubItems) {
+        var idx = pageId === 'timesheets' ? 1 : 0;
+        window._setActiveTimesheetsSubItem(window._timesheetsSubItems()[idx]);
+      }
 
       /* We supplied our own navigate adapter, which means the plugin's
          built-in sessionStorage handoff (reveal + highlight after landing on

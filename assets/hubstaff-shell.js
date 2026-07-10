@@ -30,8 +30,8 @@
   // ── Nav items ─────────────────────────────────────────────────────
   const NAV_ITEMS = [
     { key: 'dashboard',           icon: 'dashboard',             title: 'Dashboard' },
-    { key: 'timesheets',          icon: 'schedule',              title: 'Time tracked',
-      subs: ['Time logged', 'Timesheets', 'Manual time requests'] },
+    { key: 'timesheets',          icon: 'schedule',              title: 'Tracking',
+      subs: ['Timesheets', 'Approvals', 'Manual time requests'] },
     { key: 'activity',            icon: 'bar_chart',             title: 'Activity',
       subs: ['Screenshots', 'Apps', 'URLs'] },
     { key: 'insights',            icon: 'lightbulb',             title: 'Insights',
@@ -595,9 +595,14 @@
     if (hasSubs) {
       let rows = '';
       if (item.subs) {
+        // Track whether activeSub has already matched — some groups have two
+        // sub-items sharing the same label (e.g. "Timesheets"/"Timesheets"),
+        // so only the first occurrence should light up on initial render.
+        let subMatched = false;
         rows = item.subs.map(s => {
-          const subActive = (item.key === activeKey && s === activeSub) ? ' active' : '';
-          return `<a class="hs-sub-item${subActive}" href="#">${s}</a>`;
+          const subActive = (item.key === activeKey && s === activeSub && !subMatched);
+          if (subActive) subMatched = true;
+          return `<a class="hs-sub-item${subActive ? ' active' : ''}" href="#">${s}</a>`;
         }).join('');
       } else if (item.sections) {
         rows = item.sections.map(sec => {

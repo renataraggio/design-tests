@@ -8,7 +8,7 @@
 
 HubstaffShell.init({
   activeItem: 'timesheets', // which sidebar icon is highlighted
-  activeSub:  'Time logged', // which sub-item is highlighted
+  activeSub:  'Timesheets', // which sub-item is highlighted (first "Timesheets" entry — the renamed Time Logged feature)
   logoHref:   '#',          // where the Hubstaff logo links to
   expanded:   true,         // start with sidebar expanded
 });

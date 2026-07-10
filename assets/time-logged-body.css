@@ -367,7 +367,7 @@
 .ts-col-check   { width: 40px; }
 .ts-col-project { width: 220px; }
 .ts-col-reason  { width: 180px; }
-.ts-col-num     { width: 75px; }   /* Activity / Idle / Manual / Duration */
+.ts-col-num     { width: 75px; }   /* Time spent / Activity / Idle / Manual */
 .ts-col-status  { width: 110px; }
 .ts-col-time    { width: 160px; }
 .ts-col-actions { width: 130px; }
@@ -415,6 +415,7 @@
   background: #fff;
 }
 
+.ts-table tbody tr { cursor: pointer; }
 .ts-table tbody tr:hover { background: #fafafa; }
 
 .ts-table tbody td {
@@ -502,6 +503,13 @@
   background: #fde8e8;
   color: #c81e1e;
 }
+
+/* Activity % color coding — same thresholds/classes used everywhere Activity
+   is shown (individual timesheet rows, Daily/Weekly Timesheets, and the
+   Timesheets pay-period table), applied via window._activityColorClass(). */
+.ts-activity--high { color: #059669; font-weight: 600; }
+.ts-activity--med  { color: #d97706; font-weight: 600; }
+.ts-activity--low  { color: #c81e1e; font-weight: 600; }
 
 /* "Soon" tag on disabled coming-soon tabs (e.g. Monthly) — kept colorful on
    purpose so it still reads as an announcement, not just more disabled-gray. */
