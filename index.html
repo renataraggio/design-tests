@@ -3126,14 +3126,6 @@
           utmAddSpanBtn.hidden = false;
         }
 
-        /* Timeline is the regular user's own self-service view (one person,
-           one entry) — not shown for a manager, whether they're scoped to
-           one specific member ("single") or several ("multi"/"batch"). */
-        if (utmTimeline) {
-          utmTimeline.hidden = (mode !== 'locked');
-          if (mode === 'locked' && window._utmRecalcTimeSpans) window._utmRecalcTimeSpans();
-        }
-
         /* Pre-fill WB member dropdown */
         fillWbMember(memberData || null);
 
@@ -3189,6 +3181,13 @@
         /* Hide work break sections */
         utmWbMembersSec.hidden = true;
         utmWbAssignSec.hidden = true;
+        /* Time log's timeline is the regular user's own self-service view
+           (one person, one entry) — a manager gets "Add time span" instead,
+           whether they're scoped to one specific member or several. */
+        if (utmTimeline) {
+          utmTimeline.hidden = !isSelfServiceTL;
+          if (isSelfServiceTL && window._utmRecalcTimeSpans) window._utmRecalcTimeSpans();
+        }
       }
 
       function switchToWorkBreak() {
@@ -3212,6 +3211,14 @@
         utmSingleMemberSec.hidden = (mode !== 'single');
         utmWbMembersSec.hidden = !isMultiWB;
         utmWbAssignSec.hidden = false;
+        /* A work break entry is always exactly one person, one span — the
+           timeline always applies here regardless of role (per Figma: node
+           7695:71455), unlike the Time log tab where a manager's multi-span
+           capability replaces it. */
+        if (utmTimeline) {
+          utmTimeline.hidden = false;
+          if (window._utmRecalcTimeSpans) window._utmRecalcTimeSpans();
+        }
       }
 
       utmTabTL.addEventListener('click', switchToTimeLog);
