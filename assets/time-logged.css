@@ -1113,8 +1113,9 @@
 .ts-wmk-td--zero { color: #9ca3af; }
 .ts-wmk-td--total { font-weight: 600; color: #111827; }
 
-/* Member cell */
-.ts-wmk-td--member { min-width: 200px; }
+/* Member cell — the whole cell is the hover/click target, not just the
+   avatar+name's own width, so the affordance covers the full column. */
+.ts-wmk-td--member { min-width: 200px; cursor: pointer; }
 .ts-wmk-member {
   display: flex;
   align-items: center;

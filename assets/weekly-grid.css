@@ -3,7 +3,7 @@
    Prefix: ts-wkg-
    ============================================================= */
 
-/* ── Weekly subheader: total + Grid/Table toggle ── */
+/* ── Weekly subheader: total ── */
 .ts-wk-subheader {
   display: none;
   align-items: center;

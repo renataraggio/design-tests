@@ -190,6 +190,15 @@
   color: #111827;
 }
 
+/* ── Single-member reassign select (mode: single) ── */
+.utm-single-member-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  padding: 0 0 12px;
+}
+
 /* ── Select ── */
 .utm-select {
   display: flex;
@@ -357,7 +366,7 @@
 .utm-delete-btn:hover { background: #fef2f2; color: #ef4444; }
 .utm-delete-btn .material-symbols-rounded { font-size: 18px; }
 
-/* ── Timeline ── */
+/* ── Timeline (self-service / "locked" mode only) ── */
 .utm-timeline {
   margin: 10px 0 8px;
 }

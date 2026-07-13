@@ -13,9 +13,9 @@
 
   <!-- Page-level styles -->
   <link rel="stylesheet" href="assets/styles.css" />
-  <link rel="stylesheet" href="assets/time-logged.css?v=32" />
-  <link rel="stylesheet" href="assets/time-logged-body.css?v=2" />
-  <link rel="stylesheet" href="assets/unified-time-modal.css" />
+  <link rel="stylesheet" href="assets/time-logged.css?v=33" />
+  <link rel="stylesheet" href="assets/time-logged-body.css?v=6" />
+  <link rel="stylesheet" href="assets/unified-time-modal.css?v=4" />
   <link rel="stylesheet" href="assets/feature-announcement.css?v=2" />
   <link rel="stylesheet" href="assets/screenshots-modal.css" />
   <link rel="stylesheet" href="assets/filters-drawer.css" />
@@ -211,9 +211,6 @@
         <div class="tl-page-actions">
           <button type="button" class="tl-btn-primary" id="tl-add-time-btn">Add time</button>
           <div class="tl-icon-btns">
-            <button type="button" class="tl-icon-btn" disabled title="Download — coming soon">
-              <span class="material-symbols-rounded" aria-hidden="true">download</span>
-            </button>
             <button type="button" class="tl-icon-btn" title="Settings">
               <span class="material-symbols-rounded" aria-hidden="true">settings</span>
             </button>
@@ -376,19 +373,10 @@
           </div>
         </div>
 
-        <!-- Weekly subheader: total + contextual switch link (weekly mode) -->
+        <!-- Weekly subheader: total (weekly mode) -->
         <div class="ts-wk-subheader">
           <div class="ts-weekly-total">Total: <strong>42:19</strong></div>
-          <div class="ts-wmg-switch" id="ts-wk-toggle" role="switch" aria-checked="false" tabindex="0">
-            <span class="ts-wmg-switch__label">View grid</span>
-            <span class="ts-wmg-switch__track">
-              <span class="ts-wmg-switch__thumb"></span>
-            </span>
-          </div>
         </div>
-
-        <!-- Weekly time-grid (shown in weekly mode, grid sub-view) -->
-        <div class="ts-wkg-wrap" id="ts-wkg-wrap"></div>
 
         <!-- Weekly summary table (shown in weekly mode, table sub-view) -->
         <div class="ts-wk-table-single" id="ts-wk-table-single"></div>
@@ -409,7 +397,7 @@
           <div class="ts-day-row ts-day-row--collapsed">
             <div class="ts-day-row__header" role="button" tabindex="0" aria-expanded="false">
               <span class="ts-day-row__date">Sun, Jun 29, 2026<span class="ts-day-row__hours">: 0:00:00 hrs</span></span>
-              <span class="material-symbols-rounded ts-day-row__notes" aria-hidden="true">notes</span>
+              <span class="material-symbols-rounded ts-day-row__notes" aria-hidden="true" title="Add note">notes</span>
               <span class="material-symbols-rounded ts-day-row__chevron">expand_more</span>
             </div>
             <div class="ts-day-row__body">
@@ -421,7 +409,7 @@
           <div class="ts-day-row ts-day-row--expanded">
             <div class="ts-day-row__header" role="button" tabindex="0" aria-expanded="true">
               <span class="ts-day-row__date">Mon, Jun 30, 2026<span class="ts-day-row__hours">: 8:08:35 hrs</span></span>
-              <span class="material-symbols-rounded ts-day-row__notes" aria-hidden="true">notes</span>
+              <span class="material-symbols-rounded ts-day-row__notes" aria-hidden="true" title="Add note">notes</span>
               <span class="material-symbols-rounded ts-day-row__chevron">expand_more</span>
             </div>
 
@@ -523,7 +511,7 @@
           <div class="ts-day-row ts-day-row--expanded">
             <div class="ts-day-row__header" role="button" tabindex="0" aria-expanded="true">
               <span class="ts-day-row__date">Tue, Jul 1, 2026<span class="ts-day-row__hours">: 11:10:00 hrs</span></span>
-              <span class="material-symbols-rounded ts-day-row__notes" aria-hidden="true">notes</span>
+              <span class="material-symbols-rounded ts-day-row__notes" aria-hidden="true" title="Add note">notes</span>
               <span class="material-symbols-rounded ts-day-row__chevron">expand_more</span>
             </div>
 
@@ -1924,7 +1912,7 @@
         <!-- Members section (shown for users with permissions) -->
         <div class="utm-section utm-members-section" id="utm-members-section">
           <p class="utm-section-title">Members</p>
-          <div class="utm-field-label">ADD MEMBERS OR TEAMS *</div>
+          <div class="utm-field-label">ADD MULTIPLE MEMBERS OR TEAMS *</div>
           <div class="utm-members-row">
             <div class="utm-select" role="combobox" tabindex="0" id="utm-teams-select">
               <div class="utm-select__inner">
@@ -1942,10 +1930,26 @@
           <p class="utm-members-hint">Members who have already been paid for the selected time span will not appear.</p>
         </div>
 
-        <!-- Single member display (locked — no permissions or single view) -->
+        <!-- Single member display (locked — no permissions, self-service) -->
         <div class="utm-member-display" id="utm-member-display" hidden>
           <span class="utm-member-display__avatar" id="utm-member-display-avatar"></span>
           <span class="utm-member-display__name" id="utm-member-display-name"></span>
+        </div>
+
+        <!-- Single-member reassign select (mode: single — a manager adding
+             time for one specific member from that member's own page).
+             Pre-filled with that member; clicking it reassigns to a
+             different single member — no multi-select here (per Figma:
+             node 7695:71455). Shared across the Time log / Work break
+             tabs, same as utm-member-display above. -->
+        <div class="utm-single-member-section" id="utm-single-member-section" hidden>
+          <div class="utm-field-label">Members</div>
+          <div class="utm-select" role="combobox" tabindex="0" id="utm-single-member-select">
+            <div class="utm-select__inner" id="utm-single-member-select-inner">
+              <span class="utm-select__placeholder">Select a member</span>
+            </div>
+            <span class="material-symbols-rounded utm-select__chevron">keyboard_arrow_down</span>
+          </div>
         </div>
 
         <!-- Work break: Members section (single dropdown) -->
@@ -2012,8 +2016,11 @@
             </div>
           </div>
 
-          <!-- Timeline visualization -->
-          <div class="utm-timeline">
+          <!-- Timeline visualization — self-service ("locked" mode) only:
+               one person, one entry, so a single day timeline makes sense.
+               Managers get "Add time span" (below) instead, for one or
+               several entries across one or more people. -->
+          <div class="utm-timeline" id="utm-timeline" hidden>
             <div class="utm-timeline__track">
               <div class="utm-timeline__segment" style="left:58.33%;width:4.17%;"></div>
             </div>
@@ -2410,6 +2417,7 @@
       selectedTeams:   new Set(),
       selectedMembers: new Set(),
       prefilledMember: null,   /* set by single-mode open */
+      singleMember:    null,   /* mode: single — the one member this "Add time" is scoped to */
       selectedProject: null,
       selectedTodo:    null,
       selectedReason:  null,
@@ -2424,10 +2432,19 @@
       if (inner) renderMemberChips(inner, utm.selectedMembers, utm.prefilledMember);
     };
 
+    /* Expose so openUnifiedModal can clear any single-mode prefill / stale
+       selections left over from a previous time this modal instance was
+       opened, when it opens fresh in multi/batch mode. */
+    window._utmClearMemberSelection = function() {
+      utm.prefilledMember = null;
+      utm.selectedMembers.clear();
+    };
+
     window._utmReset = function() {
       utm.selectedTeams.clear();
       utm.selectedMembers.clear();
       utm.prefilledMember = null;
+      utm.singleMember = null;
       utm.selectedProject = null;
       utm.selectedTodo    = null;
       utm.selectedReason  = null;
@@ -2443,6 +2460,7 @@
       if (td) td.innerHTML = '<span class="utm-select__placeholder">Select a to-do / job</span>';
       if (rs) rs.innerHTML = '<span class="utm-select__placeholder">Why are you adding this time entry?</span>';
       if (typeof renderWbMemberSelection === 'function') renderWbMemberSelection(null);
+      if (typeof renderSingleMemberSelection === 'function') renderSingleMemberSelection(null);
     };
 
     /* ── Teams select ── */
@@ -2544,7 +2562,13 @@
           var checked = utm.selectedMembers.has(m.id)
             || (utm.prefilledMember && utm.prefilledMember.id === m.id);
           list.appendChild(listItem(avatarEl(m, 24), m.name, checked, function() {
-            utm.prefilledMember = null;
+            /* Migrate the prefilled member into the real selection set first
+               — otherwise picking a second person silently drops the one
+               that was pre-loaded from the page instead of adding to it. */
+            if (utm.prefilledMember) {
+              utm.selectedMembers.add(utm.prefilledMember.id);
+              utm.prefilledMember = null;
+            }
             if (utm.selectedMembers.has(m.id)) utm.selectedMembers.delete(m.id);
             else utm.selectedMembers.add(m.id);
             renderMemberChips(membersInner, utm.selectedMembers, null);
@@ -2613,6 +2637,68 @@
         var container = document.createElement('div');
         container.appendChild(frag);
         makePopup(wbMemberAnchor, container, { width: wbMemberAnchor.offsetWidth });
+      });
+    }
+
+    /* ── Single-member reassign select (mode: single) — single-select, same
+       pattern as the Work break member select above: picking a member
+       immediately replaces the current one and closes the popup. ── */
+    var singleMemberAnchor = document.getElementById('utm-single-member-select');
+    var singleMemberInner  = document.getElementById('utm-single-member-select-inner');
+
+    function renderSingleMemberSelection(member) {
+      singleMemberInner.innerHTML = '';
+      if (!member) {
+        var ph = document.createElement('span');
+        ph.className = 'utm-select__placeholder';
+        ph.textContent = 'Select a member';
+        singleMemberInner.appendChild(ph);
+        return;
+      }
+      var chip = document.createElement('span');
+      chip.className = 'utm-member-chip';
+      chip.appendChild(avatarEl(member, 22));
+      var nm = document.createElement('span');
+      nm.className = 'utm-member-chip__name';
+      nm.textContent = member.name;
+      chip.appendChild(nm);
+      singleMemberInner.appendChild(chip);
+    }
+
+    /* Expose so openUnifiedModal can pre-fill / reset this member */
+    window._utmSetSingleMember = function(member) {
+      utm.singleMember = member;
+      renderSingleMemberSelection(member);
+    };
+
+    if (singleMemberAnchor) {
+      singleMemberAnchor.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var frag = document.createDocumentFragment();
+        var s = searchInput('Search members', renderSingleMemberList);
+        frag.appendChild(s.wrap);
+        var list = document.createElement('div');
+        list.style.cssText = 'padding:4px 0;';
+
+        function renderSingleMemberList(q) {
+          list.innerHTML = '';
+          var filtered = q ? MEMBERS.filter(function(m) {
+            return m.name.toLowerCase().indexOf(q.toLowerCase()) !== -1;
+          }) : MEMBERS;
+          filtered.forEach(function(m) {
+            var checked = utm.singleMember && utm.singleMember.id === m.id;
+            list.appendChild(listItem(avatarEl(m, 24), m.name, checked, function() {
+              window._utmSetSingleMember(m);
+              closeActivePopup();
+            }));
+          });
+        }
+        renderSingleMemberList('');
+        frag.appendChild(list);
+
+        var container = document.createElement('div');
+        container.appendChild(frag);
+        makePopup(singleMemberAnchor, container, { width: singleMemberAnchor.offsetWidth });
       });
     }
 
@@ -2759,18 +2845,6 @@
       setTimeout(window._utmReset || function() {}, 150);
     });
 
-    /* ── Update openUnifiedModal to pass prefill to utm state ── */
-    var _origOpen = window._openAddTimeModal;
-    window._openAddTimeModal = function(mode, memberData) {
-      if (_origOpen) _origOpen(mode, memberData);
-      if (mode === 'single' && memberData) {
-        if (window._utmSetPrefill) window._utmSetPrefill(memberData);
-      } else if (mode === 'multi' || mode === 'locked') {
-        utm.prefilledMember = null;
-        utm.selectedMembers.clear();
-      }
-    };
-
     /* ── Time span interactivity ── */
     (function() {
       var timespans  = document.getElementById('utm-timespans');
@@ -2801,8 +2875,9 @@
         var rows = timespans.querySelectorAll('.utm-span-row');
         var totalMins = 0;
 
-        /* Clear timeline segments */
-        track.innerHTML = '';
+        /* Clear timeline segments (locked mode only — track is null/unused
+           otherwise, but always exists in the DOM so this is safe). */
+        if (track) track.innerHTML = '';
 
         rows.forEach(function(row) {
           var fromIn = row.querySelector('.utm-from-input');
@@ -2819,7 +2894,7 @@
           totalMins += diff;
 
           /* Timeline segment */
-          if (fromM !== null && toM !== null && diff > 0) {
+          if (track && fromM !== null && toM !== null && diff > 0) {
             var startPct = ((fromM - DAY_START * 60) / DAY_MINS) * 100;
             var widthPct = (diff / DAY_MINS) * 100;
             startPct = Math.max(0, Math.min(100, startPct));
@@ -2871,6 +2946,10 @@
       /* Wire initial row */
       timespans.querySelectorAll('.utm-span-row').forEach(wireRow);
       recalc();
+
+      /* Exposed so openUnifiedModal can redraw the timeline the moment
+         locked mode opens, not just after the next span edit. */
+      window._utmRecalcTimeSpans = recalc;
 
       /* Add time span */
       addSpanBtn.addEventListener('click', function() {
@@ -2954,12 +3033,13 @@
       var utmMemberDisp  = document.getElementById('utm-member-display');
       var utmDispAvatar  = document.getElementById('utm-member-display-avatar');
       var utmDispName    = document.getElementById('utm-member-display-name');
+      var utmSingleMemberSec = document.getElementById('utm-single-member-section');
       var utmMembersInner = document.getElementById('utm-members-select-inner');
       var utmBatchPill   = document.getElementById('utm-batch-pill');
       var utmAddSpanBtn  = document.getElementById('utm-add-span-btn');
       var utmBillableToggle = document.getElementById('utm-billable-toggle');
       var utmBillableText   = document.getElementById('utm-billable-text');
-      var utmTimeline    = document.querySelector('.utm-timeline');
+      var utmTimeline    = document.getElementById('utm-timeline');
       var utmTimeFooter  = document.getElementById('utm-time-footer');
 
       /* mode: 'multi' | 'single' | 'locked'
@@ -3001,22 +3081,36 @@
         utmTabWB.classList.toggle('utm-tab--disabled', wbUnavailable);
         utmTabWB.setAttribute('aria-disabled', String(wbUnavailable));
         utmTabWB.title = wbUnavailable ? 'Work breaks for multiple members at once — coming soon' : '';
-        /* The per-span timeline visualization only makes sense for a single
-           person's day — with multiple members selected there's no one
-           timeline to show, so hide it in multi mode. */
-        if (utmTimeline) utmTimeline.hidden = (mode === 'multi');
 
-        if (mode === 'locked' || mode === 'single') {
-          /* Regular user, or manager viewing one specific member — this
-             modal can only ever add time for that one person here, so show
+        if (mode === 'locked') {
+          /* Genuine self-service — a regular user adding their own time —
+             this modal can only ever add time for that one person, so show
              a read-only avatar+name instead of an editable member picker
              (per Figma: node 7812:84151). */
           showMemberDisplay(memberData);
-        } else {
-          /* multi — empty member selects */
+          utmSingleMemberSec.hidden = true;
+          if (window._utmClearMemberSelection) window._utmClearMemberSelection();
+        } else if (mode === 'single') {
+          /* A manager adding time for one specific member from that
+             member's own page — pre-filled with that member, but reassignable
+             to a different single member. No multi-select here — that's the
+             "multi"/"batch" all-members flow's own experience (per Figma:
+             node 7695:71455). */
           utmMemberDisp.hidden = true;
+          utmMembersSec.hidden = true;
+          utmBatchPill.hidden = true;
+          utmSingleMemberSec.hidden = false;
+          if (window._utmSetSingleMember) window._utmSetSingleMember(memberData);
+          if (window._utmClearMemberSelection) window._utmClearMemberSelection();
+        } else {
+          /* multi/batch — manager selecting from all members, uses the
+             "Add multiple members or teams" picker (per Figma: node
+             7868:58501). */
+          utmMemberDisp.hidden = true;
+          utmSingleMemberSec.hidden = true;
           utmMembersSec.hidden = false;
           utmBatchPill.hidden = false;
+          if (window._utmClearMemberSelection) window._utmClearMemberSelection();
           utmMembersInner.innerHTML = '<span class="utm-select__placeholder">Select members</span>';
         }
 
@@ -3030,6 +3124,16 @@
           if (window._utmResetToSingleSpan) window._utmResetToSingleSpan();
         } else {
           utmAddSpanBtn.hidden = false;
+        }
+
+        /* Timeline visualizes one person's day, so it shows whenever the
+           modal is scoped to exactly one member (locked or single, per
+           Figma: node 7695:71455) — it draws one segment per time span, so
+           it works alongside "Add time span" too. Multi/batch has no one
+           day to visualize, so it's hidden there. */
+        if (utmTimeline) {
+          utmTimeline.hidden = (mode === 'multi' || mode === 'batch');
+          if (utmTimeline.hidden === false && window._utmRecalcTimeSpans) window._utmRecalcTimeSpans();
         }
 
         /* Pre-fill WB member dropdown */
@@ -3066,11 +3170,17 @@
       function switchToTimeLog() {
         utmTabTL.classList.add('utm-tab--active');
         utmTabWB.classList.remove('utm-tab--active');
-        var isLockedOrSingleTL = (utmOverlay.dataset.mode === 'locked' || utmOverlay.dataset.mode === 'single');
-        var isSelfServiceTL = (utmOverlay.dataset.mode === 'locked');
-        /* Time log sections */
-        utmMembersSec.hidden = isLockedOrSingleTL;
-        utmMemberDisp.hidden = !isLockedOrSingleTL;
+        var mode = utmOverlay.dataset.mode;
+        var isSelfServiceTL = (mode === 'locked');
+        var isMultiTL = (mode === 'multi' || mode === 'batch');
+        /* Locked (self-service) → read-only avatar+name display.
+           Single (manager, one specific member) → reassignable single-member
+           select, no multi-select. Multi/batch → "Add multiple members or
+           teams" dropdown. */
+        utmMemberDisp.hidden = !isSelfServiceTL;
+        utmSingleMemberSec.hidden = (mode !== 'single');
+        utmMembersSec.hidden = !isMultiTL;
+        utmBatchPill.hidden = !isMultiTL;
         /* One time entry only for genuine self-service — a manager adding
            time for someone else (single or multi) can add several slots,
            so "Add time span"/"Total hours" only hide for "locked" mode. */
@@ -3086,7 +3196,8 @@
       function switchToWorkBreak() {
         utmTabWB.classList.add('utm-tab--active');
         utmTabTL.classList.remove('utm-tab--active');
-        var isLockedOrSingle = (utmOverlay.dataset.mode === 'locked' || utmOverlay.dataset.mode === 'single');
+        var mode = utmOverlay.dataset.mode;
+        var isMultiWB = (mode === 'multi' || mode === 'batch');
         /* Hide time log exclusive sections — a work break entry is always
            a single span, so the "Add time span"/"Total hours" footer
            doesn't apply here */
@@ -3096,11 +3207,12 @@
         utmBatchPill.hidden = true;
         utmAssignmentSec.hidden = true;
         utmNotesSec.hidden = true;
-        /* Show work break sections — but when locked to one member, keep
-           the read-only avatar+name display instead of the editable
-           member picker (same rule as the Time log tab). */
-        utmWbMembersSec.hidden = isLockedOrSingle;
-        utmMemberDisp.hidden = !isLockedOrSingle;
+        /* Same member-area rule as the Time log tab (multi is unreachable
+           here in practice — Work break has no multi-member flow, so its
+           tab is hidden entirely then — but kept for symmetry/safety). */
+        utmMemberDisp.hidden = (mode !== 'locked');
+        utmSingleMemberSec.hidden = (mode !== 'single');
+        utmWbMembersSec.hidden = !isMultiWB;
         utmWbAssignSec.hidden = false;
       }
 
@@ -3446,7 +3558,7 @@
           if (dailyEl && dailyEl.classList.contains('ts-daily--weekly-mode')) {
             if (selected.size === 1) {
               var mid = Array.from(selected)[0];
-              if (window._buildWeeklyGrid) window._buildWeeklyGrid(mid);
+              if (window._buildWeeklyTable) window._buildWeeklyTable(mid);
             } else {
               if (window._buildWeeklyMulti) window._buildWeeklyMulti();
               var wkMulti = document.getElementById('ts-wk-multi');
@@ -3691,7 +3803,7 @@
               html += '<div class="ts-day-row ts-day-row--collapsed" data-date="' + key + '">'
                 + '<div class="ts-day-row__header" role="button" tabindex="0" aria-expanded="false">'
                 +   '<span class="ts-day-row__date">' + label + '<span class="ts-day-row__hours">: 0:00:00 hrs</span></span>'
-                +   '<span class="material-symbols-rounded ts-day-row__notes" aria-hidden="true">notes</span>'
+                +   '<span class="material-symbols-rounded ts-day-row__notes" aria-hidden="true" title="Add note">notes</span>'
                 +   '<span class="material-symbols-rounded ts-day-row__chevron">expand_more</span>'
                 + '</div>'
                 + '<div class="ts-day-row__body"></div>'
@@ -3706,7 +3818,7 @@
             html += '<div class="ts-day-row ' + (expand ? 'ts-day-row--expanded' : 'ts-day-row--collapsed') + '" data-date="' + key + '">'
               + '<div class="ts-day-row__header" role="button" tabindex="0" aria-expanded="' + expand + '">'
               +   '<span class="ts-day-row__date">' + label + '<span class="ts-day-row__hours">: ' + fmtHMS(mins) + ' hrs</span></span>'
-              +   '<span class="material-symbols-rounded ts-day-row__notes" aria-hidden="true">notes</span>'
+              +   '<span class="material-symbols-rounded ts-day-row__notes" aria-hidden="true" title="Add note">notes</span>'
               +   '<span class="material-symbols-rounded ts-day-row__chevron">expand_more</span>'
               + '</div>'
               + '<div class="ts-day-row__body">'
@@ -4135,19 +4247,13 @@
               +   '</div>'
               + '</div>';
 
-          /* ── Section always has the same header with the toggle ── */
+          /* ── Section header ── */
           var sectionLabel = 'Sun, Jun 29, 2026 – Sat, Jul 5, 2026: <strong>' + fmtHMSWk(grandTotal) + '</strong>';
           var bodyHTML = '<div class="ts-wmk-card">'
             + '<div class="ts-wmk-section ts-wmk-section--open">'
             +   '<div class="ts-wmk-sec-hdr">'
             +     '<span class="ts-wmk-sec-label">' + sectionLabel + '</span>'
             +     '<div class="ts-wmk-sec-hdr__right">'
-            +       '<div class="ts-wmg-switch" id="ts-wmg-toggle" role="switch" tabindex="0">'
-            +         '<span class="ts-wmg-switch__label">View grid</span>'
-            +         '<span class="ts-wmg-switch__track' + switchOnClass + '">'
-            +           '<span class="ts-wmg-switch__thumb"></span>'
-            +         '</span>'
-            +       '</div>'
             +       '<span class="material-symbols-rounded ts-wmk-chevron">keyboard_arrow_down</span>'
             +     '</div>'
             +   '</div>'
@@ -4170,7 +4276,7 @@
 
           /* Only the member cell is clickable — drills into that member's
              own Weekly time logged view (same table stays in Weekly mode,
-             _setMemberSelection rebuilds it via _buildWeeklyGrid). Same
+             _setMemberSelection rebuilds it via _buildWeeklyTable). Same
              goToMember + hover-revealed "View time logged" button pattern
              as the Daily table, for a consistent hover/animation feel. */
           function goToMemberFromWmkRow(row) {
@@ -4178,7 +4284,9 @@
               window._setMemberSelection(row.getAttribute('data-member-id'));
             }
           }
-          wkMultiEl.querySelectorAll('.ts-wmk-member--clickable').forEach(function(memberCell) {
+          /* Bound on the whole <td>, not just the inner avatar+name div, so
+             the hover/click target covers the full column width. */
+          wkMultiEl.querySelectorAll('.ts-wmk-td--member').forEach(function(memberCell) {
             memberCell.addEventListener('click', function() {
               goToMemberFromWmkRow(memberCell.closest('tr[data-member-id]'));
             });
@@ -4189,20 +4297,6 @@
               goToMemberFromWmkRow(btn.closest('tr[data-member-id]'));
             });
           });
-
-          /* Toggle between grid and table */
-          var toggleBtn = document.getElementById('ts-wmg-toggle');
-          if (toggleBtn) {
-            toggleBtn.addEventListener('click', function(e) {
-              e.stopPropagation();
-              try {
-                var sel = window._getMemberSelection ? window._getMemberSelection() : new Set();
-                var members = window._MEMBERS || [];
-                var activeMembers = members.filter(function(m) { return sel.size === 0 || sel.has(m.id); });
-                buildWeeklyMulti(activeMembers, _wkMultiMode === 'grid' ? 'table' : 'grid');
-              } catch(err) { console.error('toggle error:', err); }
-            });
-          }
 
           /* ── Grid bar hover tooltips ── */
           if (_wkMultiMode === 'grid') {
@@ -4251,8 +4345,7 @@
 
           /* Collapse/expand section on header click (table mode only) */
           wkMultiEl.querySelectorAll('.ts-wmk-sec-hdr').forEach(function(hdr) {
-            hdr.addEventListener('click', function(e) {
-              if (e.target.closest('#ts-wmg-toggle')) return;
+            hdr.addEventListener('click', function() {
               hdr.closest('.ts-wmk-section').classList.toggle('ts-wmk-section--open');
             });
           });
@@ -5152,28 +5245,6 @@
       var title      = document.getElementById('ts-view-title');
       var segBtns    = document.querySelectorAll('.ts-daily .ts-seg-btn');
 
-      /* ── Weekly sub-view switch links ── */
-      document.getElementById('ts-wk-toggle').addEventListener('click', function(e) {
-        e.stopPropagation();
-        var sel = window._getMemberSelection ? window._getMemberSelection() : new Set();
-        if (!(window._tlDrilledIn && sel.size === 1)) return;
-        var mid = Array.from(sel)[0];
-        var track = this.querySelector('.ts-wmg-switch__track');
-        if (daily.classList.contains('ts-daily--wk-grid')) {
-          daily.classList.add('ts-daily--wk-table');
-          daily.classList.remove('ts-daily--wk-grid');
-          track.classList.remove('ts-wmg-switch__track--on');
-          this.setAttribute('aria-checked', 'false');
-          if (window._buildWeeklyTable) window._buildWeeklyTable(mid);
-        } else {
-          daily.classList.add('ts-daily--wk-grid');
-          daily.classList.remove('ts-daily--wk-table');
-          track.classList.add('ts-wmg-switch__track--on');
-          this.setAttribute('aria-checked', 'true');
-          if (window._buildWeeklyGrid) window._buildWeeklyGrid(mid);
-        }
-      });
-
       segBtns.forEach(function(btn) {
         btn.addEventListener('click', function() {
           var label = btn.textContent.trim();
@@ -5190,15 +5261,15 @@
             if (!(window._tlDrilledIn && selD.size === 1) && window._renderMultiDaily) window._renderMultiDaily(selD);
           } else if (label === 'Weekly') {
             daily.classList.add('ts-daily--weekly-mode');
-            daily.classList.add('ts-daily--wk-grid');
-            daily.classList.remove('ts-daily--wk-table');
+            daily.classList.add('ts-daily--wk-table');
+            daily.classList.remove('ts-daily--wk-grid');
             title.textContent = 'Weekly Timesheets';
             segBtns.forEach(function(b) { b.classList.remove('ts-seg-btn--active'); });
             btn.classList.add('ts-seg-btn--active');
             var sel = window._getMemberSelection ? window._getMemberSelection() : new Set();
             if (window._tlDrilledIn && sel.size === 1) {
               var mid = Array.from(sel)[0];
-              if (window._buildWeeklyGrid) window._buildWeeklyGrid(mid);
+              if (window._buildWeeklyTable) window._buildWeeklyTable(mid);
             } else {
               if (window._buildWeeklyMulti) window._buildWeeklyMulti();
               var wkMulti = document.getElementById('ts-wk-multi');

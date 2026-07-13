@@ -505,11 +505,52 @@
 }
 
 /* Activity % color coding — same thresholds/classes used everywhere Activity
-   is shown (individual timesheet rows, Daily/Weekly Timesheets, and the
-   Timesheets pay-period table), applied via window._activityColorClass(). */
-.ts-activity--high { color: #059669; font-weight: 600; }
-.ts-activity--med  { color: #d97706; font-weight: 600; }
-.ts-activity--low  { color: #c81e1e; font-weight: 600; }
+   is shown (individual timesheet rows, Daily/Weekly Timesheets, the
+   Approvals pay-period table, and the stats summary card), applied via
+   window._activityColorClass(). Plain colored text by default; only the
+   multi-member Daily/Weekly Timesheets table (nested inside .tl-tbl-val)
+   renders it as a pill, matching that table's Billable/Status badges. */
+.ts-activity--high,
+.ts-activity--med,
+.ts-activity--low {
+  font-weight: 600;
+}
+.ts-activity--high { color: #059669; }
+.ts-activity--med  { color: #d97706; }
+.ts-activity--low  { color: #c81e1e; }
+
+/* On the individual member page (stats card total + their own day-by-day
+   table), Activity isn't color-coded at all — it reads like every other
+   plain value there (same weight/color as its neighbors), no highlight. */
+.ts-stat__value.ts-activity--high,
+.ts-stat__value.ts-activity--med,
+.ts-stat__value.ts-activity--low {
+  color: #111827;
+  font-weight: 500;
+}
+.ts-table tbody td .ts-activity--high,
+.ts-table tbody td .ts-activity--med,
+.ts-table tbody td .ts-activity--low {
+  color: #374151;
+  font-weight: 500;
+}
+
+.tl-tbl-val .ts-activity--high,
+.tl-tbl-val .ts-activity--med,
+.tl-tbl-val .ts-activity--low {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 10px;
+  border-radius: 9999px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 12px;
+  line-height: 16px;
+  white-space: nowrap;
+}
+.tl-tbl-val .ts-activity--high { background: #d1fae5; }
+.tl-tbl-val .ts-activity--med  { background: #fef3c7; }
+.tl-tbl-val .ts-activity--low  { background: #fde8e8; }
 
 /* "Soon" tag on disabled coming-soon tabs (e.g. Monthly) — kept colorful on
    purpose so it still reads as an announcement, not just more disabled-gray. */
