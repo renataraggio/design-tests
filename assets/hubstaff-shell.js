@@ -30,7 +30,7 @@
   // ── Nav items ─────────────────────────────────────────────────────
   const NAV_ITEMS = [
     { key: 'dashboard',           icon: 'dashboard',             title: 'Dashboard' },
-    { key: 'timesheets',          icon: 'schedule',              title: 'Tracking',
+    { key: 'timesheets',          icon: 'schedule',              title: 'Time tracking',
       subs: ['Timesheets', 'Approvals', 'Manual time requests'] },
     { key: 'activity',            icon: 'bar_chart',             title: 'Activity',
       subs: ['Screenshots', 'Apps', 'URLs'] },
