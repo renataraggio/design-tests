@@ -3950,14 +3950,14 @@
 
             rows += '<div class="tl-tbl-row" data-member-id="' + m.id + '" data-date="' + dayKey + '">'
               + '<div class="tl-tbl-td tl-tbl-td--member" style="flex:1 0 0;min-width:200px">'
-              +   '<div class="tl-tbl-member tl-tbl-member--clickable" title="Go to ' + m.name + '&#39;s time logged">'
+              +   '<div class="tl-tbl-member tl-tbl-member--clickable" title="Go to ' + m.name + '&#39;s timesheet">'
               +     avatarEl
               +     '<div class="tl-tbl-member__text">'
               +       '<div class="tl-tbl-member__name-row">'
               +         '<span class="tl-tbl-member__name">' + m.name + '</span>'
-              +         '<button class="tl-tbl-view-btn" type="button" title="View ' + m.name + '&#39;s time logged" aria-label="View ' + m.name + '&#39;s time logged">'
+              +         '<button class="tl-tbl-view-btn" type="button" title="View ' + m.name + '&#39;s timesheet" aria-label="View ' + m.name + '&#39;s timesheet">'
               +           '<span class="material-symbols-rounded">north_east</span>'
-              +           '<span class="tl-tbl-view-btn__label">View time logged</span>'
+              +           '<span class="tl-tbl-view-btn__label">View timesheet</span>'
               +         '</button>'
               +       '</div>'
               +       '<span class="tl-tbl-member__email">' + MEMBER_EMAILS[m.id] + '</span>'
@@ -4184,13 +4184,13 @@
 
             tbody += '<tr data-member-id="' + m.id + '">'
               + '<td class="ts-wmk-td ts-wmk-td--member">'
-              +   '<div class="ts-wmk-member ts-wmk-member--clickable" title="Go to ' + m.name + '&#39;s time logged">' + avatarEl
+              +   '<div class="ts-wmk-member ts-wmk-member--clickable" title="Go to ' + m.name + '&#39;s timesheet">' + avatarEl
               +     '<div class="ts-wmk-member__info">'
               +       '<div class="ts-wmk-member__name-row">'
               +         '<span class="ts-wmk-member__name">' + m.name + '</span>'
-              +         '<button class="tl-tbl-view-btn" type="button" title="View ' + m.name + '&#39;s time logged" aria-label="View ' + m.name + '&#39;s time logged">'
+              +         '<button class="tl-tbl-view-btn" type="button" title="View ' + m.name + '&#39;s timesheet" aria-label="View ' + m.name + '&#39;s timesheet">'
               +           '<span class="material-symbols-rounded">north_east</span>'
-              +           '<span class="tl-tbl-view-btn__label">View time logged</span>'
+              +           '<span class="tl-tbl-view-btn__label">View timesheet</span>'
               +         '</button>'
               +       '</div>'
               +       '<span class="ts-wmk-member__email">' + (MEMBER_EMAILS[m.id] || '') + '</span>'
@@ -4282,7 +4282,7 @@
           /* Only the member cell is clickable — drills into that member's
              own Weekly time logged view (same table stays in Weekly mode,
              _setMemberSelection rebuilds it via _buildWeeklyTable). Same
-             goToMember + hover-revealed "View time logged" button pattern
+             goToMember + hover-revealed "View timesheet" button pattern
              as the Daily table, for a consistent hover/animation feel. */
           function goToMemberFromWmkRow(row) {
             if (row && window._setMemberSelection) {
@@ -4508,7 +4508,7 @@
             });
           });
 
-          /* Drill into a single member's daily view — shared by the member cell and the "View time logged" button */
+          /* Drill into a single member's daily view — shared by the member cell and the "View timesheet" button */
           function goToMemberFromRow(row) {
             var id = row.getAttribute('data-member-id');
             /* Deep-link to the day section matching the row that was clicked */
@@ -5464,7 +5464,7 @@
   <!-- ── Row "Actions" dropdown menu (shared, repositioned per row) ── -->
   <div class="tl-actions-dd" id="tl-actions-dd" hidden>
     <button type="button" class="tl-actions-dd__item" data-action="add-time">Add time</button>
-    <button type="button" class="tl-actions-dd__item" data-action="view-time-logged">View time logged</button>
+    <button type="button" class="tl-actions-dd__item" data-action="view-time-logged">View timesheet</button>
     <button type="button" class="tl-actions-dd__item" data-action="view-screenshots">View screenshots</button>
     <button type="button" class="tl-actions-dd__item tl-actions-dd__item--disabled" data-action="review-manual-time" disabled>Review manual time</button>
     <button type="button" class="tl-actions-dd__item tl-actions-dd__item--disabled" data-action="review-pto" disabled>Review PTO request</button>
