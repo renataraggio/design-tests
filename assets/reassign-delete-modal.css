@@ -1,0 +1,161 @@
+/* =============================================================
+   Reassign time entries / Delete time modals (single-member page)
+   Prefix: rtm- (reassign) / dtm- (delete) — both reuse .utm-*
+   classes from unified-time-modal.css for header/footer/select/
+   toggle, and share the Summary Card styles below.
+   Per Figma: nQBqKj0q9DT9ZCxpbhOU2V nodes 7868:58638 / 7868:58612
+   ============================================================= */
+
+.rtm-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.rtm-description {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  color: #374151;
+}
+
+/* Delete modal's body has no description text — summary card and the
+   reason field sit as direct siblings with a 20px gap between them. */
+.dtm-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+/* ── Summary card (shared) ── */
+.rtm-summary {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.rtm-summary__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-bottom: 1px solid #d1d5db;
+}
+.rtm-summary__avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Roboto', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+  overflow: hidden;
+}
+.rtm-summary__avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+.rtm-summary__name {
+  flex: 1 1 0;
+  min-width: 0;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  color: #111827;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rtm-summary__date-pill {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  height: 16px;
+  padding: 0 8px;
+  background: #f3f4f6;
+  border-radius: 9999px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 12px;
+  color: #4b5563;
+  white-space: nowrap;
+}
+.rtm-summary__stats {
+  display: flex;
+  padding: 12px;
+  gap: 8px;
+}
+.rtm-summary__stat {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.rtm-summary__stat-label {
+  width: 100%;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  color: #617083;
+  text-transform: uppercase;
+}
+.rtm-summary__stat-value {
+  width: 100%;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: #374151;
+}
+
+/* ── Delete modal's primary action — same shape as .utm-save-btn but red ── */
+.dtm-delete-btn {
+  padding: 10px 20px;
+  border: 1px solid #c81e1e;
+  border-radius: 6px;
+  background: #c81e1e;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 500;
+}
+.dtm-delete-btn:hover { background: #ad1a1a; border-color: #ad1a1a; }
+
+/* ── Generic list popup used by these modals' selects (Project / To-do /
+   Reason) — same visual language as the other in-app dropdown popups ── */
+.rtm-popup {
+  position: fixed;
+  z-index: 9999;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, .14);
+  overflow-y: auto;
+  max-height: 260px;
+}
+.rtm-popup__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  background: #fff;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  color: #111827;
+  text-align: left;
+  cursor: pointer;
+}
+.rtm-popup__item:hover { background: #f9fafb; }
+.rtm-popup__item-swatch {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}

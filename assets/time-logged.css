@@ -1493,6 +1493,9 @@
 }
 .tl-actions-dd__item--disabled:hover { background: #fff; }
 
+.tl-actions-dd__item--danger { color: #c81e1e; }
+.tl-actions-dd__item--danger:hover { background: #fef2f2; }
+
 /* Read-only member label shown to a "Team member" — no dropdown affordance,
    no border (reads as an identity chip, not a control), bigger avatar +
    text (avatar/base, body md-medium) so it's prominent. */

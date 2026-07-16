@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="assets/time-logged.css?v=33" />
   <link rel="stylesheet" href="assets/time-logged-body.css?v=6" />
   <link rel="stylesheet" href="assets/unified-time-modal.css?v=4" />
+  <link rel="stylesheet" href="assets/reassign-delete-modal.css" />
   <link rel="stylesheet" href="assets/feature-announcement.css?v=2" />
   <link rel="stylesheet" href="assets/screenshots-modal.css" />
   <link rel="stylesheet" href="assets/filters-drawer.css" />
@@ -1565,11 +1566,148 @@
     document.getElementById('view-time-logged').addEventListener('click', function(e) {
       var row = e.target.closest('.ts-table tbody tr');
       if (!row) return;
-      /* Checkbox keeps its own selection behaviour; the Actions button will
-         get its own menu later — neither should also fire the row click. */
+      /* Checkbox and Actions each have their own click behaviour — neither
+         should also fire the row click. */
       if (e.target.closest('.ts-cb, .ts-actions-btn')) return;
       if (window._showToast) window._showToast('Editing time entries is coming soon', 'success');
     });
+  </script>
+
+  <!-- ── Row-checkbox batch selection (per Figma: TYWOqIhHi2EyJ48HLoZsKI
+       node 4001:52502) — delegated globally so it covers every
+       .ts-table-wrap on the page (single- and multi-member views alike),
+       including tables rebuilt after a re-render. ── -->
+  <script>
+  (function() {
+    function rowCbs(wrap) { return Array.prototype.slice.call(wrap.querySelectorAll('tbody .ts-cb')); }
+    function headerCb(wrap) { return wrap.querySelector('thead .ts-cb'); }
+
+    function ensureIcon(cb) {
+      var icon = cb.querySelector('.material-symbols-rounded');
+      if (!icon) {
+        icon = document.createElement('span');
+        icon.className = 'material-symbols-rounded';
+        icon.setAttribute('aria-hidden', 'true');
+        cb.appendChild(icon);
+      }
+      return icon;
+    }
+
+    function setChecked(cb, state) {
+      cb.setAttribute('aria-checked', state);
+      ensureIcon(cb).textContent = state === 'mixed' ? 'check_indeterminate_small' : 'check';
+    }
+
+    function getBar(wrap) {
+      var bar = wrap.querySelector(':scope > .ts-batch-bar');
+      if (bar) return bar;
+      bar = document.createElement('div');
+      bar.className = 'ts-batch-bar';
+      bar.hidden = true;
+      bar.innerHTML =
+        '<div class="ts-batch-bar__left">' +
+          '<span class="ts-batch-pill">' +
+            '<span class="ts-batch-pill__label"></span>' +
+            '<button type="button" class="ts-batch-pill__close" aria-label="Clear selection">' +
+              '<span class="material-symbols-rounded" aria-hidden="true">close</span>' +
+            '</button>' +
+          '</span>' +
+          '<button type="button" class="ts-batch-selectall"></button>' +
+        '</div>' +
+        '<div class="ts-batch-bar__actions">' +
+          '<button type="button" class="ts-batch-action-btn" data-action="reassign">' +
+            '<span class="material-symbols-rounded" aria-hidden="true">compare_arrows</span>Reassign time' +
+          '</button>' +
+          '<button type="button" class="ts-batch-action-btn" data-action="delete">' +
+            '<span class="material-symbols-rounded" aria-hidden="true">delete</span>Delete time' +
+          '</button>' +
+        '</div>';
+      wrap.insertBefore(bar, wrap.firstChild);
+      return bar;
+    }
+
+    function refresh(wrap) {
+      var rows = rowCbs(wrap);
+      var checked = rows.filter(function(cb) { return cb.getAttribute('aria-checked') === 'true'; });
+      var hcb = headerCb(wrap);
+      if (hcb) {
+        if (checked.length === 0) setChecked(hcb, 'false');
+        else if (checked.length === rows.length) setChecked(hcb, 'true');
+        else setChecked(hcb, 'mixed');
+      }
+      var bar = getBar(wrap);
+      var active = checked.length > 0;
+      bar.hidden = !active;
+      wrap.classList.toggle('ts-batch-active', active);
+      if (active) {
+        bar.querySelector('.ts-batch-pill__label').textContent = checked.length + ' selected';
+        bar.querySelector('.ts-batch-selectall').textContent = 'Select all (' + rows.length + ')';
+      }
+    }
+
+    document.addEventListener('click', function(e) {
+      var cb = e.target.closest('.ts-cb');
+      if (cb) {
+        var wrap = cb.closest('.ts-table-wrap');
+        if (!wrap) return;
+        if (cb.closest('thead')) {
+          var rows = rowCbs(wrap);
+          var allChecked = rows.length > 0 && rows.every(function(r) { return r.getAttribute('aria-checked') === 'true'; });
+          rows.forEach(function(r) { setChecked(r, allChecked ? 'false' : 'true'); });
+        } else {
+          setChecked(cb, cb.getAttribute('aria-checked') === 'true' ? 'false' : 'true');
+        }
+        refresh(wrap);
+        return;
+      }
+
+      var closeBtn = e.target.closest('.ts-batch-pill__close');
+      if (closeBtn) {
+        var wrapC = closeBtn.closest('.ts-table-wrap');
+        rowCbs(wrapC).forEach(function(r) { setChecked(r, 'false'); });
+        refresh(wrapC);
+        return;
+      }
+
+      var selectAllBtn = e.target.closest('.ts-batch-selectall');
+      if (selectAllBtn) {
+        var wrapS = selectAllBtn.closest('.ts-table-wrap');
+        rowCbs(wrapS).forEach(function(r) { setChecked(r, 'true'); });
+        refresh(wrapS);
+        return;
+      }
+
+      var actionBtn = e.target.closest('.ts-batch-action-btn');
+      if (actionBtn) {
+        var action = actionBtn.getAttribute('data-action');
+        var checkedRows = rowCbs(actionBtn.closest('.ts-table-wrap')).filter(function(r) { return r.getAttribute('aria-checked') === 'true'; });
+        var checkedTrs = checkedRows.map(function(r) { return r.closest('tr'); }).filter(Boolean);
+        /* The Reassign/Delete modals own confirmation + the actual mutation
+           (and clear the toolbar themselves once done) — this button only
+           opens them. */
+        if (action === 'reassign') {
+          if (window._openReassignModal) window._openReassignModal(checkedTrs);
+        } else if (action === 'delete') {
+          if (window._openDeleteModal) window._openDeleteModal(checkedTrs);
+        }
+      }
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      var cb = e.target.closest && e.target.closest('.ts-cb');
+      if (!cb) return;
+      e.preventDefault();
+      cb.click();
+    });
+
+    /* Lets the multi-member roster's per-member leading checkbox
+       select/deselect every entry in that member's nested table. */
+    window._tsSetAllChecked = function(wrap, state) {
+      rowCbs(wrap).forEach(function(r) { setChecked(r, state ? 'true' : 'false'); });
+      refresh(wrap);
+    };
+  })();
   </script>
 
   <!-- ── Feature Announcement Modal: multi-member view ── -->
@@ -1893,7 +2031,13 @@
 
       <!-- Header -->
       <div class="utm-header">
-        <h2 class="utm-title" id="utm-title">Add time</h2>
+        <div class="utm-header-titles">
+          <h2 class="utm-title" id="utm-title">Add time</h2>
+          <span class="utm-batch-pill" id="utm-batch-pill" hidden>
+            <span class="material-symbols-rounded">bolt</span>
+            Create batch time entries
+          </span>
+        </div>
         <button type="button" class="utm-close-btn" id="utm-close" aria-label="Close modal">
           <span class="material-symbols-rounded">close</span>
         </button>
@@ -1911,20 +2055,25 @@
 
         <!-- Members section (shown for users with permissions) -->
         <div class="utm-section utm-members-section" id="utm-members-section">
-          <p class="utm-section-title">Members</p>
-          <div class="utm-field-label">ADD MULTIPLE MEMBERS OR TEAMS *</div>
+          <p class="utm-section-title">Select members or teams</p>
           <div class="utm-members-row">
-            <div class="utm-select" role="combobox" tabindex="0" id="utm-teams-select">
-              <div class="utm-select__inner">
-                <span class="utm-select__placeholder">Select teams</span>
+            <div class="utm-field-group">
+              <div class="utm-field-label">TEAMS*</div>
+              <div class="utm-select" role="combobox" tabindex="0" id="utm-teams-select">
+                <div class="utm-select__inner">
+                  <span class="utm-select__placeholder">Select teams</span>
+                </div>
+                <span class="material-symbols-rounded utm-select__chevron">keyboard_arrow_down</span>
               </div>
-              <span class="material-symbols-rounded utm-select__chevron">keyboard_arrow_down</span>
             </div>
-            <div class="utm-select" role="combobox" tabindex="0" id="utm-members-select">
-              <div class="utm-select__inner" id="utm-members-select-inner">
-                <span class="utm-select__placeholder">Select members</span>
+            <div class="utm-field-group">
+              <div class="utm-field-label">MEMBERS</div>
+              <div class="utm-select" role="combobox" tabindex="0" id="utm-members-select">
+                <div class="utm-select__inner" id="utm-members-select-inner">
+                  <span class="utm-select__placeholder">Select members</span>
+                </div>
+                <span class="material-symbols-rounded utm-select__chevron">keyboard_arrow_down</span>
               </div>
-              <span class="material-symbols-rounded utm-select__chevron">keyboard_arrow_down</span>
             </div>
           </div>
           <p class="utm-members-hint">Members who have already been paid for the selected time span will not appear.</p>
@@ -1969,13 +2118,7 @@
 
         <!-- Time selection section -->
         <div class="utm-section utm-time-section">
-          <div class="utm-section-header">
-            <p class="utm-section-title">Time selection</p>
-            <span class="utm-batch-pill" id="utm-batch-pill" hidden>
-              <span class="material-symbols-rounded" style="font-size:14px;">bolt</span>
-              Add time in batch
-            </span>
-          </div>
+          <p class="utm-section-title">Select time</p>
 
           <!-- Time spans list -->
           <div class="utm-timespans" id="utm-timespans">
@@ -2036,15 +2179,16 @@
           <div class="utm-time-footer" id="utm-time-footer">
             <button type="button" class="utm-add-span-btn" id="utm-add-span-btn">
               <span class="material-symbols-rounded">add</span>
-              Add time span
+              Add time entry
             </button>
             <span class="utm-total-hours">Total hours: <strong id="utm-total-hours-val">1hrs</strong></span>
           </div>
         </div>
 
-        <!-- Assignment section (Time log tab) -->
+        <!-- Assignment section (Time log tab) — includes Notes nested
+             inside the same unboxed card (per Figma: node 8072:504967) -->
         <div class="utm-section utm-assignment-section" id="utm-assignment-section">
-          <p class="utm-section-title">Assignment</p>
+          <p class="utm-section-title">Assign time</p>
           <div class="utm-form-row">
             <div class="utm-form-group">
               <div class="utm-field-label">PROJECT / WORK ORDER *</div>
@@ -2088,6 +2232,15 @@
               </div>
             </div>
           </div>
+
+          <!-- Notes (Time log tab) — same card as Assign time above -->
+          <div class="utm-notes-section" id="utm-notes-section">
+            <p class="utm-section-title">Notes</p>
+            <button type="button" class="utm-add-note-btn">
+              <span class="material-symbols-rounded">notes</span>
+              Add note
+            </button>
+          </div>
         </div>
 
         <!-- Work break: Assignment section (policy only) -->
@@ -2104,15 +2257,6 @@
           </div>
         </div>
 
-        <!-- Notes section (Time log tab) -->
-        <div class="utm-notes-section" id="utm-notes-section">
-          <p class="utm-section-title">Notes</p>
-          <button type="button" class="utm-add-note-btn">
-            <span class="material-symbols-rounded">notes</span>
-            Add note
-          </button>
-        </div>
-
 
       </div><!-- /utm-body -->
 
@@ -2124,6 +2268,413 @@
 
     </div><!-- /utm-modal -->
   </div><!-- /utm-overlay -->
+
+  <!-- ── Reassign time entries modal (single-member page) — per Figma:
+       nQBqKj0q9DT9ZCxpbhOU2V node 7868:58638 ── -->
+  <div class="utm-overlay" id="rtm-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="rtm-title">
+    <div class="utm-modal">
+
+      <div class="utm-header">
+        <h2 class="utm-title" id="rtm-title">Reassign time entries</h2>
+        <button type="button" class="utm-close-btn" id="rtm-close" aria-label="Close modal">
+          <span class="material-symbols-rounded">close</span>
+        </button>
+      </div>
+
+      <div class="utm-body">
+        <div class="rtm-content">
+          <p class="rtm-description">Moves time entries to a new project / to-do. Tracked hours and dates stay the same.</p>
+
+          <div class="rtm-summary" id="rtm-summary">
+            <div class="rtm-summary__header">
+              <span class="rtm-summary__avatar" id="rtm-avatar"></span>
+              <span class="rtm-summary__name" id="rtm-name"></span>
+              <span class="rtm-summary__date-pill" id="rtm-date"></span>
+            </div>
+            <div class="rtm-summary__stats">
+              <div class="rtm-summary__stat">
+                <span class="rtm-summary__stat-label">Time entries</span>
+                <span class="rtm-summary__stat-value" id="rtm-stat-entries">0</span>
+              </div>
+              <div class="rtm-summary__stat">
+                <span class="rtm-summary__stat-label">Projects</span>
+                <span class="rtm-summary__stat-value" id="rtm-stat-projects">0</span>
+              </div>
+              <div class="rtm-summary__stat">
+                <span class="rtm-summary__stat-label">To-dos</span>
+                <span class="rtm-summary__stat-value" id="rtm-stat-todos">0</span>
+              </div>
+              <div class="rtm-summary__stat">
+                <span class="rtm-summary__stat-label">Total hours</span>
+                <span class="rtm-summary__stat-value" id="rtm-stat-hours">0:00:00</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="utm-section utm-assignment-section" id="rtm-assignment-section">
+            <p class="utm-section-title">Assign time</p>
+            <div class="utm-form-row">
+              <div class="utm-form-group">
+                <div class="utm-field-label">REASSIGN TO PROJECT/WORK ORDER *</div>
+                <div class="utm-select" role="combobox" tabindex="0" id="rtm-project-select">
+                  <div class="utm-select__inner" id="rtm-project-select-inner">
+                    <span class="utm-select__placeholder">Select project/work order</span>
+                  </div>
+                  <span class="material-symbols-rounded utm-select__chevron">keyboard_arrow_down</span>
+                </div>
+              </div>
+              <div class="utm-form-group">
+                <div class="utm-field-label">REASSIGN TO TO-DO/JOB</div>
+                <div class="utm-select" role="combobox" tabindex="0" id="rtm-todo-select">
+                  <div class="utm-select__inner" id="rtm-todo-select-inner">
+                    <span class="utm-select__placeholder">Select to-do/job</span>
+                  </div>
+                  <span class="material-symbols-rounded utm-select__chevron">keyboard_arrow_down</span>
+                </div>
+              </div>
+            </div>
+            <div class="utm-form-row">
+              <div class="utm-form-group">
+                <div class="utm-field-label">REASON *</div>
+                <div class="utm-select" role="combobox" tabindex="0" id="rtm-reason-select">
+                  <div class="utm-select__inner" id="rtm-reason-select-inner">
+                    <span class="utm-select__placeholder">Select reason</span>
+                  </div>
+                  <span class="material-symbols-rounded utm-select__chevron">keyboard_arrow_down</span>
+                </div>
+              </div>
+              <div class="utm-toggle-group">
+                <div class="utm-field-label">
+                  BILLABLE
+                  <span class="material-symbols-rounded" style="font-size:16px;vertical-align:-3px;">info</span>
+                </div>
+                <div class="utm-toggle-row">
+                  <button type="button" class="utm-toggle" id="rtm-billable-toggle" aria-checked="true" role="switch" aria-label="Billable">
+                    <span class="utm-toggle__knob"></span>
+                  </button>
+                  <span class="utm-toggle-text" id="rtm-billable-text">Yes</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="utm-footer">
+        <button type="button" class="utm-cancel-btn" id="rtm-cancel">Cancel</button>
+        <button type="button" class="utm-save-btn" id="rtm-save-btn">Save</button>
+      </div>
+
+    </div><!-- /utm-modal -->
+  </div><!-- /rtm-overlay -->
+
+  <!-- ── Delete time confirmation modal (single-member page) — per Figma:
+       nQBqKj0q9DT9ZCxpbhOU2V node 7868:58612 ── -->
+  <div class="utm-overlay" id="dtm-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="dtm-title">
+    <div class="utm-modal">
+
+      <div class="utm-header">
+        <h2 class="utm-title" id="dtm-title">Delete time</h2>
+        <button type="button" class="utm-close-btn" id="dtm-close" aria-label="Close modal">
+          <span class="material-symbols-rounded">close</span>
+        </button>
+      </div>
+
+      <div class="utm-body">
+        <div class="dtm-body">
+          <div class="rtm-summary" id="dtm-summary">
+            <div class="rtm-summary__header">
+              <span class="rtm-summary__avatar" id="dtm-avatar"></span>
+              <span class="rtm-summary__name" id="dtm-name"></span>
+              <span class="rtm-summary__date-pill" id="dtm-date"></span>
+            </div>
+            <div class="rtm-summary__stats">
+              <div class="rtm-summary__stat">
+                <span class="rtm-summary__stat-label">Time entries</span>
+                <span class="rtm-summary__stat-value" id="dtm-stat-entries">0</span>
+              </div>
+              <div class="rtm-summary__stat">
+                <span class="rtm-summary__stat-label">Projects</span>
+                <span class="rtm-summary__stat-value" id="dtm-stat-projects">0</span>
+              </div>
+              <div class="rtm-summary__stat">
+                <span class="rtm-summary__stat-label">To-dos</span>
+                <span class="rtm-summary__stat-value" id="dtm-stat-todos">0</span>
+              </div>
+              <div class="rtm-summary__stat">
+                <span class="rtm-summary__stat-label">Total hours</span>
+                <span class="rtm-summary__stat-value" id="dtm-stat-hours">0:00:00</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="utm-form-group" style="width:100%;">
+            <div class="utm-field-label">REASON *</div>
+            <div class="utm-select" role="combobox" tabindex="0" id="dtm-reason-select">
+              <div class="utm-select__inner" id="dtm-reason-select-inner">
+                <span class="utm-select__placeholder">Why are you deleting this time entry?</span>
+              </div>
+              <span class="material-symbols-rounded utm-select__chevron">keyboard_arrow_down</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="utm-footer">
+        <button type="button" class="utm-cancel-btn" id="dtm-cancel">Cancel</button>
+        <button type="button" class="dtm-delete-btn" id="dtm-delete-btn">Delete</button>
+      </div>
+
+    </div><!-- /utm-modal -->
+  </div><!-- /dtm-overlay -->
+
+  <script>
+  /* ── Reassign / Delete modals — interaction wiring (single-member page) ──
+       Per Figma: nQBqKj0q9DT9ZCxpbhOU2V nodes 7868:58638 / 7868:58612 */
+  (function() {
+    var REASONS = [
+      'Forgot to start/stop timer',
+      'Timer malfunction',
+      'Offline work',
+      'Manual correction',
+      'Pre-approved overtime',
+      'Travel time',
+      'Admin/meeting',
+    ];
+    var TODOS_GENERIC = [
+      'Q3 planning doc',
+      'Client onboarding',
+      'Stakeholder review',
+      'Bug triage',
+    ];
+
+    function parseHM(str) {
+      if (!str || str.indexOf(':') === -1) return 0;
+      var parts = str.split(':');
+      return parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
+    }
+    function fmtTotalHours(mins) {
+      var h = Math.floor(mins / 60), m = Math.round(mins % 60);
+      return (h < 10 ? '0' : '') + h + ':' + (m < 10 ? '0' : '') + m + ':00';
+    }
+
+    /* ── Tiny list popup shared by these modals' selects ── */
+    var closeActivePopup = null;
+    function closePopup() { if (closeActivePopup) { closeActivePopup(); closeActivePopup = null; } }
+    function openListPopup(anchor, items, onPick) {
+      closePopup();
+      var popup = document.createElement('div');
+      popup.className = 'rtm-popup';
+      var r = anchor.getBoundingClientRect();
+      popup.style.left = r.left + 'px';
+      popup.style.top = (r.bottom + 4) + 'px';
+      popup.style.width = anchor.offsetWidth + 'px';
+      items.forEach(function(item) {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'rtm-popup__item';
+        if (item.color) {
+          var sw = document.createElement('span');
+          sw.className = 'rtm-popup__item-swatch';
+          sw.style.background = item.color;
+          btn.appendChild(sw);
+        }
+        btn.appendChild(document.createTextNode(item.name));
+        btn.addEventListener('click', function() { onPick(item); closePopup(); });
+        popup.appendChild(btn);
+      });
+      document.body.appendChild(popup);
+      function destroy() {
+        popup.remove();
+        document.removeEventListener('click', outsideClick, true);
+      }
+      function outsideClick(e) {
+        if (!popup.contains(e.target) && !anchor.contains(e.target)) destroy();
+      }
+      setTimeout(function() { document.addEventListener('click', outsideClick, true); }, 0);
+      closeActivePopup = destroy;
+    }
+
+    function rowInfo(row) {
+      var projName = row.querySelector('.ts-project-name');
+      var durationEl = row.querySelector('.ts-duration');
+      return {
+        project: projName ? projName.textContent.trim() : '',
+        minutes: durationEl ? parseHM(durationEl.textContent.trim()) : 0,
+      };
+    }
+
+    /* Fills in the shared Summary Card for either modal (prefix 'rtm' or 'dtm') */
+    function populateSummary(prefix, rows) {
+      /* The single-member page relies on window._currentSingleMemberId (one
+         member per page); the multi-member roster's nested per-member
+         tables carry their own data-member-id/data-date-label instead, so
+         this works correctly in both places. */
+      var wrapEl = rows[0] ? rows[0].closest('[data-member-id]') : null;
+      var memberId = wrapEl ? wrapEl.getAttribute('data-member-id') : window._currentSingleMemberId;
+      var member = (window._MEMBERS || []).find(function(m) { return m.id === memberId; }) || {};
+      var avatarUrl = (window._MEMBER_AVATARS || {})[member.id];
+      var avatarEl = document.getElementById(prefix + '-avatar');
+      avatarEl.style.background = member.color || '#6b7280';
+      avatarEl.innerHTML = avatarUrl
+        ? '<img src="' + avatarUrl + '" alt="">'
+        : (member.name || '?').charAt(0).toUpperCase();
+      document.getElementById(prefix + '-name').textContent = member.name || '';
+
+      var dateLabel = wrapEl ? wrapEl.getAttribute('data-date-label') : null;
+      if (!dateLabel) {
+        var dayRow = rows[0] ? rows[0].closest('.ts-day-row') : null;
+        var dateEl = dayRow ? dayRow.querySelector('.ts-day-row__date') : null;
+        dateLabel = (dateEl && dateEl.firstChild) ? dateEl.firstChild.textContent.trim() : '';
+      }
+      document.getElementById(prefix + '-date').textContent = dateLabel;
+
+      var infos = rows.map(rowInfo);
+      var projects = new Set(infos.map(function(i) { return i.project; }).filter(Boolean));
+      var totalMins = infos.reduce(function(sum, i) { return sum + i.minutes; }, 0);
+
+      document.getElementById(prefix + '-stat-entries').textContent = rows.length;
+      document.getElementById(prefix + '-stat-projects').textContent = projects.size;
+      document.getElementById(prefix + '-stat-todos').textContent = '0';
+      document.getElementById(prefix + '-stat-hours').textContent = fmtTotalHours(totalMins);
+    }
+
+    /* Clears the batch toolbar/header-checkbox state for a table-wrap after
+       a Reassign/Delete action completes on rows from it. */
+    function resetBatchBar(wrap) {
+      if (!wrap) return;
+      wrap.classList.remove('ts-batch-active');
+      var bar = wrap.querySelector(':scope > .ts-batch-bar');
+      if (bar) bar.hidden = true;
+      var headerCb = wrap.querySelector('thead .ts-cb');
+      if (headerCb) {
+        headerCb.setAttribute('aria-checked', 'false');
+        var hIcon = headerCb.querySelector('.material-symbols-rounded');
+        if (hIcon) hIcon.textContent = 'check';
+      }
+    }
+
+    /* ── Reassign modal ── */
+    var rtmOverlay = document.getElementById('rtm-overlay');
+    var rtmRows = [];
+    var rtmProject = null;
+
+    function resetReassignFields() {
+      rtmProject = null;
+      document.getElementById('rtm-project-select-inner').innerHTML = '<span class="utm-select__placeholder">Select project/work order</span>';
+      document.getElementById('rtm-todo-select-inner').innerHTML = '<span class="utm-select__placeholder">Select to-do/job</span>';
+      document.getElementById('rtm-reason-select-inner').innerHTML = '<span class="utm-select__placeholder">Select reason</span>';
+      var toggle = document.getElementById('rtm-billable-toggle');
+      toggle.setAttribute('aria-checked', 'true');
+      document.getElementById('rtm-billable-text').textContent = 'Yes';
+    }
+
+    window._openReassignModal = function(rows) {
+      if (!rows || !rows.length) return;
+      rtmRows = rows;
+      populateSummary('rtm', rows);
+      resetReassignFields();
+      rtmOverlay.hidden = false;
+    };
+
+    document.getElementById('rtm-project-select').addEventListener('click', function() {
+      var projInfo = window._PROJ_INFO || {};
+      var anchor = this;
+      var items = Object.keys(projInfo).map(function(k) { return { name: projInfo[k].name, color: projInfo[k].color }; });
+      openListPopup(anchor, items, function(item) {
+        rtmProject = item;
+        document.getElementById('rtm-project-select-inner').innerHTML = '<span style="color:#111827;">' + item.name + '</span>';
+      });
+    });
+    document.getElementById('rtm-todo-select').addEventListener('click', function() {
+      var items = TODOS_GENERIC.map(function(t) { return { name: t }; });
+      openListPopup(this, items, function(item) {
+        document.getElementById('rtm-todo-select-inner').innerHTML = '<span style="color:#111827;">' + item.name + '</span>';
+      });
+    });
+    document.getElementById('rtm-reason-select').addEventListener('click', function() {
+      var items = REASONS.map(function(r) { return { name: r }; });
+      openListPopup(this, items, function(item) {
+        document.getElementById('rtm-reason-select-inner').innerHTML = '<span style="color:#111827;">' + item.name + '</span>';
+      });
+    });
+    document.getElementById('rtm-billable-toggle').addEventListener('click', function() {
+      var checked = this.getAttribute('aria-checked') === 'true';
+      this.setAttribute('aria-checked', String(!checked));
+      document.getElementById('rtm-billable-text').textContent = !checked ? 'Yes' : 'No';
+    });
+
+    function closeReassignModal() { rtmOverlay.hidden = true; }
+    document.getElementById('rtm-close').addEventListener('click', closeReassignModal);
+    document.getElementById('rtm-cancel').addEventListener('click', closeReassignModal);
+    document.getElementById('rtm-save-btn').addEventListener('click', function() {
+      var count = rtmRows.length;
+      var wrap = rtmRows[0] ? rtmRows[0].closest('.ts-table-wrap') : null;
+      if (rtmProject) {
+        rtmRows.forEach(function(row) {
+          var nameEl = row.querySelector('.ts-project-name');
+          var avatarEl = row.querySelector('.ts-avatar');
+          if (nameEl) nameEl.textContent = rtmProject.name;
+          if (avatarEl) {
+            avatarEl.style.background = rtmProject.color || avatarEl.style.background;
+            avatarEl.textContent = rtmProject.name.split(' ').map(function(w) { return w[0]; }).slice(0, 2).join('').toUpperCase();
+          }
+          /* The day's timeline bar renders one .ts-timeline-seg per row, in
+             the same order as the table body — recolor the matching segment
+             so the timeline reflects the new project too. */
+          if (rtmProject.color && row.parentElement) {
+            var rowIndex = Array.prototype.indexOf.call(row.parentElement.children, row);
+            var dayRow = row.closest('.ts-day-row');
+            var seg = dayRow ? dayRow.querySelectorAll('.ts-timeline-seg')[rowIndex] : null;
+            if (seg) seg.style.background = rtmProject.color;
+          }
+        });
+      }
+      rtmRows.forEach(function(row) {
+        var cb = row.querySelector('.ts-cb');
+        if (cb) {
+          cb.setAttribute('aria-checked', 'false');
+          var icon = cb.querySelector('.material-symbols-rounded');
+          if (icon) icon.textContent = 'check';
+        }
+      });
+      resetBatchBar(wrap);
+      closeReassignModal();
+      if (window._showToast) window._showToast(count + ' time ' + (count === 1 ? 'entry' : 'entries') + ' reassigned.', 'success');
+    });
+
+    /* ── Delete modal ── */
+    var dtmOverlay = document.getElementById('dtm-overlay');
+    var dtmRows = [];
+
+    window._openDeleteModal = function(rows) {
+      if (!rows || !rows.length) return;
+      dtmRows = rows;
+      populateSummary('dtm', rows);
+      document.getElementById('dtm-reason-select-inner').innerHTML = '<span class="utm-select__placeholder">Why are you deleting this time entry?</span>';
+      dtmOverlay.hidden = false;
+    };
+
+    document.getElementById('dtm-reason-select').addEventListener('click', function() {
+      var items = REASONS.map(function(r) { return { name: r }; });
+      openListPopup(this, items, function(item) {
+        document.getElementById('dtm-reason-select-inner').innerHTML = '<span style="color:#111827;">' + item.name + '</span>';
+      });
+    });
+
+    function closeDeleteModal() { dtmOverlay.hidden = true; }
+    document.getElementById('dtm-close').addEventListener('click', closeDeleteModal);
+    document.getElementById('dtm-cancel').addEventListener('click', closeDeleteModal);
+    document.getElementById('dtm-delete-btn').addEventListener('click', function() {
+      var count = dtmRows.length;
+      var wrap = dtmRows[0] ? dtmRows[0].closest('.ts-table-wrap') : null;
+      dtmRows.forEach(function(row) { row.remove(); });
+      resetBatchBar(wrap);
+      closeDeleteModal();
+      if (window._showToast) window._showToast(count + ' time ' + (count === 1 ? 'entry' : 'entries') + ' deleted.', 'success');
+    });
+  })();
+  </script>
 
   <script>
   /* ── Unified Modal — Interactive Dropdowns ── */
@@ -2773,7 +3324,7 @@
         makePopup(projSel, container, { width: projSel.offsetWidth });
       });
 
-      todoSel.style.opacity = utm.selectedProject ? '1' : '0.5';
+      todoSel.style.opacity = utm.selectedProject ? '1' : '0.3';
       todoSel.style.pointerEvents = utm.selectedProject ? 'auto' : 'none';
 
       todoSel.addEventListener('click', function(e) {
@@ -3759,7 +4310,7 @@
               + '<td><span class="ts-cb" role="checkbox" aria-checked="false" tabindex="0"></span></td>'
               + '<td><div class="ts-project-cell"><span class="ts-avatar" style="background:' + pr.color + ';">' + pr.init + '</span>'
               +   '<span class="ts-project-name">' + pr.name + '</span></div></td>'
-              + '<td>' + fmtDuration(seg.mins) + '</td>'
+              + '<td class="ts-duration">' + fmtDuration(seg.mins) + '</td>'
               + '<td>--</td>'
               + '<td><span class="' + window._activityColorClass(stats.act) + '">' + stats.act + '%</span></td>'
               + '<td>' + stats.idle + '%</td>'
@@ -3779,6 +4330,10 @@
         function renderSingleMemberDaily(memberId) {
           var singleEl = document.getElementById('ts-days-single');
           if (!singleEl) return;
+          /* Exposed so the Reassign/Delete modals (wired elsewhere) know whose
+             time entries they're acting on without threading memberId through
+             every row/toolbar handler. */
+          window._currentSingleMemberId = memberId;
           var data = window._MEMBER_DATA || {};
           var html = '';
 
@@ -5534,6 +6089,65 @@
       if (dd.hidden) return;
       if (!dd.contains(e.target) && !e.target.closest('.tl-tbl-actions-btn')) closeMenu();
     });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && !dd.hidden) closeMenu();
+    });
+    window.addEventListener('scroll', function() { if (!dd.hidden) closeMenu(); }, true);
+  })();
+  </script>
+
+  <!-- ── Row "Actions" dropdown menu (individual timesheet entries) —
+       per Figma: TYWOqIhHi2EyJ48HLoZsKI node 4001:52502 ── -->
+  <div class="tl-actions-dd" id="ts-row-actions-dd" hidden>
+    <button type="button" class="tl-actions-dd__item" data-action="reassign-time">Reassign time</button>
+    <button type="button" class="tl-actions-dd__item tl-actions-dd__item--danger" data-action="delete-time">Delete time</button>
+  </div>
+
+  <script>
+  (function() {
+    var dd = document.getElementById('ts-row-actions-dd');
+    var currentBtn = null;
+
+    function closeMenu() {
+      dd.hidden = true;
+      if (currentBtn) currentBtn.classList.remove('ts-actions-btn--active');
+      currentBtn = null;
+    }
+
+    function openMenu(btn) {
+      currentBtn = btn;
+      btn.classList.add('ts-actions-btn--active');
+      var r = btn.getBoundingClientRect();
+      dd.hidden = false;
+      var ddWidth = dd.offsetWidth;
+      dd.style.left = Math.max(8, r.right - ddWidth) + 'px';
+      dd.style.top = (r.bottom + 4) + 'px';
+    }
+
+    document.addEventListener('click', function(e) {
+      var btn = e.target.closest('.ts-actions-btn');
+      if (btn) {
+        if (!dd.hidden && currentBtn === btn) { closeMenu(); return; }
+        openMenu(btn);
+        return;
+      }
+      if (!dd.hidden && !dd.contains(e.target)) closeMenu();
+    });
+
+    dd.addEventListener('click', function(e) {
+      var item = e.target.closest('.tl-actions-dd__item');
+      if (!item) return;
+      var action = item.getAttribute('data-action');
+      var row = currentBtn ? currentBtn.closest('tr') : null;
+      closeMenu();
+
+      if (action === 'reassign-time' && row) {
+        if (window._openReassignModal) window._openReassignModal([row]);
+      } else if (action === 'delete-time' && row) {
+        if (window._openDeleteModal) window._openDeleteModal([row]);
+      }
+    });
+
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape' && !dd.hidden) closeMenu();
     });
