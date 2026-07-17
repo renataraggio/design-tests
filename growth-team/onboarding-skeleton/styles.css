@@ -1,0 +1,391 @@
+/* ==========================================================================
+   Onboarding skeleton — page-level styles
+   Figma: Growth Central — node 20028:34798 "Onboarding skeleton"
+   ========================================================================== */
+
+:root {
+  --white: #ffffff;
+  --gray-100: #f3f4f6;
+  --gray-300: #d1d5db;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-900: #111827;
+  --primary-500: #2aa7ff;
+  --primary-600: #2f8af4;
+  --primary-700: #0168dd;
+  --primary-800: #0a4b96;
+
+  --font-body: "Roboto", sans-serif;
+  --font-icon: "Material Symbols Rounded";
+
+  --sidebar-width-collapsed: 80px;
+  --sidebar-width-expanded: 240px;
+  --transition: 240ms ease;
+  --transition-fast: 150ms ease;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: var(--white);
+  font-family: var(--font-body);
+  color: var(--gray-900);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.material-symbols-rounded {
+  font-family: var(--font-icon);
+  font-weight: normal;
+  font-style: normal;
+  font-size: 18px;
+  line-height: 1;
+  display: inline-block;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Onboarding shell ─────────────────────────────────────────────────── */
+
+.onboarding {
+  display: flex;
+  align-items: stretch;
+  height: 100vh;
+  width: 100%;
+  background: var(--white);
+}
+
+/* ── Side panel ───────────────────────────────────────────────────────── */
+
+.onboarding-sidebar {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  flex-shrink: 0;
+  width: var(--sidebar-width-collapsed);
+  height: 100%;
+  padding: 12px 24px 14px 0;
+  background: #f3f4f6;
+  border: none;
+  border-right: 1px solid var(--gray-300);
+  transition: width var(--transition);
+}
+
+.onboarding-sidebar.is-expanded {
+  width: var(--sidebar-width-expanded);
+}
+
+.onboarding-sidebar__row {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+}
+
+.onboarding-sidebar__logo {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex: 1 1 0;
+  min-width: 0;
+  height: 24px;
+  padding: 10px 0 10px 28px;
+}
+
+.onboarding-sidebar__logo img {
+  display: block;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.onboarding-sidebar__logo .wordmark {
+  display: none;
+  margin-left: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--gray-900);
+  white-space: nowrap;
+}
+
+.onboarding-sidebar.is-expanded .onboarding-sidebar__logo .wordmark {
+  display: inline;
+}
+
+.onboarding-sidebar__toggle {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 5px;
+  background: var(--white);
+  border: 1px solid var(--gray-300);
+  border-radius: 52px;
+  transform: scaleY(-1);
+  transition: background var(--transition-fast);
+}
+
+.onboarding-sidebar:hover .onboarding-sidebar__toggle {
+  background: var(--gray-100);
+}
+
+.onboarding-sidebar:focus-visible {
+  outline: none;
+}
+
+.onboarding-sidebar:focus-visible .onboarding-sidebar__toggle {
+  box-shadow: 0 0 0 3px var(--primary-700);
+}
+
+.onboarding-sidebar__toggle img {
+  display: block;
+  width: 14px;
+  height: 14px;
+  transition: transform var(--transition);
+}
+
+.onboarding-sidebar.is-expanded .onboarding-sidebar__toggle img {
+  transform: rotate(180deg);
+}
+
+/* ── Content area ─────────────────────────────────────────────────────── */
+
+.onboarding-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  min-width: 0;
+  height: 100%;
+}
+
+.onboarding-header-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 36px;
+  flex: 1 1 0;
+  min-height: 0;
+  width: 100%;
+  padding: 56px 160px;
+  overflow-y: auto;
+}
+
+@media (max-width: 1024px) {
+  .onboarding-header-section {
+    padding: 40px 48px;
+  }
+}
+
+@media (max-width: 640px) {
+  .onboarding-header-section {
+    padding: 24px 20px;
+  }
+}
+
+.onboarding-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.onboarding-heading__title {
+  margin: 0;
+  width: 100%;
+  text-align: center;
+  font-weight: 300;
+  font-size: 30px;
+  line-height: 40px;
+  color: var(--gray-900);
+}
+
+.onboarding-heading__title .wave {
+  color: #000000;
+}
+
+.onboarding-segments {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  height: 6px;
+  width: 100%;
+  max-width: 276px;
+  overflow: hidden;
+}
+
+.onboarding-segments__item {
+  flex: 1 1 0;
+  min-width: 1px;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--gray-300);
+  transition: background var(--transition);
+}
+
+.onboarding-segments__item.is-complete {
+  background: var(--primary-500);
+}
+
+.onboarding-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  text-align: center;
+  word-break: break-word;
+}
+
+.onboarding-section__title {
+  margin: 0;
+  width: 100%;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 28px;
+  color: var(--gray-900);
+}
+
+.onboarding-section__body {
+  margin: 0;
+  width: 100%;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--gray-700);
+}
+
+.onboarding-slot {
+  flex: 1 1 0;
+  min-height: 0;
+  width: 100%;
+  background: var(--white);
+  border: 1px dashed var(--gray-300);
+  border-radius: 6px;
+}
+
+.onboarding-main-action {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 12px 24px;
+  background: var(--primary-700);
+  border: none;
+  border-radius: 6px;
+  color: var(--white);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  transition: background var(--transition-fast);
+}
+
+.onboarding-main-action:hover {
+  background: var(--primary-800);
+}
+
+.onboarding-main-action:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--primary-700);
+}
+
+.onboarding.has-main-action .onboarding-main-action {
+  display: flex;
+}
+
+/* ── Footer ───────────────────────────────────────────────────────────── */
+
+.onboarding-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  width: 100%;
+  padding: 14px;
+  border-top: 1px solid var(--gray-300);
+  background: var(--white);
+}
+
+.onboarding-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-height: 40px;
+  padding: 10px 20px;
+  background: var(--white);
+  border: 1px solid var(--gray-300);
+  border-radius: 6px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--gray-600);
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.onboarding-btn .material-symbols-rounded {
+  font-size: 18px;
+  color: var(--gray-500);
+}
+
+.onboarding-btn:hover:not(:disabled) {
+  background: var(--gray-100);
+}
+
+.onboarding-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--primary-700);
+}
+
+.onboarding-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.onboarding-footer__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.onboarding-btn--primary {
+  background: var(--primary-500);
+  border: none;
+  color: var(--white);
+}
+
+.onboarding-btn--primary .material-symbols-rounded {
+  color: var(--white);
+}
+
+.onboarding-btn--primary:hover:not(:disabled) {
+  background: var(--primary-600);
+}
+
+.onboarding-btn--primary:disabled {
+  opacity: 0.3;
+}
+
+/* ── Design Annotations overrides ─────────────────────────────────────────
+   design-annotations.js is vendored verbatim; its floating Task Center button
+   defaults to bottom-right. Reposition to top-right without touching the
+   runtime file — higher specificity than its own `.da-tc-btn--float` rule so
+   it wins regardless of style injection order. ────────────────────────── */
+
+body .da-tc-btn--float {
+  top: 20px;
+  right: 20px;
+  bottom: auto;
+}

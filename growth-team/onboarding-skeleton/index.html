@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Onboarding skeleton — Hubstaff</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&family=Material+Symbols+Rounded" rel="stylesheet" />
+
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<div class="onboarding" id="onboarding">
+
+  <!-- Side panel -->
+  <button type="button" class="onboarding-sidebar" id="sidebar-toggle" aria-label="Expand sidebar" aria-expanded="false">
+    <div class="onboarding-sidebar__row">
+      <span class="onboarding-sidebar__logo">
+        <img src="assets/logo-mark.svg" alt="Hubstaff" />
+        <span class="wordmark">Hubstaff</span>
+      </span>
+      <span class="onboarding-sidebar__toggle">
+        <img src="assets/arrow-right.svg" alt="" />
+      </span>
+    </div>
+  </button>
+
+  <!-- Content area -->
+  <div class="onboarding-content">
+
+    <div class="onboarding-header-section">
+
+      <header class="onboarding-heading">
+        <h1 class="onboarding-heading__title">
+          <span class="wave" aria-hidden="true">👋</span> Let’s get you started with Hubstaff!
+        </h1>
+        <div class="onboarding-segments" role="progressbar" aria-label="Onboarding progress" aria-valuemin="1" aria-valuemax="4" aria-valuenow="1" id="segments">
+          <span class="onboarding-segments__item is-complete"></span>
+          <span class="onboarding-segments__item"></span>
+          <span class="onboarding-segments__item"></span>
+          <span class="onboarding-segments__item"></span>
+        </div>
+      </header>
+
+      <section class="onboarding-section" id="onboarding-copy">
+        <h2 class="onboarding-section__title" id="onboarding-title">Title for section</h2>
+        <p class="onboarding-section__body" id="onboarding-body">Lorem ipsum sentence</p>
+      </section>
+
+      <div class="onboarding-slot" id="onboarding-slot" role="region" aria-label="Step content"></div>
+
+      <button type="button" class="onboarding-main-action" id="main-action">Main action</button>
+
+    </div>
+
+    <footer class="onboarding-footer">
+      <button type="button" class="onboarding-btn" id="btn-explore">
+        <span class="material-symbols-rounded" aria-hidden="true">logout</span>
+        Explore on my own
+      </button>
+
+      <div class="onboarding-footer__actions">
+        <button type="button" class="onboarding-btn" id="btn-back" disabled>Back</button>
+        <button type="button" class="onboarding-btn onboarding-btn--primary" id="btn-continue">
+          Continue
+          <span class="material-symbols-rounded" aria-hidden="true">arrow_forward</span>
+        </button>
+      </div>
+    </footer>
+
+  </div>
+</div>
+
+<script src="onboarding.js"></script>
+<script src="design-annotations.js"></script>
+<script src="design-annotations.data.js"></script>
+<script>
+  DesignAnnotations.init({
+    pages: window.DESIGN_ANNOTATIONS_DATA.pages,
+    annotations: window.DESIGN_ANNOTATIONS_DATA.annotations,
+    mount: '#onboarding',
+    topOffset: 0,
+    trigger: ['contextmenu', 'button'],
+    taskCenter: true,
+  });
+</script>
+</body>
+</html>
