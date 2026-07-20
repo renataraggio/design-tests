@@ -38,11 +38,11 @@
     },
   };
 
-  // Tooltip copy for a disabled Continue — only steps with a real gate the user
-  // can act on need one. Step 2 now resolves on its own (no button to click),
-  // so it has no tooltip.
+  // Tooltip copy for a disabled Continue — explains why it's disabled even on
+  // Step 2, where there's nothing to click (it resolves on its own).
   var CONTINUE_TOOLTIP_COPY = {
     1: "Click the Download button for the desktop app to continue",
+    2: "Waiting for the desktop app to confirm tracking…",
   };
 
   function isContinueUnlocked() {
@@ -217,6 +217,7 @@
       step2TimerStarted = true;
       if (currentStep === 2) {
         btnContinue.disabled = false;
+        continueTooltip.hidden = true;
       }
     }
   }
