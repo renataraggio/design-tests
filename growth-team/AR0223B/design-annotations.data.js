@@ -33,13 +33,13 @@ window.DESIGN_ANNOTATIONS_DATA = {
       ],
     },
     {
-      id: "help-panel-mailto-placeholder",
+      id: "help-modal-mailto-placeholder",
       page: "onboarding",
       kind: "required",
       title: "\"Email your manager\" mailto: uses a placeholder address",
       description:
-        "The expanded help panel's manager-contact link points to your-manager@example.com — there's no real org/manager lookup wired up yet.",
-      target: "#help-panel-content",
+        "The \"need help\" modal's manager-contact link points to your-manager@example.com — there's no real org/manager lookup wired up yet.",
+      target: "#help-modal-overlay",
       sub: ["Wire this to the signed-in user's actual manager/org-owner email, or replace with an in-app request flow instead of mailto:"],
     },
     {
@@ -66,12 +66,12 @@ window.DESIGN_ANNOTATIONS_DATA = {
       id: "footer-navigation-local-only",
       page: "onboarding",
       kind: "required",
-      title: "Back / Continue / Explore only manage local step state",
+      title: "Back / Continue only manage local step state",
       description:
-        "Navigation currently just moves an in-memory currentStep counter and dispatches onboarding:complete / onboarding:skip events. No real routing, progress persistence, or analytics tracking is wired up yet.",
+        "Navigation currently just moves an in-memory currentStep counter and dispatches an onboarding:complete event on Finish. No real routing, progress persistence, or analytics tracking is wired up yet.",
       target: ".onboarding-footer__actions",
       sub: [
-        "Wire onboarding:complete / onboarding:skip listeners to real app routing",
+        "Wire onboarding:complete to real app routing",
         "Add analytics events per step transition before this ships",
       ],
     },

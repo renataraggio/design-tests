@@ -354,56 +354,91 @@ button {
   text-align: center;
 }
 
-/* ── Step 2: expandable "need help" panel ────────────────────────────────
-   Replaces the old static "Don't see a Project?" callout — now expands to
-   a Quick Start link, a couple of FAQs, a way to email a manager, and a
-   skip path, for anyone who can't or doesn't need to track right now.
+/* ── Step 2: "need help" link + modal ─────────────────────────────────────
+   A plain understated link (not an alert box — this is a low-priority,
+   optional escape hatch, not an urgent notice) that opens a modal with a
+   Quick Start link, a couple of FAQs, and a way to email a manager.
    ────────────────────────────────────────────────────────────────────── */
 
-.help-panel {
-  width: 100%;
+.help-link {
+  align-self: center;
+  background: none;
+  border: none;
+  padding: 4px;
+  color: var(--primary-700);
+  font-size: 14px;
+  text-decoration: underline;
 }
 
-.help-panel__trigger {
+.help-link:hover {
+  color: var(--primary-800);
+}
+
+.help-modal-overlay {
+  position: fixed;
+  inset: 0;
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(17, 24, 39, 0.5);
+  z-index: 50;
+}
+
+.help-modal {
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  padding: 12px;
-  background: #eaf6ff;
-  border: 1px solid var(--primary-700);
+  max-width: 420px;
+  max-height: 80vh;
+  background: var(--white);
   border-radius: 8px;
-  color: var(--primary-800);
-  font-size: 14px;
-  line-height: 20px;
-  text-align: left;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
 }
 
-.help-panel__icon {
-  font-size: 18px;
-  color: var(--primary-800);
+.help-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--gray-300);
 }
 
-.help-panel__trigger-text {
-  flex: 1 1 0;
+.help-modal__title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--gray-900);
 }
 
-.help-panel__chevron {
-  font-size: 18px;
-  color: var(--primary-800);
+.help-modal__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  background: none;
+  border: none;
+  border-radius: 6px;
+  color: var(--gray-500);
 }
 
-.help-panel__content {
+.help-modal__close:hover {
+  background: var(--gray-100);
+}
+
+.help-modal__body {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  margin-top: 12px;
-  padding: 16px;
-  border: 1px solid var(--gray-300);
-  border-radius: 8px;
+  padding: 20px;
+  overflow-y: auto;
 }
 
-.help-panel__link {
+.help-modal__link {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -412,55 +447,32 @@ button {
   text-decoration: none;
 }
 
-.help-panel__link:hover {
+.help-modal__link:hover {
   text-decoration: underline;
 }
 
-.help-panel__link .material-symbols-rounded {
+.help-modal__link .material-symbols-rounded {
   font-size: 18px;
 }
 
-.help-panel__faq {
+.help-modal__faq {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
-.help-panel__faq-q {
+.help-modal__faq-q {
   margin: 0;
   font-size: 14px;
   font-weight: 500;
   color: var(--gray-900);
 }
 
-.help-panel__faq-a {
+.help-modal__faq-a {
   margin: 0;
   font-size: 13px;
   line-height: 1.4;
   color: var(--gray-600);
-}
-
-.help-panel__skip {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 10px 20px;
-  background: var(--white);
-  border: 1px solid var(--gray-300);
-  border-radius: 6px;
-  color: var(--gray-600);
-  font-size: 14px;
-  transition: background var(--transition-fast);
-}
-
-.help-panel__skip:hover {
-  background: var(--gray-100);
-}
-
-.help-panel__skip .material-symbols-rounded {
-  font-size: 18px;
-  color: var(--gray-500);
 }
 
 /* ── Step 1: widget row (Utilization + timer mockup + Activity) ──────────
@@ -878,37 +890,6 @@ button {
   color: var(--white);
 }
 
-.timer-status {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 0;
-}
-
-.timer-status__icon {
-  font-size: 18px;
-  color: var(--gray-500);
-}
-
-.timer-status__icon--pending {
-  animation: timer-status-spin 1s linear infinite;
-}
-
-.timer-status__icon--tracking {
-  color: var(--primary-700);
-}
-
-@keyframes timer-status-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.timer-status__text {
-  font-size: 14px;
-  color: var(--gray-600);
-}
-
 .app-window__search {
   display: flex;
   align-items: center;
@@ -992,14 +973,6 @@ button {
   padding: 14px;
   border-top: 1px solid var(--gray-300);
   background: var(--white);
-}
-
-/* Pushes the footer actions to the far right regardless of whether
-   #btn-explore is present — space-between collapses to flex-start when
-   btn-explore is display:none (e.g. hidden on step 2), so flex-end + this
-   auto-margin is used instead of relying on a two-item split. */
-#btn-explore {
-  margin-right: auto;
 }
 
 .onboarding-btn {

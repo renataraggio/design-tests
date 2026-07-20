@@ -12,7 +12,6 @@
   var segments = document.querySelectorAll("#segments .onboarding-segments__item");
   var btnBack = document.getElementById("btn-back");
   var btnContinue = document.getElementById("btn-continue");
-  var btnExplore = document.getElementById("btn-explore");
   var continueTooltip = document.getElementById("continue-tooltip");
   var onboardingRoot = document.getElementById("onboarding");
   var mainAction = document.getElementById("main-action");
@@ -86,10 +85,6 @@
     btnBack.hidden = currentStep === 1 || currentStep === TOTAL_STEPS;
     btnBack.disabled = currentStep === 1;
 
-    // Hide the skip option during Step 2 — letting someone bail before they've
-    // confirmed the timer works undermines the whole point of this step.
-    btnExplore.hidden = currentStep === 2;
-
     // Continue/Finish button state
     setContinueButtonContent();
     btnContinue.disabled = !isContinueUnlocked();
@@ -131,10 +126,6 @@
     }
   });
 
-  btnExplore.addEventListener("click", function () {
-    window.dispatchEvent(new CustomEvent("onboarding:skip"));
-  });
-
   // ── Step 1: "Download the desktop app" main action ──────────────────────
 
   mainAction.addEventListener("click", function () {
@@ -167,8 +158,6 @@
 
   var timerBar = document.getElementById("timer-bar");
   var timerBarReadout = document.getElementById("timer-bar-readout");
-  var timerStatusIcon = document.getElementById("timer-status-icon");
-  var timerStatusText = document.getElementById("timer-status-text");
   var taskRowStatus = document.getElementById("task-row-status");
   var taskRowTime = document.getElementById("task-row-time");
 
@@ -202,10 +191,6 @@
 
   function beginTracking() {
     timerBar.classList.add("is-running");
-    timerStatusIcon.classList.remove("timer-status__icon--pending");
-    timerStatusIcon.classList.add("timer-status__icon--tracking");
-    timerStatusIcon.textContent = "fiber_manual_record";
-    timerStatusText.textContent = "Tracking time…";
     taskRowStatus.classList.add("task-row__status--tracking");
     timerBarReadout.textContent = formatHHMMSS(elapsedSeconds);
     taskRowTime.textContent = formatShort(elapsedSeconds);
@@ -230,22 +215,29 @@
     }, PENDING_DELAY_MS);
   }
 
-  // ── Step 2: expandable "need help" panel ─────────────────────────────────
+  // ── Step 2: "need help" modal ─────────────────────────────────────────────
 
-  var helpPanelTrigger = document.getElementById("help-panel-trigger");
-  var helpPanelContent = document.getElementById("help-panel-content");
-  var helpPanelChevron = document.getElementById("help-panel-chevron");
-  var helpPanelSkip = document.getElementById("help-panel-skip");
+  var helpLink = document.getElementById("help-link");
+  var helpModalOverlay = document.getElementById("help-modal-overlay");
+  var helpModalClose = document.getElementById("help-modal-close");
 
-  helpPanelTrigger.addEventListener("click", function () {
-    var expanded = helpPanelTrigger.getAttribute("aria-expanded") === "true";
-    helpPanelTrigger.setAttribute("aria-expanded", String(!expanded));
-    helpPanelContent.hidden = expanded;
-    helpPanelChevron.textContent = expanded ? "expand_more" : "expand_less";
+  function openHelpModal() {
+    helpModalOverlay.hidden = false;
+  }
+
+  function closeHelpModal() {
+    helpModalOverlay.hidden = true;
+  }
+
+  helpLink.addEventListener("click", openHelpModal);
+  helpModalClose.addEventListener("click", closeHelpModal);
+
+  helpModalOverlay.addEventListener("click", function (event) {
+    if (event.target === helpModalOverlay) closeHelpModal();
   });
 
-  helpPanelSkip.addEventListener("click", function () {
-    window.dispatchEvent(new CustomEvent("onboarding:skip"));
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" && !helpModalOverlay.hidden) closeHelpModal();
   });
 
   renderStep();
