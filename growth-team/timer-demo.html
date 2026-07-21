@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Timer demo — AR0227</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&family=Inter:wght@400;500;600&family=Material+Symbols+Rounded" rel="stylesheet" />
+
+<style>
+  :root {
+    --white: #ffffff;
+    --gray-100: #f3f4f6;
+    --gray-300: #d1d5db;
+    --gray-500: #6b7280;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-900: #111827;
+    --primary-600: #2f8af4;
+    --primary-700: #0168dd;
+    --primary-800: #0a4b96;
+    --transition: 240ms ease;
+    --transition-fast: 150ms ease;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    height: 100%;
+    background: #fafafa;
+    font-family: "Roboto", sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .material-symbols-rounded {
+    font-family: "Material Symbols Rounded";
+    font-weight: normal;
+    font-style: normal;
+    font-size: 18px;
+    line-height: 1;
+    display: inline-block;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .app-window {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    background: var(--white);
+    border: 1px solid #d6dbe6;
+    border-radius: 8px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+  }
+
+  .app-window__titlebar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .app-window__dot { width: 10px; height: 10px; border-radius: 50%; }
+  .app-window__dot--red { background: #ff5f57; }
+  .app-window__dot--yellow { background: #febc2e; }
+  .app-window__dot--green { background: #28c840; }
+
+  .app-window__body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 24px 24px;
+  }
+
+  .app-window__project-title {
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--gray-900);
+  }
+
+  .timer-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 36px;
+    background: var(--gray-300);
+    border-radius: 6px;
+    transition: background var(--transition);
+  }
+
+  .timer-bar.is-running { background: var(--primary-700); }
+
+  .timer-bar__readout {
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--white);
+  }
+
+  .timer-play {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    background: var(--primary-700);
+    border: none;
+    border-radius: 44px;
+    transition: background var(--transition-fast);
+  }
+
+  .timer-play:hover { background: var(--primary-800); }
+  .timer-play .material-symbols-rounded { font-size: 22px; color: var(--white); }
+
+  .app-window__search {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    height: 32px;
+    padding: 0 12px;
+    background: var(--white);
+    border: 1px solid var(--gray-300);
+    border-radius: 6px;
+    color: var(--gray-500);
+    font-size: 14px;
+  }
+
+  .app-window__search .material-symbols-rounded { font-size: 18px; }
+
+  .app-window__group-label {
+    align-self: flex-start;
+    width: 100%;
+    padding: 6px 4px;
+    background: var(--gray-100);
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--gray-700);
+  }
+
+  .app-window__task-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 6px 4px;
+    background: #eaf6ff;
+  }
+
+  .task-row__play {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    background: var(--primary-700);
+    border: none;
+    border-radius: 44px;
+    transition: background var(--transition-fast);
+  }
+
+  .task-row__play:hover { background: var(--primary-800); }
+  .task-row__play .material-symbols-rounded { font-size: 10px; color: var(--white); }
+
+  .task-row__label { flex: 1 1 0; font-size: 14px; color: var(--gray-900); }
+  .task-row__time { font-size: 14px; color: var(--gray-900); }
+
+  .wrap { display: flex; flex-direction: column; align-items: center; }
+
+  .stage { position: relative; }
+
+  .cursor {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 24px;
+    height: 24px;
+    pointer-events: none;
+    z-index: 10;
+    transform: translate(340px, 380px);
+    transition: transform 700ms cubic-bezier(0.65, 0, 0.35, 1);
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35));
+  }
+
+  .cursor svg { display: block; width: 100%; height: 100%; }
+
+  .cursor.is-clicking {
+    transition: transform 120ms ease;
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="stage" id="stage">
+  <div class="app-window">
+    <div class="app-window__titlebar">
+      <span class="app-window__dot app-window__dot--red"></span>
+      <span class="app-window__dot app-window__dot--yellow"></span>
+      <span class="app-window__dot app-window__dot--green"></span>
+    </div>
+
+    <div class="app-window__body">
+      <div class="timer-bar" id="timer-bar">
+        <span class="timer-bar__readout" id="timer-bar-readout"></span>
+      </div>
+
+      <p class="app-window__project-title">Onboarding</p>
+
+      <button type="button" class="timer-play" id="timer-play" aria-label="Simulate: start tracking">
+        <span class="material-symbols-rounded" aria-hidden="true" id="timer-play-icon">play_arrow</span>
+      </button>
+
+      <div class="app-window__search">
+        <span class="material-symbols-rounded" aria-hidden="true">search</span>
+        <span>Search</span>
+      </div>
+
+      <div class="app-window__group-label">Your organization</div>
+
+      <div class="app-window__task-row">
+        <button type="button" class="task-row__play" id="task-row-play" aria-label="Simulate: start tracking">
+          <span class="material-symbols-rounded" aria-hidden="true" id="task-row-play-icon">play_arrow</span>
+        </button>
+        <span class="task-row__label">Onboarding</span>
+        <span class="task-row__time" id="task-row-time">0:00</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cursor" id="cursor">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5.5 3.5L18.5 12.5L12.5 13.5L15.5 20.5L12.5 21.5L9.5 14.5L5.5 18.5V3.5Z" fill="white" stroke="black" stroke-width="1.3" stroke-linejoin="round" />
+    </svg>
+  </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var CURSOR_START_DELAY_MS = 600;
+  var CURSOR_TRAVEL_MS = 700;
+  var CURSOR_CLICK_MS = 140;
+  var CURSOR_START_X = 340;
+  var CURSOR_START_Y = 380;
+  var RUN_DURATION_MS = 10000;
+
+  var stage = document.getElementById("stage");
+  var cursor = document.getElementById("cursor");
+  var timerBar = document.getElementById("timer-bar");
+  var timerBarReadout = document.getElementById("timer-bar-readout");
+  var timerPlay = document.getElementById("timer-play");
+  var timerPlayIcon = document.getElementById("timer-play-icon");
+  var taskRowPlay = document.getElementById("task-row-play");
+  var taskRowPlayIcon = document.getElementById("task-row-play-icon");
+  var taskRowTime = document.getElementById("task-row-time");
+
+  var elapsedSeconds = 0;
+  var timerInterval = null;
+  var cursorTimeouts = [];
+  var autoResetTimeout = null;
+  var started = false;
+  var cursorX = CURSOR_START_X;
+  var cursorY = CURSOR_START_Y;
+
+  function setCursorTarget(x, y, scale) {
+    cursorX = x;
+    cursorY = y;
+    var t = "translate(" + x + "px," + y + "px)";
+    if (scale) t += " scale(" + scale + ")";
+    cursor.style.transform = t;
+  }
+
+  function clearCursorTimeouts() {
+    cursorTimeouts.forEach(function (id) { window.clearTimeout(id); });
+    cursorTimeouts = [];
+  }
+
+  function playCursorSequence() {
+    clearCursorTimeouts();
+    cursor.classList.remove("is-clicking");
+    setCursorTarget(CURSOR_START_X, CURSOR_START_Y);
+
+    cursorTimeouts.push(window.setTimeout(function () {
+      var stageRect = stage.getBoundingClientRect();
+      var btnRect = timerPlay.getBoundingClientRect();
+      var x = btnRect.left - stageRect.left + btnRect.width / 2;
+      var y = btnRect.top - stageRect.top + btnRect.height / 2;
+      setCursorTarget(x, y);
+
+      cursorTimeouts.push(window.setTimeout(function () {
+        cursor.classList.add("is-clicking");
+        setCursorTarget(cursorX, cursorY, 0.85);
+        if (!started) startTimer();
+
+        cursorTimeouts.push(window.setTimeout(function () {
+          cursor.classList.remove("is-clicking");
+          setCursorTarget(cursorX, cursorY, 1);
+        }, CURSOR_CLICK_MS));
+      }, CURSOR_TRAVEL_MS));
+    }, CURSOR_START_DELAY_MS));
+  }
+
+  function pad(n) { return String(n).padStart(2, "0"); }
+
+  function formatHHMMSS(totalSeconds) {
+    var h = Math.floor(totalSeconds / 3600);
+    var m = Math.floor((totalSeconds % 3600) / 60);
+    var s = totalSeconds % 60;
+    return pad(h) + ":" + pad(m) + ":" + pad(s);
+  }
+
+  function formatShort(totalSeconds) {
+    var h = Math.floor(totalSeconds / 3600);
+    var m = Math.floor((totalSeconds % 3600) / 60);
+    var s = totalSeconds % 60;
+    return h > 0 ? h + ":" + pad(m) + ":" + pad(s) : m + ":" + pad(s);
+  }
+
+  function tick() {
+    elapsedSeconds += 1;
+    timerBarReadout.textContent = formatHHMMSS(elapsedSeconds);
+    taskRowTime.textContent = formatShort(elapsedSeconds);
+  }
+
+  function clearAutoReset() {
+    if (autoResetTimeout) {
+      window.clearTimeout(autoResetTimeout);
+      autoResetTimeout = null;
+    }
+  }
+
+  function startTimer() {
+    clearCursorTimeouts();
+    started = true;
+    timerBar.classList.add("is-running");
+    timerPlayIcon.textContent = "pause";
+    taskRowPlayIcon.textContent = "pause";
+    timerBarReadout.textContent = formatHHMMSS(elapsedSeconds);
+    taskRowTime.textContent = formatShort(elapsedSeconds);
+    if (!timerInterval) {
+      timerInterval = window.setInterval(tick, 1000);
+    }
+    clearAutoReset();
+    autoResetTimeout = window.setTimeout(function () {
+      autoResetTimeout = null;
+      resetAndLoop();
+    }, RUN_DURATION_MS);
+  }
+
+  function pauseTimer() {
+    timerBar.classList.remove("is-running");
+    timerPlayIcon.textContent = "play_arrow";
+    taskRowPlayIcon.textContent = "play_arrow";
+    if (timerInterval) {
+      window.clearInterval(timerInterval);
+      timerInterval = null;
+    }
+  }
+
+  function toggleTimer() {
+    if (timerBar.classList.contains("is-running")) {
+      pauseTimer();
+    } else {
+      startTimer();
+    }
+  }
+
+  function resetAndLoop() {
+    clearAutoReset();
+    clearCursorTimeouts();
+    if (timerInterval) { window.clearInterval(timerInterval); timerInterval = null; }
+    started = false;
+    elapsedSeconds = 0;
+    timerBar.classList.remove("is-running");
+    timerBarReadout.textContent = "";
+    timerPlayIcon.textContent = "play_arrow";
+    taskRowPlayIcon.textContent = "play_arrow";
+    taskRowTime.textContent = "0:00";
+    playCursorSequence();
+  }
+
+  timerPlay.addEventListener("click", toggleTimer);
+  taskRowPlay.addEventListener("click", toggleTimer);
+
+  playCursorSequence();
+})();
+</script>
+</body>
+</html>
