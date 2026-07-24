@@ -37,10 +37,10 @@
         <h1 class="onboarding-heading__title">
           <span class="wave" aria-hidden="true">👋</span> Let’s get you started with Hubstaff!
         </h1>
-        <div class="onboarding-segments" role="progressbar" aria-label="Onboarding progress" aria-valuemin="1" aria-valuemax="3" aria-valuenow="1" id="segments">
-          <span class="onboarding-segments__item is-complete"></span>
-          <span class="onboarding-segments__item"></span>
-          <span class="onboarding-segments__item"></span>
+        <div class="onboarding-progress" role="progressbar" aria-label="Onboarding progress" aria-valuemin="1" aria-valuemax="3" aria-valuenow="1" id="segments">
+          <div class="onboarding-progress__track">
+            <div class="onboarding-progress__fill" id="progress-fill"></div>
+          </div>
         </div>
       </header>
 
@@ -159,24 +159,30 @@
             </div>
 
             <div class="app-window__body">
-              <div class="timer-bar" id="timer-bar">
-                <span class="timer-bar__readout" id="timer-bar-readout"></span>
-              </div>
-
-              <p class="app-window__project-title">Onboarding</p>
-
-              <button type="button" class="timer-play" id="timer-play" aria-label="Simulate: start tracking">
-                <span class="material-symbols-rounded" aria-hidden="true" id="timer-play-icon">play_arrow</span>
-              </button>
-
               <div class="app-window__search">
                 <span class="material-symbols-rounded" aria-hidden="true">search</span>
                 <span>Search</span>
               </div>
 
-              <div class="app-window__group-label">Your organization</div>
+              <div class="project-alert" id="project-alert">
+                <span class="material-symbols-rounded" aria-hidden="true">info</span>
+                <p>No project assigned yet to track time.</p>
+              </div>
 
-              <div class="app-window__task-row">
+              <div class="timer-bar" id="timer-bar" hidden>
+                <span class="timer-bar__readout" id="timer-bar-readout"></span>
+              </div>
+
+              <p class="app-window__project-title">Onboarding</p>
+
+              <button type="button" class="timer-play is-attention" id="timer-play" aria-label="Simulate: start tracking">
+                <span class="timer-play__pulse" id="timer-play-pulse" aria-hidden="true"></span>
+                <span class="material-symbols-rounded" aria-hidden="true" id="timer-play-icon">play_arrow</span>
+              </button>
+
+              <div class="app-window__group-label" id="group-label" hidden>Your organization</div>
+
+              <div class="app-window__task-row" id="task-row" hidden>
                 <button type="button" class="task-row__play" id="task-row-play" aria-label="Simulate: start tracking">
                   <span class="material-symbols-rounded" aria-hidden="true" id="task-row-play-icon">play_arrow</span>
                 </button>
@@ -186,9 +192,9 @@
             </div>
           </div>
 
-          <button type="button" class="help-link" id="help-link">Need help, can’t track, or doesn’t apply?</button>
+          <button type="button" class="request-project-btn" id="btn-request-project">Request a project</button>
 
-          <a class="support-link" href="https://support.hubstaff.com/contact" target="_blank" rel="noopener noreferrer">Reach out to Our Support Team</a>
+          <button type="button" class="help-link" id="help-link">Need help, can’t track, or doesn’t apply?</button>
 
           <div class="help-modal-overlay" id="help-modal-overlay" hidden>
             <div class="help-modal" role="dialog" aria-modal="true" aria-labelledby="help-modal-title">
@@ -216,10 +222,14 @@
                   <p class="help-modal__faq-q">Don’t have a project?</p>
                   <p class="help-modal__faq-a">To track time in Hubstaff, you need to create or select a project first. Without a project, time tracking won’t be recorded properly.</p>
                 </div>
+
+                <a class="help-modal__support-link" href="https://support.hubstaff.com/contact" target="_blank" rel="noopener noreferrer">
+                  <img src="assets/logo-mark.svg" alt="" class="help-modal__support-icon" />
+                  Reach out to our support team
+                </a>
               </div>
               <div class="help-modal__footer">
-                <button type="button" class="footer-skip" id="help-modal-skip">Skip</button>
-                <a class="help-modal__request-btn" href="mailto:your-manager@example.com?subject=Add%20me%20to%20a%20project&body=Hi%2C%20I%20don%27t%20see%20any%20projects%20assigned%20to%20me%20in%20Hubstaff%20%E2%80%94%20could%20you%20add%20me%20to%20one%3F">Request project</a>
+                <button type="button" class="help-modal__bypass-btn" id="help-modal-bypass">Continue without tracking time</button>
               </div>
             </div>
           </div>

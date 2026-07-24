@@ -221,27 +221,27 @@ button {
   color: #000000;
 }
 
-.onboarding-segments {
-  display: flex;
-  align-items: flex-start;
-  gap: 4px;
+.onboarding-progress {
+  width: 100%;
+  max-width: 240px;
+}
+
+.onboarding-progress__track {
+  position: relative;
   height: 6px;
   width: 100%;
-  max-width: 276px;
+  background: var(--gray-300);
+  border-radius: 2px;
   overflow: hidden;
 }
 
-.onboarding-segments__item {
-  flex: 1 1 0;
-  min-width: 1px;
-  height: 6px;
-  border-radius: 3px;
-  background: var(--gray-300);
-  transition: background var(--transition);
-}
-
-.onboarding-segments__item.is-complete {
+.onboarding-progress__fill {
+  position: absolute;
+  inset: 0;
+  width: 25%;
   background: var(--primary-500);
+  border-radius: 2px;
+  transition: width var(--transition);
 }
 
 .onboarding-section {
@@ -374,23 +374,22 @@ button {
   color: var(--primary-800);
 }
 
-.support-link {
+.request-project-btn {
+  align-self: center;
   display: flex;
   align-items: center;
   justify-content: center;
-  align-self: center;
-  padding: 10px 20px;
+  padding: 6px 12px;
   background: var(--white);
   border: 1px solid var(--gray-300);
   border-radius: 6px;
   color: var(--gray-600);
   font-size: 14px;
   line-height: 20px;
-  text-decoration: none;
   transition: background var(--transition-fast);
 }
 
-.support-link:hover {
+.request-project-btn:hover {
   background: var(--gray-100);
 }
 
@@ -495,30 +494,49 @@ button {
   color: var(--gray-600);
 }
 
+.help-modal__support-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--primary-700);
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.help-modal__support-link:hover {
+  text-decoration: underline;
+}
+
+.help-modal__support-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #1f2e54;
+  padding: 4px;
+}
+
 .help-modal__footer {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 0 20px 20px;
+  justify-content: center;
+  padding: 20px;
 }
 
-.help-modal__request-btn {
+.help-modal__bypass-btn {
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 10px 20px;
-  background: var(--primary-500);
-  border: none;
+  background: var(--white);
+  border: 1px solid var(--gray-300);
   border-radius: 6px;
-  color: var(--white);
+  color: var(--gray-600);
   font-size: 14px;
-  text-decoration: none;
   transition: background var(--transition-fast);
 }
 
-.help-modal__request-btn:hover {
-  background: var(--primary-600);
+.help-modal__bypass-btn:hover {
+  background: var(--gray-100);
 }
 
 /* ── Step 1: widget row (Utilization + timer mockup + Activity) ──────────
@@ -960,6 +978,7 @@ button {
 }
 
 .timer-play {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -976,8 +995,59 @@ button {
 }
 
 .timer-play .material-symbols-rounded {
+  position: relative;
   font-size: 22px;
   color: var(--white);
+}
+
+/* Pulsing attention ring — draws the eye to the play button before it's
+   been pressed (matches the Figma prototype's looping opacity animation). */
+.timer-play__pulse {
+  display: none;
+  position: absolute;
+  inset: 0;
+  border-radius: 44px;
+  background: var(--primary-700);
+}
+
+.timer-play.is-attention .timer-play__pulse {
+  display: block;
+  animation: timer-play-pulse 2s linear infinite;
+}
+
+@keyframes timer-play-pulse {
+  0% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.6);
+  }
+}
+
+/* Step 2 "no project assigned" mockup alert (empty state, before tracking) */
+
+.project-alert {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px;
+  background: #fdfdea;
+  border: 1px solid #9f580a;
+  border-radius: 8px;
+  color: #723b13;
+  font-size: 13px;
+}
+
+.project-alert .material-symbols-rounded {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.project-alert p {
+  margin: 0;
 }
 
 .app-window__search {

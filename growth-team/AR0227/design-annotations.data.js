@@ -34,34 +34,47 @@ window.DESIGN_ANNOTATIONS_DATA = {
       ],
     },
     {
-      id: "step2-copy-swap-inferred",
+      id: "step2-no-project-state-new",
       page: "onboarding",
       kind: "suggestion",
-      title: "Step 2's title/body/alert swap on tracking start — sequencing inferred",
+      title: "Step 2 now has a distinct \"no project assigned\" empty state",
       description:
-        "The Figma file (Growth Central WIP, node 20110-7094) has two frames both showing Step 2 (progress bar on segment 2) with different copy: one with generic \"install + start the timer\" instructions and a grey bar, another headlined \"Next, you'll track time using the Hubstaff desktop app\" with a blue/tracking bar. This build assumed the first is the \"before tracking\" state and the second is the \"after tracking starts\" state, and wires the copy to swap accordingly. That sequencing was not explicitly confirmed — the two frames could equally have been alternate drafts rather than sequential states.",
-      target: "#step2-alert-text",
-      sub: ["Confirm with design/PM whether this before/after copy swap is the intended behavior before this ships"],
+        "The final Figma hand-off (node 2:3577, \"AR0227 — Agressive track version\") added a state that didn't exist in earlier rounds: before the first press of play, the desktop-app mockup shows a yellow \"No project assigned yet to track time.\" banner and a \"Request a project\" button instead of the organization/task-row view. This build treats pressing play as resolving both — a project gets assigned AND tracking starts in one click — since no separate \"project assigned, not yet tracking\" screen was included in the hand-off to confirm a 3rd intermediate state.",
+      target: "#project-alert",
+      sub: ["Confirm whether \"assign a project\" and \"start tracking\" should really collapse into a single simulated action, or need distinct steps once this is wired to the real app"],
     },
     {
-      id: "help-modal-request-project-placeholder",
-      page: "onboarding",
-      kind: "required",
-      title: "\"Request project\" button uses a placeholder mailto:",
-      description:
-        "The help modal's \"Request project\" button points to a mailto: for your-manager@example.com — there's no real org/manager lookup or in-app request flow wired up yet.",
-      target: "#help-modal-overlay",
-      sub: ["Wire this to the signed-in user's actual manager/org-owner, or replace mailto: with a real in-app request-a-project flow"],
-    },
-    {
-      id: "skip-reintroduced",
+      id: "help-modal-bypass-vs-skip",
       page: "onboarding",
       kind: "suggestion",
-      title: "\"Skip\" was removed, then reintroduced to match this Figma update",
+      title: "Modal's \"Continue without tracking time\" is distinct from the footer's Skip — inferred",
       description:
-        "An earlier round of this experiment deliberately removed all skip-onboarding paths (footer \"Explore on my own\" and the help modal's skip link) on the reasoning that skipping doesn't apply to this experiment. This Figma update (Growth Central WIP) reintroduces a lightweight \"Skip\" text link in Step 2's footer and inside the help modal, so it's been added back to match — but that product decision (skip applies after all, at least for Step 2) was inferred from the design file, not explicitly reconfirmed.",
+        "The final hand-off replaced the modal's old \"Skip\" + \"Request project\" footer buttons with a single \"Continue without tracking time\" button, and moved \"Reach out to our support team\" into the modal body. This build interprets the new button as unlocking Continue for Step 2 only (bypassing the tracking gate without exiting onboarding) — separate from the page footer's \"Skip\" (which still exits the whole flow via the onboarding:skip event). That distinction was inferred from the wording, not explicitly confirmed. The \"Request a project\" button now on the main Step 2 view (not just in the modal) simply opens this same help modal — there's still no real project-request flow behind it.",
+      target: "#help-modal-bypass",
+      sub: [
+        "Confirm \"Continue without tracking time\" should only bypass Step 2's gate, not skip the whole experiment",
+        "Wire \"Request a project\" to a real org/manager lookup or in-app request flow instead of just opening the help modal",
+      ],
+    },
+    {
+      id: "skip-visible-steps-1-2",
+      page: "onboarding",
+      kind: "suggestion",
+      title: "\"Skip\" is now visible on both Step 1 and Step 2, hidden only on Step 3",
+      description:
+        "Earlier rounds of this experiment went back and forth on whether Skip should exist at all, then limited it to Step 2 only. The final hand-off's Step 1 frames (both before and after clicking Download) show a footer \"Skip\" link, so this build now shows it on Steps 1-2 and hides it only on the final Step 3 screen, matching the hand-off exactly.",
       target: "#btn-skip",
-      sub: ["Confirm this reversal is intentional before shipping — it directly contradicts an earlier explicit decision on this same experiment"],
+      sub: ["No action needed unless product wants Skip scoped differently than the final Figma shows"],
+    },
+    {
+      id: "progress-bar-value-inferred",
+      page: "onboarding",
+      kind: "suggestion",
+      title: "Progress bar now fills per-step — Figma showed the same fixed amount on every screen",
+      description:
+        "The final hand-off replaced the old 3-segment progress pills with a single continuous bar (Zone DS \"ProgressBars\" component). Every one of its 5 screens — including the very last \"Get familiar with Hubstaff\" step — renders that bar at the same fixed ~25% fill, suggesting it may represent progress through a larger onboarding checklist outside this 3-screen experiment, not progress through these screens specifically. This build instead scales the fill by currentStep/3 so it visibly advances, since a bar that never moves would look broken in this isolated prototype — but that per-step scaling is this build's inference, not something the hand-off actually shows.",
+      target: "#progress-fill",
+      sub: ["Confirm with design whether this bar should track progress through this experiment specifically, or reflect something broader that this prototype can't represent in isolation"],
     },
     {
       id: "step1-widgets-approximated",

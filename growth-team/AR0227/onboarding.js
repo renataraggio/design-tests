@@ -6,10 +6,11 @@
 
   var step1Confirmed = false; // gated by clicking "Download the desktop app"
   var step2TimerStarted = false; // gated by pressing play on the timer
+  var step2Bypassed = false; // gated by "Continue without tracking time" in the help modal
 
   var sidebar = document.getElementById("sidebar-toggle");
   var segmentsRoot = document.getElementById("segments");
-  var segments = document.querySelectorAll("#segments .onboarding-segments__item");
+  var progressFill = document.getElementById("progress-fill");
   var btnBack = document.getElementById("btn-back");
   var btnSkip = document.getElementById("btn-skip");
   var btnContinue = document.getElementById("btn-continue");
@@ -29,23 +30,14 @@
       title: "Download the desktop app",
       body: "This is used to track time to your projects and tasks",
     },
+    2: {
+      title: "Install the desktop app and track time to a project",
+      body: "Start the timer on the desktop app to confirm your setup",
+    },
     3: {
       title: "Get familiar with Hubstaff",
       body: "Check out the video below and learn more about how to use Hubstaff",
     },
-  };
-
-  // Step 2's copy switches once tracking is confirmed — before: generic
-  // "start the timer" instructions; after: a demo of what tracking looks like.
-  var STEP2_COPY_BEFORE = {
-    title: "Install the desktop app and track time to a project",
-    body: "Start the timer on the desktop app to confirm your setup",
-    alert: "This timer will turn blue when you start tracking time. We’ll make sure everything is set up right.",
-  };
-  var STEP2_COPY_AFTER = {
-    title: "Next, you’ll track time using the Hubstaff desktop app",
-    body: "After installing the app you downloaded on the previous step, follow the instructions below to track time",
-    alert: "Here’s a demo of how to track time using the Hubstaff app",
   };
 
   // Tooltip copy for a disabled Continue — only steps with a real gate need one
@@ -56,7 +48,7 @@
 
   function isContinueUnlocked() {
     if (currentStep === 1) return step1Confirmed;
-    if (currentStep === 2) return step2TimerStarted;
+    if (currentStep === 2) return step2TimerStarted || step2Bypassed;
     return true;
   }
 
@@ -72,26 +64,17 @@
     btnContinue.appendChild(icon);
   }
 
-  function applyStep2Copy() {
-    var copy = step2TimerStarted ? STEP2_COPY_AFTER : STEP2_COPY_BEFORE;
-    document.getElementById("onboarding-title").textContent = copy.title;
-    document.getElementById("onboarding-body").textContent = copy.body;
-    step2AlertText.textContent = copy.alert;
-  }
-
   function renderStep() {
-    // Copy
+    // Copy — static per step; step 2 no longer swaps copy on tracking start
+    // (the final Figma hand-off only shows one title/body/alert state for it).
+    document.getElementById("onboarding-title").textContent = STEP_COPY[currentStep].title;
+    document.getElementById("onboarding-body").textContent = STEP_COPY[currentStep].body;
     if (currentStep === 2) {
-      applyStep2Copy();
-    } else {
-      document.getElementById("onboarding-title").textContent = STEP_COPY[currentStep].title;
-      document.getElementById("onboarding-body").textContent = STEP_COPY[currentStep].body;
+      step2AlertText.textContent = "This timer will turn blue when you start tracking time. We’ll make sure everything is set up right.";
     }
 
-    // Progress bar (skeleton template's discrete segments)
-    segments.forEach(function (segment, index) {
-      segment.classList.toggle("is-complete", index < currentStep);
-    });
+    // Progress bar — continuous fill (matches the Figma "ProgressBars" component)
+    progressFill.style.width = Math.round((currentStep / TOTAL_STEPS) * 100) + "%";
     segmentsRoot.setAttribute("aria-valuenow", String(currentStep));
 
     // Step panels
@@ -106,8 +89,8 @@
     btnBack.hidden = currentStep === 1;
     btnBack.disabled = currentStep === 1;
 
-    // Skip only makes sense on step 2 (project/tracking edge cases)
-    btnSkip.hidden = currentStep !== 2;
+    // Skip is available on steps 1-2, hidden on the final step
+    btnSkip.hidden = currentStep === TOTAL_STEPS;
 
     // Continue/Finish button state
     setContinueButtonContent();
@@ -191,6 +174,10 @@
   var taskRowPlay = document.getElementById("task-row-play");
   var taskRowPlayIcon = document.getElementById("task-row-play-icon");
   var taskRowTime = document.getElementById("task-row-time");
+  var projectAlert = document.getElementById("project-alert");
+  var groupLabel = document.getElementById("group-label");
+  var taskRow = document.getElementById("task-row");
+  var btnRequestProject = document.getElementById("btn-request-project");
 
   var elapsedSeconds = 0;
   var timerInterval = null;
@@ -234,6 +221,17 @@
       window.clearTimeout(pendingTimeout);
       pendingTimeout = null;
     }
+
+    // First press also resolves the "no project assigned" mockup state —
+    // swap the empty-state UI for the assigned-project task row.
+    if (!step2TimerStarted) {
+      timerBar.hidden = false;
+      projectAlert.hidden = true;
+      groupLabel.hidden = false;
+      taskRow.hidden = false;
+      timerPlay.classList.remove("is-attention");
+    }
+
     timerBar.classList.add("is-running");
     timerPlayIcon.textContent = "pause";
     taskRowPlayIcon.textContent = "pause";
@@ -249,7 +247,6 @@
       if (currentStep === 2) {
         btnContinue.disabled = false;
         continueTooltip.hidden = true;
-        applyStep2Copy();
       }
     }
   }
@@ -281,7 +278,7 @@
   var helpLink = document.getElementById("help-link");
   var helpModalOverlay = document.getElementById("help-modal-overlay");
   var helpModalClose = document.getElementById("help-modal-close");
-  var helpModalSkip = document.getElementById("help-modal-skip");
+  var helpModalBypass = document.getElementById("help-modal-bypass");
 
   function openHelpModal() {
     helpModalOverlay.hidden = false;
@@ -291,9 +288,22 @@
     helpModalOverlay.hidden = true;
   }
 
+  // "Continue without tracking time" unlocks Continue for this step without
+  // actually starting the timer — distinct from the footer's Skip, which
+  // exits the whole onboarding flow.
+  function bypassTracking() {
+    step2Bypassed = true;
+    if (currentStep === 2) {
+      btnContinue.disabled = false;
+      continueTooltip.hidden = true;
+    }
+    closeHelpModal();
+  }
+
   helpLink.addEventListener("click", openHelpModal);
   helpModalClose.addEventListener("click", closeHelpModal);
-  helpModalSkip.addEventListener("click", skipOnboarding);
+  helpModalBypass.addEventListener("click", bypassTracking);
+  btnRequestProject.addEventListener("click", openHelpModal);
 
   helpModalOverlay.addEventListener("click", function (event) {
     if (event.target === helpModalOverlay) closeHelpModal();
