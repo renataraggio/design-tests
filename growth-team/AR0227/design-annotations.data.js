@@ -34,14 +34,17 @@ window.DESIGN_ANNOTATIONS_DATA = {
       ],
     },
     {
-      id: "step2-no-project-state-new",
+      id: "step2-no-project-blocks-timer",
       page: "onboarding",
-      kind: "suggestion",
-      title: "Step 2 now has a distinct \"no project assigned\" empty state",
+      kind: "required",
+      title: "Timer can't start while no project is assigned — and this build has no way to resolve that",
       description:
-        "The final Figma hand-off (node 2:3577, \"AR0227 — Agressive track version\") added a state that didn't exist in earlier rounds: before the first press of play, the desktop-app mockup shows a yellow \"No project assigned yet to track time.\" banner and a \"Request a project\" button instead of the organization/task-row view. This build treats pressing play as resolving both — a project gets assigned AND tracking starts in one click — since no separate \"project assigned, not yet tracking\" screen was included in the hand-off to confirm a 3rd intermediate state.",
+        "Step 2 starts in a \"No project assigned yet to track time.\" state (per the final Figma hand-off, node 2:3577). Pressing the play button no longer starts the timer while that alert is showing — it just shakes the alert, since there's nothing to track time against. The organization/task-row \"assigned\" view this build already has still exists in the markup, but nothing in this static prototype can actually resolve the \"no project\" state to reach it (the \"Request a project\" button only opens the help modal — it doesn't simulate getting added to one). In this scenario, the only way to unlock Continue is the help modal's \"Continue without tracking time\" button.",
       target: "#project-alert",
-      sub: ["Confirm whether \"assign a project\" and \"start tracking\" should really collapse into a single simulated action, or need distinct steps once this is wired to the real app"],
+      sub: [
+        "Wire a real \"project assigned\" signal so the task-row/tracking view becomes reachable once someone is actually added to a project",
+        "Confirm whether Continue should stay gated on the bypass button alone whenever an org has no project, or if there's a shorter path intended",
+      ],
     },
     {
       id: "help-modal-bypass-vs-skip",
@@ -60,9 +63,9 @@ window.DESIGN_ANNOTATIONS_DATA = {
       id: "skip-visible-steps-1-2",
       page: "onboarding",
       kind: "suggestion",
-      title: "\"Skip\" is now visible on both Step 1 and Step 2, hidden only on Step 3",
+      title: "\"Skip\" is visible on Steps 1-2 but means something different on each",
       description:
-        "Earlier rounds of this experiment went back and forth on whether Skip should exist at all, then limited it to Step 2 only. The final hand-off's Step 1 frames (both before and after clicking Download) show a footer \"Skip\" link, so this build now shows it on Steps 1-2 and hides it only on the final Step 3 screen, matching the hand-off exactly.",
+        "Earlier rounds of this experiment went back and forth on whether Skip should exist at all, then limited it to Step 2 only. The final hand-off's Step 1 frames (both before and after clicking Download) show a footer \"Skip\" link, so it's shown on Steps 1-2 and hidden only on the final Step 3 screen, matching the hand-off. Per direct product feedback, Step 1's Skip only advances to Step 2 (there's nothing to exit to yet) rather than exiting the whole flow — Step 2's Skip still dispatches the full onboarding:skip exit.",
       target: "#btn-skip",
       sub: ["No action needed unless product wants Skip scoped differently than the final Figma shows"],
     },

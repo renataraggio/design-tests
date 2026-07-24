@@ -1050,6 +1050,24 @@ button {
   margin: 0;
 }
 
+/* Draws attention to the alert when play is pressed with no project assigned
+   — the timer can't start, so this is the only feedback the click gets. */
+.project-alert.is-shaking {
+  animation: project-alert-shake 400ms ease;
+}
+
+@keyframes project-alert-shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  20%, 60% {
+    transform: translateX(-4px);
+  }
+  40%, 80% {
+    transform: translateX(4px);
+  }
+}
+
 .app-window__search {
   display: flex;
   align-items: center;

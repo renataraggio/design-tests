@@ -7,6 +7,7 @@
   var step1Confirmed = false; // gated by clicking "Download the desktop app"
   var step2TimerStarted = false; // gated by pressing play on the timer
   var step2Bypassed = false; // gated by "Continue without tracking time" in the help modal
+  var step2ProjectAssigned = false; // no project means there's nothing to track time to
 
   var sidebar = document.getElementById("sidebar-toggle");
   var segmentsRoot = document.getElementById("segments");
@@ -138,7 +139,16 @@
     window.dispatchEvent(new CustomEvent("onboarding:skip"));
   }
 
-  btnSkip.addEventListener("click", skipOnboarding);
+  btnSkip.addEventListener("click", function () {
+    // On Step 1, Skip just moves past the download prompt to Step 2 — it
+    // doesn't exit the whole flow (there's nothing to skip to yet on Step 1).
+    if (currentStep === 1) {
+      currentStep = 2;
+      renderStep();
+      return;
+    }
+    skipOnboarding();
+  });
 
   // ── Step 1: "Download the desktop app" main action ──────────────────────
 
@@ -209,14 +219,29 @@
   }
 
   function startPendingSimulation() {
-    if (step2TimerStarted || pendingTimeout) return;
+    if (step2TimerStarted || pendingTimeout || !step2ProjectAssigned) return;
     pendingTimeout = window.setTimeout(function () {
       pendingTimeout = null;
       startTimer();
     }, PENDING_DELAY_MS);
   }
 
+  function flashProjectAlert() {
+    projectAlert.classList.remove("is-shaking");
+    // Force a reflow so re-adding the class restarts the animation even if
+    // it's already mid-shake from a previous click.
+    void projectAlert.offsetWidth;
+    projectAlert.classList.add("is-shaking");
+  }
+
   function startTimer() {
+    // No project assigned means there's nothing to track time to — the
+    // timer can't start. Draw attention to the alert instead.
+    if (!step2ProjectAssigned) {
+      flashProjectAlert();
+      return;
+    }
+
     if (pendingTimeout) {
       window.clearTimeout(pendingTimeout);
       pendingTimeout = null;
