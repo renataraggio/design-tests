@@ -180,8 +180,6 @@
   var signalStatusCheck = document.getElementById("signal-status-check");
   var btnRequestProject = document.getElementById("btn-request-project");
   var simulateTracking = document.getElementById("simulate-tracking");
-  var heroWaiting = document.getElementById("setup-hero-waiting");
-  var heroConfirmed = document.getElementById("setup-hero-confirmed");
 
   function markStepComplete(stepEl, glyph) {
     stepEl.classList.remove("is-current", "is-pending");
@@ -204,9 +202,6 @@
 
     markStepComplete(setupStepOpen, "check");
     markStepComplete(setupStepPlay, "check");
-
-    heroWaiting.hidden = true;
-    heroConfirmed.hidden = false;
 
     signalStatus.classList.add("is-confirmed");
     signalStatusCheck.hidden = false;

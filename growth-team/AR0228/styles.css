@@ -969,22 +969,6 @@ button {
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
 }
 
-/* Hero illustration — Hitu illustration library. Clock while waiting,
-   swapped for the cheering character once tracking is confirmed, so the
-   payoff at the end of the story actually feels like a payoff. */
-.setup-story__hero {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 96px;
-}
-
-.setup-story__hero-img {
-  height: 100%;
-  width: auto;
-  object-fit: contain;
-}
-
 .setup-steps {
   display: flex;
   flex-direction: column;
