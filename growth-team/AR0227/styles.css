@@ -796,9 +796,16 @@ button {
 .app-window__titlebar {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 6px;
   padding: 12px 16px;
   border-bottom: 1px solid var(--gray-100);
+}
+
+.app-window__titlebar-label {
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  color: var(--gray-500);
 }
 
 .app-window__dot {
@@ -977,45 +984,49 @@ button {
   color: var(--white);
 }
 
-.timer-play {
+/* Decorative status indicator — NOT a button. It mirrors what the timer
+   looks like inside the real desktop app; tracking can only ever be started
+   there, so this never responds to clicks. Grey + pulsing while waiting,
+   solid green once the desktop app has reported tracking started. */
+.timer-status {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 52px;
   height: 52px;
-  background: var(--primary-700);
-  border: none;
+  background: var(--white);
+  border: 1px solid var(--gray-300);
   border-radius: 44px;
-  transition: background var(--transition-fast);
 }
 
-.timer-play:hover {
-  background: var(--primary-800);
-}
-
-.timer-play .material-symbols-rounded {
+.timer-status__icon {
   position: relative;
-  font-size: 22px;
-  color: var(--white);
+  width: 20px;
+  height: 20px;
+  background: var(--gray-500);
+  border-radius: 4px;
+  transition: background var(--transition);
 }
 
-/* Pulsing attention ring — draws the eye to the play button before it's
-   been pressed (matches the Figma prototype's looping opacity animation). */
-.timer-play__pulse {
-  display: none;
+.timer-status.is-running .timer-status__icon {
+  background: #18d06b;
+}
+
+.timer-status__pulse {
+  display: block;
   position: absolute;
   inset: 0;
   border-radius: 44px;
-  background: var(--primary-700);
+  background: var(--gray-300);
+  animation: timer-status-pulse 2s linear infinite;
 }
 
-.timer-play.is-attention .timer-play__pulse {
-  display: block;
-  animation: timer-play-pulse 2s linear infinite;
+.timer-status.is-running .timer-status__pulse {
+  display: none;
 }
 
-@keyframes timer-play-pulse {
+@keyframes timer-status-pulse {
   0% {
     opacity: 0.6;
     transform: scale(1);
@@ -1024,6 +1035,65 @@ button {
     opacity: 0;
     transform: scale(1.6);
   }
+}
+
+/* Page-level status line — lives outside the app-window mockup on purpose,
+   to make clear the browser tab is only watching for a signal from the
+   desktop app, not hosting the control that starts it. */
+.waiting-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  color: var(--gray-600);
+  font-size: 13px;
+}
+
+.waiting-indicator__dot {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--primary-500);
+  animation: waiting-dot-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes waiting-dot-pulse {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(0.85);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Prototype-only stand-in for the real desktop app reporting that tracking
+   started (dashed border + muted tone marks it as a testing affordance,
+   not a real product control — it should be removed once this is wired to
+   a real signal from the desktop app). */
+.simulate-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  align-self: center;
+  background: none;
+  border: 1px dashed var(--gray-300);
+  border-radius: 6px;
+  padding: 4px 10px;
+  color: var(--gray-500);
+  font-size: 12px;
+}
+
+.simulate-link:hover {
+  border-color: var(--gray-500);
+  color: var(--gray-700);
+}
+
+.simulate-link .material-symbols-rounded {
+  font-size: 14px;
 }
 
 /* Step 2 "no project assigned" mockup alert (empty state, before tracking) */
@@ -1106,31 +1176,19 @@ button {
   background: #eaf6ff;
 }
 
-.task-row__play {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* Decorative only — same reasoning as .timer-status above. */
+.task-row__status {
+  display: block;
   width: 18px;
   height: 18px;
   flex-shrink: 0;
-  background: var(--primary-700);
-  border: none;
+  background: var(--gray-500);
   border-radius: 44px;
-  transition: background var(--transition-fast);
+  transition: background var(--transition);
 }
 
-.task-row__play:hover {
-  background: var(--primary-800);
-}
-
-.task-row__play:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 3px var(--primary-700);
-}
-
-.task-row__play .material-symbols-rounded {
-  font-size: 10px;
-  color: var(--white);
+.task-row__status.is-running {
+  background: #18d06b;
 }
 
 .task-row__label {

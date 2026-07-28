@@ -156,6 +156,7 @@
               <span class="app-window__dot app-window__dot--red"></span>
               <span class="app-window__dot app-window__dot--yellow"></span>
               <span class="app-window__dot app-window__dot--green"></span>
+              <span class="app-window__titlebar-label">Hubstaff Desktop App</span>
             </div>
 
             <div class="app-window__body">
@@ -175,26 +176,40 @@
 
               <p class="app-window__project-title">Onboarding</p>
 
-              <button type="button" class="timer-play is-attention" id="timer-play" aria-label="Simulate: start tracking">
-                <span class="timer-play__pulse" id="timer-play-pulse" aria-hidden="true"></span>
-                <span class="material-symbols-rounded" aria-hidden="true" id="timer-play-icon">play_arrow</span>
-              </button>
+              <!-- Decorative only — this mirrors what the timer looks like inside
+                   the real desktop app. It isn't a button: tracking can only be
+                   started there, never from this browser tab. -->
+              <span class="timer-status" id="timer-status" aria-hidden="true">
+                <span class="timer-status__pulse"></span>
+                <span class="timer-status__icon"></span>
+              </span>
 
               <div class="app-window__group-label" id="group-label" hidden>Your organization</div>
 
               <div class="app-window__task-row" id="task-row" hidden>
-                <button type="button" class="task-row__play" id="task-row-play" aria-label="Simulate: start tracking">
-                  <span class="material-symbols-rounded" aria-hidden="true" id="task-row-play-icon">play_arrow</span>
-                </button>
+                <span class="task-row__status" id="task-row-status" aria-hidden="true"></span>
                 <span class="task-row__label">Onboarding</span>
                 <span class="task-row__time" id="task-row-time">0:00</span>
               </div>
             </div>
           </div>
 
+          <p class="waiting-indicator" id="waiting-indicator">
+            <span class="waiting-indicator__dot" aria-hidden="true"></span>
+            Waiting for the desktop app to confirm tracking…
+          </p>
+
           <button type="button" class="request-project-btn" id="btn-request-project">Request a project</button>
 
           <button type="button" class="help-link" id="help-link">Need help, can’t track, or doesn’t apply?</button>
+
+          <!-- Prototype-only: stands in for the real desktop app reporting
+               that tracking started, since this page can't observe the real
+               app. Not part of the actual product design. -->
+          <button type="button" class="simulate-link" id="simulate-tracking">
+            <span class="material-symbols-rounded" aria-hidden="true">science</span>
+            Simulate: desktop app started tracking
+          </button>
 
           <div class="help-modal-overlay" id="help-modal-overlay" hidden>
             <div class="help-modal" role="dialog" aria-modal="true" aria-labelledby="help-modal-title">

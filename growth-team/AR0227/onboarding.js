@@ -104,12 +104,6 @@
       continueTooltip.textContent = tooltipText;
     }
 
-    // The desktop app "confirming tracking" should surface on its own —
-    // the button lets someone trigger it right away, but it also starts
-    // automatically after a short wait if they don't click it.
-    if (currentStep === 2) {
-      startPendingSimulation();
-    }
   }
 
   sidebar.addEventListener("click", function () {
@@ -172,27 +166,26 @@
     }
   });
 
-  // ── Step 2: timer simulation ──────────────────────────────────────────────
-  // The play button simulates the desktop app reporting that tracking has
-  // started — a web page can't actually start/stop the real desktop app's
-  // timer, so this is a stand-in for that signal, not a real remote control.
+  // ── Step 2: timer status ──────────────────────────────────────────────────
+  // Nothing here is a real control — a web page can't start, stop, or even
+  // observe the real desktop app's timer. The mockup only mirrors what
+  // tracking looks like once the desktop app reports it started; the
+  // "Simulate" link below stands in for that real report, for demo purposes.
 
   var timerBar = document.getElementById("timer-bar");
   var timerBarReadout = document.getElementById("timer-bar-readout");
-  var timerPlay = document.getElementById("timer-play");
-  var timerPlayIcon = document.getElementById("timer-play-icon");
-  var taskRowPlay = document.getElementById("task-row-play");
-  var taskRowPlayIcon = document.getElementById("task-row-play-icon");
+  var timerStatus = document.getElementById("timer-status");
+  var taskRowStatus = document.getElementById("task-row-status");
   var taskRowTime = document.getElementById("task-row-time");
   var projectAlert = document.getElementById("project-alert");
   var groupLabel = document.getElementById("group-label");
   var taskRow = document.getElementById("task-row");
+  var waitingIndicator = document.getElementById("waiting-indicator");
   var btnRequestProject = document.getElementById("btn-request-project");
+  var simulateTracking = document.getElementById("simulate-tracking");
 
   var elapsedSeconds = 0;
   var timerInterval = null;
-  var pendingTimeout = null;
-  var PENDING_DELAY_MS = 3500;
 
   function pad(n) {
     return String(n).padStart(2, "0");
@@ -218,14 +211,6 @@
     taskRowTime.textContent = formatShort(elapsedSeconds);
   }
 
-  function startPendingSimulation() {
-    if (step2TimerStarted || pendingTimeout || !step2ProjectAssigned) return;
-    pendingTimeout = window.setTimeout(function () {
-      pendingTimeout = null;
-      startTimer();
-    }, PENDING_DELAY_MS);
-  }
-
   function flashProjectAlert() {
     projectAlert.classList.remove("is-shaking");
     // Force a reflow so re-adding the class restarts the animation even if
@@ -234,6 +219,9 @@
     projectAlert.classList.add("is-shaking");
   }
 
+  // Represents the desktop app reporting that tracking started — there's no
+  // "pause" from here, because this page never had a way to stop the real
+  // app's timer either. Once it starts, it just keeps counting.
   function startTimer() {
     // No project assigned means there's nothing to track time to — the
     // timer can't start. Draw attention to the alert instead.
@@ -242,61 +230,36 @@
       return;
     }
 
-    if (pendingTimeout) {
-      window.clearTimeout(pendingTimeout);
-      pendingTimeout = null;
-    }
+    if (step2TimerStarted) return;
+    step2TimerStarted = true;
 
-    // First press also resolves the "no project assigned" mockup state —
-    // swap the empty-state UI for the assigned-project task row.
-    if (!step2TimerStarted) {
-      timerBar.hidden = false;
-      projectAlert.hidden = true;
-      groupLabel.hidden = false;
-      taskRow.hidden = false;
-      timerPlay.classList.remove("is-attention");
-    }
+    // Resolve the "no project assigned" mockup state — swap the empty-state
+    // UI for the assigned-project task row.
+    timerBar.hidden = false;
+    projectAlert.hidden = true;
+    groupLabel.hidden = false;
+    taskRow.hidden = false;
+    waitingIndicator.hidden = true;
+    simulateTracking.hidden = true;
+    btnRequestProject.hidden = true;
 
     timerBar.classList.add("is-running");
-    timerPlayIcon.textContent = "pause";
-    taskRowPlayIcon.textContent = "pause";
-    timerPlay.setAttribute("aria-pressed", "true");
+    timerStatus.classList.add("is-running");
+    taskRowStatus.classList.add("is-running");
     timerBarReadout.textContent = formatHHMMSS(elapsedSeconds);
     taskRowTime.textContent = formatShort(elapsedSeconds);
-    if (!timerInterval) {
-      timerInterval = window.setInterval(tick, 1000);
-    }
+    timerInterval = window.setInterval(tick, 1000);
 
-    if (!step2TimerStarted) {
-      step2TimerStarted = true;
-      if (currentStep === 2) {
-        btnContinue.disabled = false;
-        continueTooltip.hidden = true;
-      }
+    if (currentStep === 2) {
+      btnContinue.disabled = false;
+      continueTooltip.hidden = true;
     }
   }
 
-  function pauseTimer() {
-    timerBar.classList.remove("is-running");
-    timerPlayIcon.textContent = "play_arrow";
-    taskRowPlayIcon.textContent = "play_arrow";
-    timerPlay.setAttribute("aria-pressed", "false");
-    if (timerInterval) {
-      window.clearInterval(timerInterval);
-      timerInterval = null;
-    }
-  }
-
-  function toggleTimer() {
-    if (timerBar.classList.contains("is-running")) {
-      pauseTimer();
-    } else {
-      startTimer();
-    }
-  }
-
-  timerPlay.addEventListener("click", toggleTimer);
-  taskRowPlay.addEventListener("click", toggleTimer);
+  simulateTracking.addEventListener("click", function () {
+    step2ProjectAssigned = true;
+    startTimer();
+  });
 
   // ── Step 2: "need help" modal ─────────────────────────────────────────────
 
@@ -318,6 +281,8 @@
   // exits the whole onboarding flow.
   function bypassTracking() {
     step2Bypassed = true;
+    waitingIndicator.hidden = true;
+    simulateTracking.hidden = true;
     if (currentStep === 2) {
       btnContinue.disabled = false;
       continueTooltip.hidden = true;
