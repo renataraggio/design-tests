@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AR0228 — Onboarding — Hubstaff</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&family=Material+Symbols+Rounded" rel="stylesheet" />
+
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<div class="onboarding has-main-action" id="onboarding">
+
+  <!-- Side panel -->
+  <button type="button" class="onboarding-sidebar" id="sidebar-toggle" aria-label="Expand sidebar" aria-expanded="false">
+    <div class="onboarding-sidebar__row">
+      <span class="onboarding-sidebar__logo">
+        <img src="assets/logo-mark.svg" alt="Hubstaff" />
+        <span class="wordmark">Hubstaff</span>
+      </span>
+      <span class="onboarding-sidebar__toggle">
+        <img src="assets/arrow-right.svg" alt="" />
+      </span>
+    </div>
+  </button>
+
+  <!-- Content area -->
+  <div class="onboarding-content">
+
+    <div class="onboarding-header-section">
+
+      <header class="onboarding-heading">
+        <h1 class="onboarding-heading__title">
+          <span class="wave" aria-hidden="true">👋</span> Let’s get you started with Hubstaff!
+        </h1>
+        <div class="onboarding-progress" role="progressbar" aria-label="Onboarding progress" aria-valuemin="1" aria-valuemax="3" aria-valuenow="1" id="segments">
+          <div class="onboarding-progress__track">
+            <div class="onboarding-progress__fill" id="progress-fill"></div>
+          </div>
+        </div>
+      </header>
+
+      <section class="onboarding-section" id="onboarding-copy">
+        <h2 class="onboarding-section__title" id="onboarding-title">Download the desktop app</h2>
+        <p class="onboarding-section__body" id="onboarding-body">This is used to track time to your projects and tasks</p>
+      </section>
+
+      <div class="onboarding-slot" id="onboarding-slot" role="region" aria-label="Step content">
+
+        <!-- Step 1: Download the desktop app -->
+        <div class="step-panel" id="step-panel-1" data-step="1">
+          <div class="onboarding-alert">
+            <span class="material-symbols-rounded onboarding-alert__icon" aria-hidden="true">info</span>
+            <p class="onboarding-alert__text">Your organization requires you to track time with the desktop app</p>
+          </div>
+
+          <div class="widgets-row">
+
+            <!-- Utilization widget -->
+            <div class="widget-card widget-card--utilization">
+              <span class="widget-avatar widget-avatar--purple">
+                <img src="assets/avatar-man.png" alt="" />
+              </span>
+              <div class="widget-card__label-row">
+                <span class="widget-card__label">Utilization</span>
+                <span class="material-symbols-rounded widget-card__info-icon" aria-hidden="true">info</span>
+              </div>
+              <div class="widget-card__stat-row">
+                <div class="widget-card__stat">
+                  <p class="widget-card__stat-value">8:55</p>
+                  <p class="widget-card__stat-caption">Daily average</p>
+                  <p class="widget-card__stat-subcaption">Daily target: 8:00</p>
+                </div>
+                <div class="gauge">
+                  <div class="gauge__arc"></div>
+                  <div class="gauge__needle"></div>
+                </div>
+              </div>
+              <p class="gauge__value">113%</p>
+            </div>
+
+            <!-- Timer / app mockup -->
+            <div class="app-window app-window--center">
+              <div class="app-window__titlebar">
+                <span class="app-window__dot app-window__dot--red"></span>
+                <span class="app-window__dot app-window__dot--yellow"></span>
+                <span class="app-window__dot app-window__dot--green"></span>
+              </div>
+              <div class="timer-mock">
+                <div class="timer-mock__bar-row">
+                  <span class="timer-mock__icon-btn" aria-hidden="true">
+                    <span class="material-symbols-rounded" aria-hidden="true">coffee</span>
+                  </span>
+                  <div class="timer-mock__bar">
+                    <span class="timer-mock__bar-time">02:25:00</span>
+                    <span class="timer-mock__bar-badge">
+                      <span class="material-symbols-rounded" aria-hidden="true">check</span>
+                    </span>
+                  </div>
+                  <span class="timer-mock__icon-btn" aria-hidden="true">
+                    <span class="material-symbols-rounded" aria-hidden="true">edit</span>
+                  </span>
+                </div>
+                <p class="timer-mock__project">Product Design</p>
+                <span class="timer-mock__control">
+                  <span class="timer-mock__control-icon"></span>
+                </span>
+                <div class="timer-mock__footer">
+                  <span class="timer-mock__footer-stat">Weekly: 2:25 / 40:00</span>
+                  <span class="timer-mock__footer-divider"></span>
+                  <span class="timer-mock__footer-stat">Today: 2:25</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Activity widget -->
+            <div class="widget-card widget-card--activity">
+              <span class="widget-avatar widget-avatar--teal">
+                <img src="assets/avatar-woman.png" alt="" />
+              </span>
+              <div class="widget-card__label-row">
+                <span class="widget-card__label">activity</span>
+                <span class="material-symbols-rounded widget-card__info-icon" aria-hidden="true">info</span>
+              </div>
+              <p class="widget-card__pill">65%</p>
+              <img class="widget-card__sparkline" src="assets/activity-sparkline.svg" alt="" />
+              <div class="benchmark-bar">
+                <span class="benchmark-bar__label">0%</span>
+                <div class="benchmark-bar__track">
+                  <span class="benchmark-bar__tick benchmark-bar__tick--org" style="left: 40%;"></span>
+                  <span class="benchmark-bar__tick benchmark-bar__tick--job" style="left: 72%;"></span>
+                  <span class="benchmark-bar__marker" style="left: 65%;">
+                    <span class="benchmark-bar__marker-value">65%</span>
+                  </span>
+                </div>
+                <span class="benchmark-bar__label">100%</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Step 2: Install the desktop app and track time to a project -->
+        <div class="step-panel" id="step-panel-2" data-step="2" hidden>
+          <div class="onboarding-alert onboarding-alert--top">
+            <span class="material-symbols-rounded onboarding-alert__icon" aria-hidden="true">info</span>
+            <p class="onboarding-alert__text" id="step2-alert-text">We’ll let you know the moment we can see you tracking time.</p>
+          </div>
+
+          <!-- Storytelling illustration: what we expect the user to do, told
+               as a 3-step sequence, plus an honest "we're watching for it"
+               signal — no fake app window, no fake interactive timer. -->
+          <div class="setup-story">
+            <div class="setup-story__hero">
+              <img src="assets/illustration-clock.png" alt="" class="setup-story__hero-img" id="setup-hero-waiting" />
+              <img src="assets/illustration-cheering.png" alt="" class="setup-story__hero-img" id="setup-hero-confirmed" hidden />
+            </div>
+
+            <ol class="setup-steps" id="setup-steps">
+              <li class="setup-step is-complete" id="setup-step-download">
+                <span class="setup-step__icon" aria-hidden="true">
+                  <span class="material-symbols-rounded" id="setup-step-download-icon">check</span>
+                </span>
+                <span class="setup-step__label">Download the app</span>
+              </li>
+              <li class="setup-step is-current" id="setup-step-open">
+                <span class="setup-step__icon" aria-hidden="true">
+                  <span class="setup-step__pulse"></span>
+                  <img src="assets/illustration-display.png" alt="" class="setup-step__logo" />
+                </span>
+                <span class="setup-step__label">Open Hubstaff on your computer</span>
+              </li>
+              <li class="setup-step is-pending" id="setup-step-play">
+                <span class="setup-step__icon" aria-hidden="true">
+                  <span class="material-symbols-rounded">play_arrow</span>
+                </span>
+                <span class="setup-step__label">Press play to start the timer</span>
+              </li>
+            </ol>
+
+            <p class="signal-status" id="signal-status">
+              <span class="signal-status__waves" aria-hidden="true">
+                <span></span><span></span><span></span>
+              </span>
+              <span class="material-symbols-rounded signal-status__check" id="signal-status-check" aria-hidden="true" hidden>check_circle</span>
+              <span id="signal-status-text">Listening for a signal from your desktop app…</span>
+            </p>
+          </div>
+
+          <button type="button" class="request-project-btn" id="btn-request-project">Request a project</button>
+
+          <button type="button" class="help-link" id="help-link">Need help, can’t track, or doesn’t apply?</button>
+
+          <!-- Prototype-only: stands in for the real desktop app reporting
+               that tracking started, since this page can't observe the real
+               app. Not part of the actual product design. -->
+          <button type="button" class="simulate-link" id="simulate-tracking">
+            <span class="material-symbols-rounded" aria-hidden="true">science</span>
+            Simulate: desktop app started tracking
+          </button>
+
+          <div class="help-modal-overlay" id="help-modal-overlay" hidden>
+            <div class="help-modal" role="dialog" aria-modal="true" aria-labelledby="help-modal-title">
+              <div class="help-modal__header">
+                <h3 class="help-modal__title" id="help-modal-title">Need help, can’t track, or doesn’t apply?</h3>
+                <button type="button" class="help-modal__close" id="help-modal-close" aria-label="Close">
+                  <span class="material-symbols-rounded" aria-hidden="true">close</span>
+                </button>
+              </div>
+              <div class="help-modal__body">
+                <a class="help-modal__link" href="https://support.hubstaff.com/quick-start-guide-for-new-users/" target="_blank" rel="noopener noreferrer">
+                  <span class="material-symbols-rounded" aria-hidden="true">menu_book</span>
+                  Read the Quick Start guide
+                </a>
+
+                <div class="help-modal__faq">
+                  <p class="help-modal__faq-q">How do I start tracking time?</p>
+                  <p class="help-modal__faq-a">Download the desktop app. Then select a project and track time and activity to that project.</p>
+                </div>
+                <div class="help-modal__faq">
+                  <p class="help-modal__faq-q">Where can I see the time I tracked?</p>
+                  <p class="help-modal__faq-a">You can view your time and activity in Hubstaff’s web application.</p>
+                </div>
+                <div class="help-modal__faq">
+                  <p class="help-modal__faq-q">Don’t have a project?</p>
+                  <p class="help-modal__faq-a">To track time in Hubstaff, you need to create or select a project first. Without a project, time tracking won’t be recorded properly.</p>
+                </div>
+
+                <a class="help-modal__support-link" href="https://support.hubstaff.com/contact" target="_blank" rel="noopener noreferrer">
+                  <img src="assets/logo-mark.svg" alt="" class="help-modal__support-icon" />
+                  Reach out to our support team
+                </a>
+              </div>
+              <div class="help-modal__footer">
+                <button type="button" class="help-modal__bypass-btn" id="help-modal-bypass">Continue without tracking time</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Get familiar with Hubstaff -->
+        <div class="step-panel" id="step-panel-3" data-step="3" hidden>
+          <img class="step3-image" src="assets/step3-video-promo.png" alt="Hubstaff onboarding for new users preview" />
+        </div>
+
+      </div>
+
+      <button type="button" class="onboarding-main-action" id="main-action">Download the desktop app</button>
+
+    </div>
+
+    <footer class="onboarding-footer">
+      <button type="button" class="onboarding-btn" id="btn-back" disabled hidden>Back</button>
+
+      <div class="onboarding-footer__actions">
+        <button type="button" class="footer-skip" id="btn-skip" hidden>Skip</button>
+        <span class="continue-wrap" id="continue-wrap">
+          <span class="onboarding-tooltip" id="continue-tooltip" hidden>Click the Download button for the desktop app to continue</span>
+          <button type="button" class="onboarding-btn onboarding-btn--primary" id="btn-continue" disabled>
+            Continue
+            <span class="material-symbols-rounded" aria-hidden="true">arrow_forward</span>
+          </button>
+        </span>
+      </div>
+    </footer>
+
+  </div>
+</div>
+
+<script src="onboarding.js"></script>
+<script src="design-annotations.js"></script>
+<script src="design-annotations.data.js"></script>
+<script>
+  DesignAnnotations.init({
+    pages: window.DESIGN_ANNOTATIONS_DATA.pages,
+    annotations: window.DESIGN_ANNOTATIONS_DATA.annotations,
+    mount: '#onboarding',
+    topOffset: 0,
+    trigger: ['contextmenu', 'button'],
+    taskCenter: true,
+  });
+</script>
+</body>
+</html>

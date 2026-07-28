@@ -1,0 +1,1357 @@
+/* ==========================================================================
+   Onboarding skeleton — page-level styles
+   Figma: Growth Central — node 20028:34798 "Onboarding skeleton"
+   ========================================================================== */
+
+:root {
+  --white: #ffffff;
+  --gray-100: #f3f4f6;
+  --gray-300: #d1d5db;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-900: #111827;
+  --primary-500: #2aa7ff;
+  --primary-600: #2f8af4;
+  --primary-700: #0168dd;
+  --primary-800: #0a4b96;
+
+  --font-body: "Roboto", sans-serif;
+  --font-icon: "Material Symbols Rounded";
+
+  --sidebar-width-collapsed: 80px;
+  --sidebar-width-expanded: 240px;
+  --transition: 240ms ease;
+  --transition-fast: 150ms ease;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: var(--white);
+  font-family: var(--font-body);
+  color: var(--gray-900);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.material-symbols-rounded {
+  font-family: var(--font-icon);
+  font-weight: normal;
+  font-style: normal;
+  font-size: 18px;
+  line-height: 1;
+  display: inline-block;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Onboarding shell ─────────────────────────────────────────────────── */
+
+.onboarding {
+  display: flex;
+  align-items: stretch;
+  height: 100vh;
+  width: 100%;
+  background: var(--white);
+}
+
+/* ── Side panel ───────────────────────────────────────────────────────── */
+
+.onboarding-sidebar {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  flex-shrink: 0;
+  width: var(--sidebar-width-collapsed);
+  height: 100%;
+  padding: 12px 24px 14px 0;
+  background: #f3f4f6;
+  border: none;
+  border-right: 1px solid var(--gray-300);
+  transition: width var(--transition);
+}
+
+.onboarding-sidebar.is-expanded {
+  width: var(--sidebar-width-expanded);
+}
+
+.onboarding-sidebar__row {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+}
+
+.onboarding-sidebar__logo {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex: 1 1 0;
+  min-width: 0;
+  height: 24px;
+  padding: 10px 0 10px 28px;
+}
+
+.onboarding-sidebar__logo img {
+  display: block;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.onboarding-sidebar__logo .wordmark {
+  display: none;
+  margin-left: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--gray-900);
+  white-space: nowrap;
+}
+
+.onboarding-sidebar.is-expanded .onboarding-sidebar__logo .wordmark {
+  display: inline;
+}
+
+.onboarding-sidebar__toggle {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 5px;
+  background: var(--white);
+  border: 1px solid var(--gray-300);
+  border-radius: 52px;
+  transform: scaleY(-1);
+  transition: background var(--transition-fast);
+}
+
+.onboarding-sidebar:hover .onboarding-sidebar__toggle {
+  background: var(--gray-100);
+}
+
+.onboarding-sidebar:focus-visible {
+  outline: none;
+}
+
+.onboarding-sidebar:focus-visible .onboarding-sidebar__toggle {
+  box-shadow: 0 0 0 3px var(--primary-700);
+}
+
+.onboarding-sidebar__toggle img {
+  display: block;
+  width: 14px;
+  height: 14px;
+  transition: transform var(--transition);
+}
+
+.onboarding-sidebar.is-expanded .onboarding-sidebar__toggle img {
+  transform: rotate(180deg);
+}
+
+/* ── Content area ─────────────────────────────────────────────────────── */
+
+.onboarding-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  min-width: 0;
+  height: 100%;
+}
+
+.onboarding-header-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 36px;
+  flex: 1 1 0;
+  min-height: 0;
+  width: 100%;
+  padding: 56px 160px;
+  overflow-y: auto;
+}
+
+@media (max-width: 1024px) {
+  .onboarding-header-section {
+    padding: 40px 48px;
+  }
+}
+
+@media (max-width: 640px) {
+  .onboarding-header-section {
+    padding: 24px 20px;
+  }
+}
+
+.onboarding-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.onboarding-heading__title {
+  margin: 0;
+  width: 100%;
+  text-align: center;
+  font-weight: 300;
+  font-size: 30px;
+  line-height: 40px;
+  color: var(--gray-900);
+}
+
+.onboarding-heading__title .wave {
+  color: #000000;
+}
+
+.onboarding-progress {
+  width: 100%;
+  max-width: 240px;
+}
+
+.onboarding-progress__track {
+  position: relative;
+  height: 6px;
+  width: 100%;
+  background: var(--gray-300);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.onboarding-progress__fill {
+  position: absolute;
+  inset: 0;
+  width: 25%;
+  background: var(--primary-500);
+  border-radius: 2px;
+  transition: width var(--transition);
+}
+
+.onboarding-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  text-align: center;
+  word-break: break-word;
+}
+
+.onboarding-section__title {
+  margin: 0;
+  width: 100%;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 28px;
+  color: var(--gray-900);
+}
+
+.onboarding-section__body {
+  margin: 0;
+  width: 100%;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--gray-700);
+}
+
+.onboarding-slot {
+  width: 100%;
+  background: var(--white);
+  border-radius: 6px;
+}
+
+.onboarding-main-action {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-shrink: 0;
+  padding: 12px 24px;
+  background: var(--primary-700);
+  border: none;
+  border-radius: 6px;
+  color: var(--white);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  transition: background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.onboarding-main-action:hover:not(:disabled) {
+  background: var(--primary-800);
+}
+
+.onboarding-main-action:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--primary-700);
+}
+
+.onboarding.has-main-action .onboarding-main-action {
+  display: flex;
+}
+
+/* Confirmed state — outline primary with a checkbox icon, not a dimmed/disabled look */
+.onboarding-main-action.is-confirmed {
+  background: var(--white);
+  border: 1px solid var(--primary-700);
+  color: var(--primary-700);
+  cursor: default;
+}
+
+.onboarding-main-action.is-confirmed .material-symbols-rounded {
+  color: var(--primary-700);
+}
+
+/* ── Step content ─────────────────────────────────────────────────────── */
+
+.step-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 8px 0;
+}
+
+.onboarding-alert {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  background: #eaf6ff;
+  border: 1px solid var(--primary-700);
+  border-radius: 8px;
+}
+
+.onboarding-alert__icon {
+  font-size: 18px;
+  color: var(--primary-800);
+}
+
+.onboarding-alert__text {
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--primary-800);
+  text-align: center;
+}
+
+/* ── Step 2: "need help" link + modal ─────────────────────────────────────
+   A plain understated link (not an alert box — this is a low-priority,
+   optional escape hatch, not an urgent notice) that opens a modal with a
+   Quick Start link, a couple of FAQs, and a way to email a manager.
+   ────────────────────────────────────────────────────────────────────── */
+
+.help-link {
+  align-self: center;
+  background: none;
+  border: none;
+  padding: 4px;
+  color: var(--primary-700);
+  font-size: 14px;
+  text-decoration: underline;
+}
+
+.help-link:hover {
+  color: var(--primary-800);
+}
+
+.request-project-btn {
+  align-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  background: var(--white);
+  border: 1px solid var(--gray-300);
+  border-radius: 6px;
+  color: var(--gray-600);
+  font-size: 14px;
+  line-height: 20px;
+  transition: background var(--transition-fast);
+}
+
+.request-project-btn:hover {
+  background: var(--gray-100);
+}
+
+.help-modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(17, 24, 39, 0.5);
+  z-index: 50;
+}
+
+.help-modal {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 420px;
+  max-height: 80vh;
+  background: var(--white);
+  border-radius: 8px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+
+.help-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--gray-300);
+}
+
+.help-modal__title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--gray-900);
+}
+
+.help-modal__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  background: none;
+  border: none;
+  border-radius: 6px;
+  color: var(--gray-500);
+}
+
+.help-modal__close:hover {
+  background: var(--gray-100);
+}
+
+.help-modal__body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.help-modal__link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--primary-700);
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.help-modal__link:hover {
+  text-decoration: underline;
+}
+
+.help-modal__link .material-symbols-rounded {
+  font-size: 18px;
+}
+
+.help-modal__faq {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.help-modal__faq-q {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--gray-900);
+}
+
+.help-modal__faq-a {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--gray-600);
+}
+
+.help-modal__support-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--primary-700);
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.help-modal__support-link:hover {
+  text-decoration: underline;
+}
+
+.help-modal__support-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #1f2e54;
+  padding: 4px;
+}
+
+.help-modal__footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.help-modal__bypass-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  background: var(--white);
+  border: 1px solid var(--gray-300);
+  border-radius: 6px;
+  color: var(--gray-600);
+  font-size: 14px;
+  transition: background var(--transition-fast);
+}
+
+.help-modal__bypass-btn:hover {
+  background: var(--gray-100);
+}
+
+/* ── Step 1: widget row (Utilization + timer mockup + Activity) ──────────
+   Faithful-but-simplified recreation of the Figma dashboard widgets
+   (gauge chart, activity benchmark bar, floating avatar badges).
+   ────────────────────────────────────────────────────────────────────── */
+
+.widgets-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 24px;
+  width: 100%;
+}
+
+.widget-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 220px;
+  flex-shrink: 0;
+  padding: 15px;
+  background: var(--white);
+  border: 1px solid #d6dbe6;
+  border-radius: 8px;
+  box-shadow: 6px 12px 16px rgba(0, 0, 0, 0.08);
+}
+
+.widget-avatar {
+  position: absolute;
+  top: -14px;
+  right: -14px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.widget-avatar img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.widget-avatar--purple {
+  background: linear-gradient(153deg, #bfabff 16%, #8b73ff 100%);
+}
+
+.widget-avatar--teal {
+  background: linear-gradient(153deg, #1cf1d0 19%, #0ecb95 90%);
+}
+
+.widget-card__label-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.widget-card__label {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #617083;
+}
+
+.widget-card__info-icon {
+  font-size: 14px;
+  color: #9ca3af;
+}
+
+.widget-card__stat-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.widget-card__stat-value {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 22px;
+  color: #2d3137;
+}
+
+.widget-card__stat-caption {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: #617083;
+}
+
+.widget-card__stat-subcaption {
+  margin: 6px 0 0;
+  font-size: 11px;
+  color: #617083;
+}
+
+/* Utilization gauge (CSS conic-gradient half-donut + rotated needle) */
+
+.gauge {
+  position: relative;
+  width: 96px;
+  height: 48px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.gauge__arc {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: conic-gradient(from 180deg, #d1d5db 0deg 128deg, #9ca3af 128deg 138deg, var(--primary-500) 138deg 180deg);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 10px), #000 calc(100% - 10px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 10px), #000 calc(100% - 10px));
+}
+
+.gauge__needle {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  height: 38px;
+  background: #2d3137;
+  border-radius: 2px;
+  transform-origin: bottom center;
+  transform: translateX(-50%) rotate(46deg);
+}
+
+.gauge__needle::after {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  background: #2d3137;
+  border-radius: 50%;
+  transform: translateX(-50%);
+}
+
+.gauge__value {
+  align-self: center;
+  margin: 4px 0 0;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #7a8798;
+}
+
+/* Activity widget */
+
+.widget-card__pill {
+  align-self: flex-end;
+  margin: 0 0 8px;
+  padding: 6px 12px;
+  background: #18d06b;
+  border-radius: 16px;
+  color: var(--white);
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.widget-card__sparkline {
+  display: block;
+  width: 100%;
+  height: 12px;
+  margin-bottom: 16px;
+}
+
+.benchmark-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-top: 16px;
+  border-top: 1px solid #f1f3f5;
+  font-size: 11px;
+  color: #333;
+}
+
+.benchmark-bar__track {
+  position: relative;
+  flex: 1 1 0;
+  height: 6px;
+  background: #f4f6f9;
+  border-radius: 3px;
+}
+
+.benchmark-bar__tick {
+  position: absolute;
+  top: 0;
+  width: 3px;
+  height: 100%;
+  border-radius: 2px;
+  transform: translateX(-50%);
+}
+
+.benchmark-bar__tick--org {
+  background: #ebc604;
+}
+
+.benchmark-bar__tick--job {
+  background: #b066ff;
+}
+
+.benchmark-bar__marker {
+  position: absolute;
+  bottom: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translateX(-50%);
+}
+
+.benchmark-bar__marker::after {
+  content: "";
+  width: 2px;
+  height: 16px;
+  background: #2d3137;
+}
+
+.benchmark-bar__marker-value {
+  margin-bottom: 2px;
+  font-size: 11px;
+  color: #333;
+  white-space: nowrap;
+}
+
+/* ── Fake desktop app window (steps 1 & 2) ───────────────────────────────
+   Illustrative recreation of the Figma "snazzy-image" app mockup — traffic
+   lights, timer bar, project row — kept lightweight rather than pixel
+   -cloning every gauge/avatar from the design's decorative widgets.
+   ────────────────────────────────────────────────────────────────────── */
+
+.app-window {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 334px;
+  background: var(--white);
+  border: 1px solid #d6dbe6;
+  border-radius: 8px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+}
+
+.app-window--center {
+  width: 300px;
+  flex-shrink: 0;
+}
+
+.app-window__titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--gray-100);
+}
+
+.app-window__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.app-window__dot--red {
+  background: #ff5f57;
+}
+
+.app-window__dot--yellow {
+  background: #febc2e;
+}
+
+.app-window__dot--green {
+  background: #28c840;
+}
+
+.app-window__body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 24px 24px;
+}
+
+/* Step 1 decorative timer mockup (matches the Figma "Image 3" widget) */
+
+.timer-mock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 24px;
+}
+
+.timer-mock__bar-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.timer-mock__icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  background: var(--white);
+  border: 1px solid var(--gray-300);
+  border-radius: 44px;
+}
+
+.timer-mock__icon-btn .material-symbols-rounded {
+  font-size: 16px;
+  color: var(--gray-500);
+}
+
+.timer-mock__bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 182px;
+  height: 36px;
+  background: var(--primary-600);
+  border-radius: 6px;
+}
+
+.timer-mock__bar-time {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--white);
+}
+
+.timer-mock__bar-badge {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: var(--white);
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.timer-mock__bar-badge .material-symbols-rounded {
+  font-size: 14px;
+  color: var(--primary-600);
+}
+
+.timer-mock__project {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--gray-900);
+}
+
+.timer-mock__control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  background: var(--white);
+  border: 1px solid var(--gray-300);
+  border-radius: 44px;
+}
+
+.timer-mock__control-icon {
+  width: 20px;
+  height: 20px;
+  background: var(--primary-700);
+  border-radius: 4px;
+}
+
+.timer-mock__footer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding-top: 16px;
+  border-top: 1px solid var(--gray-300);
+  font-size: 12px;
+  color: var(--gray-900);
+}
+
+.timer-mock__footer-stat {
+  flex: 1 1 0;
+  text-align: center;
+}
+
+.timer-mock__footer-divider {
+  width: 1px;
+  height: 20px;
+  background: var(--gray-300);
+}
+
+/* ── Step 2: setup story (new direction) ─────────────────────────────────
+   Replaces the old fake-app-window mockup entirely. Tells the story of
+   what we expect — download, open the app, press play — as a 3-item
+   sequence, then honestly shows this page just listening for a signal
+   rather than pretending to host the control itself.
+   ────────────────────────────────────────────────────────────────────── */
+
+.setup-story {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  max-width: 420px;
+  padding: 32px 24px;
+  background: var(--white);
+  border: 1px solid #d6dbe6;
+  border-radius: 12px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* Hero illustration — Hitu illustration library. Clock while waiting,
+   swapped for the cheering character once tracking is confirmed, so the
+   payoff at the end of the story actually feels like a payoff. */
+.setup-story__hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 96px;
+}
+
+.setup-story__hero-img {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+}
+
+.setup-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.setup-step {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 0;
+}
+
+/* Connecting line between steps, like a vertical timeline/stepper */
+.setup-step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 19px;
+  top: calc(100% - 6px);
+  width: 2px;
+  height: 12px;
+  background: var(--gray-300);
+}
+
+.setup-step__icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  background: var(--white);
+  border: 1px solid var(--gray-300);
+  border-radius: 50%;
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.setup-step__icon .material-symbols-rounded {
+  font-size: 20px;
+  color: var(--gray-500);
+}
+
+.setup-step__logo {
+  width: 20px;
+  height: 20px;
+}
+
+.setup-step__label {
+  font-size: 15px;
+  color: var(--gray-700);
+}
+
+/* Completed step — solid primary badge with a checkmark */
+.setup-step.is-complete .setup-step__icon {
+  background: var(--primary-700);
+  border-color: var(--primary-700);
+}
+
+.setup-step.is-complete .setup-step__icon .material-symbols-rounded {
+  color: var(--white);
+}
+
+.setup-step.is-complete .setup-step__label {
+  color: var(--gray-900);
+  font-weight: 500;
+}
+
+/* Current step — the one we expect the user to be doing right now */
+.setup-step.is-current .setup-step__icon {
+  border-color: var(--primary-500);
+}
+
+.setup-step.is-current .setup-step__label {
+  color: var(--gray-900);
+  font-weight: 500;
+}
+
+.setup-step__pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--primary-500);
+  animation: setup-step-pulse 2s linear infinite;
+}
+
+@keyframes setup-step-pulse {
+  0% {
+    opacity: 0.45;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+}
+
+/* Pending step — dimmed until the one before it completes */
+.setup-step.is-pending .setup-step__icon,
+.setup-step.is-pending .setup-step__label {
+  opacity: 0.5;
+}
+
+/* Honest status line: this page is only listening, not controlling anything */
+.signal-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  padding: 10px 16px;
+  width: 100%;
+  background: var(--gray-100);
+  border-radius: 8px;
+  color: var(--gray-600);
+  font-size: 13px;
+}
+
+.signal-status__waves {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+}
+
+.signal-status__waves span {
+  position: absolute;
+  border-radius: 50%;
+  border: 1.5px solid var(--primary-500);
+  animation: signal-wave 1.8s ease-out infinite;
+}
+
+.signal-status__waves span:nth-child(1) {
+  width: 4px;
+  height: 4px;
+  background: var(--primary-500);
+  border: none;
+  animation: none;
+}
+
+.signal-status__waves span:nth-child(2) {
+  width: 16px;
+  height: 16px;
+  animation-delay: 0s;
+}
+
+.signal-status__waves span:nth-child(3) {
+  width: 16px;
+  height: 16px;
+  animation-delay: 0.9s;
+}
+
+@keyframes signal-wave {
+  0% {
+    opacity: 0.6;
+    transform: scale(0.3);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+.signal-status__check {
+  flex-shrink: 0;
+  font-size: 18px;
+  color: #18d06b;
+}
+
+.signal-status.is-confirmed {
+  background: #eafff4;
+  color: #0a6b3f;
+}
+
+.signal-status.is-confirmed .signal-status__waves {
+  display: none;
+}
+
+.signal-status.is-bypassed .signal-status__waves {
+  display: none;
+}
+
+.signal-status.is-bypassed {
+  background: var(--gray-100);
+  color: var(--gray-600);
+}
+
+/* Prototype-only stand-in for the real desktop app reporting that tracking
+   started (dashed border + muted tone marks it as a testing affordance,
+   not a real product control — it should be removed once this is wired to
+   a real signal from the desktop app). */
+.simulate-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  align-self: center;
+  background: none;
+  border: 1px dashed var(--gray-300);
+  border-radius: 6px;
+  padding: 4px 10px;
+  color: var(--gray-500);
+  font-size: 12px;
+}
+
+.simulate-link:hover {
+  border-color: var(--gray-500);
+  color: var(--gray-700);
+}
+
+.simulate-link .material-symbols-rounded {
+  font-size: 14px;
+}
+
+/* ── Step 3: static video-promo image ─────────────────────────────────── */
+
+.step3-image {
+  width: 100%;
+  max-width: 836px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+/* ── Footer ───────────────────────────────────────────────────────────── */
+
+.onboarding-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-shrink: 0;
+  width: 100%;
+  padding: 14px;
+  border-top: 1px solid var(--gray-300);
+  background: var(--white);
+}
+
+/* Pushes the footer actions to the far right regardless of whether #btn-back
+   is present — space-between collapses to flex-start when btn-back is
+   display:none (hidden on step 1), so flex-end + this auto-margin is used
+   instead of relying on a two-item split. */
+#btn-back {
+  margin-right: auto;
+}
+
+.footer-skip {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  padding: 4px 8px;
+  color: var(--primary-700);
+  font-size: 14px;
+}
+
+.footer-skip:hover {
+  color: var(--primary-800);
+  text-decoration: underline;
+}
+
+.onboarding-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-height: 40px;
+  padding: 10px 20px;
+  background: var(--white);
+  border: 1px solid var(--gray-300);
+  border-radius: 6px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--gray-600);
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.onboarding-btn .material-symbols-rounded {
+  font-size: 18px;
+  color: var(--gray-500);
+}
+
+.onboarding-btn:hover:not(:disabled) {
+  background: var(--gray-100);
+}
+
+.onboarding-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--primary-700);
+}
+
+.onboarding-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.onboarding-footer__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.continue-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.onboarding-tooltip {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  right: 0;
+  width: 182px;
+  padding: 10px 12px;
+  background: var(--gray-800, #1f2937);
+  border-radius: 4px;
+  color: #9ca3af;
+  font-size: 12px;
+  line-height: 1.25;
+  text-align: left;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-fast);
+}
+
+.onboarding-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  right: 24px;
+  border: 6px solid transparent;
+  border-top-color: var(--gray-800, #1f2937);
+}
+
+.continue-wrap:hover .onboarding-tooltip:not([hidden]) {
+  opacity: 1;
+}
+
+.onboarding-btn--primary {
+  background: var(--primary-500);
+  border: none;
+  color: var(--white);
+}
+
+.onboarding-btn--primary .material-symbols-rounded {
+  color: var(--white);
+}
+
+.onboarding-btn--primary:hover:not(:disabled) {
+  background: var(--primary-600);
+}
+
+.onboarding-btn--primary:disabled {
+  opacity: 0.3;
+}
+
+/* ── Design Annotations overrides ─────────────────────────────────────────
+   design-annotations.js is vendored verbatim; its floating Task Center button
+   defaults to bottom-right. Reposition to top-right without touching the
+   runtime file — higher specificity than its own `.da-tc-btn--float` rule so
+   it wins regardless of style injection order. ────────────────────────── */
+
+body .da-tc-btn--float {
+  top: 20px;
+  right: 20px;
+  bottom: auto;
+}
