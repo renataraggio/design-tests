@@ -34,7 +34,7 @@ window.DESIGN_ANNOTATIONS_DATA = {
       kind: "suggestion",
       title: "This experiment is a pivot away from AR0227's fake-app-window approach",
       description:
-        "AR0227's Step 2 mimicked the real desktop app in a browser mockup (traffic-light titlebar, a fake play button, a fake counting timer) — feedback was that this made it look like you could actually track time from the web page, when tracking can only ever happen in the real desktop app. AR0228 duplicates AR0227 and replaces just that idea: Step 2 is now a 3-step \"story\" (Download → Open the app → Press play), plus an honest \"Listening for a signal from your desktop app…\" status line — no element on the page claims to be a working control. Steps 1 and 3 are unchanged from AR0227.",
+        "AR0227's Step 2 mimicked the real desktop app in a browser mockup (traffic-light titlebar, a fake play button, a fake counting timer) — feedback was that this made it look like you could actually track time from the web page, when tracking can only ever happen in the real desktop app. AR0228 duplicates AR0227 and replaces just that idea: Step 2 is now a 3-step \"story\" (Download → Open the app → Press play), plus an honest \"Waiting to hear back from your desktop app…\" status line — no element on the page claims to be a working control. Steps 1 and 3 are unchanged from AR0227.",
       target: ".setup-story",
       sub: ["Compare directly against AR0227 with stakeholders before deciding which direction to carry forward"],
     },
@@ -44,7 +44,7 @@ window.DESIGN_ANNOTATIONS_DATA = {
       kind: "required",
       title: "\"Simulate\" link stands in for the real desktop-app signal — no real signal exists yet",
       description:
-        "The 3-step list and \"Listening for a signal…\" status are driven entirely by the \"Simulate: desktop app started tracking\" link, since this static prototype has no way to hear from a real desktop app. Clicking it marks \"Open Hubstaff\" and \"Press play\" complete and unlocks Continue. It's explicitly marked as a testing affordance (dashed border, \"Simulate:\" copy) and isn't part of the real design — and it always succeeds, so it can't reproduce a \"no project assigned\" or \"app never reports back\" failure case the way AR0227's build attempted to.",
+        "The 3-step list and \"Waiting to hear back…\" status are driven entirely by the \"Simulate: desktop app started tracking\" link, since this static prototype has no way to hear from a real desktop app. Clicking it marks \"Open Hubstaff\" and \"Press play\" complete and unlocks Continue. It's explicitly marked as a testing affordance (dashed border, \"Simulate:\" copy) and isn't part of the real design — and it always succeeds, so it can't reproduce a \"no project assigned\" or \"app never reports back\" failure case the way AR0227's build attempted to.",
       target: "#simulate-tracking",
       priority: "high",
       sub: [

@@ -216,12 +216,16 @@
       setupStepDownloadCta.hidden = false;
     }
 
+    // Only one step is ever the active/highlighted one — "Open Hubstaff"
+    // while we wait on the download, then "Press play" stays dimmed until
+    // tracking is actually confirmed (there's no distinct "app opened"
+    // signal to promote it to active on its own).
     if (!step2TimerStarted) {
-      var state = step1Confirmed ? "is-current" : "is-pending";
-      [setupStepOpen, setupStepPlay].forEach(function (el) {
-        el.classList.remove("is-current", "is-pending");
-        el.classList.add(state);
-      });
+      setupStepOpen.classList.remove("is-current", "is-pending");
+      setupStepOpen.classList.add(step1Confirmed ? "is-current" : "is-pending");
+
+      setupStepPlay.classList.remove("is-current", "is-pending");
+      setupStepPlay.classList.add("is-pending");
     }
   }
 
