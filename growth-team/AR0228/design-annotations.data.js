@@ -5,6 +5,16 @@ window.DESIGN_ANNOTATIONS_DATA = {
 
   annotations: [
     {
+      id: "step2-download-cta-fallback",
+      page: "onboarding",
+      kind: "suggestion",
+      title: "Step 2's story now shows a \"Download\" CTA if Step 1 was skipped",
+      description:
+        "Since Step 1's Skip advances straight to Step 2 without requiring the download, it's possible to land here with nothing actually downloaded yet. The 3-step story now reflects that honestly: \"Download the app\" only shows its checkmark once step1Confirmed is true — otherwise it shows a download icon, a pulsing highlight, and an inline \"Download\" button (reusing the same confirmDownload() logic as Step 1's own button), and \"Open Hubstaff\"/\"Press play\" stay dimmed until it's done.",
+      target: "#setup-step-download-cta",
+      sub: ["Confirm this inline recovery path is preferred over, say, blocking Skip on Step 1 entirely, or redirecting back to Step 1 automatically"],
+    },
+    {
       id: "step1-download-simulated",
       page: "onboarding",
       kind: "required",

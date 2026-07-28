@@ -1077,6 +1077,29 @@ button {
   opacity: 0.5;
 }
 
+.setup-step.is-pending .setup-step__pulse {
+  display: none;
+}
+
+/* Inline CTA shown next to a step that needs the user to act from here
+   (e.g. "Download" if Step 1 was skipped without confirming the download) */
+.setup-step__cta {
+  margin-left: auto;
+  flex-shrink: 0;
+  padding: 6px 14px;
+  background: var(--primary-700);
+  border: none;
+  border-radius: 6px;
+  color: var(--white);
+  font-size: 13px;
+  font-weight: 500;
+  transition: background var(--transition-fast);
+}
+
+.setup-step__cta:hover {
+  background: var(--primary-800);
+}
+
 /* Honest status line: this page is only listening, not controlling anything */
 .signal-status {
   display: flex;

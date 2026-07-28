@@ -158,9 +158,11 @@
             <ol class="setup-steps" id="setup-steps">
               <li class="setup-step is-complete" id="setup-step-download">
                 <span class="setup-step__icon" aria-hidden="true">
+                  <span class="setup-step__pulse"></span>
                   <span class="material-symbols-rounded" id="setup-step-download-icon">check</span>
                 </span>
                 <span class="setup-step__label">Download the app</span>
+                <button type="button" class="setup-step__cta" id="setup-step-download-cta" hidden>Download</button>
               </li>
               <li class="setup-step is-current" id="setup-step-open">
                 <span class="setup-step__icon" aria-hidden="true">
@@ -169,8 +171,9 @@
                 </span>
                 <span class="setup-step__label">Open Hubstaff on your computer</span>
               </li>
-              <li class="setup-step is-pending" id="setup-step-play">
+              <li class="setup-step is-current" id="setup-step-play">
                 <span class="setup-step__icon" aria-hidden="true">
+                  <span class="setup-step__pulse"></span>
                   <span class="material-symbols-rounded">play_arrow</span>
                 </span>
                 <span class="setup-step__label">Press play to start the timer</span>

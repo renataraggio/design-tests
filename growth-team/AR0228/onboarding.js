@@ -103,6 +103,7 @@
       continueTooltip.textContent = tooltipText;
     }
 
+    syncSetupStory();
   }
 
   sidebar.addEventListener("click", function () {
@@ -144,8 +145,10 @@
   });
 
   // ── Step 1: "Download the desktop app" main action ──────────────────────
+  // Shared by Step 1's own button and Step 2's "Download" CTA — reachable
+  // there whenever Step 1 was skipped without confirming the download.
 
-  mainAction.addEventListener("click", function () {
+  function confirmDownload() {
     if (step1Confirmed) return;
     step1Confirmed = true;
     mainAction.disabled = true;
@@ -163,7 +166,10 @@
       btnContinue.disabled = false;
       continueTooltip.hidden = true;
     }
-  });
+    syncSetupStory();
+  }
+
+  mainAction.addEventListener("click", confirmDownload);
 
   // ── Step 2: setup story + signal status ───────────────────────────────────
   // Nothing here is a real control — a web page can't start, stop, or even
@@ -173,6 +179,8 @@
   // page is just listening for a signal, not hosting the action itself.
   // The "Simulate" link stands in for that real signal, for demo purposes.
 
+  var setupStepDownload = document.getElementById("setup-step-download");
+  var setupStepDownloadCta = document.getElementById("setup-step-download-cta");
   var setupStepOpen = document.getElementById("setup-step-open");
   var setupStepPlay = document.getElementById("setup-step-play");
   var signalStatus = document.getElementById("signal-status");
@@ -192,6 +200,32 @@
     span.textContent = glyph;
     icon.appendChild(span);
   }
+
+  // Keeps the 3-step story honest about what actually happened. Skip on
+  // Step 1 can land someone on Step 2 without ever confirming the download —
+  // in that case, show a CTA to go do it, right where it's needed, rather
+  // than a checkmark that isn't true yet.
+  function syncSetupStory() {
+    if (step1Confirmed) {
+      markStepComplete(setupStepDownload, "check");
+      setupStepDownloadCta.hidden = true;
+    } else {
+      setupStepDownload.classList.remove("is-complete", "is-pending");
+      setupStepDownload.classList.add("is-current");
+      document.getElementById("setup-step-download-icon").textContent = "download";
+      setupStepDownloadCta.hidden = false;
+    }
+
+    if (!step2TimerStarted) {
+      var state = step1Confirmed ? "is-current" : "is-pending";
+      [setupStepOpen, setupStepPlay].forEach(function (el) {
+        el.classList.remove("is-current", "is-pending");
+        el.classList.add(state);
+      });
+    }
+  }
+
+  setupStepDownloadCta.addEventListener("click", confirmDownload);
 
   // Represents the desktop app reporting that tracking started. There's no
   // "undo" from here — this page never had a way to stop the real app's
