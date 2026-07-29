@@ -6,44 +6,96 @@
 <title>Design Tests</title>
 <style>
   :root { color-scheme: light dark; }
+  * { box-sizing: border-box; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    max-width: 720px;
-    margin: 64px auto;
+    max-width: 1080px;
+    margin: 56px auto 80px;
     padding: 0 24px;
     color: #1f2937;
+    background: #fafafa;
   }
-  h1 { font-size: 24px; font-weight: 600; margin-bottom: 4px; }
+  h1 { font-size: 26px; font-weight: 600; margin-bottom: 4px; }
   p.subtitle { color: #6b7280; margin-top: 0; margin-bottom: 40px; }
   h2 {
     font-size: 13px;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.06em;
     color: #6b7280;
-    margin: 32px 0 12px;
-    border-bottom: 1px solid #e5e7eb;
-    padding-bottom: 8px;
+    margin: 40px 0 16px;
   }
-  ul { list-style: none; padding: 0; margin: 0; }
-  li { margin: 0; }
-  a.project-link {
-    display: block;
-    padding: 12px 4px;
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+  }
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
     text-decoration: none;
-    color: #111827;
-    border-bottom: 1px solid #f3f4f6;
+    color: inherit;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
   }
-  a.project-link:hover { color: #0168dd; }
-  a.project-link .label { font-weight: 500; }
-  a.project-link .path { display: block; font-size: 13px; color: #9ca3af; margin-top: 2px; }
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(17, 24, 39, 0.08);
+    border-color: #d1d5db;
+  }
+  .card-link-overlay { position: absolute; inset: 0; z-index: 1; }
+  .preview {
+    aspect-ratio: 16 / 10;
+    background: #f3f4f6;
+    display: block;
+  }
+  .preview svg { width: 100%; height: 100%; display: block; }
+  .card-body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  .card-title { font-size: 15px; font-weight: 600; color: #111827; line-height: 1.3; }
+  .card-desc { font-size: 13px; color: #6b7280; line-height: 1.4; margin: 0; }
+  .card-footer { margin-top: auto; display: flex; align-items: center; justify-content: space-between; padding-top: 10px; }
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    padding: 3px 9px;
+    border-radius: 9999px;
+    white-space: nowrap;
+  }
+  .status::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  .status-design      { background: #f3e8ff; color: #7c3aed; }
+  .status-review      { background: #fef3c7; color: #b45309; }
+  .status-dev         { background: #dbeafe; color: #0168dd; }
+  .status-abtest      { background: #d1fae5; color: #059669; }
+  .status-usertesting { background: #cffafe; color: #0e7490; }
+  .status-template    { background: #f3f4f6; color: #6b7280; }
+
+  .secondary-link { position: relative; z-index: 2; font-size: 12px; color: #9ca3af; text-decoration: none; }
+  .secondary-link:hover { color: #0168dd; text-decoration: underline; }
 
   @media (prefers-color-scheme: dark) {
-    body { color: #e5e7eb; background: #111827; }
+    body { color: #e5e7eb; background: #0b0f19; }
     p.subtitle { color: #9ca3af; }
-    h2 { color: #9ca3af; border-bottom-color: #1f2937; }
-    a.project-link { color: #f3f4f6; border-bottom-color: #1f2937; }
-    a.project-link:hover { color: #4da3ff; }
-    a.project-link .path { color: #6b7280; }
+    h2 { color: #9ca3af; }
+    .card { background: #111827; border-color: #1f2937; }
+    .card:hover { border-color: #374151; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); }
+    .preview { background: #0b0f19; }
+    .card-title { color: #f3f4f6; }
+    .card-desc { color: #9ca3af; }
+    .status-design      { background: rgba(124, 58, 237, 0.18); color: #c4b5fd; }
+    .status-review      { background: rgba(180, 83, 9, 0.18); color: #fcd34d; }
+    .status-dev         { background: rgba(1, 104, 221, 0.18); color: #7db9ff; }
+    .status-abtest      { background: rgba(5, 150, 105, 0.18); color: #6ee7b7; }
+    .status-usertesting { background: rgba(14, 116, 144, 0.2); color: #67e8f9; }
+    .status-template    { background: rgba(255, 255, 255, 0.08); color: #9ca3af; }
+    .secondary-link { color: #6b7280; }
   }
 </style>
 </head>
@@ -53,40 +105,173 @@
 <p class="subtitle">Prototypes and design handoffs for review.</p>
 
 <h2>Growth Team</h2>
-<ul>
-  <li><a class="project-link" href="AR0226/">
-    <span class="label">AR0226 — Dashboard for GAP Team Managers</span>
-    <span class="path">/AR0226/</span>
-  </a></li>
-  <li><a class="project-link" href="growth-team/AR0227-v.1/">
-    <span class="label">AR0227 — v.1</span>
-    <span class="path">/growth-team/AR0227-v.1/</span>
-  </a></li>
-  <li><a class="project-link" href="growth-team/AR0227-v.2/">
-    <span class="label">AR0227 — v.2</span>
-    <span class="path">/growth-team/AR0227-v.2/</span>
-  </a></li>
-  <li><a class="project-link" href="growth-team/getting-started-template/">
-    <span class="label">Getting Started — template</span>
-    <span class="path">/growth-team/getting-started-template/</span>
-  </a></li>
-  <li><a class="project-link" href="growth-team/timer-demo.html">
-    <span class="label">Timer demo</span>
-    <span class="path">/growth-team/timer-demo.html</span>
-  </a></li>
-</ul>
+<div class="grid">
+
+  <a class="card" href="AR0226/">
+    <div class="preview" style="--accent:#0168dd;">
+      <svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
+        <rect width="400" height="250" fill="#f3f4f6"/>
+        <rect width="400" height="18" fill="#ffffff"/>
+        <circle cx="12" cy="9" r="3" fill="#e5e7eb"/><circle cx="24" cy="9" r="3" fill="#e5e7eb"/><circle cx="36" cy="9" r="3" fill="#e5e7eb"/>
+        <rect x="0" y="18" width="72" height="232" fill="#ffffff"/>
+        <rect x="14" y="34" width="44" height="6" rx="3" fill="#0168dd" opacity="0.35"/>
+        <rect x="14" y="52" width="34" height="5" rx="2.5" fill="#d1d5db"/>
+        <rect x="14" y="66" width="34" height="5" rx="2.5" fill="#d1d5db"/>
+        <rect x="14" y="80" width="34" height="5" rx="2.5" fill="#d1d5db"/>
+        <rect x="14" y="94" width="34" height="5" rx="2.5" fill="#d1d5db"/>
+        <rect x="88" y="32" width="90" height="10" rx="2" fill="#111827" opacity="0.7"/>
+        <rect x="88" y="54" width="60" height="14" rx="7" fill="#0168dd"/>
+        <rect x="156" y="54" width="60" height="14" rx="7" fill="#e5e7eb"/>
+        <rect x="88" y="82" width="140" height="34" rx="6" fill="#ffffff" stroke="#e5e7eb"/>
+        <rect x="238" y="82" width="140" height="34" rx="6" fill="#ffffff" stroke="#e5e7eb"/>
+        <rect x="88" y="128" width="290" height="90" rx="6" fill="#ffffff" stroke="#e5e7eb"/>
+        <rect x="102" y="146" width="34" height="50" rx="2" fill="#0168dd" opacity="0.25"/>
+        <rect x="146" y="160" width="34" height="36" rx="2" fill="#0168dd" opacity="0.45"/>
+        <rect x="190" y="150" width="34" height="46" rx="2" fill="#0168dd" opacity="0.3"/>
+        <rect x="234" y="170" width="34" height="26" rx="2" fill="#0168dd" opacity="0.2"/>
+        <rect x="278" y="156" width="34" height="40" rx="2" fill="#0168dd" opacity="0.5"/>
+        <rect x="322" y="166" width="34" height="30" rx="2" fill="#0168dd" opacity="0.25"/>
+      </svg>
+    </div>
+    <div class="card-body">
+      <div class="card-title">AR0226 — Dashboard for GAP Team Managers</div>
+      <p class="card-desc">New "Members" tab with pinnable teammates for at-a-glance individual stats.</p>
+      <div class="card-footer">
+        <span class="status status-dev">In development</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="card" href="growth-team/AR0227-v.1/">
+    <div class="preview" style="--accent:#059669;">
+      <svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
+        <rect width="400" height="250" fill="#f3f4f6"/>
+        <rect width="400" height="18" fill="#ffffff"/>
+        <circle cx="12" cy="9" r="3" fill="#e5e7eb"/><circle cx="24" cy="9" r="3" fill="#e5e7eb"/><circle cx="36" cy="9" r="3" fill="#e5e7eb"/>
+        <rect x="90" y="50" width="220" height="150" rx="10" fill="#ffffff" stroke="#e5e7eb"/>
+        <circle cx="200" cy="95" r="22" fill="#059669" opacity="0.2"/>
+        <rect x="150" y="128" width="100" height="9" rx="4.5" fill="#111827" opacity="0.6"/>
+        <rect x="165" y="146" width="70" height="6" rx="3" fill="#d1d5db"/>
+        <rect x="140" y="168" width="120" height="18" rx="9" fill="#059669"/>
+      </svg>
+    </div>
+    <div class="card-body">
+      <div class="card-title">AR0227 — v.1</div>
+      <p class="card-desc">Onboarding flow, version 1 — aggressive step-through variant.</p>
+      <div class="card-footer">
+        <span class="status status-abtest">In A/B testing</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="card" href="growth-team/AR0227-v.2/">
+    <div class="preview" style="--accent:#059669;">
+      <svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
+        <rect width="400" height="250" fill="#f3f4f6"/>
+        <rect width="400" height="18" fill="#ffffff"/>
+        <circle cx="12" cy="9" r="3" fill="#e5e7eb"/><circle cx="24" cy="9" r="3" fill="#e5e7eb"/><circle cx="36" cy="9" r="3" fill="#e5e7eb"/>
+        <rect x="90" y="50" width="220" height="150" rx="10" fill="#ffffff" stroke="#e5e7eb"/>
+        <rect x="112" y="70" width="176" height="10" rx="2" fill="#111827" opacity="0.6"/>
+        <rect x="112" y="90" width="176" height="6" rx="3" fill="#d1d5db"/>
+        <rect x="112" y="102" width="130" height="6" rx="3" fill="#d1d5db"/>
+        <rect x="112" y="150" width="80" height="16" rx="8" fill="#e5e7eb"/>
+        <rect x="200" y="150" width="88" height="16" rx="8" fill="#059669"/>
+      </svg>
+    </div>
+    <div class="card-body">
+      <div class="card-title">AR0227 — v.2</div>
+      <p class="card-desc">Onboarding flow, version 2 — lighter-touch alternative to v.1.</p>
+      <div class="card-footer">
+        <span class="status status-abtest">In A/B testing</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="card" href="growth-team/getting-started-template/">
+    <div class="preview" style="--accent:#6b7280;">
+      <svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
+        <rect width="400" height="250" fill="#f3f4f6"/>
+        <rect width="400" height="18" fill="#ffffff"/>
+        <circle cx="12" cy="9" r="3" fill="#e5e7eb"/><circle cx="24" cy="9" r="3" fill="#e5e7eb"/><circle cx="36" cy="9" r="3" fill="#e5e7eb"/>
+        <rect x="60" y="40" width="90" height="70" rx="6" fill="#ffffff" stroke="#d1d5db" stroke-dasharray="5 4"/>
+        <rect x="160" y="40" width="90" height="70" rx="6" fill="#ffffff" stroke="#d1d5db" stroke-dasharray="5 4"/>
+        <rect x="260" y="40" width="90" height="70" rx="6" fill="#ffffff" stroke="#d1d5db" stroke-dasharray="5 4"/>
+        <rect x="60" y="120" width="290" height="70" rx="6" fill="#ffffff" stroke="#d1d5db" stroke-dasharray="5 4"/>
+        <circle cx="105" cy="75" r="10" fill="#6b7280" opacity="0.25"/>
+        <circle cx="205" cy="75" r="10" fill="#6b7280" opacity="0.25"/>
+        <circle cx="305" cy="75" r="10" fill="#6b7280" opacity="0.25"/>
+      </svg>
+    </div>
+    <div class="card-body">
+      <div class="card-title">Getting Started — template</div>
+      <p class="card-desc">Base scaffold for spinning up a new onboarding-flow prototype.</p>
+      <div class="card-footer">
+        <span class="status status-template">Template</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="card" href="growth-team/timer-demo.html">
+    <div class="preview" style="--accent:#7c3aed;">
+      <svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
+        <rect width="400" height="250" fill="#f3f4f6"/>
+        <rect width="400" height="18" fill="#ffffff"/>
+        <circle cx="12" cy="9" r="3" fill="#e5e7eb"/><circle cx="24" cy="9" r="3" fill="#e5e7eb"/><circle cx="36" cy="9" r="3" fill="#e5e7eb"/>
+        <circle cx="200" cy="120" r="62" fill="none" stroke="#e5e7eb" stroke-width="10"/>
+        <circle cx="200" cy="120" r="62" fill="none" stroke="#7c3aed" stroke-width="10" stroke-dasharray="290 390" stroke-linecap="round" transform="rotate(-90 200 120)"/>
+        <rect x="172" y="112" width="56" height="10" rx="3" fill="#111827" opacity="0.6"/>
+        <rect x="160" y="196" width="80" height="14" rx="7" fill="#7c3aed"/>
+      </svg>
+    </div>
+    <div class="card-body">
+      <div class="card-title">Timer demo</div>
+      <p class="card-desc">Standalone time-tracking widget interaction prototype.</p>
+      <div class="card-footer">
+        <span class="status status-design">In design</span>
+      </div>
+    </div>
+  </a>
+
+</div>
 
 <h2>Retention Team</h2>
-<ul>
-  <li><a class="project-link" href="retention-team/timesheet-ai/">
-    <span class="label">Timesheet AI</span>
-    <span class="path">/retention-team/timesheet-ai/</span>
-  </a></li>
-  <li><a class="project-link" href="retention-team/timesheet-ai/scoring-companion.html">
-    <span class="label">Timesheet AI — scoring companion</span>
-    <span class="path">/retention-team/timesheet-ai/scoring-companion.html</span>
-  </a></li>
-</ul>
+<div class="grid">
+
+  <div class="card">
+    <a class="card-link-overlay" href="retention-team/timesheet-ai/" aria-label="Timesheet AI"></a>
+    <div class="preview" style="--accent:#0e7490;">
+      <svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
+        <rect width="400" height="250" fill="#f3f4f6"/>
+        <rect width="400" height="18" fill="#ffffff"/>
+        <circle cx="12" cy="9" r="3" fill="#e5e7eb"/><circle cx="24" cy="9" r="3" fill="#e5e7eb"/><circle cx="36" cy="9" r="3" fill="#e5e7eb"/>
+        <rect x="20" y="18" width="70" height="232" fill="#ffffff"/>
+        <rect x="34" y="34" width="42" height="6" rx="3" fill="#0e7490" opacity="0.4"/>
+        <rect x="34" y="52" width="30" height="5" rx="2.5" fill="#d1d5db"/>
+        <rect x="34" y="66" width="30" height="5" rx="2.5" fill="#d1d5db"/>
+        <rect x="106" y="34" width="270" height="40" rx="6" fill="#ffffff" stroke="#e5e7eb"/>
+        <circle cx="128" cy="54" r="10" fill="#0e7490" opacity="0.3"/>
+        <rect x="146" y="46" width="120" height="6" rx="3" fill="#111827" opacity="0.5"/>
+        <rect x="146" y="58" width="80" height="5" rx="2.5" fill="#d1d5db"/>
+        <rect x="330" y="44" width="34" height="18" rx="9" fill="#0e7490"/>
+        <rect x="106" y="86" width="130" height="80" rx="6" fill="#ffffff" stroke="#e5e7eb"/>
+        <rect x="246" y="86" width="130" height="80" rx="6" fill="#ffffff" stroke="#e5e7eb"/>
+        <rect x="120" y="100" width="60" height="7" rx="3.5" fill="#111827" opacity="0.5"/>
+        <rect x="120" y="118" width="100" height="34" rx="4" fill="#0e7490" opacity="0.15"/>
+        <rect x="260" y="100" width="60" height="7" rx="3.5" fill="#111827" opacity="0.5"/>
+        <rect x="260" y="118" width="100" height="34" rx="4" fill="#0e7490" opacity="0.15"/>
+      </svg>
+    </div>
+    <div class="card-body">
+      <div class="card-title">Timesheet AI</div>
+      <p class="card-desc">AI-assisted timesheet review and anomaly scoring companion.</p>
+      <div class="card-footer">
+        <span class="status status-usertesting">In user testing</span>
+        <a class="secondary-link" href="retention-team/timesheet-ai/scoring-companion.html">Scoring companion →</a>
+      </div>
+    </div>
+  </div>
+
+</div>
 
 </body>
 </html>
