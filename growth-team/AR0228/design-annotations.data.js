@@ -5,36 +5,36 @@ window.DESIGN_ANNOTATIONS_DATA = {
 
   annotations: [
     {
-      id: "step2-download-cta-fallback",
+      id: "step1-download-screen-removed",
       page: "onboarding",
       kind: "suggestion",
-      title: "Step 2's story now shows a \"Download\" CTA if Step 1 was skipped",
+      title: "The old \"Download the desktop app\" screen has been removed",
       description:
-        "Since Step 1's Skip advances straight to Step 2 without requiring the download, it's possible to land here with nothing actually downloaded yet. The 3-step story now reflects that honestly: \"Download the app\" only shows its checkmark once step1Confirmed is true — otherwise it shows a download icon, a pulsing highlight, and an inline \"Download\" button (reusing the same confirmDownload() logic as Step 1's own button), and \"Open Hubstaff\"/\"Press play\" stay dimmed until it's done.",
-      target: "#setup-step-download-cta",
-      sub: ["Confirm this inline recovery path is preferred over, say, blocking Skip on Step 1 entirely, or redirecting back to Step 1 automatically"],
+        "AR0227 (and AR0228's first draft) opened with a dedicated screen: an org-requires-this alert, a preview of the utilization/activity widgets, and a \"Download the desktop app\" button gating Continue. Per direct product feedback, that screen is now cut entirely — this experiment starts on what used to be Step 2, and the \"Download the app\" item in its 3-step story is the only place download happens now (see \"setup-download-is-the-primary-path\" below). The tradeoff: this shortens the flow by a full screen, but loses the explicit \"your organization requires this\" framing and the motivating preview of the utilization/activity widgets before asking for the install.",
+      target: "#setup-step-download",
+      sub: ["Confirm losing the \"org requires this\" framing and widget preview is acceptable, or find another place for that messaging if not"],
     },
     {
-      id: "step1-download-simulated",
+      id: "setup-download-is-the-primary-path",
       page: "onboarding",
       kind: "required",
-      title: "\"Download the desktop app\" is simulated",
+      title: "\"Download the app\" always starts unconfirmed — this is the only download entry point now",
       description:
-        "Clicking the button just flips local UI state (button becomes an outline \"Downloaded\" state, Continue unlocks). It doesn't detect OS, trigger a real download, or confirm the app was actually installed.",
-      target: "#main-action",
+        "With the old download screen gone, this experiment now starts directly on the 3-step story with nothing downloaded yet. \"Download the app\" shows a download icon, a pulsing highlight, and an inline \"Download\" button (confirmDownload()) — clicking it just flips local state; it doesn't detect OS, trigger a real download, or confirm the app was actually installed. \"Open Hubstaff\"/\"Press play\" stay dimmed until it's done.",
+      target: "#setup-step-download-cta",
       priority: "high",
       sub: [
         "Wire to real OS detection + the actual desktop app installer link",
-        "Consider gating Continue on a real \"app installed\" signal instead of the click alone",
+        "Consider gating progress on a real \"app installed\" signal instead of the click alone",
       ],
     },
     {
       id: "ar0228-pivot-from-ar0227",
       page: "onboarding",
       kind: "suggestion",
-      title: "This experiment is a pivot away from AR0227's fake-app-window approach",
+      title: "This experiment is a pivot away from AR0227's fake-app-window approach — now down to 2 steps",
       description:
-        "AR0227's Step 2 mimicked the real desktop app in a browser mockup (traffic-light titlebar, a fake play button, a fake counting timer) — feedback was that this made it look like you could actually track time from the web page, when tracking can only ever happen in the real desktop app. AR0228 duplicates AR0227 and replaces just that idea: Step 2 is now a 3-step \"story\" (Download → Open the app → Press play), plus an honest \"Waiting to hear back from your desktop app…\" status line — no element on the page claims to be a working control. Steps 1 and 3 are unchanged from AR0227.",
+        "AR0227's Step 2 mimicked the real desktop app in a browser mockup (traffic-light titlebar, a fake play button, a fake counting timer) — feedback was that this made it look like you could actually track time from the web page, when tracking can only ever happen in the real desktop app. AR0228 started as a duplicate of AR0227 with that idea replaced by a 3-step \"story\" (Download → Open the app → Press play) plus an honest \"Waiting to hear back from your desktop app…\" status line. It has since also dropped AR0227's separate \"Download the desktop app\" screen entirely — this experiment is now 2 steps total: the setup story (with download folded in), then \"Get familiar with Hubstaff.\"",
       target: ".setup-story",
       sub: ["Compare directly against AR0227 with stakeholders before deciding which direction to carry forward"],
     },
@@ -59,22 +59,22 @@ window.DESIGN_ANNOTATIONS_DATA = {
       kind: "suggestion",
       title: "Modal's \"Continue without tracking time\" is distinct from the footer's Skip — inferred",
       description:
-        "The final hand-off replaced the modal's old \"Skip\" + \"Request project\" footer buttons with a single \"Continue without tracking time\" button, and moved \"Reach out to our support team\" into the modal body. This build interprets the new button as unlocking Continue for Step 2 only (bypassing the tracking gate without exiting onboarding) — separate from the page footer's \"Skip\" (which still exits the whole flow via the onboarding:skip event). That distinction was inferred from the wording, not explicitly confirmed. The \"Request a project\" button now on the main Step 2 view (not just in the modal) simply opens this same help modal — there's still no real project-request flow behind it.",
+        "The final hand-off replaced the modal's old \"Skip\" + \"Request project\" footer buttons with a single \"Continue without tracking time\" button, and moved \"Reach out to our support team\" into the modal body. This build interprets the new button as unlocking Continue for this step only (bypassing the tracking gate without exiting onboarding) — separate from the page footer's \"Skip\" (which exits the whole flow via the onboarding:skip event). That distinction was inferred from the wording, not explicitly confirmed. The \"Request a project\" button on the main view (not just in the modal) simply opens this same help modal — there's still no real project-request flow behind it.",
       target: "#help-modal-bypass",
       sub: [
-        "Confirm \"Continue without tracking time\" should only bypass Step 2's gate, not skip the whole experiment",
+        "Confirm \"Continue without tracking time\" should only bypass this step's gate, not skip the whole experiment",
         "Wire \"Request a project\" to a real org/manager lookup or in-app request flow instead of just opening the help modal",
       ],
     },
     {
-      id: "skip-visible-steps-1-2",
+      id: "skip-exits-onboarding",
       page: "onboarding",
       kind: "suggestion",
-      title: "\"Skip\" is visible on Steps 1-2 but means something different on each",
+      title: "\"Skip\" now always exits the whole flow",
       description:
-        "Earlier rounds of this experiment went back and forth on whether Skip should exist at all, then limited it to Step 2 only. The final hand-off's Step 1 frames (both before and after clicking Download) show a footer \"Skip\" link, so it's shown on Steps 1-2 and hidden only on the final Step 3 screen, matching the hand-off. Per direct product feedback, Step 1's Skip only advances to Step 2 (there's nothing to exit to yet) rather than exiting the whole flow — Step 2's Skip still dispatches the full onboarding:skip exit.",
+        "Earlier rounds of this experiment went back and forth on whether Skip should exist at all, then gave Step 1 its own \"just advance, don't exit\" behavior since it was possible to reach Step 2 without downloading. Now that the download screen is gone and downloading is folded into this step's own story (with its own \"Download\" CTA), there's no separate screen left to \"just advance\" past — Skip is shown on this step and hidden on the final \"Get familiar\" screen, and always dispatches the full onboarding:skip exit.",
       target: "#btn-skip",
-      sub: ["No action needed unless product wants Skip scoped differently than the final Figma shows"],
+      sub: ["No action needed unless product wants a softer Skip behavior on this step"],
     },
     {
       id: "progress-bar-value-inferred",
@@ -82,42 +82,19 @@ window.DESIGN_ANNOTATIONS_DATA = {
       kind: "suggestion",
       title: "Progress bar now fills per-step — Figma showed the same fixed amount on every screen",
       description:
-        "The final hand-off replaced the old 3-segment progress pills with a single continuous bar (Zone DS \"ProgressBars\" component). Every one of its 5 screens — including the very last \"Get familiar with Hubstaff\" step — renders that bar at the same fixed ~25% fill, suggesting it may represent progress through a larger onboarding checklist outside this 3-screen experiment, not progress through these screens specifically. This build instead scales the fill by currentStep/3 so it visibly advances, since a bar that never moves would look broken in this isolated prototype — but that per-step scaling is this build's inference, not something the hand-off actually shows.",
+        "The final hand-off (a 5-screen, 3-step version of this flow) used a single continuous bar (Zone DS \"ProgressBars\" component) that rendered at the same fixed ~25% fill on every screen, suggesting it may represent progress through a larger onboarding checklist outside this experiment, not progress through these screens specifically. This build instead scales the fill by currentStep/2 so it visibly advances across this now-2-step flow, since a bar that never moves would look broken in an isolated prototype — but that per-step scaling is this build's inference, not something the hand-off actually shows.",
       target: "#progress-fill",
       sub: ["Confirm with design whether this bar should track progress through this experiment specifically, or reflect something broader that this prototype can't represent in isolation"],
     },
     {
-      id: "step1-widgets-approximated",
+      id: "step2-video-descoped",
       page: "onboarding",
       kind: "suggestion",
-      title: "Utilization gauge + benchmark bar are CSS approximations",
-      description:
-        "The gauge (conic-gradient arc + needle) recreates Figma's gray-then-blue dial, and the activity benchmark bar (org/job-type ticks at 40%/72%) recreates that widget's look — but neither is pixel-matched to Figma's assets. In particular, Figma's gauge uses discrete dashed tick marks around the arc; this build uses a smooth two-tone ring instead.",
-      target: ".widgets-row",
-      sub: ["If this experiment needs exact benchmark values or the dashed-tick gauge style, confirm against Figma node 20110-7094 rather than this approximation"],
-    },
-    {
-      id: "step3-video-descoped",
-      page: "onboarding",
-      kind: "suggestion",
-      title: "Step 3 uses a static image, not a real video embed",
+      title: "Final step uses a static image, not a real video embed",
       description:
         "Originally scoped as an embedded video (support.hubstaff.com quick-start guide), but that page has no actual video. Per stakeholder decision, this step currently just shows the Figma promo screenshot as a static image with no playback.",
       target: ".step3-image",
       sub: ["If a real onboarding video becomes available, swap this for a real embed and revisit the \"Finish\" CTA placement relative to it"],
-    },
-    {
-      id: "step3-necessity-open-question",
-      page: "onboarding",
-      kind: "suggestion",
-      title: "Open question: does this experiment need Step 3 at all?",
-      description:
-        "Unlike Steps 1-2, Step 3 doesn't gate on any real activation behavior — it's just a static promo image with a Finish button. Steps 1-2 alone already cover this experiment's core activation loop (download the app, confirm tracking works). Cutting Step 3 would shorten the flow and likely reduce drop-off, at the cost of losing the one touchpoint that surfaces the quick-start video/further-help content to new users.",
-      target: "#step-panel-3",
-      sub: [
-        "If kept: consider it optional/skippable rather than a required step",
-        "If cut: fold the quick-start link into Step 2's help modal so that content isn't lost entirely",
-      ],
     },
     {
       id: "footer-navigation-local-only",
