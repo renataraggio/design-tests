@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AR0226 — Member Switcher — Hubstaff</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600&family=Material+Symbols+Rounded" rel="stylesheet" />
+
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <div class="sidebar__logo">
+      <span class="sidebar__logo-mark"></span>
+      Hubstaff
+    </div>
+    <nav>
+      <a class="sidebar__item is-active" href="#"><span class="material-symbols-rounded" aria-hidden="true">speed</span>Dashboard</a>
+      <a class="sidebar__item" href="#"><span class="material-symbols-rounded" aria-hidden="true">schedule</span>Timesheets</a>
+      <a class="sidebar__item" href="#"><span class="material-symbols-rounded" aria-hidden="true">monitoring</span>Activity</a>
+      <a class="sidebar__item" href="#"><span class="material-symbols-rounded" aria-hidden="true">lightbulb</span>Insights</a>
+      <a class="sidebar__item" href="#"><span class="material-symbols-rounded" aria-hidden="true">map</span>Locations</a>
+      <a class="sidebar__item" href="#"><span class="material-symbols-rounded" aria-hidden="true">checklist</span>Project management</a>
+      <a class="sidebar__item" href="#"><span class="material-symbols-rounded" aria-hidden="true">calendar_month</span>Calendar</a>
+      <a class="sidebar__item" href="#"><span class="material-symbols-rounded" aria-hidden="true">groups</span>People</a>
+      <a class="sidebar__item" href="#"><span class="material-symbols-rounded" aria-hidden="true">summarize</span>Reports</a>
+      <a class="sidebar__item" href="#"><span class="material-symbols-rounded" aria-hidden="true">payments</span>Financials</a>
+      <a class="sidebar__item" href="#"><span class="material-symbols-rounded" aria-hidden="true">tune</span>Settings &amp; Policies</a>
+    </nav>
+  </aside>
+
+  <div class="main-column">
+    <header class="topbar">
+      <span class="topbar__timer"><span class="material-symbols-rounded" aria-hidden="true">timer</span>02:44:15</span>
+      <button type="button" class="topbar__icon-btn" aria-label="Call support"><span class="material-symbols-rounded" aria-hidden="true">call</span></button>
+      <button type="button" class="topbar__icon-btn" aria-label="Help"><span class="material-symbols-rounded" aria-hidden="true">help</span></button>
+      <button type="button" class="topbar__icon-btn" aria-label="Notifications"><span class="material-symbols-rounded" aria-hidden="true">notifications</span></button>
+      <button type="button" class="topbar__icon-btn" aria-label="What's new"><span class="material-symbols-rounded" aria-hidden="true">redeem</span></button>
+      <button type="button" class="topbar__icon-btn" aria-label="Apps"><span class="material-symbols-rounded" aria-hidden="true">apps</span></button>
+      <span class="topbar__avatar">P</span>
+    </header>
+
+    <main class="page">
+      <div class="page-header">
+        <div>
+          <h1>Dashboard</h1>
+          <p class="page-header__range" id="page-range"></p>
+        </div>
+        <div class="date-picker">
+          <button type="button" class="page-header__date-btn" id="date-btn">
+            <span class="material-symbols-rounded" aria-hidden="true">calendar_today</span>
+            <span id="date-btn-label"></span>
+          </button>
+          <div class="date-popover" id="date-popover" hidden>
+            <div class="date-popover__header">
+              <button type="button" class="date-popover__nav" id="cal-prev-month" aria-label="Previous month">
+                <span class="material-symbols-rounded" aria-hidden="true">chevron_left</span>
+              </button>
+              <span class="date-popover__month" id="cal-month-label"></span>
+              <button type="button" class="date-popover__nav" id="cal-next-month" aria-label="Next month">
+                <span class="material-symbols-rounded" aria-hidden="true">chevron_right</span>
+              </button>
+            </div>
+            <div class="date-popover__weekdays">
+              <span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span><span>Su</span>
+            </div>
+            <div class="date-popover__grid" id="cal-grid"></div>
+            <p class="date-popover__hint">Click any day to select its full week</p>
+            <div class="date-popover__footer">
+              <button type="button" class="date-popover__today" id="date-today">This week</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="switcher">
+        <div class="switcher__toolbar">
+          <div class="switcher__row" id="pill-row"></div>
+          <span class="pin-counter" id="pin-counter"></span>
+        </div>
+      </div>
+
+      <!-- Positioned via computed coordinates in app.js (position: fixed) so it
+           always anchors to the "+" chip's live location, even though that chip
+           scrolls inside #pill-row's horizontal scroll container. -->
+      <div class="search-panel" id="search-panel" hidden>
+        <div class="search-panel__input-wrap">
+          <span class="material-symbols-rounded" aria-hidden="true">search</span>
+          <input type="text" id="search-input" placeholder="Search members…" aria-label="Search members" />
+        </div>
+        <div class="search-panel__body">
+          <div id="recent-section">
+            <p class="search-panel__section-label">Recent searches</p>
+            <ul id="recent-list"></ul>
+          </div>
+          <p class="search-panel__section-label">All members</p>
+          <ul id="all-list"></ul>
+        </div>
+      </div>
+
+      <div id="dashboard-main"></div>
+
+      <p class="prototype-note">
+        Interactive prototype — data is illustrative (mirrors real Dashboard numbers for Adrian Goia; everyone else is
+        invented; the week picker changes which dates are shown but not the underlying activity numbers). Try: search
+        "Carl" via the + pill (UC1) → pin him (UC3) → toggle Compare view (UC2) → pin a 7th person to see the limit.
+      </p>
+    </main>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

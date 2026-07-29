@@ -76,6 +76,7 @@
   .status-abtest      { background: #d1fae5; color: #059669; }
   .status-usertesting { background: #cffafe; color: #0e7490; }
   .status-template    { background: #f3f4f6; color: #6b7280; }
+  .status-archived    { background: #f3f4f6; color: #4b5563; }
 
   .secondary-link { position: relative; z-index: 2; font-size: 12px; color: #9ca3af; text-decoration: none; }
   .secondary-link:hover { color: #0168dd; text-decoration: underline; }
@@ -95,6 +96,7 @@
     .status-abtest      { background: rgba(5, 150, 105, 0.18); color: #6ee7b7; }
     .status-usertesting { background: rgba(14, 116, 144, 0.2); color: #67e8f9; }
     .status-template    { background: rgba(255, 255, 255, 0.08); color: #9ca3af; }
+    .status-archived    { background: rgba(255, 255, 255, 0.06); color: #9ca3af; }
     .secondary-link { color: #6b7280; }
   }
 </style>
@@ -107,7 +109,39 @@
 <h2>Growth Team</h2>
 <div class="grid">
 
-  <a class="card" href="AR0226/">
+  <a class="card" href="growth-team/experiments/AR0226-v.1/">
+    <div class="preview" style="--accent:#4b5563;">
+      <svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
+        <rect width="400" height="250" fill="#f3f4f6"/>
+        <rect width="400" height="18" fill="#ffffff"/>
+        <circle cx="12" cy="9" r="3" fill="#e5e7eb"/><circle cx="24" cy="9" r="3" fill="#e5e7eb"/><circle cx="36" cy="9" r="3" fill="#e5e7eb"/>
+        <rect x="70" y="40" width="260" height="26" rx="13" fill="#ffffff" stroke="#d1d5db"/>
+        <circle cx="86" cy="53" r="5" fill="#9ca3af"/>
+        <rect x="98" y="49" width="60" height="8" rx="4" fill="#d1d5db"/>
+        <rect x="70" y="78" width="260" height="36" rx="6" fill="#ffffff" stroke="#e5e7eb"/>
+        <circle cx="90" cy="96" r="10" fill="#4b5563" opacity="0.25"/>
+        <rect x="108" y="90" width="90" height="6" rx="3" fill="#111827" opacity="0.5"/>
+        <rect x="108" y="100" width="60" height="5" rx="2.5" fill="#d1d5db"/>
+        <rect x="70" y="122" width="260" height="36" rx="6" fill="#ffffff" stroke="#e5e7eb"/>
+        <circle cx="90" cy="140" r="10" fill="#4b5563" opacity="0.15"/>
+        <rect x="108" y="134" width="90" height="6" rx="3" fill="#111827" opacity="0.4"/>
+        <rect x="108" y="144" width="60" height="5" rx="2.5" fill="#d1d5db"/>
+        <rect x="70" y="166" width="260" height="36" rx="6" fill="#ffffff" stroke="#e5e7eb"/>
+        <circle cx="90" cy="184" r="10" fill="#4b5563" opacity="0.15"/>
+        <rect x="108" y="178" width="90" height="6" rx="3" fill="#111827" opacity="0.4"/>
+        <rect x="108" y="188" width="60" height="5" rx="2.5" fill="#d1d5db"/>
+      </svg>
+    </div>
+    <div class="card-body">
+      <div class="card-title">AR0226 — v.1</div>
+      <p class="card-desc">Original "Member Switcher" pattern exploration for GAP team managers.</p>
+      <div class="card-footer">
+        <span class="status status-archived">Archived</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="card" href="growth-team/experiments/AR0226-v.2/">
     <div class="preview" style="--accent:#0168dd;">
       <svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
         <rect width="400" height="250" fill="#f3f4f6"/>
@@ -134,7 +168,7 @@
       </svg>
     </div>
     <div class="card-body">
-      <div class="card-title">AR0226 — Dashboard for GAP Team Managers</div>
+      <div class="card-title">AR0226 — v.2</div>
       <p class="card-desc">New "Members" tab with pinnable teammates for at-a-glance individual stats.</p>
       <div class="card-footer">
         <span class="status status-dev">In development</span>
@@ -142,7 +176,7 @@
     </div>
   </a>
 
-  <a class="card" href="growth-team/AR0227-v.1/">
+  <a class="card" href="growth-team/experiments/AR0227-v.1/">
     <div class="preview" style="--accent:#059669;">
       <svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
         <rect width="400" height="250" fill="#f3f4f6"/>
@@ -164,7 +198,7 @@
     </div>
   </a>
 
-  <a class="card" href="growth-team/AR0227-v.2/">
+  <a class="card" href="growth-team/experiments/AR0227-v.2/">
     <div class="preview" style="--accent:#059669;">
       <svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
         <rect width="400" height="250" fill="#f3f4f6"/>
@@ -187,7 +221,7 @@
     </div>
   </a>
 
-  <a class="card" href="growth-team/getting-started-template/">
+  <a class="card" href="growth-team/templates/getting-started-template/">
     <div class="preview" style="--accent:#6b7280;">
       <svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
         <rect width="400" height="250" fill="#f3f4f6"/>
@@ -211,7 +245,7 @@
     </div>
   </a>
 
-  <a class="card" href="growth-team/timer-demo.html">
+  <a class="card" href="growth-team/random/timer-demo.html">
     <div class="preview" style="--accent:#7c3aed;">
       <svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
         <rect width="400" height="250" fill="#f3f4f6"/>
