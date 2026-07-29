@@ -1,0 +1,31 @@
+Participant,Track,Date,Duration (s)
+Mercy,user,2026-07-09,328
+
+t_ms,t_iso,type,label,detail
+1,2026-07-09T16:10:47.901Z,milestone,session_start,track=user
+20274,2026-07-09T16:11:08.174Z,click,Add time,button#tl-add-time-btn
+20274,2026-07-09T16:11:08.174Z,milestone,add_time_button_clicked,
+20291,2026-07-09T16:11:08.191Z,milestone,add_time_modal_opened,mode=single
+26985,2026-07-09T16:11:14.885Z,click,Select a project / work order keyboard_arrow_down,div#utm-proj-select
+27853,2026-07-09T16:11:15.753Z,click,AGArt Gnome,div
+28935,2026-07-09T16:11:16.835Z,click,Select a to-do / job keyboard_arrow_down,div#utm-todo-select
+32664,2026-07-09T16:11:20.564Z,click,Logo assets,span
+34065,2026-07-09T16:11:21.965Z,click,Why are you adding this time entry? keyboard_arrow_down,div#utm-reason-select
+35132,2026-07-09T16:11:23.032Z,click,Manual correction,span
+42875,2026-07-09T16:11:30.775Z,click,keyboard_arrow_down,span
+45288,2026-07-09T16:11:33.188Z,click,No,div
+57278,2026-07-09T16:11:45.178Z,click,Save,button#utm-save-btn
+57278,2026-07-09T16:11:45.178Z,milestone,add_time_save_clicked,selectedMembersCount=1
+57280,2026-07-09T16:11:45.180Z,milestone,add_time_modal_closed,mode=single
+81319,2026-07-09T16:12:09.219Z,click,Weekly,button
+81319,2026-07-09T16:12:09.219Z,milestone,view_switched,view=Weekly
+134807,2026-07-09T16:13:02.707Z,click,ts-wmg-switch__track,span
+142113,2026-07-09T16:13:10.013Z,click,All teams keyboard_arrow_down search Select all | Unselect a,div
+148161,2026-07-09T16:13:16.061Z,click,Hubstaff shell — starter template [hidden] { display: none !,html
+166934,2026-07-09T16:13:34.834Z,click,Select timezone,div
+176901,2026-07-09T16:13:44.801Z,click,"Sun, Jun 29, 2026 - Sat, Jul 12, 2026 Total hours 47:12:00 T",div
+224960,2026-07-09T16:14:32.860Z,click,ts-wmg-switch__thumb,span
+226910,2026-07-09T16:14:34.810Z,click,ts-wmg-switch__thumb,span
+233186,2026-07-09T16:14:41.086Z,click,Weekly time logged Daily Weekly MonthlySoon filter_list Filt,div
+236099,2026-07-09T16:14:43.999Z,click,ts-wmg-switch__track,span
+245640,2026-07-09T16:14:53.540Z,click,ts-wmg-switch__track ts-wmg-switch__track--on,span

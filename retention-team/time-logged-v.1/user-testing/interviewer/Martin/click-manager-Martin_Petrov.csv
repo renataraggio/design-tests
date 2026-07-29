@@ -1,0 +1,172 @@
+Participant,Track,Date,Duration (s)
+Martin Petrov,manager,2026-07-06,1738
+
+t_ms,t_iso,type,label,detail
+1,2026-07-06T16:45:19.736Z,milestone,session_start,track=manager
+20716,2026-07-06T16:45:40.451Z,click,All teams keyboard_arrow_down search Select all | Unselect a,div
+21021,2026-07-06T16:45:40.756Z,click,Select team,div#tl-team-select
+24790,2026-07-06T16:45:44.525Z,click,MMarketing,li
+26032,2026-07-06T16:45:45.767Z,click,"Sun, Jun 29, 2026 - Sat, Jul 12, 2026 Total hours 96:30:29 T",div
+57261,2026-07-06T16:46:16.996Z,click,Helene Engelsnorth_eastView time loggedhelene.engels@hubstaf,div
+57261,2026-07-06T16:46:16.996Z,milestone,member_row_drill_in,memberId=he
+57773,2026-07-06T16:46:17.508Z,click,Helene Engelsnorth_eastView time loggedhelene.engels@hubstaf,div
+57773,2026-07-06T16:46:17.508Z,milestone,member_row_drill_in,memberId=he
+58876,2026-07-06T16:46:18.611Z,click,Helene Engelsnorth_eastView time loggedhelene.engels@hubstaf,div
+58877,2026-07-06T16:46:18.612Z,milestone,member_row_drill_in,memberId=he
+59335,2026-07-06T16:46:19.070Z,click,Helene Engelsnorth_eastView time loggedhelene.engels@hubstaf,div
+59337,2026-07-06T16:46:19.072Z,milestone,member_row_drill_in,memberId=he
+60375,2026-07-06T16:46:20.110Z,click,Helene Engelsnorth_eastView time loggedhelene.engels@hubstaf,div
+60376,2026-07-06T16:46:20.111Z,milestone,member_row_drill_in,memberId=he
+60737,2026-07-06T16:46:20.472Z,click,Helene Engelsnorth_eastView time loggedhelene.engels@hubstaf,div
+60737,2026-07-06T16:46:20.472Z,milestone,member_row_drill_in,memberId=he
+61466,2026-07-06T16:46:21.201Z,click,Helene Engelsnorth_eastView time loggedhelene.engels@hubstaf,div
+61466,2026-07-06T16:46:21.201Z,milestone,member_row_drill_in,memberId=he
+67455,2026-07-06T16:46:27.190Z,click,Helene Engelsnorth_eastView time loggedhelene.engels@hubstaf,div
+67456,2026-07-06T16:46:27.191Z,milestone,member_row_drill_in,memberId=he
+68637,2026-07-06T16:46:28.372Z,click,Helene Engelsnorth_eastView time loggedhelene.engels@hubstaf,div
+68637,2026-07-06T16:46:28.372Z,milestone,member_row_drill_in,memberId=he
+103189,2026-07-06T16:47:02.924Z,click,"Sun, Jun 29, 2026 - Sat, Jul 12, 2026 Total hours 96:30:29 T",div
+114548,2026-07-06T16:47:14.283Z,click,Select team,div#tl-team-select
+115383,2026-07-06T16:47:15.118Z,click,Select team,div#tl-team-select
+116380,2026-07-06T16:47:16.115Z,click,Select team,div#tl-team-select
+117627,2026-07-06T16:47:17.362Z,click,Daily time loggedDailyWeeklyMonthlySoonview_columncollapse_a,div
+125098,2026-07-06T16:47:24.833Z,click,Select team,div#tl-team-select
+126731,2026-07-06T16:47:26.466Z,click,Select team,div#tl-team-select
+127490,2026-07-06T16:47:27.225Z,click,Select team,div#tl-team-select
+133866,2026-07-06T16:47:33.601Z,click,SSales,li
+134720,2026-07-06T16:47:34.455Z,click,SSalescheck,li
+135220,2026-07-06T16:47:34.955Z,click,SSales,li
+137348,2026-07-06T16:47:37.083Z,click,SSalescheck,li
+138407,2026-07-06T16:47:38.142Z,click,MMarketingcheck,li
+139366,2026-07-06T16:47:39.101Z,click,Daily time loggedDailyWeeklyMonthlySoonview_columncollapse_a,div
+140976,2026-07-06T16:47:40.711Z,click,Select team,div#tl-team-select
+157121,2026-07-06T16:47:56.856Z,click,All teams keyboard_arrow_down search Select all | Unselect a,div
+160741,2026-07-06T16:48:00.476Z,click,Select team,div#tl-team-select
+163480,2026-07-06T16:48:03.215Z,click,"Sun, Jun 29, 2026: 2:22:00 hrskeyboard_arrow_down",div
+164807,2026-07-06T16:48:04.542Z,click,Daily time loggedDailyWeeklyMonthlySoonview_columncollapse_a,div
+165233,2026-07-06T16:48:04.968Z,click,"Sun, Jun 29, 2026: 2:22:00 hrskeyboard_arrow_down",div
+165800,2026-07-06T16:48:05.535Z,click,"Sun, Jun 29, 2026: 2:22:00 hrskeyboard_arrow_down",div
+166768,2026-07-06T16:48:06.503Z,click,"Mon, Jun 30, 2026: 30:35:00 hrskeyboard_arrow_down",div
+167743,2026-07-06T16:48:07.478Z,click,"Tue, Jul 1, 2026: 43:24:00 hrskeyboard_arrow_down",div
+168484,2026-07-06T16:48:08.219Z,click,"Wed, Jul 2, 2026: 43:41:00 hrskeyboard_arrow_down",div
+169232,2026-07-06T16:48:08.967Z,click,"Wed, Jul 2, 2026: 43:41:00 hrskeyboard_arrow_down",div
+169657,2026-07-06T16:48:09.392Z,click,"Tue, Jul 1, 2026: 43:24:00 hrskeyboard_arrow_down",div
+170020,2026-07-06T16:48:09.755Z,click,"Mon, Jun 30, 2026: 30:35:00 hrskeyboard_arrow_down",div
+170479,2026-07-06T16:48:10.214Z,click,Daily time loggedDailyWeeklyMonthlySoonview_columncollapse_a,div
+170884,2026-07-06T16:48:10.619Z,click,"Sun, Jun 29, 2026: 2:22:00 hrskeyboard_arrow_down",div
+191964,2026-07-06T16:48:31.699Z,click,Select team,div#tl-team-select
+193780,2026-07-06T16:48:33.515Z,click,MMarketing,li
+194610,2026-07-06T16:48:34.345Z,click,Daily time loggedDailyWeeklyMonthlySoonview_columncollapse_a,div
+206966,2026-07-06T16:48:46.701Z,click,Time logged Add time settings,div
+207296,2026-07-06T16:48:47.031Z,click,Add time,button#tl-add-time-btn
+207297,2026-07-06T16:48:47.032Z,milestone,add_time_button_clicked,
+207321,2026-07-06T16:48:47.056Z,milestone,add_time_modal_opened,mode=multi/batch
+207321,2026-07-06T16:48:47.056Z,milestone,batch_selection_changed,count=0
+215012,2026-07-06T16:48:54.747Z,click,Date,input
+216578,2026-07-06T16:48:56.313Z,click,Date,input
+219474,2026-07-06T16:48:59.209Z,click,Time selection bolt Add time in batch DATE calendar_today FR,div
+219880,2026-07-06T16:48:59.615Z,click,schedule,div
+226335,2026-07-06T16:49:06.070Z,click,add Add time span Total hours: 1hr,div#utm-time-footer
+227409,2026-07-06T16:49:07.144Z,click,add Add time span,button#utm-add-span-btn
+227984,2026-07-06T16:49:07.719Z,click,calendar_today,div
+234526,2026-07-06T16:49:14.261Z,click,Select teams keyboard_arrow_down,div#utm-teams-select
+235926,2026-07-06T16:49:15.661Z,click,Marketing,span
+235928,2026-07-06T16:49:15.663Z,milestone,batch_selection_changed,count=0
+236735,2026-07-06T16:49:16.470Z,click,Members,p
+244793,2026-07-06T16:49:24.528Z,click,From time,input
+246474,2026-07-06T16:49:26.209Z,click,schedule,div
+248284,2026-07-06T16:49:28.019Z,click,add Add time span Total hours: 3hrs,div#utm-time-footer
+250124,2026-07-06T16:49:29.859Z,click,Select a project / work order,div#utm-proj-inner
+256600,2026-07-06T16:49:36.335Z,click,Nottingham Green,span
+258391,2026-07-06T16:49:38.126Z,click,Why are you adding this time entry?,span
+261322,2026-07-06T16:49:41.057Z,click,Offline work,span
+262046,2026-07-06T16:49:41.781Z,click,Notes notes Add note,div#utm-notes-section
+263217,2026-07-06T16:49:42.952Z,click,notes Add note,button
+263956,2026-07-06T16:49:43.691Z,click,Notes notes Add note,div#utm-notes-section
+264304,2026-07-06T16:49:44.039Z,click,notes Add note,button
+266256,2026-07-06T16:49:45.991Z,click,notes Add note,button
+267212,2026-07-06T16:49:46.947Z,click,notes Add note,button
+268590,2026-07-06T16:49:48.325Z,click,Save,button#utm-save-btn
+268590,2026-07-06T16:49:48.325Z,milestone,add_time_save_clicked,selectedMembersCount=1
+268591,2026-07-06T16:49:48.326Z,milestone,add_time_modal_closed,mode=multi/batch
+949586,2026-07-06T17:01:09.321Z,click,M Marketing keyboard_arrow_down search Select all | Unselect,div
+949926,2026-07-06T17:01:09.661Z,click,Select team,div#tl-team-select
+951349,2026-07-06T17:01:11.084Z,click,Unselect all,button#tl-ts-unselect-all
+951993,2026-07-06T17:01:11.728Z,click,"Sun, Jun 29, 2026 - Sat, Jul 12, 2026 Total hours 96:30:29 T",div
+953057,2026-07-06T17:01:12.792Z,click,Select member,div#tl-member-select
+954677,2026-07-06T17:01:14.412Z,click,Ryan Davis,li
+956256,2026-07-06T17:01:15.991Z,click,All teams keyboard_arrow_down search Select all | Unselect a,div
+957503,2026-07-06T17:01:17.238Z,click,Select date range,div#tl-date-range-btn
+960498,2026-07-06T17:01:20.233Z,click,29,span
+961037,2026-07-06T17:01:20.772Z,click,29,span
+965219,2026-07-06T17:01:24.954Z,click,Select date range,div#tl-date-range-btn
+972837,2026-07-06T17:01:32.572Z,click,22,span
+974219,2026-07-06T17:01:33.954Z,click,5,span
+982203,2026-07-06T17:01:41.938Z,click,View Ryan Davis's time logged,button
+982204,2026-07-06T17:01:41.939Z,milestone,member_row_drill_in,memberId=rd
+982204,2026-07-06T17:01:41.939Z,click,Daily,button
+982204,2026-07-06T17:01:41.939Z,milestone,view_switched,view=Daily
+999533,2026-07-06T17:01:59.268Z,click,"Mon, Jun 30, 2026: 6:04:00 hrsnotesexpand_more",div
+1001023,2026-07-06T17:02:00.758Z,click,"Sun, Jun 29, 2026: 0:00:00 hrsnotesexpand_more",div
+1003781,2026-07-06T17:02:03.516Z,click,"Wed, Jul 2, 2026: 9:03:00 hrsnotesexpand_more",div
+1011280,2026-07-06T17:02:11.015Z,click,Actionsexpand_more,button
+1104743,2026-07-06T17:03:44.478Z,click,Select member,div#tl-member-select
+1106801,2026-07-06T17:03:46.536Z,click,Unselect all,button#tl-ms-unselect-all
+1107695,2026-07-06T17:03:47.430Z,click,"Sun, Jun 29, 2026 - Sat, Jul 12, 2026 Total hours 20:52:00 T",div
+1155468,2026-07-06T17:04:35.203Z,click,View Helene Engels's time logged,button
+1155469,2026-07-06T17:04:35.204Z,milestone,member_row_drill_in,memberId=he
+1155469,2026-07-06T17:04:35.204Z,click,Daily,button
+1155469,2026-07-06T17:04:35.204Z,milestone,view_switched,view=Daily
+1164740,2026-07-06T17:04:44.475Z,click,Select member,div#tl-member-select
+1166427,2026-07-06T17:04:46.162Z,click,All teams keyboard_arrow_down search Select all | Unselect a,div
+1170588,2026-07-06T17:04:50.323Z,click,arrow_back Back,button#tl-breadcrumb-btn
+1180531,2026-07-06T17:05:00.266Z,click,View Helene Engels's time logged,button
+1180531,2026-07-06T17:05:00.266Z,milestone,member_row_drill_in,memberId=he
+1180531,2026-07-06T17:05:00.266Z,click,Daily,button
+1180531,2026-07-06T17:05:00.266Z,milestone,view_switched,view=Daily
+1211834,2026-07-06T17:05:31.569Z,click,Time logged Add time settings,div
+1212449,2026-07-06T17:05:32.184Z,click,Time logged,h1
+1215454,2026-07-06T17:05:35.189Z,click,Time logged,h1
+1216820,2026-07-06T17:05:36.555Z,click,Time logged,h1
+1225786,2026-07-06T17:05:45.521Z,click,arrow_back Back,div#tl-breadcrumb
+1226416,2026-07-06T17:05:46.151Z,click,arrow_back Back,button#tl-breadcrumb-btn
+1279118,2026-07-06T17:06:38.853Z,click,View Helene Engels's time logged,button
+1279118,2026-07-06T17:06:38.853Z,milestone,member_row_drill_in,memberId=he
+1279118,2026-07-06T17:06:38.853Z,click,Daily,button
+1279119,2026-07-06T17:06:38.854Z,milestone,view_switched,view=Daily
+1300062,2026-07-06T17:06:59.797Z,click,Add time,button#tl-add-time-btn
+1300062,2026-07-06T17:06:59.797Z,milestone,add_time_button_clicked,
+1300068,2026-07-06T17:06:59.803Z,milestone,add_time_modal_opened,mode=single
+1309840,2026-07-06T17:07:09.575Z,click,Date,input
+1311475,2026-07-06T17:07:11.210Z,click,Time selection bolt Add time in batch,div
+1312430,2026-07-06T17:07:12.165Z,click,Close modal,button#utm-close
+1312430,2026-07-06T17:07:12.165Z,milestone,add_time_modal_closed,mode=single
+1312588,2026-07-06T17:07:12.323Z,milestone,batch_selection_changed,count=0
+1313538,2026-07-06T17:07:13.273Z,click,Actionsexpand_more,button
+1318532,2026-07-06T17:07:18.267Z,click,"Sun, Jun 29, 2026: 2:22:00 hrsnotesexpand_more",div
+1320796,2026-07-06T17:07:20.531Z,click,"Sun, Jun 29, 2026: 2:22:00 hrsnotesexpand_more",div
+1362071,2026-07-06T17:08:01.806Z,click,Add time,button#tl-add-time-btn
+1362071,2026-07-06T17:08:01.806Z,milestone,add_time_button_clicked,
+1362077,2026-07-06T17:08:01.812Z,milestone,add_time_modal_opened,mode=single
+1370982,2026-07-06T17:08:10.717Z,click,Close modal,button#utm-close
+1370982,2026-07-06T17:08:10.717Z,milestone,add_time_modal_closed,mode=single
+1371135,2026-07-06T17:08:10.870Z,milestone,batch_selection_changed,count=0
+1376742,2026-07-06T17:08:16.477Z,click,Add time,button#tl-add-time-btn
+1376742,2026-07-06T17:08:16.477Z,milestone,add_time_button_clicked,
+1376748,2026-07-06T17:08:16.483Z,milestone,add_time_modal_opened,mode=single
+1445768,2026-07-06T17:09:25.503Z,click,Close modal,button#utm-close
+1445768,2026-07-06T17:09:25.503Z,milestone,add_time_modal_closed,mode=single
+1445921,2026-07-06T17:09:25.656Z,milestone,batch_selection_changed,count=0
+1492120,2026-07-06T17:10:11.855Z,click,arrow_back Back,button#tl-breadcrumb-btn
+1494248,2026-07-06T17:10:13.983Z,click,hs-avatar-btn,div#hs-avatar-btn
+1497994,2026-07-06T17:10:17.729Z,click,All teams keyboard_arrow_down search Select all | Unselect a,div
+1504113,2026-07-06T17:10:23.848Z,click,Select member,div#tl-member-select
+1511106,2026-07-06T17:10:30.841Z,click,James Miller,li
+1511980,2026-07-06T17:10:31.715Z,click,All teams keyboard_arrow_down search Select all | Unselect a,div
+1538052,2026-07-06T17:10:57.787Z,click,View James Miller's time logged,button
+1538052,2026-07-06T17:10:57.787Z,milestone,member_row_drill_in,memberId=jm
+1538053,2026-07-06T17:10:57.788Z,click,Daily,button
+1538053,2026-07-06T17:10:57.788Z,milestone,view_switched,view=Daily
+1726047,2026-07-06T17:14:05.782Z,click,Select member,div#tl-member-select
+1728362,2026-07-06T17:14:08.097Z,click,Unselect all,button#tl-ms-unselect-all
+1729201,2026-07-06T17:14:08.936Z,click,All teams keyboard_arrow_down search Select all | Unselect a,div

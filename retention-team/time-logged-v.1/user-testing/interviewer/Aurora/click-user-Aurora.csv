@@ -1,0 +1,15 @@
+Participant,Track,Date,Duration (s)
+Aurora,user,2026-07-06,41
+
+t_ms,t_iso,type,label,detail
+0,2026-07-06T13:18:19.362Z,milestone,session_start,track=user
+7249,2026-07-06T13:18:26.611Z,click,Add time,button#tl-add-time-btn
+7249,2026-07-06T13:18:26.611Z,milestone,add_time_button_clicked,
+7254,2026-07-06T13:18:26.616Z,milestone,add_time_modal_opened,mode=single
+10346,2026-07-06T13:18:29.708Z,click,To time,input
+12166,2026-07-06T13:18:31.528Z,click,Olivia Brown,div#utm-member-display
+15676,2026-07-06T13:18:35.038Z,click,Cancel,button#utm-cancel
+15677,2026-07-06T13:18:35.039Z,milestone,add_time_modal_closed,mode=single
+15829,2026-07-06T13:18:35.191Z,milestone,batch_selection_changed,count=0
+28411,2026-07-06T13:18:47.773Z,click,Weekly,button
+28411,2026-07-06T13:18:47.773Z,milestone,view_switched,view=Weekly

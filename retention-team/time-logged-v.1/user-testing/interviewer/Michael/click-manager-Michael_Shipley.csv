@@ -1,0 +1,249 @@
+Participant,Track,Date,Duration (s)
+Michael Shipley,manager,2026-07-09,1615
+
+t_ms,t_iso,type,label,detail
+1,2026-07-09T13:08:35.210Z,milestone,session_start,track=manager
+22841,2026-07-09T13:08:58.050Z,click,Select date range,div#tl-date-range-btn
+24313,2026-07-09T13:08:59.522Z,click,29,span
+24507,2026-07-09T13:08:59.716Z,click,29,span
+25902,2026-07-09T13:09:01.111Z,click,Select team,div#tl-team-select
+34529,2026-07-09T13:09:09.738Z,click,PProduct,li
+35525,2026-07-09T13:09:10.734Z,click,Daily time loggedDailyWeeklyMonthlySoonview_columncollapse_a,div
+97207,2026-07-09T13:10:12.416Z,click,Select team,div#tl-team-select
+100019,2026-07-09T13:10:15.228Z,click,EEngineering,li
+101464,2026-07-09T13:10:16.673Z,click,Daily time loggedDailyWeeklyMonthlySoonview_columncollapse_a,div
+109432,2026-07-09T13:10:24.641Z,click,Actionsexpand_more,button
+112804,2026-07-09T13:10:28.013Z,click,Add time,button
+112809,2026-07-09T13:10:28.018Z,milestone,add_time_modal_opened,mode=single
+119527,2026-07-09T13:10:34.736Z,click,Cancel,button#utm-cancel
+119528,2026-07-09T13:10:34.737Z,milestone,add_time_modal_closed,mode=single
+119679,2026-07-09T13:10:34.888Z,milestone,batch_selection_changed,count=0
+120599,2026-07-09T13:10:35.808Z,click,Select date range,div#tl-date-range-btn
+123844,2026-07-09T13:10:39.053Z,click,29,span
+124276,2026-07-09T13:10:39.485Z,click,30,span
+128740,2026-07-09T13:10:43.949Z,click,Actionsexpand_more,button
+129476,2026-07-09T13:10:44.685Z,click,Add time,button
+129480,2026-07-09T13:10:44.689Z,milestone,add_time_modal_opened,mode=single
+134229,2026-07-09T13:10:49.438Z,click,Date,input
+141364,2026-07-09T13:10:56.573Z,click,Time selection bolt Add time in batch DATE calendar_today FR,div
+150128,2026-07-09T13:11:05.337Z,click,Date,input
+153070,2026-07-09T13:11:08.279Z,click,Date,input
+154816,2026-07-09T13:11:10.025Z,click,Date,input
+156448,2026-07-09T13:11:11.657Z,click,Cancel,button#utm-cancel
+156449,2026-07-09T13:11:11.658Z,milestone,add_time_modal_closed,mode=single
+156601,2026-07-09T13:11:11.810Z,milestone,batch_selection_changed,count=0
+159925,2026-07-09T13:11:15.134Z,click,Weekly,button
+159925,2026-07-09T13:11:15.134Z,milestone,view_switched,view=Weekly
+159925,2026-07-09T13:11:15.134Z,click,Weekly,button
+159925,2026-07-09T13:11:15.134Z,milestone,view_switched,view=Weekly
+162634,2026-07-09T13:11:17.843Z,click,Daily,button
+162634,2026-07-09T13:11:17.843Z,milestone,view_switched,view=Daily
+162635,2026-07-09T13:11:17.844Z,click,Daily,button
+162635,2026-07-09T13:11:17.844Z,milestone,view_switched,view=Daily
+168241,2026-07-09T13:11:23.450Z,click,"Sun, Jun 29, 2026 - Sat, Jul 12, 2026 Total hours 96:30:29 T",div
+172802,2026-07-09T13:11:28.011Z,click,Add time,button#tl-add-time-btn
+172802,2026-07-09T13:11:28.011Z,milestone,add_time_button_clicked,
+172805,2026-07-09T13:11:28.014Z,milestone,add_time_modal_opened,mode=multi/batch
+172805,2026-07-09T13:11:28.014Z,milestone,batch_selection_changed,count=0
+186234,2026-07-09T13:11:41.443Z,click,keyboard_arrow_down,span
+187030,2026-07-09T13:11:42.239Z,click,keyboard_arrow_down,span
+187446,2026-07-09T13:11:42.655Z,click,Select members,span
+188702,2026-07-09T13:11:43.911Z,click,Select members,span
+190014,2026-07-09T13:11:45.223Z,click,keyboard_arrow_down,span
+190782,2026-07-09T13:11:45.991Z,click,Product,div
+190784,2026-07-09T13:11:45.993Z,milestone,batch_selection_changed,count=0
+191930,2026-07-09T13:11:47.139Z,click,Engineering,div
+191931,2026-07-09T13:11:47.140Z,milestone,batch_selection_changed,count=0
+192415,2026-07-09T13:11:47.624Z,click,Select members keyboard_arrow_down,div#utm-members-select
+193613,2026-07-09T13:11:48.822Z,click,Helene Engels,span
+193614,2026-07-09T13:11:48.823Z,milestone,batch_selection_changed,count=1
+194030,2026-07-09T13:11:49.239Z,click,James Miller,span
+194031,2026-07-09T13:11:49.240Z,milestone,batch_selection_changed,count=1
+194365,2026-07-09T13:11:49.574Z,click,Sarah Chen,span
+194366,2026-07-09T13:11:49.575Z,milestone,batch_selection_changed,count=1
+195103,2026-07-09T13:11:50.312Z,click,Members ADD MEMBERS OR TEAMS * 2Teams keyboard_arrow_down 3M,div#utm-members-section
+196594,2026-07-09T13:11:51.803Z,click,Date,input
+197298,2026-07-09T13:11:52.507Z,click,Date,input
+198033,2026-07-09T13:11:53.242Z,click,Time selection bolt Add time in batch DATE calendar_today FR,div
+200198,2026-07-09T13:11:55.407Z,click,add Add time span,button#utm-add-span-btn
+201006,2026-07-09T13:11:56.215Z,click,add Add time span,button#utm-add-span-btn
+201826,2026-07-09T13:11:57.035Z,click,Date,input
+203686,2026-07-09T13:11:58.895Z,click,From time,input
+205733,2026-07-09T13:12:00.942Z,click,Time selection bolt Add time in batch DATE calendar_today FR,div
+206566,2026-07-09T13:12:01.775Z,click,To time,input
+208730,2026-07-09T13:12:03.939Z,click,Time selection bolt Add time in batch DATE calendar_today FR,div
+209498,2026-07-09T13:12:04.707Z,click,Date,input
+212910,2026-07-09T13:12:08.119Z,click,Date,input
+216999,2026-07-09T13:12:12.208Z,click,Time selection bolt Add time in batch,div
+217830,2026-07-09T13:12:13.039Z,click,Date,input
+226451,2026-07-09T13:12:21.660Z,click,Time selection bolt Add time in batch,div
+227324,2026-07-09T13:12:22.533Z,click,Date,input
+230127,2026-07-09T13:12:25.336Z,click,schedule,div
+231955,2026-07-09T13:12:27.164Z,click,To time,input
+233554,2026-07-09T13:12:28.763Z,click,Time selection bolt Add time in batch DATE calendar_today FR,div
+235270,2026-07-09T13:12:30.479Z,click,To time,input
+237266,2026-07-09T13:12:32.475Z,click,add Add time span Total hours: 5hr 3min,div#utm-time-footer
+239444,2026-07-09T13:12:34.653Z,click,add Add time span Total hours: 5hr 3min,div#utm-time-footer
+241110,2026-07-09T13:12:36.319Z,click,0hrs delete,div
+241894,2026-07-09T13:12:37.103Z,click,add Add time span Total hours: 5hr 3min,div#utm-time-footer
+242662,2026-07-09T13:12:37.871Z,click,Date,input
+243978,2026-07-09T13:12:39.187Z,click,add Add time span Total hours: 5hr 3min,div#utm-time-footer
+244379,2026-07-09T13:12:39.588Z,click,From time,input
+247327,2026-07-09T13:12:42.536Z,click,Time selection bolt Add time in batch DATE calendar_today FR,div
+248624,2026-07-09T13:12:43.833Z,click,Time selection bolt Add time in batch DATE calendar_today FR,div
+250531,2026-07-09T13:12:45.740Z,click,From time,input
+252919,2026-07-09T13:12:48.128Z,click,Time selection bolt Add time in batch DATE calendar_today FR,div
+254967,2026-07-09T13:12:50.176Z,click,add Add time span Total hours: 11hr 57min,div#utm-time-footer
+258624,2026-07-09T13:12:53.833Z,click,Select a project / work order,div#utm-proj-inner
+260240,2026-07-09T13:12:55.449Z,click,Feldman enterprise,span
+261455,2026-07-09T13:12:56.664Z,click,Assignment PROJECT / WORK ORDER * FEFeldman enterprise keybo,div#utm-assignment-section
+262556,2026-07-09T13:12:57.765Z,click,Select a to-do / job,div#utm-todo-inner
+263691,2026-07-09T13:12:58.900Z,click,Stakeholder review,span
+264591,2026-07-09T13:12:59.800Z,click,add Add time span Total hours: 11hr 57min,div#utm-time-footer
+265256,2026-07-09T13:13:00.465Z,click,Why are you adding this time entry?,span
+268244,2026-07-09T13:13:03.453Z,click,Notes,p
+269059,2026-07-09T13:13:04.268Z,click,Why are you adding this time entry?,span
+274027,2026-07-09T13:13:09.236Z,click,Notes notes Add note,div#utm-notes-section
+275531,2026-07-09T13:13:10.740Z,click,Why are you adding this time entry?,span
+285691,2026-07-09T13:13:20.900Z,click,Forgot to start/stop timer,span
+286272,2026-07-09T13:13:21.481Z,click,Notes notes Add note,div#utm-notes-section
+289297,2026-07-09T13:13:24.506Z,click,Billable,button#utm-billable-toggle
+291107,2026-07-09T13:13:26.316Z,click,notes Add note,button
+294056,2026-07-09T13:13:29.265Z,click,Save,button#utm-save-btn
+294056,2026-07-09T13:13:29.265Z,milestone,add_time_save_clicked,selectedMembersCount=1
+294057,2026-07-09T13:13:29.266Z,milestone,add_time_modal_closed,mode=multi/batch
+300888,2026-07-09T13:13:36.097Z,click,Close annotations panel,button
+323617,2026-07-09T13:13:58.826Z,click,Actionsexpand_more,button
+328057,2026-07-09T13:14:03.266Z,click,Add time,button
+328061,2026-07-09T13:14:03.270Z,milestone,add_time_modal_opened,mode=single
+343797,2026-07-09T13:14:19.006Z,click,Close modal,button#utm-close
+343797,2026-07-09T13:14:19.006Z,milestone,add_time_modal_closed,mode=single
+343948,2026-07-09T13:14:19.157Z,milestone,batch_selection_changed,count=0
+346633,2026-07-09T13:14:21.842Z,click,"Sun, Jun 29, 2026 - Sat, Jul 12, 2026 Total hours 96:30:29 T",div
+349342,2026-07-09T13:14:24.551Z,click,Actionsexpand_more,button
+349853,2026-07-09T13:14:25.062Z,click,Add time,button
+349855,2026-07-09T13:14:25.064Z,milestone,add_time_modal_opened,mode=single
+389450,2026-07-09T13:15:04.659Z,click,Cancel,button#utm-cancel
+389450,2026-07-09T13:15:04.659Z,milestone,add_time_modal_closed,mode=single
+389602,2026-07-09T13:15:04.811Z,milestone,batch_selection_changed,count=0
+391759,2026-07-09T13:15:06.968Z,click,Add time,button#tl-add-time-btn
+391759,2026-07-09T13:15:06.968Z,milestone,add_time_button_clicked,
+391762,2026-07-09T13:15:06.971Z,milestone,add_time_modal_opened,mode=multi/batch
+391762,2026-07-09T13:15:06.971Z,milestone,batch_selection_changed,count=0
+397248,2026-07-09T13:15:12.457Z,click,Select members,div#utm-members-select-inner
+397814,2026-07-09T13:15:13.023Z,click,Select members,div#utm-members-select-inner
+398662,2026-07-09T13:15:13.871Z,click,Cancel,button#utm-cancel
+398663,2026-07-09T13:15:13.872Z,milestone,add_time_modal_closed,mode=multi/batch
+398820,2026-07-09T13:15:14.029Z,milestone,batch_selection_changed,count=0
+399979,2026-07-09T13:15:15.188Z,click,Actionsexpand_more,button
+400459,2026-07-09T13:15:15.668Z,click,Add time,button
+400462,2026-07-09T13:15:15.671Z,milestone,add_time_modal_opened,mode=single
+404706,2026-07-09T13:15:19.915Z,click,Cancel,button#utm-cancel
+404707,2026-07-09T13:15:19.916Z,milestone,add_time_modal_closed,mode=single
+404858,2026-07-09T13:15:20.067Z,milestone,batch_selection_changed,count=0
+406101,2026-07-09T13:15:21.310Z,click,Add time,button#tl-add-time-btn
+406101,2026-07-09T13:15:21.310Z,milestone,add_time_button_clicked,
+406104,2026-07-09T13:15:21.313Z,milestone,add_time_modal_opened,mode=multi/batch
+406104,2026-07-09T13:15:21.313Z,milestone,batch_selection_changed,count=0
+417475,2026-07-09T13:15:32.684Z,click,Select members,div#utm-members-select-inner
+419345,2026-07-09T13:15:34.554Z,click,Members,p
+427200,2026-07-09T13:15:42.409Z,click,Cancel,button#utm-cancel
+427200,2026-07-09T13:15:42.409Z,milestone,add_time_modal_closed,mode=multi/batch
+427353,2026-07-09T13:15:42.562Z,milestone,batch_selection_changed,count=0
+428307,2026-07-09T13:15:43.516Z,click,"Sun, Jun 29, 2026 - Sat, Jul 12, 2026 Total hours 96:30:29 T",div
+502801,2026-07-09T13:16:58.010Z,click,Add time,button#tl-add-time-btn
+502801,2026-07-09T13:16:58.010Z,milestone,add_time_button_clicked,
+502804,2026-07-09T13:16:58.013Z,milestone,add_time_modal_opened,mode=multi/batch
+502804,2026-07-09T13:16:58.013Z,milestone,batch_selection_changed,count=0
+524201,2026-07-09T13:17:19.410Z,click,Cancel,button#utm-cancel
+524201,2026-07-09T13:17:19.410Z,milestone,add_time_modal_closed,mode=multi/batch
+524355,2026-07-09T13:17:19.564Z,milestone,batch_selection_changed,count=0
+525394,2026-07-09T13:17:20.603Z,click,Actionsexpand_more,button
+525891,2026-07-09T13:17:21.100Z,click,Add time,button
+525893,2026-07-09T13:17:21.102Z,milestone,add_time_modal_opened,mode=single
+529650,2026-07-09T13:17:24.859Z,click,Work break,button#utm-tab-workbreak
+535244,2026-07-09T13:17:30.453Z,click,Select a work break policy,div
+536483,2026-07-09T13:17:31.692Z,click,Select a work break policy,div
+537631,2026-07-09T13:17:32.840Z,click,keyboard_arrow_down,span
+557787,2026-07-09T13:17:52.996Z,click,Cancel,button#utm-cancel
+557788,2026-07-09T13:17:52.997Z,milestone,add_time_modal_closed,mode=single
+557939,2026-07-09T13:17:53.148Z,milestone,batch_selection_changed,count=0
+559175,2026-07-09T13:17:54.384Z,click,Add time,button#tl-add-time-btn
+559175,2026-07-09T13:17:54.384Z,milestone,add_time_button_clicked,
+559177,2026-07-09T13:17:54.386Z,milestone,add_time_modal_opened,mode=multi/batch
+559177,2026-07-09T13:17:54.386Z,milestone,batch_selection_changed,count=0
+561184,2026-07-09T13:17:56.393Z,click,Cancel,button#utm-cancel
+561184,2026-07-09T13:17:56.393Z,milestone,add_time_modal_closed,mode=multi/batch
+561335,2026-07-09T13:17:56.544Z,milestone,batch_selection_changed,count=0
+565359,2026-07-09T13:18:00.568Z,click,Actionsexpand_more,button
+566910,2026-07-09T13:18:02.119Z,click,Add time,button
+566913,2026-07-09T13:18:02.122Z,milestone,add_time_modal_opened,mode=single
+569211,2026-07-09T13:18:04.420Z,click,Time type,div#utm-tabs
+569532,2026-07-09T13:18:04.741Z,click,Work break,button#utm-tab-workbreak
+570414,2026-07-09T13:18:05.623Z,click,Add time close,div
+571814,2026-07-09T13:18:07.023Z,click,Cancel,button#utm-cancel
+571815,2026-07-09T13:18:07.024Z,milestone,add_time_modal_closed,mode=single
+571969,2026-07-09T13:18:07.178Z,milestone,batch_selection_changed,count=0
+590695,2026-07-09T13:18:25.904Z,click,Add time,button#tl-add-time-btn
+590695,2026-07-09T13:18:25.904Z,milestone,add_time_button_clicked,
+590698,2026-07-09T13:18:25.907Z,milestone,add_time_modal_opened,mode=multi/batch
+590698,2026-07-09T13:18:25.907Z,milestone,batch_selection_changed,count=0
+593422,2026-07-09T13:18:28.631Z,click,Date,input
+597260,2026-07-09T13:18:32.469Z,click,Date,input
+598812,2026-07-09T13:18:34.021Z,click,calendar_today,div
+600528,2026-07-09T13:18:35.737Z,click,add Add time span Total hours: 4hr 3min,div#utm-time-footer
+603092,2026-07-09T13:18:38.301Z,click,add Add time span,button#utm-add-span-btn
+608056,2026-07-09T13:18:43.265Z,click,add Add time span,button#utm-add-span-btn
+611449,2026-07-09T13:18:46.658Z,click,add Add time span Total hours: 6hr 3min,div#utm-time-footer
+740896,2026-07-09T13:20:56.105Z,click,add Add time span,button#utm-add-span-btn
+741852,2026-07-09T13:20:57.061Z,click,add Add time span,button#utm-add-span-btn
+747171,2026-07-09T13:21:02.380Z,click,Time log Work break Members ADD MEMBERS OR TEAMS * Select te,div
+752759,2026-07-09T13:21:07.968Z,click,Cancel,button#utm-cancel
+752759,2026-07-09T13:21:07.968Z,milestone,add_time_modal_closed,mode=multi/batch
+752923,2026-07-09T13:21:08.132Z,milestone,batch_selection_changed,count=0
+788246,2026-07-09T13:21:43.455Z,click,ProductEngineering keyboard_arrow_down search Select all | U,div
+930825,2026-07-09T13:24:06.034Z,click,View Helene Engels's time logged,button
+930825,2026-07-09T13:24:06.034Z,milestone,member_row_drill_in,memberId=he
+930825,2026-07-09T13:24:06.034Z,click,Daily,button
+930825,2026-07-09T13:24:06.034Z,milestone,view_switched,view=Daily
+944624,2026-07-09T13:24:19.833Z,click,arrow_back Back,button#tl-breadcrumb-btn
+962773,2026-07-09T13:24:37.982Z,click,View Helene Engels's time logged,button
+962773,2026-07-09T13:24:37.982Z,milestone,member_row_drill_in,memberId=he
+962773,2026-07-09T13:24:37.982Z,click,Daily,button
+962773,2026-07-09T13:24:37.982Z,milestone,view_switched,view=Daily
+970221,2026-07-09T13:24:45.430Z,click,arrow_back Back,button#tl-breadcrumb-btn
+1023003,2026-07-09T13:25:38.212Z,click,Actionsexpand_more,button
+1026070,2026-07-09T13:25:41.279Z,click,Actionsexpand_more,button
+1036414,2026-07-09T13:25:51.623Z,click,View Helene Engels's time logged,button
+1036415,2026-07-09T13:25:51.624Z,milestone,member_row_drill_in,memberId=he
+1036415,2026-07-09T13:25:51.624Z,click,Daily,button
+1036415,2026-07-09T13:25:51.624Z,milestone,view_switched,view=Daily
+1042118,2026-07-09T13:25:57.327Z,click,Actionsexpand_more,button
+1057748,2026-07-09T13:26:12.957Z,click,Add time,button#tl-add-time-btn
+1057748,2026-07-09T13:26:12.957Z,milestone,add_time_button_clicked,
+1057751,2026-07-09T13:26:12.960Z,milestone,add_time_modal_opened,mode=single
+1068096,2026-07-09T13:26:23.305Z,click,Cancel,button#utm-cancel
+1068097,2026-07-09T13:26:23.306Z,milestone,add_time_modal_closed,mode=single
+1068248,2026-07-09T13:26:23.457Z,milestone,batch_selection_changed,count=0
+1214751,2026-07-09T13:28:49.960Z,click,Add time,button#tl-add-time-btn
+1214751,2026-07-09T13:28:49.960Z,milestone,add_time_button_clicked,
+1214753,2026-07-09T13:28:49.962Z,milestone,add_time_modal_opened,mode=single
+1347774,2026-07-09T13:31:02.983Z,click,Cancel,button#utm-cancel
+1347774,2026-07-09T13:31:02.983Z,milestone,add_time_modal_closed,mode=single
+1347925,2026-07-09T13:31:03.134Z,milestone,batch_selection_changed,count=0
+1348938,2026-07-09T13:31:04.147Z,click,Hubstaff shell — starter template [hidden] { display: none !,html
+1352579,2026-07-09T13:31:07.788Z,click,arrow_back Back,button#tl-breadcrumb-btn
+1387928,2026-07-09T13:31:43.137Z,click,Select team,div#tl-team-select
+1390600,2026-07-09T13:31:45.809Z,click,PProductcheck,li
+1391340,2026-07-09T13:31:46.549Z,click,EEngineeringcheck,li
+1393548,2026-07-09T13:31:48.757Z,click,Daily time loggedDailyWeeklyMonthlySoonview_columncollapse_a,div
+1394591,2026-07-09T13:31:49.800Z,click,Select member,div#tl-member-select
+1397779,2026-07-09T13:31:52.988Z,click,James Miller,li
+1398419,2026-07-09T13:31:53.628Z,click,All teams keyboard_arrow_down search Select all | Unselect a,div
+1405832,2026-07-09T13:32:01.041Z,click,Select date range,div#tl-date-range-btn
+1409196,2026-07-09T13:32:04.405Z,click,30,span
+1410588,2026-07-09T13:32:05.798Z,click,4,span
+1417227,2026-07-09T13:32:12.436Z,click,View James Miller's time logged,button
+1417228,2026-07-09T13:32:12.437Z,milestone,member_row_drill_in,memberId=jm
+1417228,2026-07-09T13:32:12.437Z,click,Daily,button
+1417228,2026-07-09T13:32:12.437Z,milestone,view_switched,view=Daily

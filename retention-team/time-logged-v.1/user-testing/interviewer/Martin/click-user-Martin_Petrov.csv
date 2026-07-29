@@ -1,0 +1,22 @@
+Participant,Track,Date,Duration (s)
+Martin Petrov,user,2026-07-06,465
+
+t_ms,t_iso,type,label,detail
+1,2026-07-06T17:16:20.228Z,milestone,session_start,track=user
+26515,2026-07-06T17:16:46.742Z,click,Add time,button#tl-add-time-btn
+26516,2026-07-06T17:16:46.743Z,milestone,add_time_button_clicked,
+26550,2026-07-06T17:16:46.777Z,milestone,add_time_modal_opened,mode=single
+37121,2026-07-06T17:16:57.348Z,click,Select a project / work order,div#utm-proj-inner
+39460,2026-07-06T17:16:59.687Z,click,Nottingham Green,span
+40675,2026-07-06T17:17:00.902Z,click,Select a to-do / job,div#utm-todo-inner
+41490,2026-07-06T17:17:01.717Z,click,Client onboarding,span
+42511,2026-07-06T17:17:02.738Z,click,Why are you adding this time entry? keyboard_arrow_down,div#utm-reason-select
+43149,2026-07-06T17:17:03.376Z,click,Manual correction,div
+44751,2026-07-06T17:17:04.978Z,click,Billable,button#utm-billable-toggle
+50153,2026-07-06T17:17:10.380Z,click,Save,button#utm-save-btn
+50153,2026-07-06T17:17:10.380Z,milestone,add_time_save_clicked,selectedMembersCount=1
+50163,2026-07-06T17:17:10.390Z,milestone,add_time_modal_closed,mode=single
+118519,2026-07-06T17:18:18.746Z,click,view_column,button
+154413,2026-07-06T17:18:54.640Z,click,Weekly,button
+154413,2026-07-06T17:18:54.640Z,milestone,view_switched,view=Weekly
+209707,2026-07-06T17:19:49.934Z,click,ts-wmg-switch__thumb,span

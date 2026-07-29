@@ -1,0 +1,66 @@
+span_id,source_span,document,participant,signal_or_noise
+S001,"The view and edit page is one of the pages where I see customers getting the most confused.",transcript-Bruno.md,Bruno Ribas,signal
+S002,"So this gives me the sense that I'll have a page where I can see everyone's time tracked and yeah, pretty much the detailed activity that hubs have tracks.",transcript-Bruno.md,Bruno Ribas,signal
+S003,"It's a single page, but I'm not sure what to expect in terms of. Yeah, like of course I can see it in here with the, with the table.",transcript-Bruno.md,Bruno Ribas,noise
+S004,"So I had the whole team and then if I click to someone, just like the kind of the new activity page, for example, you can see multiple people at once and whatever you want to dig further into, you choose the person that you're interested in seeing.",transcript-Bruno.md,Bruno Ribas,signal
+S005,"This is good.",transcript-Bruno.md,Bruno Ribas,noise
+S006,"Considering that I'm an org manager and there are multiple teams here. Right. Because otherwise I will only see my team directly.",transcript-Bruno.md,Bruno Ribas,signal
+S007,"All teams. And then which team am I managing?",transcript-Bruno.md,Bruno Ribas,noise
+S008,"The filter being applied and I only see members from the team that I pick.",transcript-Bruno.md,Bruno Ribas,signal
+S009,"Because of course, I'm a very seasoned hubsp user, so I know all the filters usually look like.",transcript-Bruno.md,Bruno Ribas,signal
+S010,"this is the standard team filter that we have right now. Right. Even insights. Because I know we also have that sidebar design as we make it more standard.",transcript-Bruno.md,Bruno Ribas,signal
+S011,"still, like, I see all members or all teams here. I don't see the teams that I can pick from.",transcript-Bruno.md,Bruno Ribas,signal
+S012,"for me, I didn't have issues finding. Not sure how a regular customer would feel about it. If that makes sense.",transcript-Bruno.md,Bruno Ribas,signal
+S013,"So add time, add members for teams.",transcript-Bruno.md,Bruno Ribas,noise
+S014,"They told me they started working A bit earlier today, See 728-1-hour, they were working on the Prado home project and it was.",transcript-Bruno.md,Bruno Ribas,noise
+S015,"Yeah, because when Renata mentioned like two time entries, I thought a one time entry for two members, which would be two.",transcript-Bruno.md,Bruno Ribas,signal
+S016,"And maybe something here that could. Because I know like here we have the add time spent, but maybe time selection and then between parentheses S. Like maybe multiple.",transcript-Bruno.md,Bruno Ribas,signal
+S017,"Add time in batch. Yeah, this is very clear. So you can select multiple members.",transcript-Bruno.md,Bruno Ribas,signal
+S018,"Yeah, I would say fairly easy. Like at time is super clear. The only thing I didn't get was the multiple time entries right away. So I would like to give it a five. But because of that, I'll keep it at four.",transcript-Bruno.md,Bruno Ribas,signal
+S019,"I'll scroll over here and click his name. So yeah, with this coming up here makes sense.",transcript-Bruno.md,Bruno Ribas,signal
+S020,"The view here also looks better with the bars and I can open more days.",transcript-Bruno.md,Bruno Ribas,signal
+S021,"customers have been requesting for the pay period to be an option, even in the reports. So instead of you selecting weekly or monthly, you select the pay period that that person has. So it would filter the timesheet to be the exact timesheet that they currently have open.",transcript-Bruno.md,Bruno Ribas,signal
+S022,"I see the biggest problem with the paper selection is if you have team members on different schedules, which could be. Yeah. Making the desired a little harder.",transcript-Bruno.md,Bruno Ribas,signal
+S023,"maybe you should click like paper pay periods. And then Hubstaff gave you the option to filter the pay periods that you actually want to come up and then you have the exact dates of the papers that you have enabled right now.",transcript-Bruno.md,Bruno Ribas,signal
+S024,"You need the timesheet approval for paper to exist. So maybe the pay period option would be grayed out. Like hey, this is not available because you don't have timesheets.",transcript-Bruno.md,Bruno Ribas,signal
+S025,"Oh no, this one is a five. Five being easy, right? Yeah.",transcript-Bruno.md,Bruno Ribas,signal
+S026,"Five. Yeah, super easy.",transcript-Bruno.md,Bruno Ribas,signal
+S027,"I'll go to their profile and add time here. Yeah. As expected.",transcript-Bruno.md,Bruno Ribas,signal
+S028,"Five. Yeah.",transcript-Bruno.md,Bruno Ribas,noise
+S029,"You can choose between me and all because I'm not used to picking myself as a member in these models.",transcript-Bruno.md,Bruno Ribas,signal
+S030,"Sometimes I go to those reports and then I don't see my whole team and I'm like, where are them? Right. So maybe having everyone own by default is a better option in general.",transcript-Bruno.md,Bruno Ribas,signal
+S031,"Should they come up in here?",transcript-Bruno.md,Bruno Ribas,noise
+S032,"Now with the actions button for sure. View, time log, view screenshots, add time, view, timeline would take me to that same view. And what else? Yeah, you can see the name.",transcript-Bruno.md,Bruno Ribas,signal
+S033,"It feels very dynamic. Like at no time I had a concern that I would not be able to open this because. Yeah, the highlight it gives when you scroll over, it's already very clear, which doesn't really help.",transcript-Bruno.md,Bruno Ribas,signal
+S034,"Doesn't happen with the timesheet approvals. If you see timesheet approvals, you don't have the feeling that you can open them right away. So yeah, this one is a. It's a good improvement.",transcript-Bruno.md,Bruno Ribas,signal
+S035,"No, I think it's pretty clear. The one question that I had was like this, going to open the activity page, the screenshots one or. Yeah, because then when I click it, open the screenshots right away. So that was. Yeah, one thing that was not clear to me from the start, but I think this makes sense.",transcript-Bruno.md,Bruno Ribas,signal
+S036,"Yep, nothing changed here.",transcript-Bruno.md,Bruno Ribas,signal
+S037,"And is it the same if you're requesting manual time, it's also add time. Right. It's not like request time.",transcript-Bruno.md,Bruno Ribas,noise
+S038,"Yeah, it says request, something like that.",transcript-Bruno.md,Bruno Ribas,signal
+S039,"Looks good. So five.",transcript-Bruno.md,Bruno Ribas,signal
+S040,"I would say the timeline because as a user is that the book entries are more valuable when you have like multiple members to fix. So that's why probably doing it in bulk. I don't see many use cases where the user needs to do it in book.",transcript-Bruno.md,Bruno Ribas,signal
+S041,"One thing that I remember was confusing for me at the start was because I didn't know if add time would already select the day that I wanted. So I always had in mind like should I add time on the day or should I choose the general option?",transcript-Bruno.md,Bruno Ribas,signal
+S042,"So I'm wondering if having a separate add time for a specific day would help.",transcript-Bruno.md,Bruno Ribas,signal
+S043,"But yeah, it's fine. I think it's clear enough that you can change the date here.",transcript-Bruno.md,Bruno Ribas,signal
+S044,"Probably different, because the calendar view for time sheets, I don't like it that much. The kind of view is more suitable for the calendar option, like with the shifts and all.",transcript-Bruno.md,Bruno Ribas,signal
+S045,"I would prefer having this. Only just the table. Yeah, just the table.",transcript-Bruno.md,Bruno Ribas,signal
+S046,"Not really. I would say, Kate, and especially now, I don't know if you have much context, but I have totally different book now that I became a team lead. Like, I have the SMB accounts that I have very little relationship with.",transcript-Bruno.md,Bruno Ribas,signal
+S047,"even thinking from the old book, I wouldn't say I had customers that were too interested in. In this.",transcript-Bruno.md,Bruno Ribas,signal
+S048,"only if they needed to edit things because otherwise for them to see how much time was tracked over the. The timesheet, they would probably use reports, actually.",transcript-Bruno.md,Bruno Ribas,signal
+S049,"And then the time review. Only if they had shifts and time offs.",transcript-Bruno.md,Bruno Ribas,signal
+S050,"No, no, I think that's fine. It's. It's what Google Calendar does. Right. I think.",transcript-Bruno.md,Bruno Ribas,signal
+S051,"For the timesheets. No, I think it makes sense. Like the. What's not super clear to me is the other actions from the timesheet. Right. For example, the approvals.",transcript-Bruno.md,Bruno Ribas,signal
+S052,"So I think today this is called timesheets. And then you have approvals in manual, time required. No, sorry, you have approvals and do an edit. Right.",transcript-Bruno.md,Bruno Ribas,noise
+S053,"And then you also have time tracked against time logged. Yeah. The definition could be Very close to as well. Right.",transcript-Bruno.md,Bruno Ribas,signal
+S054,"Time entries seem to make more sense here because time tracking and time lock for me are the same. Are the same.",transcript-Bruno.md,Bruno Ribas,signal
+S055,"Time tracking time entries, timesheet approvals, minimum time requests. I think, yeah, we are a group that would make more sense to me.",transcript-Bruno.md,Bruno Ribas,signal
+S056,"I don't think it's very clear for them either. They just learned that it's there, it's where they should go to get that done.",transcript-Bruno.md,Bruno Ribas,signal
+S057,"especially during like onboarding calls, it's always a funny process of the customer learning where to go for the approvals. Like I had seen customers going back to settings looking for the timesheets again, they forgot it was up on the top.",transcript-Bruno.md,Bruno Ribas,signal
+S058,"No, I don't think so. Work breaks.",transcript-Bruno.md,Bruno Ribas,signal
+S059,"the few customers that could ask for it, we could do the project as a work break workaround that some customers do today.",transcript-Bruno.md,Bruno Ribas,signal
+S060,"previously you always had to remember oh, no. Like I'm only seeing a single member now. I need to choose who I need.",transcript-Bruno.md,Bruno Ribas,signal
+S061,"if the page defaults to seeing everyone at once and then I have the option to filter for someone specifically, I think it's more close to what the rest of our pages do already. So. Yeah, I would say it's way easier.",transcript-Bruno.md,Bruno Ribas,signal
+S062,"Yeah, no, but I think it should be a fairly easy transaction for that transition.",transcript-Bruno.md,Bruno Ribas,signal
+S063,"I really like the, the new design. So. Yeah, hopefully some of the feedback was helpful.",transcript-Bruno.md,Bruno Ribas,signal
+S064,"I'll send you the CSV just like.",transcript-Bruno.md,Bruno Ribas,noise
+S065,"I know we are on time, but I can spend more time at least from my end. That's fine.",transcript-Bruno.md,Bruno Ribas,noise

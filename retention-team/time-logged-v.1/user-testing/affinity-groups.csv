@@ -1,0 +1,415 @@
+group_name,highlight_text,participant,source,original_tags,flags
+"I don't think losing the export button is a big deal, since customers can use Reports instead",I don't think the missing export button on the new timesheets page would be a problem for my clients.,Laura Larrea,,Context;Timesheets;no,weak:size<3
+"I don't think losing the export button is a big deal, since customers can use Reports instead","The lack of an export button on this page can wait, since we can direct customers to the work sessions report in the meantime.",Mercy Mwende,,Context;Reporting;Timesheets;no,weak:size<3
+"I don't think removing the calendar/grid view would be a big loss, based on what I've seen from customers","Even in my previous CSM portfolio, I wouldn't say I had customers who were very interested in the calendar/timesheet view.",Bruno Ribas,,Context;Timesheets;Calendar;no,
+"I don't think removing the calendar/grid view would be a big loss, based on what I've seen from customers","Based on the little customer interaction I've seen about Hubstaff's calendar view, I don't think removing it would be a big issue.",Martin Petrov,,Context;Calendar;no,
+"I don't think removing the calendar/grid view would be a big loss, based on what I've seen from customers","In all my years at Hubstaff, only about two customers have ever mentioned the calendar/grid-style view.",Mercy Mwende,,Context;Timesheets;no,
+"I expected to easily find screenshots when drilling into a member's detail view, but it wasn't clear how",At first it wasn't clear to me whether clicking the row would open the activity page or open the screenshots directly.,Bruno Ribas,,Problems;Timesheets;Screenshots;Activity;Discoverability;no,weak:size<3
+"I expected to easily find screenshots when drilling into a member's detail view, but it wasn't clear how",I looked for the screenshots after clicking through to a member's detail view but didn't see them.,Mercy Mwende,,Problems;Discoverability;Screenshots;no,weak:size<3
+I like that the drill-down action on a member's row is now obvious when I hover over it,"The row highlight on hover in Time Logged makes it clear the row is clickable, which is a good improvement.",Bruno Ribas,,Context;Timesheets;no,
+I like that the drill-down action on a member's row is now obvious when I hover over it,"The view-time-log button appearing over a member's row on hover is important, and I'm glad it's there.",Laura Larrea,,Context;Timesheets;no,
+I like that the drill-down action on a member's row is now obvious when I hover over it,I like that Hubstaff makes the drill-down 'pill' very obvious on hover.,Michael Shipley,,Context;Timesheets;Discoverability;no,
+"I recognize this filter behaves the same as filters elsewhere in Hubstaff, which makes it easy to use","Time Logged's team filter is the same standard team filter Hubstaff uses elsewhere, like in Insights.",Bruno Ribas,,Context;Timesheets;Insights;no,weak:size<3
+"I recognize this filter behaves the same as filters elsewhere in Hubstaff, which makes it easy to use","I can filter the multi-member view down to a single member, similar to filtering I've done on other Hubstaff pages.",Michael Shipley,,Context;Timesheets;no,weak:size<3
+I want 'Time Tracked' and 'Time Logged' to be clearly differentiated so people don't wonder what the difference is,"Seeing both 'Time Tracked' and 'Time Log' as labels on the same page could make people ask 'wait, what's the difference?' and not realize that Time Tracked includes everything listed below it.",Aurora Arjonilla,,Problems;Timesheets;Discoverability;no,
+I want 'Time Tracked' and 'Time Logged' to be clearly differentiated so people don't wonder what the difference is,'Time tracked' and 'time logged' feel confusingly close in definition to me.,Bruno Ribas,,Problems;Timesheets;Discoverability;no,
+I want 'Time Tracked' and 'Time Logged' to be clearly differentiated so people don't wonder what the difference is,I'm unclear on the difference between 'time tracked' and 'time logged' -- to me they sound like they mean the same thing.,Mercy Mwende,,Problems;Discoverability;Timesheets;no,
+I want a monthly or pay-period-specific view option since payroll cycles vary,"Customers have been requesting a pay-period filter option for timesheets, including in reports, so that instead of selecting weekly or monthly, they can filter to the exact timesheet period they currently have open.",Bruno Ribas,,Goals;Timesheets;Reporting;yes,weak:size<3
+I want a monthly or pay-period-specific view option since payroll cycles vary,"It would be great for Hubstaff to have a monthly view option, given more clients are moving to monthly payroll periods.",Laura Larrea,,Goals;Timesheets;Payments;yes,weak:size<3
+I want a quick way to undo a batch time-add mistake instead of fixing it manually,"I think Hubstaff should have an audit log on this screen that records entries like who added how much time for how many members and when, with an option to undo within a specific time period.",Martin Petrov,,Problems;Timesheets;yes,weak:size<3
+I want a quick way to undo a batch time-add mistake instead of fixing it manually,I want to be able to delete or undo a batch time entry after mistakenly saving it for all members in the organization.,Mercy Mwende,,Goals;Timesheets;yes,weak:size<3
+I want customers to get advance notice or input before changes roll out,"Hubstaff could add a banner or pop-up on the legacy page saying changes are coming soon, similar to what was done for the Time and Activity report during its legacy-to-new transition.",Aurora Arjonilla,,Goals;Timesheets;Reporting;System feedback;yes,
+I want customers to get advance notice or input before changes roll out,"A brief one-minute video sent a few days before release, showing that users get the same data plus a few new additions, would help prepare clients for the timesheets changes.",Laura Larrea,,Goals;Timesheets;Customer Support;yes,
+I want customers to get advance notice or input before changes roll out,I think Hubstaff should reach out first to customers who already use a given feature area and involve them in a focus group before making changes to it.,Martin Petrov,,Problems;Customer Support;yes,
+I want section and page names to actually reflect what you can do there,"I think naming the section 'time tracked' doesn't make sense when it also includes manual time requests, since that time isn't technically tracked.",Martin Petrov,,Problems;Timesheets;no,
+I want section and page names to actually reflect what you can do there,I don't think the name 'Time Logged' makes it clear that you can edit and split time on that page.,Mercy Mwende,,Problems;Discoverability;Timesheets;no,
+I want section and page names to actually reflect what you can do there,"If it's just labeled 'timesheet,' I would think this is where I go to look at my team's tracked time, not just to approve it.",Michael Shipley,,Problems;Timesheets;no,
+I want the export/download option kept because my customers rely on it,Some clients who bill other clients download the timesheets view to see how many projects or hours per day were worked.,Laura Larrea,,Context;Timesheets;Reporting;no,
+I want the export/download option kept because my customers rely on it,"Some Hubstaff customers will mind that the download option is missing from this page, since they used it to download their timesheet for their own offline use.",Martin Petrov,,Problems;Timesheets;no,
+I want the export/download option kept because my customers rely on it,Some organizations export their timesheet data weekly.,Mercy Mwende,,Context;Timesheets;Reporting;no,
+"I want the multi-member view to default to showing everyone, not just me","Similar to timesheet approvals, where you can submit and approve for multiple people, being able to see more people at once and then exclude down to one or a specific team is always better than the reverse.",Aurora Arjonilla,,Goals;Timesheets;People;no,weak:size<3
+"I want the multi-member view to default to showing everyone, not just me",Having everyone shown by default would be a better general option than defaulting to just me.,Bruno Ribas,,Goals;Reporting;Timesheets;yes,weak:size<3
+I want the timeline shown when adding time because it helps me catch mistakes and see exactly when time was tracked,"The timeline bar under the date in the Add Time dialog gives good visual confirmation of roughly where in the day the time is placed, which helps me catch mistakes like accidentally logging time in the morning instead of the afternoon because I didn't use 24-hour time.",Aurora Arjonilla,,Context;Timesheets;Timeline;no,
+I want the timeline shown when adding time because it helps me catch mistakes and see exactly when time was tracked,"Without the timeline, a person adding time blindly to a slot that already has time tracked (e.g. 12 to 2) would encounter errors.",Laura Larrea,,Problems;Timesheets;no,
+I want the timeline shown when adding time because it helps me catch mistakes and see exactly when time was tracked,"I think the tracked time span should be shown directly on this page, since knowing where time has and hasn't been tracked is the most important thing for a user.",Martin Petrov,,Problems;Timesheets;Time tracking;yes,
+"I want the weekly view to default to the table, not the calendar-style grid","For the weekly view in Time Logged, I'd prefer having just the table, not the illustrative calendar-style view.",Bruno Ribas,,Goals;Timesheets;Calendar;no,
+"I want the weekly view to default to the table, not the calendar-style grid",I'd want the time-logged page to default to the table view instead of the calendar view.,Laura Larrea,,Goals;Timesheets;yes,
+"I want the weekly view to default to the table, not the calendar-style grid",I think the table layout is better than the calendar-grid layout for viewing weekly time.,Mercy Mwende,,Goals;Timesheets;no,
+"I want the weekly view to default to the table, not the calendar-style grid",Hubstaff should default the weekly view to the table view but make it very clear and obvious how to switch to the other grid view.,Michael Shipley,,Goals;Timesheets;Discoverability;yes,
+"I want this page to default to my own time, since that's my most common use as a manager","As a manager, I expect to see my own time by default rather than needing extra clicks to filter for just myself.",Mercy Mwende,,Problems;Discoverability;Timesheets;no,weak:size<3
+"I want this page to default to my own time, since that's my most common use as a manager","Hubstaff should default this page to my own experience, or have a 'me' and 'team' tab like it did in the past.",Michael Shipley,,Goals;Timesheets;yes,weak:size<3
+"I want to add time across multiple dates in one go, not just a single date",I think it would be a good idea to allow admins to modify either a single date or multiple dates at once in the Add Time dialog.,Aurora Arjonilla,,Goals;Timesheets;Account;yes,
+"I want to add time across multiple dates in one go, not just a single date","As a manager, I'd expect the single-member add-time dialog to support adding multiple days, the same as the batch actions dialog does.",Mercy Mwende,,Goals;Timesheets;yes,
+"I want to add time across multiple dates in one go, not just a single date",I would prefer having the ability to add time across multiple days over keeping the timeline view.,Michael Shipley,,Goals;Timesheets;Timeline;no,
+I want to confirm nothing from the old timesheets experience is missing in the new design,Nothing was missing for me between the previous Timesheets experience and the new Time Logged experience.,Aurora Arjonilla,,Context;Timesheets;no,
+I want to confirm nothing from the old timesheets experience is missing in the new design,"In the user view of Time Logged, adding time works the same as before - nothing changed for me there.",Bruno Ribas,,Context;Timesheets;no,
+I want to confirm nothing from the old timesheets experience is missing in the new design,"I do not think anything is missing from the new timesheets pages, because I tested it myself and could perform all prior actions plus some additional new ones.",Laura Larrea,,Context;Timesheets;no,
+I want to confirm nothing from the old timesheets experience is missing in the new design,I want confirmation that batch-deleting time entries at the individual user level will still be possible.,Mercy Mwende,,Goals;Timesheets;no,
+I'm not noticing important action buttons because they're not where I expect them in the redesign,The actions on hover in the multi-member view table are not immediately visible.,Laura Larrea,,Problems;Timesheets;Discoverability;no,weak:size<3
+I'm not noticing important action buttons because they're not where I expect them in the redesign,I'm so used to Hubstaff's action buttons sitting lower on the page that I didn't notice the new Add Time button in the top-right header.,Michael Shipley,,Problems;Timesheets;Discoverability;no,weak:size<3
+I'm trying to gauge how much real customer demand exists for bulk work-break entry,I don't think many customers ask for bulk work breaks.,Bruno Ribas,,Context;Timesheets;no,
+I'm trying to gauge how much real customer demand exists for bulk work-break entry,I have never seen a Hubstaff client want to add a work break for multiple team members at once.,Laura Larrea,,Context;Timesheets;no,
+I'm trying to gauge how much real customer demand exists for bulk work-break entry,"That customer considers it very important to be able to manually add work breaks, including through batch actions.",Mercy Mwende,,Goals;Time tracking;Customer Support;yes,
+I'm trying to gauge how much real customer demand exists for bulk work-break entry,"I think there's some value in bulk work-break entry for the multi-member view, but it's probably a fringe case right now.",Michael Shipley,,Context;Time tracking;no,
+I'm worried customers will be caught off guard when they see the redesign,I think customers will still be shocked by the redesign because most of our users aren't in the habit of checking a 'what's coming' section.,Aurora Arjonilla,,Problems;Timesheets;Customer Support;no,
+I'm worried customers will be caught off guard when they see the redesign,Clients panic when things in Hubstaff look different.,Laura Larrea,,Problems;no,
+I'm worried customers will be caught off guard when they see the redesign,It's a jarring experience to default the weekly tab to a calendar view because nothing on screen explains why this tab is now a calendar view instead of a table.,Michael Shipley,,Problems;Timesheets;System feedback;no,
+I'm worried customers won't know where to go now that familiar names like 'View and Edit' are gone,"When looking at Time Log and thinking of the old view-and-edit page, it's unclear where to go to make a change.",Laura Larrea,,Problems;Timesheets;Discoverability;no,
+I'm worried customers won't know where to go now that familiar names like 'View and Edit' are gone,Customers have specifically been asking where the 'view and edits' page went since it was renamed.,Martin Petrov,,Problems;Timesheets;Discoverability;no,
+I'm worried customers won't know where to go now that familiar names like 'View and Edit' are gone,"When I first saw the new page names, I didn't immediately understand them because I'm used to the old 'View and Edit' terminology.",Mercy Mwende,,Problems;Discoverability;Timesheets;no,
+Some of my customers do rely on the calendar view for specific niche use cases,Customers only look at the calendar/time-review view if they have shifts and time-offs configured.,Bruno Ribas,,Context;Calendar;no,weak:size<3
+Some of my customers do rely on the calendar view for specific niche use cases,"Some customers use the calendar view to visually plan or review their day, seeing exactly when each project was tracked.",Mercy Mwende,,Context;Timesheets;no,weak:size<3
+ungrouped,"When I see the onboarding prompt on the new Time Logged page, it's the first thing I would look at.",Aurora Arjonilla,,Context;Timesheets;no,unclustered
+ungrouped,I'm more likely than most people to actually read an onboarding prompt when something is new.,Aurora Arjonilla,,Context;Onboarding;no,unclustered
+ungrouped,Most people would likely just click next through the onboarding prompt until it disappears and figure things out on their own as they go.,Aurora Arjonilla,,Context;Onboarding;Discoverability;no,unclustered
+ungrouped,I assume the onboarding prompt includes all the important information I would need when questions come up eventually.,Aurora Arjonilla,,Context;Onboarding;no,unclustered
+ungrouped,"To see everyone's time for the last week on the Time Logged manager view, I would first select last week in the date picker.",Aurora Arjonilla,,Context;Timesheets;no,unclustered
+ungrouped,"To see everyone's time for the last week on the Time Logged manager view, I would select a team.",Aurora Arjonilla,,Context;Timesheets;People;no,unclustered
+ungrouped,I found both the date selection and filtering by team on the Time Logged manager view very easy.,Aurora Arjonilla,,Context;Timesheets;no,unclustered
+ungrouped,"When adding time for a team, I wondered whether selecting a team lets me then exclude specific members, like removing Ryan from the product team, rather than adding time for everybody in the team.",Aurora Arjonilla,,Problems;Timesheets;Discoverability;People;no,unclustered
+ungrouped,I found adding two hours of time for a whole team at once very easy.,Aurora Arjonilla,,Context;Timesheets;no,unclustered
+ungrouped,"My only concern with the bulk add-time flow is understanding that if you select a team without further selecting specific team members, you're logging time for the entire team.",Aurora Arjonilla,,Problems;Timesheets;Discoverability;no,unclustered
+ungrouped,"If I had no idea what was going on with a user's time log and needed to know what data was logged, I would go to the Time and Activity report rather than the individual time-log view.",Aurora Arjonilla,,Context;Reporting;Timesheets;no,unclustered
+ungrouped,"To drill into one member's time log detail from the multi-member view, I would go to Actions and click View Time Logged.",Aurora Arjonilla,,Context;Timesheets;no,unclustered
+ungrouped,Clicking on a user's name from View Time Logged switches the whole page to that specific user.,Aurora Arjonilla,,Context;Timesheets;no,unclustered
+ungrouped,"After clicking View Time Logged for a user, any action I take afterward, including the Add Time button, applies specifically to that user.",Aurora Arjonilla,,Context;Timesheets;no,unclustered
+ungrouped,Showing which specific user I'm about to modify in the Add Time dialog is really helpful because it removes any doubt about who I'm editing.,Aurora Arjonilla,,Context;Timesheets;no,unclustered
+ungrouped,"I like that Hubstaff distinguishes between a time log entry and a work break in the Add Time dialog, because that distinction has concerned customers before.",Aurora Arjonilla,,Context;Timesheets;Customer Support;no,unclustered
+ungrouped,"For the Add Time dialog, it seems easy enough to select the date and the time range for a time entry.",Aurora Arjonilla,,Context;Timesheets;no,unclustered
+ungrouped,"In the Add Time dialog, I can see a summary of the total hours I'm adding.",Aurora Arjonilla,,Context;Timesheets;no,unclustered
+ungrouped,"In the Add Time dialog, I can assign a project and any associated to-dos if they exist.",Aurora Arjonilla,,Context;Timesheets;Project management;no,unclustered
+ungrouped,"In the Add Time dialog, the reason field is mandatory and I can add notes and mark the entry billable or not.",Aurora Arjonilla,,Context;Timesheets;Billing;no,unclustered
+ungrouped,"I'm a visual person, so the timeline bar confirmation in the Add Time dialog is helpful for me.",Aurora Arjonilla,,Context;Timeline;Timesheets;no,unclustered
+ungrouped,I imagine the timeline bar in the Add Time dialog would be helpful for other people as well.,Aurora Arjonilla,,Context;Timeline;Timesheets;no,unclustered
+ungrouped,"To view my own individual time entries from the multi-member view, my first thought would be to click on all members and then select myself.",Aurora Arjonilla,,Context;Timesheets;People;no,unclustered
+ungrouped,"As a CSM, I've definitely heard customers say that being able to enter work breaks would be helpful, especially when they've forgotten to note a break they took.",Aurora Arjonilla,,Goals;Timesheets;Customer Support;yes,unclustered
+ungrouped,My biggest question mark about the redesign is the new page naming.,Aurora Arjonilla,,Problems;Timesheets;Discoverability;no,unclustered
+ungrouped,I think the naming 'Timesheets' versus 'Time Logged' / 'Time Tracked' is simple enough.,Aurora Arjonilla,,Context;Timesheets;no,unclustered
+ungrouped,"Having two sections on the same page, one called Time Tracked and one Time Logged, might be confusing.",Aurora Arjonilla,,Problems;Timesheets;Discoverability;no,unclustered
+ungrouped,"Instead of labeling a section 'Time Tracked,' Hubstaff could label it 'Tracking,' since tracking is one of the main things Hubstaff is known for.",Aurora Arjonilla,,Context;Timesheets;Time tracking;yes,unclustered
+ungrouped,Whether the subsection under Tracking is called Time Logged or Time Tracked is immaterial to me; either would work.,Aurora Arjonilla,,Context;Timesheets;no,unclustered
+ungrouped,We use the verbiage 'tracking time' a lot when talking about Hubstaff.,Aurora Arjonilla,,Context;Time tracking;no,unclustered
+ungrouped,"Using the term 'Time Log' instead of 'tracking' might make it seem like something fundamental has changed about Hubstaff, when it hasn't.",Aurora Arjonilla,,Problems;Timesheets;Time tracking;no,unclustered
+ungrouped,"I think 'daily Time Logged' is clear enough as a label, regardless of whether it says daily time tracked or daily time worked.",Aurora Arjonilla,,Context;Timesheets;no,unclustered
+ungrouped,The only thing I would look for in Hubstaff's terminology is consistency in which word is used across the whole page.,Aurora Arjonilla,,Goals;Timesheets;no,unclustered
+ungrouped,"Making a distinction between 'Time Worked' and 'Time Tracked' would confuse customers, because they would then ask us what the difference is.",Aurora Arjonilla,,Problems;Timesheets;Customer Support;no,unclustered
+ungrouped,I'm not sure Hubstaff should make a distinction between 'time worked' and 'time tracked' as separate concepts.,Aurora Arjonilla,,Context;Timesheets;Time tracking;no,unclustered
+ungrouped,I would expect customers to understand 'Edit Time' and 'Add Time' the same way; either label would work.,Aurora Arjonilla,,Context;Timesheets;no,unclustered
+ungrouped,"I don't have an issue with the page being named 'Time Logged,' as long as it isn't easily confused with 'Time Tracked.'",Aurora Arjonilla,,Context;Timesheets;no,unclustered
+ungrouped,"As long as 'Time Logged' and 'Time Tracked' are clearly differentiated, with the tracked one referencing tracking specifically, either name is fine with me.",Aurora Arjonilla,,Context;Timesheets;no,unclustered
+ungrouped,"I've been wondering what the multi-selection checkbox on the Time Logged table does, since it's not currently working in the prototype.",Aurora Arjonilla,,Context;Timesheets;Discoverability;no,unclustered
+ungrouped,I wondered whether the multi-selection checkboxes on the Time Logged table are meant to support making multiple edits at once.,Aurora Arjonilla,,Context;Timesheets;no,unclustered
+ungrouped,"Overall, the Time Logged experience seems pretty easy and straightforward to me.",Aurora Arjonilla,,Context;Timesheets;no,unclustered
+ungrouped,I like the navigation in the new Time Logged experience; it's easy.,Aurora Arjonilla,,Context;Timesheets;no,unclustered
+ungrouped,It was easy for me to find the things I was asked to do during the test.,Aurora Arjonilla,,Context;Timesheets;Discoverability;no,unclustered
+ungrouped,"I find the proposed pop-up text ('site narrowed down, updates instantly right where you are') concise and precise, and it matches what I just went through in the prototype.",Aurora Arjonilla,,Context;Timesheets;System feedback;no,unclustered
+ungrouped,Having a 'changes are coming soon' notice would at least let Hubstaff say customers were told the change was going to happen.,Aurora Arjonilla,,Context;Timesheets;Customer Support;no,unclustered
+ungrouped,There will always be managers who want to see everybody's time at once just to glance and confirm everybody is tracking time while they're already on the timesheets page.,Aurora Arjonilla,,Context;Timesheets;People;Time tracking;no,unclustered
+ungrouped,I had a lot of fun participating in this usability test.,Aurora Arjonilla,,Context;no,unclustered
+ungrouped,The View and Edit (Timesheets) page is one of the pages where I see customers getting the most confused.,Bruno Ribas,,Problems;Timesheets;Customer Support;no,unclustered
+ungrouped,"From the onboarding tooltip, I understood I'd have a single page where I can see everyone's tracked time and the detailed activity Hubstaff tracks.",Bruno Ribas,,Context;Onboarding;Timesheets;no,unclustered
+ungrouped,"Clicking into a member from the multi-member table works like the new Activity page, showing multiple people at once with the option to drill into whoever I'm interested in.",Bruno Ribas,,Context;Timesheets;Activity;no,unclustered
+ungrouped,"As an org manager with multiple teams, I'd expect to see all teams by default in Time Logged, since otherwise I'd only see my own team directly.",Bruno Ribas,,Context;Timesheets;People;no,unclustered
+ungrouped,"When I applied the team filter in Time Logged, I only saw members from the team I picked, as expected.",Bruno Ribas,,Context;Timesheets;no,unclustered
+ungrouped,"I'm a very seasoned Hubstaff user, so I already know what Hubstaff's filters usually look like.",Bruno Ribas,,Context;Timesheets;no,unclustered
+ungrouped,"In Time Logged's filter, I can see all members or all teams, but I don't see the specific teams I can pick from.",Bruno Ribas,,Problems;Timesheets;Discoverability;no,unclustered
+ungrouped,"I personally had no trouble finding the team filter in Time Logged, but I'm not sure how a regular customer would feel about it.",Bruno Ribas,,Context;Timesheets;no,unclustered
+ungrouped,"When Renata said 'two time entries,' I initially thought it meant one time entry each for two members, totaling two entries.",Bruno Ribas,,Problems;Timesheets;Discoverability;no,unclustered
+ungrouped,Hubstaff could add '(s)' in parentheses next to the time-selection label to indicate multiple entries are possible.,Bruno Ribas,,Problems;Timesheets;yes,unclustered
+ungrouped,"Hubstaff's 'Add time in batch' label is very clear, and lets me select multiple members.",Bruno Ribas,,Context;Timesheets;no,unclustered
+ungrouped,"Adding time in Time Logged was super clear, but I didn't immediately understand that I could add multiple time entries at once.",Bruno Ribas,,Problems;Timesheets;Discoverability;no,unclustered
+ungrouped,Clicking a member's name to open their detail view in Time Logged made sense to me.,Bruno Ribas,,Context;Timesheets;no,unclustered
+ungrouped,"The member detail view in Time Logged looks better now with the bars, and I can open more days.",Bruno Ribas,,Context;Timesheets;no,unclustered
+ungrouped,"The biggest problem with pay-period selection is when team members are on different schedules, which makes it harder.",Bruno Ribas,,Problems;Timesheets;no,unclustered
+ungrouped,"Hubstaff should let managers click into pay periods and filter to the ones they want, showing the exact enabled dates for those periods.",Bruno Ribas,,Problems;Timesheets;yes,unclustered
+ungrouped,"If a customer doesn't have timesheet approvals enabled, the pay-period filter option should be grayed out with a message that it isn't available.",Bruno Ribas,,Problems;Timesheets;yes,unclustered
+ungrouped,"Drilling down into a single member's detail view in Time Logged was very easy, a 5 out of 5.",Bruno Ribas,,Context;Timesheets;no,unclustered
+ungrouped,"Returning from the member detail view to the multi-member view in Time Logged was very easy, a 5 out of 5.",Bruno Ribas,,Context;Timesheets;no,unclustered
+ungrouped,Adding time from a member's detailed view in Time Logged worked exactly as I expected.,Bruno Ribas,,Context;Timesheets;no,unclustered
+ungrouped,"In Reports I can choose between 'me' and 'all,' but I'm not used to picking myself as a member in the Time Logged multi-member view.",Bruno Ribas,,Problems;Reporting;Timesheets;no,unclustered
+ungrouped,"Sometimes when I go into Reports, I don't see my whole team and wonder where they are.",Bruno Ribas,,Problems;Reporting;Discoverability;no,unclustered
+ungrouped,"In Time Logged, the actions button options - view time log, view screenshots, add time, view timeline - all take me to the same member detail view.",Bruno Ribas,,Context;Timesheets;no,unclustered
+ungrouped,Time Logged feels very dynamic - at no point did I have a concern that I wouldn't be able to open a row.,Bruno Ribas,,Context;Timesheets;no,unclustered
+ungrouped,Timesheet Approvals doesn't give me the same feeling that rows can be opened right away the way Time Logged does.,Bruno Ribas,,Problems;Timesheets;no,unclustered
+ungrouped,"In production Hubstaff, requesting manual time is labeled 'request,' not 'add time.'",Bruno Ribas,,Context;Timesheets;no,unclustered
+ungrouped,"Adding time in the individual user view of Time Logged looked good and was easy, a 5 out of 5.",Bruno Ribas,,Context;Timesheets;no,unclustered
+ungrouped,"As an individual user, I don't see many use cases for adding time entries in bulk; seeing the timeline is more valuable to me than that.",Bruno Ribas,,Context;Timesheets;no,unclustered
+ungrouped,"I was confused at first about whether Add Time in Time Logged would automatically select the day I wanted, versus me choosing the day generally.",Bruno Ribas,,Problems;Timesheets;Discoverability;no,unclustered
+ungrouped,Having a separate 'add time for a specific day' option in Time Logged might help with that confusion.,Bruno Ribas,,Problems;Timesheets;yes,unclustered
+ungrouped,It's clear enough to me that I can change the date within the Time Logged add-time modal.,Bruno Ribas,,Context;Timesheets;no,unclustered
+ungrouped,I don't like the calendar view for timesheets that much; that illustrative style is better suited to the calendar option with shifts.,Bruno Ribas,,Problems;Timesheets;Calendar;no,unclustered
+ungrouped,"Now that I've become a team lead, I have a totally different book of accounts, including SMB accounts I have very little relationship with.",Bruno Ribas,,Context;no,unclustered
+ungrouped,"Customers typically use Reports, not the timesheet view, to see how much time was tracked; they only use the timesheet view when they need to edit something.",Bruno Ribas,,Context;Reporting;Timesheets;no,unclustered
+ungrouped,"Calling it 'monthly view' instead of 'calendar view' would be fine with me, similar to how Google Calendar names its views.",Bruno Ribas,,Context;Calendar;no,unclustered
+ungrouped,"What's not super clear to me is the other actions available from the Timesheets area, like approvals.",Bruno Ribas,,Problems;Timesheets;Discoverability;no,unclustered
+ungrouped,"'Time entries' would make more sense as a name to me, since 'time tracking' and 'time log' mean the same thing to me.",Bruno Ribas,,Problems;Timesheets;yes,unclustered
+ungrouped,"'Time tracking, time entries, timesheet approvals, and time requests' would make a clearer naming group to me.",Bruno Ribas,,Problems;Timesheets;yes,unclustered
+ungrouped,Customers don't find Hubstaff's current page naming clear either; they just learn where they need to go over time.,Bruno Ribas,,Problems;Timesheets;Discoverability;Customer Support;no,unclustered
+ungrouped,"I've seen customers go back to Settings looking for timesheets, having forgotten it's at the top of the navigation.",Bruno Ribas,,Problems;Settings;Timesheets;Discoverability;Customer Support;no,unclustered
+ungrouped,Some customers today work around the lack of a work-break option by using a project to represent work breaks.,Bruno Ribas,,Problems;Timesheets;Project management;no,unclustered
+ungrouped,"Previously as a manager, I always had to remember that I was only seeing a single member and had to choose who I needed.",Bruno Ribas,,Problems;Timesheets;no,unclustered
+ungrouped,"Defaulting to seeing everyone at once, with the option to filter to someone specific, is more consistent with the rest of Hubstaff's pages and way easier.",Bruno Ribas,,Context;Timesheets;no,unclustered
+ungrouped,I think the transition to landing on the multi-member view by default should be a fairly easy one for customers.,Bruno Ribas,,Context;Timesheets;no,unclustered
+ungrouped,I really like the new design of Time Logged.,Bruno Ribas,,Context;Timesheets;no,unclustered
+ungrouped,"I found the multi-member view prompt pretty straightforward, explaining that I should be able to see my entire team in one view.",Laura Larrea,,Context;Timesheets;Discoverability;no,unclustered
+ungrouped,I expect clicking a team member's name in the multi-member view to bring down all of their information.,Laura Larrea,,Context;Timesheets;no,unclustered
+ungrouped,I would select a specific team from the all-teams option to filter Hubstaff's multi-member view to that team.,Laura Larrea,,Context;Timesheets;no,unclustered
+ungrouped,"After selecting a team, I can see my team members' day information per day.",Laura Larrea,,Context;Timesheets;no,unclustered
+ungrouped,I rated the task of filtering the multi-member view by team a 5 out of 5 for ease.,Laura Larrea,,Context;Timesheets;no,unclustered
+ungrouped,I would use the add time button on the multi-member view page to add time for the whole team.,Laura Larrea,,Context;Timesheets;no,unclustered
+ungrouped,"To add time for the team, I would select the team, enter the date and time, choose the project, and save.",Laura Larrea,,Context;Timesheets;no,unclustered
+ungrouped,I expected the add-timestamp option to let me enter a specific number of hours instead of selecting a time frame.,Laura Larrea,,Context;Timesheets;no,unclustered
+ungrouped,Clicking the add-timestamp option let me select a different time span than the one already shown.,Laura Larrea,,Context;Timesheets;no,unclustered
+ungrouped,Being able to add multiple time entries at once in Hubstaff is great.,Laura Larrea,,Goals;Timesheets;no,unclustered
+ungrouped,I rated the task of adding time to multiple members at once a 4 out of 5 for difficulty.,Laura Larrea,,Context;Timesheets;no,unclustered
+ungrouped,"I rated the task of drilling down to a specific member's view a 4 out of 5, because I have to get used to the new way of getting there.",Laura Larrea,,Problems;Timesheets;Discoverability;no,unclustered
+ungrouped,"I expect to add time to a single member's detail view the same way as before, by clicking on actions and add time.",Laura Larrea,,Context;Timesheets;no,unclustered
+ungrouped,The most important part of the single-member add-time dialogue is having visibility into the timeline.,Laura Larrea,,Goals;Timesheets;no,unclustered
+ungrouped,Seeing the timeline lets me validate what times I need to change when adding time.,Laura Larrea,,Context;Timesheets;no,unclustered
+ungrouped,"What Hubstaff's single-member add-time dialogue currently offers - selecting a time span, entering hours, assigning a project, and adding a note - is exactly what is needed.",Laura Larrea,,Context;Timesheets;no,unclustered
+ungrouped,I'm not sure whether a member without a break policy configured would still be able to see the work-break button in Hubstaff.,Laura Larrea,,Problems;Timesheets;Discoverability;no,unclustered
+ungrouped,It would be important for Hubstaff's multi-member add-time feature to mimic exactly how single time entry works today.,Laura Larrea,,Goals;Timesheets;no,unclustered
+ungrouped,"If I have multiple members selected, being able to select multiple time spans would also be important.",Laura Larrea,,Goals;Timesheets;no,unclustered
+ungrouped,The timeline in Hubstaff's add-time view is still important.,Laura Larrea,,Goals;Timesheets;no,unclustered
+ungrouped,"When adding time to one specific individual and going through the full flow, it should be fine to keep it to one time entry at a time.",Laura Larrea,,Context;Timesheets;no,unclustered
+ungrouped,"For adding time to an entire team, a group, or multiple members, I would choose the option that supports multiple time spans over the single-entry option.",Laura Larrea,,Goals;Timesheets;no,unclustered
+ungrouped,I rated returning from single-member view to multi-member view a 5 out of 5 for ease.,Laura Larrea,,Context;Timesheets;no,unclustered
+ungrouped,I navigated back using the drop-down out of muscle memory from how I use reports.,Laura Larrea,,Context;Timesheets;Reporting;no,unclustered
+ungrouped,I rated understanding that a manager can still view their own time from the multi-member view a 5 out of 5 for ease.,Laura Larrea,,Context;Timesheets;no,unclustered
+ungrouped,"If I didn't notice the view-time-log button, I would try clicking on actions and see view time log as my workaround.",Laura Larrea,,Context;Timesheets;Discoverability;no,unclustered
+ungrouped,Hubstaff could avoid showing the PTO/holiday indicator for members without PTO or holidays so the hover action is more visible.,Laura Larrea,,Problems;Timesheets;Discoverability;yes,unclustered
+ungrouped,I like that the view-time-log pop-up appears wherever I go in the page.,Laura Larrea,,Context;Timesheets;no,unclustered
+ungrouped,The view-time-log button tells me there are actions I can take on a member's row.,Laura Larrea,,Context;Timesheets;Discoverability;no,unclustered
+ungrouped,I rated adding time for myself as a regular user a 5 out of 5 for ease.,Laura Larrea,,Context;Timesheets;no,unclustered
+ungrouped,"As a user working on multiple projects or for multiple clients, I want to know how much I'm working per project or per client so I can understand my earnings or totals.",Laura Larrea,,Goals;Timesheets;Reporting;no,unclustered
+ungrouped,I want to be able to visually see my per-project or per-client totals immediately.,Laura Larrea,,Goals;Timesheets;no,unclustered
+ungrouped,"The calendar view in Hubstaff looks very beautiful and neat, but doesn't give me the detail I need immediately.",Laura Larrea,,Problems;Timesheets;no,unclustered
+ungrouped,The calendar view in Hubstaff looks very neat and very nice.,Laura Larrea,,Context;Timesheets;no,unclustered
+ungrouped,Customers normally go to the timesheets page to look at data and numbers.,Laura Larrea,,Context;Timesheets;no,unclustered
+ungrouped,"More clients are now deciding to pay on longer periods, like a monthly payroll.",Laura Larrea,,Context;Payments;no,unclustered
+ungrouped,"Keeping the Calendar tab's name as-is, even though it's not really a calendar view, should be fine.",Laura Larrea,,Context;Timesheets;no,unclustered
+ungrouped,"I like having three view options (daily, weekly, monthly) on the timesheets page.",Laura Larrea,,Goals;Timesheets;no,unclustered
+ungrouped,"I want a custom date-range selector to remain available, since a pay period might not be daily, weekly, or monthly but bi-weekly.",Laura Larrea,,Goals;Timesheets;yes,unclustered
+ungrouped,Users are accustomed to selecting custom date ranges to match their specific pay period.,Laura Larrea,,Context;Timesheets;no,unclustered
+ungrouped,Users with timesheets approvals enabled just look at the entire timesheets rather than selecting a custom range.,Laura Larrea,,Context;Timesheets;no,unclustered
+ungrouped,"Having daily, weekly, and monthly as the three view options on the timesheets page makes sense to me.",Laura Larrea,,Context;Timesheets;no,unclustered
+ungrouped,My experience with work-break requests has been limited to one member at a time missing a work break entry.,Laura Larrea,,Context;Timesheets;no,unclustered
+ungrouped,We end up adding a missed work break for a member unnecessarily because we have to do it for the whole team.,Laura Larrea,,Problems;Timesheets;no,unclustered
+ungrouped,I really liked the batch-add-time feature when it was released a few days ago.,Laura Larrea,,Context;Timesheets;no,unclustered
+ungrouped,It must be frustrating for the product team to release something and then get a lot of feedback about it.,Laura Larrea,,Context;no,unclustered
+ungrouped,Making sure clients know where to click and that the features are the same is exactly what we needed.,Laura Larrea,,Context;no,unclustered
+ungrouped,Everything that clients need is present in the new timesheets pages.,Laura Larrea,,Context;Timesheets;no,unclustered
+ungrouped,We just needed to make clients more aware upfront that they'll achieve the same results without more clicks in the new timesheets pages.,Laura Larrea,,Goals;Timesheets;no,unclustered
+ungrouped,"The new timesheets design looks really great, and I really like it.",Laura Larrea,,Context;Timesheets;no,unclustered
+ungrouped,My only concern is not knowing how to prepare clients for the new design before it's rolled out immediately.,Laura Larrea,,Problems;Timesheets;Customer Support;no,unclustered
+ungrouped,Clients panic about the new timesheets design even though nothing is actually wrong with it.,Laura Larrea,,Problems;Timesheets;no,unclustered
+ungrouped,"Scale, a Hubstaff customer, has started using the batch action feature.",Laura Larrea,,Context;Timesheets;no,unclustered
+ungrouped,Scale's feedback on the batch action feature was great; last week they said it's so easy to do this now.,Laura Larrea,,Context;Timesheets;no,unclustered
+ungrouped,The old page name P1 Edit told users specifically what they should do there.,Laura Larrea,,Context;Timesheets;no,unclustered
+ungrouped,"If clients click into either the time log or timesheets pages, the actions are very straightforward.",Laura Larrea,,Context;Timesheets;no,unclustered
+ungrouped,"I wouldn't change the Time Log page name, because there's more you can do there now than just editing time.",Laura Larrea,,Context;Timesheets;no,unclustered
+ungrouped,Naming the pages Time Log and Timesheets is more complete than the previous names of Approvals or View and Edit.,Laura Larrea,,Context;Timesheets;no,unclustered
+ungrouped,"Even clients who don't use timesheets approvals now have things they could use here, like the manual time request, which previously required going to timesheets approvals.",Laura Larrea,,Context;Timesheets;no,unclustered
+ungrouped,"If a client didn't have timesheets approvals enabled, the manual time request was hidden from them.",Laura Larrea,,Problems;Timesheets;Discoverability;no,unclustered
+ungrouped,There could be a quick show-and-tell video from the product side for clients about the new timesheets pages.,Laura Larrea,,Goals;Timesheets;Customer Support;yes,unclustered
+ungrouped,I wouldn't change the wording of the timesheets pages; it's more complete now than it was before.,Laura Larrea,,Context;Timesheets;no,unclustered
+ungrouped,Customers refer to adding time as time entries more than as time log.,Laura Larrea,,Context;Timesheets;no,unclustered
+ungrouped,"Customers say time entries more often than time log, because time logged is not a concept they use a lot.",Laura Larrea,,Context;Timesheets;no,unclustered
+ungrouped,"The term time logged is self-explanatory, but not a concept that clients use a lot.",Laura Larrea,,Context;Timesheets;no,unclustered
+ungrouped,"If a client clicks on Time Log, they will be able to see exactly what they need even without recognizing the term beforehand.",Laura Larrea,,Context;Timesheets;no,unclustered
+ungrouped,I would not change the Time Log page name; I think it's fine as it is.,Laura Larrea,,Context;Timesheets;no,unclustered
+ungrouped,I cannot recall a specific client using the CSV export in every pay period.,Laura Larrea,,Context;Timesheets;no,unclustered
+ungrouped,"Clients normally use the Reports feature, not the timesheets export, to import a larger batch of users.",Laura Larrea,,Context;Reporting;Timesheets;no,unclustered
+ungrouped,I'm not sure how crucial or how often clients download the timesheets export.,Laura Larrea,,Context;Timesheets;no,unclustered
+ungrouped,"A short video about the new timesheets changes should come from the product team, and be sent out via the Success team or Success inbox.",Laura Larrea,,Goals;Timesheets;Customer Support;yes,unclustered
+ungrouped,"When clients see the pop-up with instructions, they just click next without reading it, same as I do myself.",Laura Larrea,,Problems;Timesheets;Discoverability;no,unclustered
+ungrouped,It would be better if everyone across the company shares one version of the education video rather than each team making its own.,Laura Larrea,,Goals;Customer Support;no,unclustered
+ungrouped,I'm not sure how often an organization would actually need to add the same time entry to more than one team member at once.,Martin Petrov,,Context;Timesheets;no,unclustered
+ungrouped,"When adding time in batch on the multi-member view, the same time value gets applied to every selected member.",Martin Petrov,,Context;Timesheets;no,unclustered
+ungrouped,Hubstaff already has a feature that lets organization owners and managers bulk-approve manual time by selecting all the requests at once.,Martin Petrov,,Context;Timesheets;no,unclustered
+ungrouped,"Using the existing manual time request flow, it would be down to users themselves to request time entries one day at a time, like eight hours today and eight hours tomorrow.",Martin Petrov,,Context;Timesheets;no,unclustered
+ungrouped,"I don't think requesting time entries one day at a time would take that long for a user, especially since they're more willing to spend the time because it's their own hours.",Martin Petrov,,Context;Timesheets;no,unclustered
+ungrouped,I remember the rollout of this change being tense.,Martin Petrov,,Context;no,unclustered
+ungrouped,"I think certain areas of the Hubstaff platform, like timesheets and reports, have worked well for a long time without needing much change.",Martin Petrov,,Context;Timesheets;Reporting;no,unclustered
+ungrouped,Our customers were used to how Hubstaff's legacy reports worked.,Martin Petrov,,Context;Reporting;no,unclustered
+ungrouped,I think Hubstaff should let org owners and managers opt in to test a new change themselves instead of rolling it out as a blanket change to everyone.,Martin Petrov,,Problems;Settings;yes,unclustered
+ungrouped,I think org owners should be able to roll back a feature flag themselves without having to contact Hubstaff directly.,Martin Petrov,,Problems;Settings;yes,unclustered
+ungrouped,Rolling this change out as a blanket for everyone made the experience worse and slower for the people who didn't want or need it.,Martin Petrov,,Problems;Timesheets;no,unclustered
+ungrouped,"I would add screenshots side by side to this onboarding pop-up, since it isn't going to be possible to show them any other way.",Martin Petrov,,Problems;Onboarding;yes,unclustered
+ungrouped,I don't think the wording on this part of the onboarding pop-up needs to change.,Martin Petrov,,Context;Onboarding;no,unclustered
+ungrouped,I think the onboarding pop-up should mention work breaks in its language if an organization already uses work breaks.,Martin Petrov,,Problems;Onboarding;yes,unclustered
+ungrouped,The multi-member time table looked very black and white when I first saw it rolled out.,Martin Petrov,,Problems;Timesheets;no,unclustered
+ungrouped,"Hubstaff's activity percentage is normally color-coded elsewhere, for example red if it's below 20%.",Martin Petrov,,Context;Activity;no,unclustered
+ungrouped,I think the multi-member time table needs more color coding so it doesn't look so black and white.,Martin Petrov,,Problems;Timesheets;yes,unclustered
+ungrouped,"I think color coding for things like idle time, holiday hours, and PTO would make the multi-member time table easier to scan, read, and interpret.",Martin Petrov,,Problems;Timesheets;Activity;yes,unclustered
+ungrouped,I found selecting my team and viewing their time on the multi-member daily view very intuitive and easy.,Martin Petrov,,Context;Timesheets;no,unclustered
+ungrouped,Some organizations would want to select multiple teams at once in the multi-member view.,Martin Petrov,,Goals;Timesheets;People;no,unclustered
+ungrouped,"If Hubstaff didn't let managers select multiple teams in the multi-member view, I'd expect that to be one of the first feature requests organizations come back with.",Martin Petrov,,Context;Timesheets;no,unclustered
+ungrouped,I found batch-adding time entries for my team on the multi-member view easy to follow.,Martin Petrov,,Context;Timesheets;no,unclustered
+ungrouped,"When batch-adding time in the multi-member view, you can only select one project for the time being added.",Martin Petrov,,Context;Timesheets;Project management;no,unclustered
+ungrouped,Only being able to select one project when batch-adding time in the multi-member view could be an issue for organizations that need their time tracking to be 100% accurate across multiple projects.,Martin Petrov,,Problems;Timesheets;Project management;no,unclustered
+ungrouped,I think Hubstaff needs an option to quickly undo a batch time-add in case a mistake was made.,Martin Petrov,,Problems;Timesheets;yes,unclustered
+ungrouped,"Without a quick undo option, fixing a mistake made when batch-adding time to many members would be a nightmare to reverse manually one by one.",Martin Petrov,,Problems;Timesheets;no,unclustered
+ungrouped,"Hubstaff lets managers create work shifts up to 30 days in the past, but a manager can delete shifts going back as far as whenever the shift was originally created.",Martin Petrov,,Context;Timesheets;Settings;no,unclustered
+ungrouped,"It creates an awkward scenario where a manager could delete shifts going back years by mistake, but can only correct or restore a deleted shift within the past 30 days.",Martin Petrov,,Problems;Timesheets;no,unclustered
+ungrouped,We've had customer escalations that had to go to development because support had no way to restore shifts a manager deleted more than 30 days in the past.,Martin Petrov,,Problems;Timesheets;Customer Support;no,unclustered
+ungrouped,"Hubstaff shows a warning before deleting shifts, but some users don't pay much attention to it and delete shifts by mistake anyway.",Martin Petrov,,Problems;Timesheets;System feedback;no,unclustered
+ungrouped,"Batch-adding time in the multi-member view can touch limits, overtime policies, shifts, and holidays for the members involved.",Martin Petrov,,Context;Timesheets;Settings;no,unclustered
+ungrouped,"In Hubstaff, holiday and time-off hours currently don't count toward a user's weekly limit, which could let a user work their full limit hours plus a paid holiday and end up getting paid for more hours than intended.",Martin Petrov,,Problems;Timesheets;Settings;Financials;no,unclustered
+ungrouped,It's not immediately clear which days have tracked hours on the individual time log page.,Martin Petrov,,Problems;Timesheets;Discoverability;no,unclustered
+ungrouped,I think days without tracked hours should be shown in a different color on the individual time log page so they stand out visually.,Martin Petrov,,Problems;Timesheets;yes,unclustered
+ungrouped,I tried to return to the multi-member view by unselecting all the team members I had filtered on.,Martin Petrov,,Context;Timesheets;no,unclustered
+ungrouped,"I thought of the individual member view as a filter applied to the same page, so I tried removing the filter to get back rather than realizing it's a separate page.",Martin Petrov,,Problems;Timesheets;Discoverability;no,unclustered
+ungrouped,I think the back button on the individual time log page should be labeled something like 'back to multi-member view' instead of a generic back button.,Martin Petrov,,Problems;Timesheets;yes,unclustered
+ungrouped,I think the individual time log page should be renamed to something like 'individual time logged' or 'member's time logged' so it's clearer it's showing a single person's time.,Martin Petrov,,Problems;Timesheets;yes,unclustered
+ungrouped,I rated returning to the multi-member view a 2 out of 5 for ease because I took the wrong route.,Martin Petrov,,Problems;Timesheets;no,unclustered
+ungrouped,"I've never personally used the timeline to add time in Hubstaff, but I think it's easy to follow because hovering over an entry shows its start and end time.",Martin Petrov,,Context;Timesheets;Timeline;no,unclustered
+ungrouped,I rated finding my own time on this page an intuitive 4 out of 5.,Martin Petrov,,Context;Timesheets;no,unclustered
+ungrouped,"Currently in Hubstaff, opening a timesheet shows the last person's time that was viewed.",Martin Petrov,,Context;Timesheets;no,unclustered
+ungrouped,"In Hubstaff, a project viewer can see timesheets for anyone who tracked time to a project they view.",Martin Petrov,,Context;Timesheets;Project management;People;no,unclustered
+ungrouped,The project viewer role exists so that clients of an organization can be added for visibility into their projects.,Martin Petrov,,Context;Project management;People;no,unclustered
+ungrouped,"As a CSM, I know how our customers actually use Hubstaff, and it's not always the way it's intended to be used.",Martin Petrov,,Context;Customer Support;no,unclustered
+ungrouped,Seeing where time has and hasn't been tracked helps me figure out whether I need to add time or whether something is wrong with my time tracker.,Martin Petrov,,Goals;Time tracking;no,unclustered
+ungrouped,"I've never personally used Hubstaff's calendar view, but I know many people do use it.",Martin Petrov,,Context;Calendar;no,unclustered
+ungrouped,I spent about an hour before this call reviewing live chats and new tickets from customers about timesheets since the 24 June rollout.,Martin Petrov,,Context;Customer Support;Timesheets;no,unclustered
+ungrouped,I'm building a spreadsheet of customer tickets and feedback related to the timesheets rollout on 24 June.,Martin Petrov,,Context;Customer Support;Timesheets;no,unclustered
+ungrouped,"In Hubstaff, if a user is also a project manager for a project, they can see time tracked to that project by other members.",Martin Petrov,,Context;Project management;Timesheets;no,unclustered
+ungrouped,"Customers have asked us why report numbers differ between people, and we've had to work backwards through reports to figure out that a person manages additional projects.",Martin Petrov,,Problems;Reporting;Customer Support;no,unclustered
+ungrouped,"As a manager, I check my new starter's individual timesheet almost daily to make sure she's working around eight hours a day.",Martin Petrov,,Context;Timesheets;People;no,unclustered
+ungrouped,I open up my team member's weekly timesheet about once a week to review the breakdown of hours against what I expect.,Martin Petrov,,Context;Timesheets;no,unclustered
+ungrouped,New users and managers have gotten confused looking for 'their timesheet' when they didn't have timesheet approvals enabled.,Martin Petrov,,Problems;Timesheets;Discoverability;no,unclustered
+ungrouped,"I used to explain to customers that everyone has access to where their hours are logged, but only sees timesheet approvals if their manager enables them.",Martin Petrov,,Context;Timesheets;no,unclustered
+ungrouped,I think 'timesheets' is a US-centric term that isn't used as commonly in Europe.,Martin Petrov,,Context;Timesheets;no,unclustered
+ungrouped,"I think Hubstaff should add more in-app education, like call-outs, support article links, or demos, instead of making users go to the knowledge base when they're confused the first time they see a new page.",Martin Petrov,,Problems;Onboarding;Discoverability;yes,unclustered
+ungrouped,"I think 'time logs' and 'timesheets' are reasonable names, given Hubstaff serves a very international customer base where no naming will please everyone.",Martin Petrov,,Context;Timesheets;no,unclustered
+ungrouped,"I'd suggest alternative names for the section, like 'time breakdown,' 'overall time analysis,' or 'time management.'",Martin Petrov,,Goals;Timesheets;yes,unclustered
+ungrouped,"I don't understand why there's a rush to roll this feature out, and I don't see the value in rushing it if it means having to manage negative consequences afterward.",Martin Petrov,,Problems;no,unclustered
+ungrouped,"I recall Cody having calls directly with customers for feedback in the past, though I don't know how structured that feedback process was.",Martin Petrov,,Context;Customer Support;no,unclustered
+ungrouped,I think our Customer Success department should establish better processes than just logging a feature request or pointing customers to the roadmap link.,Martin Petrov,,Problems;Customer Support;no,unclustered
+ungrouped,"I found the onboarding popup text to be a long, dense paragraph, so I skipped it immediately.",Mercy Mwende,,Problems;Timesheets;Discoverability;no,unclustered
+ungrouped,My feedback is that the onboarding popup text should be shortened.,Mercy Mwende,,Problems;Timesheets;yes,unclustered
+ungrouped,I think the multi-member table view is good.,Mercy Mwende,,Context;Timesheets;no,unclustered
+ungrouped,"I tend to click ahead quickly, before receiving full instructions, because my brain runs fast.",Mercy Mwende,,Context;no,unclustered
+ungrouped,"I found the batch time-entry flow of selecting teams and members intuitive, and it worked as I expected.",Mercy Mwende,,Context;Timesheets;no,unclustered
+ungrouped,I noticed the date format shown in the add-time dialog didn't match the date format used elsewhere in Hubstaff.,Mercy Mwende,,Problems;Timesheets;no,unclustered
+ungrouped,I was concerned about whether batch-added time would use the organization's time zone or each individual member's own time zone.,Mercy Mwende,,Problems;Timesheets;no,unclustered
+ungrouped,I understood the two time-zone options as either the user's own time zone or the manager's time zone as the person making the change.,Mercy Mwende,,Context;Timesheets;no,unclustered
+ungrouped,"I wanted to know what would happen to tracked time if a manager based in the UK added time for a user based in Kenya, when the organization wants everyone's time recorded to a specific time zone like Manila time.",Mercy Mwende,,Problems;Timesheets;no,unclustered
+ungrouped,I want to know if there's a way to batch-delete time entries across a date range for all members at once.,Mercy Mwende,,Goals;Timesheets;yes,unclustered
+ungrouped,"I believe that if it's easy to add a date range of time entries, it should be equally easy to undo or delete that range.",Mercy Mwende,,Goals;Timesheets;yes,unclustered
+ungrouped,"I prefer a one-by-one date picker over a date-range picker for adding batch time, since it feels safer without an easy way to undo.",Mercy Mwende,,Goals;Timesheets;yes,unclustered
+ungrouped,One of our customers uses work breaks extensively.,Mercy Mwende,,Context;Time tracking;Customer Support;no,unclustered
+ungrouped,"I was concerned that with 500 members, the multi-member list would require a lot of scrolling to find a specific person if not filtered.",Mercy Mwende,,Problems;Discoverability;Timesheets;no,unclustered
+ungrouped,I wondered whether the multi-member table would display all names in a stable table or cut off after showing only the first several.,Mercy Mwende,,Problems;Discoverability;Timesheets;no,unclustered
+ungrouped,"I was worried that loading the multi-member Time Logged page for an organization with 8,000 members could cause slow loading or timeouts.",Mercy Mwende,,Problems;Loading time;Timesheets;no,unclustered
+ungrouped,"I looked for a way to add multiple days in the single-member add-time dialog, but found that option only exists under batch actions.",Mercy Mwende,,Problems;Discoverability;Timesheets;no,unclustered
+ungrouped,I was confused about why the time-selection experience differs between the single-member add-time dialog and the batch actions dialog.,Mercy Mwende,,Problems;Discoverability;Timesheets;no,unclustered
+ungrouped,"If I couldn't add multiple days in the single-member dialog, I would cancel out and go back to the batch actions dialog to add the time there instead.",Mercy Mwende,,Context;Timesheets;no,unclustered
+ungrouped,"I wanted to know whether the single-member add-time dialog would show a time-zone banner, similar to the current Hubstaff experience, when adding time across different time zones.",Mercy Mwende,,Goals;Timesheets;no,unclustered
+ungrouped,Time zone confusion is a persistent source of difficulty in my CSM work -- I once had to convince a customer that the earth isn't flat while explaining it.,Mercy Mwende,,Problems;Customer Support;no,unclustered
+ungrouped,I rarely use a 'back' button when navigating; I default to clicking directly on the page name in the left navigation instead.,Mercy Mwende,,Context;Timesheets;no,unclustered
+ungrouped,I was unsure whether clicking 'Time Logged' in the left navigation might log me out or restart my session.,Mercy Mwende,,Problems;System feedback;Timesheets;no,unclustered
+ungrouped,Returning to the multi-member view worked the same way as what I'm already used to doing.,Mercy Mwende,,Context;Timesheets;no,unclustered
+ungrouped,I used to be able to see my own data and filter to just myself in the Time and Activity report as a manager.,Mercy Mwende,,Context;Reporting;no,unclustered
+ungrouped,The ability to filter the Time and Activity report to just myself as a manager seems to have been removed.,Mercy Mwende,,Problems;Reporting;no,unclustered
+ungrouped,"I think it would be easier to have a toggle to switch between viewing just my own data and everyone's data, like the Time and Activity report used to have, applied here too.",Mercy Mwende,,Goals;Reporting;Timesheets;yes,unclustered
+ungrouped,I wanted to know if the billable toggle defaults to on automatically when the selected project is billable.,Mercy Mwende,,Goals;Billing;no,unclustered
+ungrouped,"Customers frequently reach out to me complaining that their tracked hours, like 40 hours, aren't reflecting correctly.",Mercy Mwende,,Problems;Customer Support;Timesheets;no,unclustered
+ungrouped,"Customers use the table/time-logged view rather than reports to verify their tracked hours, because they can toggle their own time zone there.",Mercy Mwende,,Context;Timesheets;Reporting;no,unclustered
+ungrouped,I haven't had customers complain about the absence of the calendar/grid-style view.,Mercy Mwende,,Context;Timesheets;no,unclustered
+ungrouped,Customers actively use the weekly table view.,Mercy Mwende,,Context;Timesheets;no,unclustered
+ungrouped,I think a monthly table view would only be valuable if Hubstaff also had monthly limits functionality.,Mercy Mwende,,Context;Timesheets;no,unclustered
+ungrouped,I don't think Hubstaff currently has monthly limits functionality.,Mercy Mwende,,Context;Settings;no,unclustered
+ungrouped,"Not many customers use the calendar view, but the ones who do use it heavily and would notice if it were removed.",Mercy Mwende,,Context;Timesheets;no,unclustered
+ungrouped,I had one customer who was very strict about tracking specific projects at specific times and relied on the calendar view to verify this.,Mercy Mwende,,Context;Timesheets;Customer Support;no,unclustered
+ungrouped,"Renaming the tabs to 'daily, weekly, monthly' would be clear and straightforward for customers.",Mercy Mwende,,Context;Timesheets;no,unclustered
+ungrouped,"Once I saw that 'Time Logged' was listed first, it made sense to me that it was named that.",Mercy Mwende,,Context;Timesheets;no,unclustered
+ungrouped,I think 'timesheets' as a name makes complete sense and is clearer than what it was called before.,Mercy Mwende,,Context;Timesheets;no,unclustered
+ungrouped,I consider time to be 'tracked' whether it was entered manually or recorded automatically via a device.,Mercy Mwende,,Context;Time tracking;no,unclustered
+ungrouped,"I liked that the old 'View and Edit' name made it immediately clear you could view, edit, and split time on that page.",Mercy Mwende,,Context;Timesheets;no,unclustered
+ungrouped,I expect customers will eventually learn what 'Time Logged' allows through UI clues and help articles rather than from the name itself.,Mercy Mwende,,Context;Timesheets;no,unclustered
+ungrouped,"Customers use split time, and we as CSMs advise them to use it.",Mercy Mwende,,Context;Time tracking;Customer Support;no,unclustered
+ungrouped,"Split time isn't used constantly, but it's needed whenever that use case comes up.",Mercy Mwende,,Context;Time tracking;no,unclustered
+ungrouped,"I personally use split time too, for example to divide one tracked period between two different projects or tasks.",Mercy Mwende,,Context;Time tracking;no,unclustered
+ungrouped,It's rare to want to split time in bulk; usually you want to split time for one specific user.,Mercy Mwende,,Context;Time tracking;Timesheets;no,unclustered
+ungrouped,I thought split time was being removed even for individual users.,Mercy Mwende,,Problems;Time tracking;Timesheets;no,unclustered
+ungrouped,I like that we now have brighter colors in the design.,Mercy Mwende,,Context;no,unclustered
+ungrouped,I was testing this using an actual production organization account.,Mercy Mwende,,Context;no,unclustered
+ungrouped,I'd expect to be able to select multiple specific days and batch-delete them together.,Mercy Mwende,,Goals;Timesheets;yes,unclustered
+ungrouped,We use filters a lot in this experience.,Mercy Mwende,,Context;Timesheets;no,unclustered
+ungrouped,"I think the 'idle/resumed' and 'manual' filters are important, because some people leave their tracker running while asleep.",Mercy Mwende,,Context;Time tracking;Activity;no,unclustered
+ungrouped,Filtering by activity below 10% is something I typically use or see used.,Mercy Mwende,,Context;Activity;no,unclustered
+ungrouped,I want confirmation that there will be a way to link out to the timesheet settings from this page.,Mercy Mwende,,Goals;Settings;no,unclustered
+ungrouped,Those organizations want to see time start/stop details specifically in the user's own time zone.,Mercy Mwende,,Context;Timesheets;no,unclustered
+ungrouped,The work break reports don't fully meet those organizations' needs for seeing start and stop times in the user's own time zone.,Mercy Mwende,,Problems;Reporting;no,unclustered
+ungrouped,Different organizations have different methods for handling their timesheet data.,Mercy Mwende,,Context;Timesheets;no,unclustered
+ungrouped,One organization had significant back-and-forth with us last year because exporting their timesheets was very important to them.,Mercy Mwende,,Context;Customer Support;Timesheets;no,unclustered
+ungrouped,That organization compared their exported Hubstaff timesheets against timesheets from tools like ClickUp or Time Doctor.,Mercy Mwende,,Context;Timesheets;no,unclustered
+ungrouped,Customers have been asking me if there's a way to batch-upload time entries.,Mercy Mwende,,Goals;Timesheets;yes,unclustered
+ungrouped,I understand Hubstaff changed this page from a single-member view to a multi-member view where I can see everyone together.,Michael Shipley,,Context;Timesheets;no,unclustered
+ungrouped,"I can see multiple team members grouped by date with their names, time log, and activity in the new Hubstaff multi-member view.",Michael Shipley,,Context;Timesheets;Activity;no,unclustered
+ungrouped,I understand that clicking on a member's name lets me drill down into their full breakdown.,Michael Shipley,,Context;Timesheets;no,unclustered
+ungrouped,I found selecting my team to show time for a specific day very easy (5 out of 5).,Michael Shipley,,Context;Timesheets;no,unclustered
+ungrouped,"I already know the Hubstaff platform, so I might be a bit biased when rating how easy tasks are.",Michael Shipley,,Context;Timesheets;no,unclustered
+ungrouped,"My team only has two people, not three.",Michael Shipley,,Context;People;no,unclustered
+ungrouped,I expect that future date cells would be grayed out and unclickable in the real Hubstaff product.,Michael Shipley,,Goals;Timesheets;no,unclustered
+ungrouped,I want to be able to type a custom reason rather than only choosing from a preselected list when adding time.,Michael Shipley,,Goals;Timesheets;yes,unclustered
+ungrouped,"I'd score the multi-member add-time task a 3 out of 5, though it got much better once I was inside the dialog.",Michael Shipley,,Context;Timesheets;no,unclustered
+ungrouped,Hubstaff's add-time modal should let someone who starts from a specific member's Actions > Add Time switch to the multi-member version within that same modal.,Michael Shipley,,Problems;Timesheets;Discoverability;yes,unclustered
+ungrouped,I would be fine with the add-time modal pre-selecting the member I started from while still letting me add additional members.,Michael Shipley,,Goals;Timesheets;yes,unclustered
+ungrouped,I don't know the adoption rate of work breaks across our Hubstaff customer base.,Michael Shipley,,Context;Time tracking;no,unclustered
+ungrouped,The most common use case for adding time across multiple days is applying the same consistent start and stop time to every day in the range.,Michael Shipley,,Context;Timesheets;no,unclustered
+ungrouped,Some Hubstaff customers don't onboard their entire team at the very start of their trial.,Michael Shipley,,Context;Onboarding;People;no,unclustered
+ungrouped,"Customers want to retroactively add a team member's hours so their first payroll run includes them, even if the member wasn't onboarded from day one.",Michael Shipley,,Goals;Payments;no,unclustered
+ungrouped,"Customers may want to add the same consistent hours, like 8 hours a day, across a 10-15 day span for every team member at once.",Michael Shipley,,Context;Timesheets;no,unclustered
+ungrouped,Adding hours retroactively across a date span for multiple members is similar to adding past timesheet approvals.,Michael Shipley,,Context;Timesheets;no,unclustered
+ungrouped,"At Hubstaff, when the team went on retreat, someone like Amanda could add eight hours for the whole team across five days in one click.",Michael Shipley,,Context;Timesheets;no,unclustered
+ungrouped,"Most commonly, someone wouldn't need to add more than four or five time entries in bulk at once.",Michael Shipley,,Context;Timesheets;no,unclustered
+ungrouped,I'm both a manager and a manager of managers.,Michael Shipley,,Context;People;no,unclustered
+ungrouped,I consistently forget to start my own Hubstaff Timer app and have to come in afterward to add my own time.,Michael Shipley,,Problems;Time tracking;Desktop app;no,unclustered
+ungrouped,"As a manager, this page defaults to managing my team's time rather than my own time, even though my day-to-day highest use case is adding my own missed time entries, not managing my team's time.",Michael Shipley,,Problems;Timesheets;no,unclustered
+ungrouped,I found drilling down into a member's detail view very easy (5 out of 5).,Michael Shipley,,Context;Timesheets;no,unclustered
+ungrouped,"In the current Hubstaff timesheet, I can click the pay period column to jump to the linked timesheet, but I almost always use Actions > View Timesheet instead.",Michael Shipley,,Context;Timesheets;no,unclustered
+ungrouped,"With the new pill-based drill-down, I would switch to clicking the pill instead of using Actions.",Michael Shipley,,Goals;Timesheets;no,unclustered
+ungrouped,"After doing the task once, my eye quickly learned to look at the top of the page for the Add Time button.",Michael Shipley,,Context;Timesheets;no,unclustered
+ungrouped,Showing multiple timelines on screen for multi-day time entries would be too messy.,Michael Shipley,,Problems;Timesheets;Timeline;no,unclustered
+ungrouped,I think Hubstaff's timeline visuals are a nice-looking part of the platform.,Michael Shipley,,Context;Timeline;no,unclustered
+ungrouped,"As a manager, I don't rely on the timeline visuals — a simple text display from one time to another is enough for me to know what I'm adding.",Michael Shipley,,Context;Timeline;no,unclustered
+ungrouped,My preference for adding time across multiple days over the timeline applies the same whether I'm acting as a user or a manager.,Michael Shipley,,Context;Timeline;no,unclustered
+ungrouped,I would prefer to be default-selected to my own time when I load this page.,Michael Shipley,,Goals;Timesheets;yes,unclustered
+ungrouped,I found finding my own personal time in the multi-member view very easy (5 out of 5).,Michael Shipley,,Context;Timesheets;no,unclustered
+ungrouped,Hubstaff used to have a 'me' and 'team' tab design on many pages.,Michael Shipley,,Context;Timesheets;no,unclustered
+ungrouped,Lattice's review-cycle feature has a similar tab design with 'my personal packet' versus 'my team's packet' at the top left of the screen.,Michael Shipley,,Context;no,unclustered
+ungrouped,I find it easy when an app separates 'my data' from 'my team's data' using a tab.,Michael Shipley,,Goals;Timesheets;yes,unclustered
+ungrouped,"In Deal, even though I'm a manager, everything defaults to my own data as an employee, and I only drill into my team members' data when needed.",Michael Shipley,,Context;no,unclustered
+ungrouped,I found adding time for myself as a user very easy (5 out of 5).,Michael Shipley,,Context;Timesheets;Time tracking;no,unclustered
+ungrouped,I love the design of the new weekly grid/table view.,Michael Shipley,,Context;Timesheets;no,unclustered
+ungrouped,"As a manager of a support team, it's important for me to know what projects and tasks my team are working on at specific times of day, like during live chat shifts.",Michael Shipley,,Context;Time tracking;Project management;no,unclustered
+ungrouped,I want to see that my team changed projects appropriately in the Hubstaff Timer app.,Michael Shipley,,Goals;Time tracking;Desktop app;no,unclustered
+ungrouped,"I would expect the table view to become the default when toggling from daily to weekly, since switching between daily and weekly changes the entire page type, not just the time range.",Michael Shipley,,Problems;Timesheets;no,unclustered
+ungrouped,"The grid-view toggle is hidden, and I don't think many people would notice it or click on it.",Michael Shipley,,Problems;Timesheets;Discoverability;no,unclustered
+ungrouped,"I think the weekly view is sufficient, without needing a separate monthly view.",Michael Shipley,,Context;Timesheets;no,unclustered
+ungrouped,"If Hubstaff defaults the weekly tab to the new grid/calendar view, a significant number of customers will contact support asking where the old numbers-format view went.",Michael Shipley,,Problems;Timesheets;Customer Support;Discoverability;no,unclustered
+ungrouped,Customers won't necessarily know that clicking 'View grid' changes the view back to the old format.,Michael Shipley,,Problems;Timesheets;Discoverability;no,unclustered
+ungrouped,"The word 'calendar' communicates something materially different to me than 'daily,' 'weekly,' or 'monthly.'",Michael Shipley,,Problems;Timesheets;no,unclustered
+ungrouped,"I would keep Hubstaff's current tab structure of Daily, Weekly, and Calendar, with the calendar view living under the Calendar tab.",Michael Shipley,,Goals;Timesheets;yes,unclustered
+ungrouped,"I could see customers wanting to see this design in a month format, just not labeled as the calendar tab.",Michael Shipley,,Goals;Timesheets;no,unclustered
+ungrouped,"As a manager, I would want to drill into an individual team member's week to check whether they're starting shifts on time and working consistently.",Michael Shipley,,Goals;Timesheets;Time tracking;no,unclustered
+ungrouped,Showing an entire month of hour-by-hour time spans would require tiles so small it might not be easy to read.,Michael Shipley,,Problems;Timesheets;no,unclustered
+ungrouped,The word 'timesheet' doesn't necessarily mean anything to people from certain countries.,Michael Shipley,,Context;Timesheets;no,unclustered
+ungrouped,'Time logged' is a clearer name than 'timesheet.',Michael Shipley,,Context;Timesheets;no,unclustered
+ungrouped,The naming confusion is less about switching to 'time logged' and more that Hubstaff previously called this page 'timesheet' and also used 'timesheet approvals' for the approvals layer.,Michael Shipley,,Problems;Timesheets;no,unclustered
+ungrouped,"If the word 'approvals' isn't included after 'timesheet,' I would click on 'timesheet' expecting something different than what I'd get.",Michael Shipley,,Problems;Timesheets;no,unclustered
+ungrouped,It's always been confusing for the support team that the admin panel and dev team refer to a person 'having a timesheet' or 'not having a timesheet.',Michael Shipley,,Problems;Timesheets;Customer Support;no,unclustered
+ungrouped,A timesheet approvals record is a separate object layered on top of time spans — deleting a timesheet approvals record doesn't delete the underlying tracked time.,Michael Shipley,,Context;Timesheets;no,unclustered
+ungrouped,"Hubstaff should label this page 'timesheet approvals' or something that makes clear it's an approvals tab, not just 'timesheet.'",Michael Shipley,,Problems;Timesheets;yes,unclustered
+ungrouped,"Hubstaff customers are used to a 'timesheet' meaning all the time a member tracked over a date range, not just an approvals record.",Michael Shipley,,Context;Timesheets;no,unclustered
+ungrouped,"If Hubstaff moves to 'time logged,' the word 'timesheet' can't just mean 'approvals' and nothing else, because customers expect it to mean the full record of hours tracked.",Michael Shipley,,Problems;Timesheets;no,unclustered
+ungrouped,Hubstaff might not need the word 'timesheet' anywhere on the platform at all — just 'time logged' and 'approvals' — which could be clearest to customers.,Michael Shipley,,Goals;Timesheets;yes,unclustered
+ungrouped,"Even without approvals enabled, having 'time logged' plus a pay period tied to payroll or export is enough to convey the concept of a timesheet to me as a manager.",Michael Shipley,,Context;Timesheets;Payments;no,unclustered
+ungrouped,I like that Hubstaff is renaming this to 'time tracked' because it's very clear.,Michael Shipley,,Context;Timesheets;no,unclustered
+ungrouped,"US and UK customers may specifically look for the word 'timesheet,' while customers elsewhere may understand it clearly enough without renaming.",Michael Shipley,,Context;Timesheets;no,unclustered
+ungrouped,"As a CSM, I've never heard a customer confused about the word 'timesheet' itself — only about the distinction between 'timesheet' and 'timesheet approvals.'",Michael Shipley,,Context;Timesheets;Customer Support;no,unclustered
+ungrouped,"My recommended naming is 'Time Tracked' as the main header, with 'Timesheet' and then 'Approvals' as sub-labels.",Michael Shipley,,Goals;Timesheets;yes,unclustered
+ungrouped,I don't see any functionality that's been lost compared to the previous Hubstaff design.,Michael Shipley,,Context;Timesheets;no,unclustered
+ungrouped,"As a member, the new design only adds capabilities — like batch actions for team members across multiple days — without taking anything away.",Michael Shipley,,Context;Timesheets;no,unclustered

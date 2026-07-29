@@ -1,0 +1,40 @@
+Participant,Track,Date,Duration (s)
+Bruno,user,2026-07-08,472
+
+t_ms,t_iso,type,label,detail
+0,2026-07-08T15:29:05.185Z,milestone,session_start,track=user
+30517,2026-07-08T15:29:35.702Z,click,Add time,button#tl-add-time-btn
+30517,2026-07-08T15:29:35.702Z,milestone,add_time_button_clicked,
+30524,2026-07-08T15:29:35.709Z,milestone,add_time_modal_opened,mode=single
+34084,2026-07-08T15:29:39.269Z,click,Select a project / work order,span
+35117,2026-07-08T15:29:40.302Z,click,FEFeldman enterprise,div
+55449,2026-07-08T15:30:00.634Z,click,Cancel,button#utm-cancel
+55449,2026-07-08T15:30:00.634Z,milestone,add_time_modal_closed,mode=single
+55601,2026-07-08T15:30:00.786Z,milestone,batch_selection_changed,count=0
+72007,2026-07-08T15:30:17.192Z,click,Add time,button#tl-add-time-btn
+72007,2026-07-08T15:30:17.192Z,milestone,add_time_button_clicked,
+72009,2026-07-08T15:30:17.194Z,milestone,add_time_modal_opened,mode=single
+159031,2026-07-08T15:31:44.216Z,click,Cancel,button#utm-cancel
+159031,2026-07-08T15:31:44.216Z,milestone,add_time_modal_closed,mode=single
+159183,2026-07-08T15:31:44.368Z,milestone,batch_selection_changed,count=0
+167031,2026-07-08T15:31:52.216Z,click,Add time,button#tl-add-time-btn
+167031,2026-07-08T15:31:52.216Z,milestone,add_time_button_clicked,
+167032,2026-07-08T15:31:52.217Z,milestone,add_time_modal_opened,mode=single
+170799,2026-07-08T15:31:55.984Z,click,Close modal,button#utm-close
+170799,2026-07-08T15:31:55.984Z,milestone,add_time_modal_closed,mode=single
+170951,2026-07-08T15:31:56.136Z,milestone,batch_selection_changed,count=0
+177114,2026-07-08T15:32:02.299Z,click,"Mon, Jun 30, 2026: 8:38:00 hrsnotesexpand_more",div
+182847,2026-07-08T15:32:08.032Z,click,"Tue, Jul 1, 2026: 8:54:00 hrsnotesexpand_more",div
+193047,2026-07-08T15:32:18.232Z,click,Actionsexpand_more,button
+220096,2026-07-08T15:32:45.281Z,click,Add time,button#tl-add-time-btn
+220096,2026-07-08T15:32:45.281Z,milestone,add_time_button_clicked,
+220098,2026-07-08T15:32:45.283Z,milestone,add_time_modal_opened,mode=single
+222697,2026-07-08T15:32:47.882Z,click,Date,input
+231296,2026-07-08T15:32:56.481Z,click,Close modal,button#utm-close
+231297,2026-07-08T15:32:56.482Z,milestone,add_time_modal_closed,mode=single
+231447,2026-07-08T15:32:56.632Z,milestone,batch_selection_changed,count=0
+255747,2026-07-08T15:33:20.932Z,click,Weekly,button
+255747,2026-07-08T15:33:20.932Z,milestone,view_switched,view=Weekly
+300279,2026-07-08T15:34:05.464Z,click,ts-wmg-switch__track,span
+315295,2026-07-08T15:34:20.480Z,click,ts-wmg-switch__track,span
+323278,2026-07-08T15:34:28.463Z,click,ts-wmg-switch__track ts-wmg-switch__track--on,span

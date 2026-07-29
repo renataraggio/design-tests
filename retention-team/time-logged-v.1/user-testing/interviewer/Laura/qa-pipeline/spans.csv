@@ -1,0 +1,105 @@
+span_id,source_span,document,participant,signal_or_noise
+S001,"How are you?",transcript-Laura.md,Laura Larrea,noise
+S002,"Okay, let me from the prompt, let me read it.",transcript-Laura.md,Laura Larrea,noise
+S003,"I think pretty straightforward. Basically I can see, I should be able to see my entire team in one view.",transcript-Laura.md,Laura Larrea,signal
+S004,"Okay, so basically I should be able to just select the name or click on the name of the person and it should bring down all their information.",transcript-Laura.md,Laura Larrea,signal
+S005,"This date range, we'll click on all teams and select a particular team here.",transcript-Laura.md,Laura Larrea,signal
+S006,"Which team? Any.",transcript-Laura.md,Laura Larrea,noise
+S007,"So I can see my team members day information per day.",transcript-Laura.md,Laura Larrea,signal
+S008,"How did you find this task five Perfect.",transcript-Laura.md,Laura Larrea,signal
+S009,"From this page there is an add time button here. Then I could select my team product and then I could enter the date, time, decide the project and save it.",transcript-Laura.md,Laura Larrea,signal
+S010,"Okay, so let's Change that from 6 to 7. I'm going to select a random project here. I just. The only thing I did was just changing the hour.",transcript-Laura.md,Laura Larrea,noise
+S011,"For me to be able to select an or to enter probably in a specific number of hours rather than selecting the time frame.",transcript-Laura.md,Laura Larrea,signal
+S012,"So I can select a different time span other than the one that I have already here.",transcript-Laura.md,Laura Larrea,signal
+S013,"That's great time.",transcript-Laura.md,Laura Larrea,signal
+S014,"Yeah, I will say four.",transcript-Laura.md,Laura Larrea,signal
+S015,"Okay, so I will click here in all members and just select someone.",transcript-Laura.md,Laura Larrea,noise
+S016,"Like the detailed. I think I will need to click here and view time log.",transcript-Laura.md,Laura Larrea,noise
+S017,"4:2 And it's just because we have to get used to the new idea of how to get here, but I will say four.",transcript-Laura.md,Laura Larrea,signal
+S018,"How would I add time to this particular view? So I click on actions, same as before, I'm assuming.",transcript-Laura.md,Laura Larrea,noise
+S019,"I should be able to do as before. Just click on actions and add time.",transcript-Laura.md,Laura Larrea,signal
+S020,"This one is still open. Yeah.",transcript-Laura.md,Laura Larrea,noise
+S021,"Okay, so like what do I expect like from what you have heard, there was something missing. Is that.",transcript-Laura.md,Laura Larrea,noise
+S022,"I think the most important part is having again this, this the visibility on the timeline.",transcript-Laura.md,Laura Larrea,signal
+S023,"So I know if there is time track, I could validate what times do I need to make X amount of changes.",transcript-Laura.md,Laura Larrea,signal
+S024,"But what we have right now is exactly what we need to be able to select from what time to what time. The time will be added, the number of hours, assign a project and add a note if needed.",transcript-Laura.md,Laura Larrea,signal
+S025,"Can I click on the work breaks or that's part of the. Just trying to check. Okay. Policy.",transcript-Laura.md,Laura Larrea,noise
+S026,"I'm not sure should be able to. If they don't have a policy, will they still be able to see the work rate button.",transcript-Laura.md,Laura Larrea,signal
+S027,"Okay, yeah, that makes sense.",transcript-Laura.md,Laura Larrea,noise
+S028,"I think that would be. Yeah, important to mimic exactly the how we have it. And if you have multiple members and you're able to select multiple, like time spans, I think that will be important here too.",transcript-Laura.md,Laura Larrea,signal
+S029,"That's a good question. Wait, and is it because the.",transcript-Laura.md,Laura Larrea,noise
+S030,"And I will still say the timeline because. And I'm assuming, like if there is. Let's say that they had time right here from 12 to 2 and the person was trying to add time blindly and they don't know, then they're going to encounter errors. So I think the timeline is still important.",transcript-Laura.md,Laura Larrea,signal
+S031,"Yeah, that makes sense.",transcript-Laura.md,Laura Larrea,noise
+S032,"And I will say probably if they are drilling down to adding time to one specific individual and they're going through all the motion, for example, clicking here, it should be fine just to keep it at one, like at one time entry at a time.",transcript-Laura.md,Laura Larrea,signal
+S033,"Yeah, but if it was like to the entire team or to a group or multiple members, definitely the other option is what I would go for.",transcript-Laura.md,Laura Larrea,signal
+S034,"I will close, obviously. Let me close it. And I just click here and select all.",transcript-Laura.md,Laura Larrea,noise
+S035,"Can I go back?",transcript-Laura.md,Laura Larrea,noise
+S036,"There is the bag.",transcript-Laura.md,Laura Larrea,noise
+S037,"Oh, five.",transcript-Laura.md,Laura Larrea,signal
+S038,"That's muscle memory.",transcript-Laura.md,Laura Larrea,signal
+S039,"That's us doing whatever we do on reports. You can just unselect members.",transcript-Laura.md,Laura Larrea,signal
+S040,"So from this same view, right,. Yeah, I think it's still view time.",transcript-Laura.md,Laura Larrea,noise
+S041,"No, this is five.",transcript-Laura.md,Laura Larrea,signal
+S042,"Wait, wait, wait. Can you repeat that? So if. If I didn't have this page.",transcript-Laura.md,Laura Larrea,noise
+S043,"On the table.",transcript-Laura.md,Laura Larrea,noise
+S044,"I will probably try to click in action and see view time log. There you go.",transcript-Laura.md,Laura Larrea,signal
+S045,"This, this is important, right. This is very important. I'm glad that it's added here.",transcript-Laura.md,Laura Larrea,signal
+S046,"The only thing I can think of is the actions do not go immediately. Right. It's not like something that you could immediately see. Not easy, is not visible. Right.",transcript-Laura.md,Laura Larrea,signal
+S047,"So maybe if like they don't have PTO or holidays, we could maybe. I don't know if it's possible to maybe not to show necessarily this just so the action could be visible. That's just one feedback,",transcript-Laura.md,Laura Larrea,signal
+S048,"but I like that wherever I go I'm seeing this pop up of view time locked.",transcript-Laura.md,Laura Larrea,signal
+S049,"So telling me that there are actions. Right. There's something that I could do, right?",transcript-Laura.md,Laura Larrea,signal
+S050,"Yeah, I did.",transcript-Laura.md,Laura Larrea,noise
+S051,"And then I, I close that or restart.",transcript-Laura.md,Laura Larrea,noise
+S052,"It's a five.",transcript-Laura.md,Laura Larrea,signal
+S053,"Hmm.",transcript-Laura.md,Laura Larrea,noise
+S054,"Can we default it to this view. Or do you.",transcript-Laura.md,Laura Larrea,signal
+S055,"Perfect.",transcript-Laura.md,Laura Larrea,noise
+S056,"Yeah, and that's a good question. And I'm just trying to think of the reasons why someone goes this time lock.",transcript-Laura.md,Laura Larrea,noise
+S057,"So people normally, like, if you work on multiple projects, if you build multiple clients, I want to know how much I'm working, maybe per project, per client, just so me as a user can understand like what my earnings are or what are my totals.",transcript-Laura.md,Laura Larrea,signal
+S058,"I want to be able to visually see that immediately.",transcript-Laura.md,Laura Larrea,signal
+S059,"So the other view, even though it looks very beautiful, it looks neat, doesn't give me the detail that I need immediately, or at least that's what it looked like.",transcript-Laura.md,Laura Larrea,signal
+S060,"I mean, wrong. It looked very neat. Right. It looked very nice. That calendar view looks very good.",transcript-Laura.md,Laura Larrea,signal
+S061,"But normally they go to this page to look at data, to look at number numbers.",transcript-Laura.md,Laura Larrea,signal
+S062,"I'm sorry, can you repeat that? I'm sorry.",transcript-Laura.md,Laura Larrea,noise
+S063,"And this is actually something that comes up, is coming up more frequently now because a lot of clients are deciding to pay longer periods, like a monthly payroll. So it will be great also having this option.",transcript-Laura.md,Laura Larrea,signal
+S064,"Can the entire period still be selected?",transcript-Laura.md,Laura Larrea,noise
+S065,"Yeah, no, it's. It should be fine.",transcript-Laura.md,Laura Larrea,signal
+S066,"I think as long as we are able to like I like having the three. The three different. Options, then as long as we're able to still have a random selector like this one. And I could select because. Because maybe the pay period is not daily or weekly or monthly. It's bi weekly. And then I want to see what my pay period looks like and I could just select the dates and users are kind of accustomed to. To do that or obviously they. If they have timesheets approvals, they just look at the entire timesheets. But this makes sense to me, having it on these three options.",transcript-Laura.md,Laura Larrea,signal
+S067,"I. I honestly have never seen a client wanted to add a work break for multiple team members at once.",transcript-Laura.md,Laura Larrea,signal
+S068,"But that's again, my. My experience. Right. Has been limited to like one member missed to enter the work break. So we're doing that for them unnecessarily. Like we need to do it for the whole team.",transcript-Laura.md,Laura Larrea,signal
+S069,"No, I think even.",transcript-Laura.md,Laura Larrea,noise
+S070,"Even when this feature got released a few days ago, I really liked it.",transcript-Laura.md,Laura Larrea,signal
+S071,"What I. And I think everything was there. I think it's. It was a matter and it's frustrating, I'm sure for you guys, you know that you release something and then it gets all this feedback.",transcript-Laura.md,Laura Larrea,signal
+S072,"I think clients panic when things look different.",transcript-Laura.md,Laura Larrea,signal
+S073,"So I think what you're doing like making sure that they know where to click and that the features are the same. I think that's exactly what we needed.",transcript-Laura.md,Laura Larrea,signal
+S074,"But everything that the client needs is there. It's definitely there.",transcript-Laura.md,Laura Larrea,signal
+S075,"I honestly do not think that there's something missing because I tested it myself and obviously I'm able to perform all of the actions plus some additional actions that I wasn't before.",transcript-Laura.md,Laura Larrea,signal
+S076,"That was exactly what we needed.",transcript-Laura.md,Laura Larrea,signal
+S077,"I think we just needed to put it more in the clients faces that hey, this is. You are going to achieve the same results. It's not that it's going to take you a bunch more clicks. It's not the case.",transcript-Laura.md,Laura Larrea,signal
+S078,"So this looks really great. I really, I really like it.",transcript-Laura.md,Laura Larrea,signal
+S079,"I don't. The only one thing I do not know how or what could we do just to prepare the clients because this should, this should be rolled out immediately.",transcript-Laura.md,Laura Larrea,signal
+S080,"It really looks great. So that's the only concern I have. Because they panic. It's not that there's nothing wrong is that they panic, but it looks great. It really looks great.",transcript-Laura.md,Laura Larrea,signal
+S081,"And Scale is using it. Scale started using the batch action and the feedback from them was great. Last week they were like, hey, it's so easy to do this now.",transcript-Laura.md,Laura Larrea,signal
+S082,"You know when I saw. Because now we have three sections before we have P1 edit which gives you. It tells you specifically what you should do there.",transcript-Laura.md,Laura Larrea,signal
+S083,"We have view and edits and I think we have timesheets approvals. That's the thing. It looks a little bit different and maybe when you're looking at time block and you're Thinking of time and edit, where do I go to make the change? Where is that I can access.",transcript-Laura.md,Laura Larrea,signal
+S084,"But if really they click, they were to just click in either or. Right. In a time or time log or timesheets. I think the actions are very straightforward.",transcript-Laura.md,Laura Larrea,signal
+S085,"I wouldn't change the name because there's more that you do now, not just editing the time.",transcript-Laura.md,Laura Larrea,signal
+S086,"So having it name as time log and timesheets I think, I think is more complete than what we had before where it was just approvals or view and edit because it's even including like I feel that even clients that don't necessarily use the timesheets approvals now have things that they could use here, like the manual time request before you had to actually go to timesheets approvals.",transcript-Laura.md,Laura Larrea,signal
+S087,"What if they didn't have timesheets approvals? It was hidden.",transcript-Laura.md,Laura Larrea,signal
+S088,"So I think it's perfect. I maybe from the product side there could be a quick show and tell video. But for the clients. Just for the clients.",transcript-Laura.md,Laura Larrea,signal
+S089,"But no, I wouldn't change the wording. I think it's more complete now than it was before.",transcript-Laura.md,Laura Larrea,signal
+S090,"Time entries, time log, time entries.",transcript-Laura.md,Laura Larrea,signal
+S091,"Yeah, I think they say more time entries than time log because time logged is not a concept. At least that I feel it like aha. That we manage a lot. I mean it's self explanatory and everything, but it's not a concept that I feel the clients like use a lot. Time lock, time entries, something along those lines.",transcript-Laura.md,Laura Larrea,signal
+S092,"But again, come on. It's not recognizing if you click on time lock, you will be able to see exactly what you need.",transcript-Laura.md,Laura Larrea,signal
+S093,"I would still not change it. I think it's the way it is.",transcript-Laura.md,Laura Larrea,signal
+S094,"I'm sorry, what type of expert?",transcript-Laura.md,Laura Larrea,noise
+S095,"So, yeah, that. Let me, Let me. Yeah.",transcript-Laura.md,Laura Larrea,noise
+S096,"Soon, right?",transcript-Laura.md,Laura Larrea,noise
+S097,"Honestly do not think that would be a problem. And I'm talking again from my clients. I do not, I cannot recall like one specific client that is using that in every pay period.",transcript-Laura.md,Laura Larrea,signal
+S098,"Maybe one particular instance gets imported. But it's not like. Because normally they use the reports to import. Like if they need to import a larger batch of users and everything. Not necessarily the time block.",transcript-Laura.md,Laura Larrea,signal
+S099,"I can think of a use case, but I'm not sure. I'm not sure if they're still doing that. Like clients that have. They bill to other clients and they do use this view, they download this view. Like sometimes clients wants to see like how many projects they will work, they worked or the hours per day. And they do download this information, but I'm not sure how crucial or how often they do that.",transcript-Laura.md,Laura Larrea,signal
+S100,"The video coming from product and maybe for everyone in the Success team, we shoot that email out or something or we shoot it from the Success inbox or something like that. Because you saw the actions that I took with the pop up and that's what clients do. They just click next.",transcript-Laura.md,Laura Larrea,signal
+S101,"I'm sorry, I know it's stupid. I know I do it myself and it has all the information they need, right. If they will read it. But the reality is they don't read those.",transcript-Laura.md,Laura Larrea,signal
+S102,"So I'm just trying to think like a few days before this is released again, we just, hey, these are the new changes. Very brief one minute video. This is exactly where you get exactly the same data that you have before plus a few new additions.",transcript-Laura.md,Laura Larrea,signal
+S103,"And coming from product because we could do, like, Success could do a video, but if we all have a version, it's.",transcript-Laura.md,Laura Larrea,signal
+S104,"Documents here.",transcript-Laura.md,Laura Larrea,noise

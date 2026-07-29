@@ -1,0 +1,10 @@
+Participant,Track,Date,Duration (s),Note
+Bruno,manager,2026-07-08,1052,
+
+Task,Outcome,Prompt count,Score,Ease (SEQ 1-5)
+Task 1 — View the team's daily time,Success,1,1,4
+Task 2 — Add time for the whole team at once (core task),Partial,3,0.5,4
+Task 3 — Drill into one member,Success,1,1,5
+Task 4 — Add time from the detail view,Success,1,1,5
+Task 5 — Return to the multi-member view,Success,1,1,5
+Task 6 — View time for yourself,Success,1,1,5

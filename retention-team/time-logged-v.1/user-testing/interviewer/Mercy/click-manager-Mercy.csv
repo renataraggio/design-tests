@@ -1,0 +1,48 @@
+Participant,Track,Date,Duration (s)
+Mercy,manager,2026-07-09,891
+
+t_ms,t_iso,type,label,detail
+0,2026-07-09T15:55:21.403Z,milestone,session_start,track=manager
+16241,2026-07-09T15:55:37.643Z,click,arrow_back Back,button#tl-breadcrumb-btn
+19433,2026-07-09T15:55:40.835Z,click,Actionsexpand_more,button
+24139,2026-07-09T15:55:45.541Z,click,View time logged,button
+24140,2026-07-09T15:55:45.542Z,click,Daily,button
+24140,2026-07-09T15:55:45.542Z,milestone,view_switched,view=Daily
+39411,2026-07-09T15:56:00.813Z,click,arrow_back Back,button#tl-breadcrumb-btn
+289821,2026-07-09T16:00:11.223Z,click,collapse_all,button
+306742,2026-07-09T16:00:28.144Z,click,collapse_all,button
+328406,2026-07-09T16:00:49.808Z,click,View Helene Engels's time logged,button
+328406,2026-07-09T16:00:49.808Z,milestone,member_row_drill_in,memberId=he
+328408,2026-07-09T16:00:49.810Z,click,Daily,button
+328408,2026-07-09T16:00:49.810Z,milestone,view_switched,view=Daily
+338903,2026-07-09T16:01:00.305Z,click,Add time,button#tl-add-time-btn
+338903,2026-07-09T16:01:00.305Z,milestone,add_time_button_clicked,
+338923,2026-07-09T16:01:00.325Z,milestone,add_time_modal_opened,mode=single
+351276,2026-07-09T16:01:12.678Z,click,Work break,button#utm-tab-workbreak
+352597,2026-07-09T16:01:13.999Z,click,Time log,button#utm-tab-timelog
+368326,2026-07-09T16:01:29.728Z,click,calendar_today,div
+385102,2026-07-09T16:01:46.504Z,click,Time log Work break Members ADD MEMBERS OR TEAMS * Select te,div
+496636,2026-07-09T16:03:38.038Z,click,Select a project / work order,div#utm-proj-inner
+499024,2026-07-09T16:03:40.426Z,click,Time log Work break Members ADD MEMBERS OR TEAMS * Select te,div
+542530,2026-07-09T16:04:23.932Z,click,Close modal,button#utm-close
+542531,2026-07-09T16:04:23.933Z,milestone,add_time_modal_closed,mode=single
+542692,2026-07-09T16:04:24.094Z,milestone,batch_selection_changed,count=0
+605322,2026-07-09T16:05:26.724Z,click,arrow_back Back,button#tl-breadcrumb-btn
+651128,2026-07-09T16:06:12.530Z,click,Select member,div#tl-member-select
+655713,2026-07-09T16:06:17.115Z,click,Select member,div#tl-member-select
+656502,2026-07-09T16:06:17.904Z,click,Select member,div#tl-member-select
+658501,2026-07-09T16:06:19.903Z,click,Sarah Chen,li
+660529,2026-07-09T16:06:21.931Z,click,All teams keyboard_arrow_down search Select all | Unselect a,div
+831684,2026-07-09T16:09:13.086Z,click,Select member,div#tl-member-select
+835849,2026-07-09T16:09:17.251Z,click,Sarah Chencheck,li
+837605,2026-07-09T16:09:19.007Z,click,Sarah Chen,li
+838516,2026-07-09T16:09:19.918Z,click,Daily time loggedDailyWeeklyMonthlySoonview_columncollapse_a,div
+840543,2026-07-09T16:09:21.945Z,click,View Sarah Chen's time logged,button
+840543,2026-07-09T16:09:21.945Z,milestone,member_row_drill_in,memberId=sc
+840546,2026-07-09T16:09:21.948Z,click,Daily,button
+840546,2026-07-09T16:09:21.948Z,milestone,view_switched,view=Daily
+846522,2026-07-09T16:09:27.924Z,click,"Tue, Jul 1, 2026: 8:27:00 hrsnotesexpand_more",div
+848468,2026-07-09T16:09:29.870Z,click,"Tue, Jul 1, 2026: 8:27:00 hrsnotesexpand_more",div
+849620,2026-07-09T16:09:31.022Z,click,"Mon, Jun 30, 2026: 7:51:00 hrsnotesexpand_more",div
+851173,2026-07-09T16:09:32.575Z,click,Time logged,h1
+883459,2026-07-09T16:10:04.861Z,click,All teams keyboard_arrow_down search Select all | Unselect a,div

@@ -1,0 +1,6 @@
+Participant,Track,Date,Duration (s),Note
+Michael,user,2026-07-09,579,
+
+Task,Outcome,Prompt count,Score,Ease (SEQ 1-5)
+Task 1 — Add time for yourself,Success,1,1,5
+Task 2 — View your time weekly,Success,1,1,5

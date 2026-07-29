@@ -1,0 +1,52 @@
+Participant,Track,Date,Duration (s)
+Michael Shipley,user,2026-07-09,580
+
+t_ms,t_iso,type,label,detail
+0,2026-07-09T13:36:06.399Z,milestone,session_start,track=user
+16828,2026-07-09T13:36:23.227Z,click,Add time,button#tl-add-time-btn
+16828,2026-07-09T13:36:23.227Z,milestone,add_time_button_clicked,
+16834,2026-07-09T13:36:23.233Z,milestone,add_time_modal_opened,mode=single
+19593,2026-07-09T13:36:25.992Z,click,Date,input
+26352,2026-07-09T13:36:32.751Z,click,Cancel,button#utm-cancel
+26353,2026-07-09T13:36:32.752Z,milestone,add_time_modal_closed,mode=single
+26518,2026-07-09T13:36:32.917Z,milestone,batch_selection_changed,count=0
+33997,2026-07-09T13:36:40.396Z,click,Close annotations panel,button
+60777,2026-07-09T13:37:07.176Z,click,Close annotations panel,button
+82387,2026-07-09T13:37:28.786Z,click,"Mon, Jun 30, 2026: 8:38:00 hrsnotesexpand_more",div
+86295,2026-07-09T13:37:32.694Z,click,"Mon, Jun 30, 2026: 8:38:00 hrsnotesexpand_more",div
+97398,2026-07-09T13:37:43.797Z,click,Weekly,button
+97398,2026-07-09T13:37:43.797Z,milestone,view_switched,view=Weekly
+113859,2026-07-09T13:38:00.258Z,click,ts-wmg-switch__track,span
+152764,2026-07-09T13:38:39.163Z,click,ts-wmg-switch__thumb,span
+217899,2026-07-09T13:39:44.298Z,click,ts-wmg-switch__track ts-wmg-switch__track--on,span
+220202,2026-07-09T13:39:46.601Z,click,Daily,button
+220202,2026-07-09T13:39:46.601Z,milestone,view_switched,view=Daily
+237018,2026-07-09T13:40:03.417Z,click,Weekly,button
+237018,2026-07-09T13:40:03.417Z,milestone,view_switched,view=Weekly
+238367,2026-07-09T13:40:04.766Z,click,ts-wmg-switch__thumb,span
+242722,2026-07-09T13:40:09.121Z,click,ts-wmg-switch__thumb,span
+246288,2026-07-09T13:40:12.687Z,click,Daily,button
+246289,2026-07-09T13:40:12.688Z,milestone,view_switched,view=Daily
+247043,2026-07-09T13:40:13.442Z,click,Weekly,button
+247043,2026-07-09T13:40:13.442Z,milestone,view_switched,view=Weekly
+253434,2026-07-09T13:40:19.833Z,click,ts-wmg-switch__thumb,span
+261546,2026-07-09T13:40:27.945Z,click,ts-wmg-switch__thumb,span
+265820,2026-07-09T13:40:32.219Z,click,ts-wmg-switch__track ts-wmg-switch__track--on,span
+328812,2026-07-09T13:41:35.211Z,click,ts-wmg-switch__thumb,span
+345297,2026-07-09T13:41:51.696Z,click,Daily,button
+345297,2026-07-09T13:41:51.696Z,milestone,view_switched,view=Daily
+347925,2026-07-09T13:41:54.324Z,click,Weekly,button
+347925,2026-07-09T13:41:54.324Z,milestone,view_switched,view=Weekly
+373825,2026-07-09T13:42:20.224Z,click,ts-wmg-switch__track ts-wmg-switch__track--on,span
+375830,2026-07-09T13:42:22.229Z,click,"Sun, Jun 29, 2026 - Sat, Jul 12, 2026 Total hours 47:12:00 T",div
+449211,2026-07-09T13:43:35.610Z,click,ts-wmg-switch__track,span
+450125,2026-07-09T13:43:36.524Z,click,Daily,button
+450125,2026-07-09T13:43:36.524Z,milestone,view_switched,view=Daily
+450908,2026-07-09T13:43:37.307Z,click,Weekly,button
+450909,2026-07-09T13:43:37.308Z,milestone,view_switched,view=Weekly
+460635,2026-07-09T13:43:47.034Z,click,Daily,button
+460635,2026-07-09T13:43:47.034Z,milestone,view_switched,view=Daily
+466539,2026-07-09T13:43:52.938Z,click,Weekly,button
+466539,2026-07-09T13:43:52.938Z,milestone,view_switched,view=Weekly
+505340,2026-07-09T13:44:31.739Z,click,ts-wmg-switch__track ts-wmg-switch__track--on,span
+530774,2026-07-09T13:44:57.173Z,click,ts-wmg-switch__track,span

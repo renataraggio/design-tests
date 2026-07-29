@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Timesheets IA — Three Problems, Three Solutions</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg:             #ffffff;
+  --surface:        #ffffff;
+  --border:         #e5e7eb;
+  --shadow:         0 1px 4px rgba(0,0,0,.06);
+  --text:           #111827;
+  --text-muted:     #6b7280;
+  --text-header:    #1f2937;
+  --green:          #16a34a;
+  --green-bg:       #f0fdf4;
+  --red:            #dc2626;
+  --red-bg:         #fef2f2;
+  --flag-bg:        #fffbeb;
+  --flag-border:    #fcd34d;
+  --flag-label:     #92400e;
+  --verdict-bg:     #f3f4f6;
+  --verdict-border: #e5e7eb;
+  --font:           'Inter', sans-serif;
+  --radius:         8px;
+  --radius-lg:      12px;
+  --blue:           #2563eb;
+  --blue-bg:        #eff6ff;
+  --blue-border:    #bfdbfe;
+  --amber:          #d97706;
+  --purple:         #7e22ce;
+  --purple-bg:      #f3e8ff;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.page {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+}
+
+h2 {
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--text-header); margin-bottom: 14px;
+}
+
+h3 {
+  font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 6px;
+}
+
+p { margin-bottom: 12px; }
+p:last-child { margin-bottom: 0; }
+
+.page-title { font-size: 22px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.meta { font-size: 13px; color: var(--text-muted); margin-bottom: 40px; }
+section { margin-bottom: 48px; }
+
+/* ── Verdict ── */
+.verdict {
+  background: var(--verdict-bg); border: 1px solid var(--verdict-border);
+  border-radius: var(--radius-lg); padding: 22px 24px; margin-bottom: 40px;
+}
+.verdict-label {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--text-muted); margin-bottom: 8px;
+}
+.verdict-statement { font-size: 20px; font-weight: 700; color: var(--text); line-height: 1.35; }
+.verdict-reason { font-size: 14px; color: var(--text-muted); margin-top: 8px; line-height: 1.55; }
+
+/* ── Card ── */
+.card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); box-shadow: var(--shadow); padding: 16px 18px;
+}
+
+/* ── Quote ── */
+.quote { font-style: italic; }
+.quote p { font-size: 15px; color: var(--text); margin-bottom: 8px; }
+.quote cite { font-size: 12px; color: var(--text-muted); font-style: normal; font-weight: 500; }
+
+/* ── Findings (always open) ── */
+.findings { display: flex; flex-direction: column; gap: 8px; }
+.finding {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); box-shadow: var(--shadow);
+  padding: 14px 16px; display: flex; gap: 12px; align-items: flex-start;
+}
+.finding.good { background: var(--green-bg); border-color: #bbf7d0; }
+.finding.bad  { background: var(--red-bg);   border-color: #fecaca; }
+.finding-icon { font-size: 15px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+.finding.good .finding-icon { color: var(--green); }
+.finding.bad  .finding-icon { color: var(--red); }
+.finding-body { flex: 1; }
+.finding-text   { font-size: 14px; font-weight: 500; color: var(--text); line-height: 1.5; margin-bottom: 4px; }
+.finding-detail { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+
+/* ── Flag ── */
+.flag {
+  background: var(--flag-bg); border: 1px solid var(--flag-border);
+  border-radius: var(--radius); padding: 14px 16px;
+  font-size: 14px; line-height: 1.55;
+}
+.flag strong {
+  display: block; font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .1em;
+  color: var(--flag-label); margin-bottom: 5px;
+}
+
+/* ── Steps ── */
+.steps { display: flex; flex-direction: column; gap: 0; }
+.step  { display: flex; gap: 16px; align-items: flex-start; position: relative; padding-bottom: 16px; }
+.step:not(:last-child)::before {
+  content: ''; position: absolute; left: 19px; top: 40px;
+  width: 2px; bottom: 0; background: var(--border);
+}
+.step-marker {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--surface); border: 2px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; color: var(--text-muted);
+  flex-shrink: 0; z-index: 1;
+}
+.step-content { flex: 1; }
+
+/* ── Matrix ── */
+.matrix-wrap { overflow-x: auto; }
+.matrix { width: 100%; border-collapse: collapse; }
+.matrix th {
+  background: #f9fafb; padding: 10px 14px; text-align: left;
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .07em; color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+}
+.matrix td { padding: 10px 14px; border-bottom: 1px solid var(--border); font-size: 13px; }
+.matrix tr:last-child td { border-bottom: none; }
+.matrix .criterion { font-weight: 600; color: var(--text); }
+.matrix .cell-good { color: var(--green); font-weight: 600; }
+.matrix .cell-mid  { color: var(--amber); font-weight: 600; }
+.matrix .cell-bad  { color: var(--red);   font-weight: 600; }
+
+/* ── Entity boxes ── */
+.entity-diagram {
+  display: flex; flex-direction: column; gap: 8px;
+  padding: 20px; background: #f9fafb;
+  border: 1px solid var(--border); border-radius: var(--radius-lg);
+  margin: 16px 0;
+}
+.entity-row { display: flex; align-items: center; gap: 10px; }
+.entity-box {
+  padding: 5px 12px; border-radius: 6px; font-size: 13px;
+  font-weight: 600; border: 1px solid; white-space: nowrap;
+}
+.entity-box.entry    { background: var(--blue-bg);   border-color: var(--blue-border); color: #1d4ed8; }
+.entity-box.log      { background: #fef9c3; border-color: #fde047; color: #854d0e; }
+.entity-box.sheet    { background: var(--purple-bg); border-color: #d8b4fe; color: var(--purple); }
+.entity-box.approval { background: var(--green-bg); border-color: #bbf7d0; color: #15803d; }
+.entity-desc { font-size: 12px; color: var(--text-muted); }
+.entity-connector { padding-left: 14px; color: #d1d5db; font-size: 12px; }
+
+/* ── Name rename diagram ── */
+.name-diagram {
+  display: grid; grid-template-columns: 1fr 32px 1fr;
+  gap: 0; margin: 16px 0; align-items: center;
+}
+.name-col { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.name-col-header {
+  padding: 8px 14px; font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .07em;
+  background: #f9fafb; border-bottom: 1px solid var(--border);
+}
+.name-col-header.bad  { color: var(--red); }
+.name-col-header.good { color: var(--green); }
+.name-item {
+  padding: 10px 14px; font-size: 12px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+}
+.name-item:last-child { border-bottom: none; }
+.nav-tag {
+  display: inline-block; background: #1e293b; color: #e2e8f0;
+  font-size: 11px; font-weight: 600; padding: 2px 8px;
+  border-radius: 4px; font-family: 'SF Mono', 'Fira Code', monospace;
+  white-space: nowrap;
+}
+.nav-tag.new { background: var(--green); color: white; }
+.name-arrow {
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; color: var(--text-muted);
+}
+
+/* ── Zoom diagram ── */
+.zoom-diagram {
+  display: grid; grid-template-columns: 1fr 40px 1fr;
+  gap: 0; margin: 16px 0; align-items: center;
+}
+.zoom-panel {
+  border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;
+}
+.zoom-panel-header {
+  padding: 8px 12px; font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .07em;
+  background: #f9fafb; border-bottom: 1px solid var(--border); color: var(--text-muted);
+}
+.zoom-panel-body { padding: 10px 12px; }
+.zoom-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 5px 0; border-bottom: 1px solid #f3f4f6; font-size: 12px; color: var(--text);
+}
+.zoom-row:last-child { border-bottom: none; }
+.zoom-row.highlight {
+  margin: 0 -12px; padding: 5px 12px;
+  background: var(--blue-bg); font-weight: 600; color: var(--blue);
+}
+.zoom-time-block { padding: 4px 0; border-bottom: 1px solid #f3f4f6; font-size: 12px; }
+.zoom-time-block:last-child { border-bottom: none; }
+.zoom-bar { height: 6px; border-radius: 3px; background: var(--blue-border); margin-top: 4px; }
+.zoom-arrow {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 2px; font-size: 18px; color: var(--text-muted);
+}
+.zoom-arrow-label {
+  font-size: 9px; text-transform: uppercase; letter-spacing: .05em;
+  color: var(--text-muted); font-weight: 600;
+}
+
+/* ── Filter behavior demo (interactive) ── */
+.filter-demo { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+.filter-panel { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.filter-panel-title {
+  padding: 8px 14px; font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .07em;
+  background: #f9fafb; border-bottom: 1px solid var(--border); color: var(--text-muted);
+}
+.filter-panel-body { padding: 12px 14px; }
+.filter-select {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 6px 10px; border: 1px solid var(--border);
+  border-radius: 6px; font-size: 12px; font-weight: 600;
+  margin-bottom: 10px; background: white; color: var(--text); cursor: pointer;
+  user-select: none;
+}
+.filter-select:hover { background: #f9fafb; }
+.filter-result-label {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .07em; color: var(--text-muted); margin-bottom: 6px;
+}
+.filter-row {
+  padding: 5px 0; border-bottom: 1px solid #f3f4f6; font-size: 12px; color: var(--text);
+}
+.filter-row:last-child { border-bottom: none; }
+.filter-meaning {
+  margin-top: 10px; padding: 8px 10px; border-radius: 6px;
+  font-size: 12px; font-weight: 600;
+}
+.filter-meaning.filter-type   { background: var(--blue-bg); color: var(--blue); }
+.filter-meaning.navigate-type { background: #fef3c7; color: #92400e; }
+
+/* ── Solution cards ── */
+.solution-cards { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; }
+.solution-card {
+  border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden;
+}
+.solution-card.recommended { border-color: #bbf7d0; }
+.solution-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 18px; background: #f9fafb; border-bottom: 1px solid var(--border);
+}
+.solution-card.recommended .solution-header {
+  background: var(--green-bg); border-bottom-color: #bbf7d0;
+}
+.solution-title { font-size: 14px; font-weight: 700; color: var(--text); }
+.solution-badge {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .08em; padding: 3px 8px; border-radius: 99px; white-space: nowrap;
+}
+.solution-badge.now      { background: #fef3c7; color: #92400e; }
+.solution-badge.later    { background: var(--blue-bg); color: var(--blue); }
+.solution-badge.consider { background: #f3f4f6; color: var(--text-muted); }
+.solution-body { padding: 16px 18px; }
+.solution-body > p { font-size: 14px; color: var(--text-muted); margin-bottom: 12px; }
+
+.pro-con { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+.pro-con-col h4 {
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .07em; margin-bottom: 6px;
+}
+.pro-con-col.pros h4 { color: var(--green); }
+.pro-con-col.cons h4 { color: var(--red); }
+.pro-con-list { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+.pro-con-list li {
+  font-size: 12px; color: var(--text-muted); padding-left: 14px;
+  position: relative; line-height: 1.45;
+}
+.pro-con-list li::before { position: absolute; left: 0; font-size: 12px; font-weight: 700; }
+.pros .pro-con-list li::before { content: '+'; color: var(--green); }
+.cons .pro-con-list li::before { content: '−'; color: var(--red); }
+
+/* ── Drawer diagram ── */
+.drawer-diagram {
+  display: flex; border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden; margin: 14px 0; font-size: 12px;
+}
+.drawer-main { flex: 1; border-right: 1px solid var(--border); }
+.drawer-main-header {
+  padding: 8px 12px; background: #f9fafb; border-bottom: 1px solid var(--border);
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .07em; color: var(--text-muted);
+}
+.drawer-main-body { padding: 10px 12px; }
+.drawer-main-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 6px 0; border-bottom: 1px solid #f3f4f6; font-size: 12px; cursor: pointer;
+}
+.drawer-main-row:last-child { border-bottom: none; }
+.drawer-main-row.selected { font-weight: 600; color: var(--blue); }
+.drawer-panel { width: 220px; flex-shrink: 0; }
+.drawer-panel-header {
+  padding: 8px 12px; background: var(--blue-bg);
+  border-bottom: 1px solid var(--blue-border);
+  font-size: 12px; font-weight: 700; color: var(--blue);
+}
+.drawer-panel-body { padding: 10px 12px; }
+.drawer-entry {
+  padding: 5px 0; border-bottom: 1px solid #f3f4f6; font-size: 11px; color: var(--text);
+}
+.drawer-entry:last-child { border-bottom: none; }
+.drawer-time { color: var(--text-muted); }
+
+/* ── Divider ── */
+.divider { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+@media (max-width: 560px) {
+  .filter-demo      { grid-template-columns: 1fr; }
+  .pro-con          { grid-template-columns: 1fr; }
+  .name-diagram     { grid-template-columns: 1fr; }
+  .zoom-diagram     { grid-template-columns: 1fr; }
+  .name-arrow, .zoom-arrow { display: none; }
+  .drawer-panel     { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="page-title">Timesheets IA — Three Problems, Three Solutions</div>
+  <div class="meta">Synthesized from the June 30 Timesheet AI check-in &nbsp;·&nbsp; Renata, Victor, Cody, Victório</div>
+
+  <div class="verdict">
+    <div class="verdict-label">Core finding</div>
+    <div class="verdict-statement">This isn't a navigation bug. It's a broken mental model — and every navigation fix built on top of it will keep feeling wrong.</div>
+    <div class="verdict-reason">Three overlapping issues compound each other: the names don't reflect reality, two zoom levels are implemented as separate pages, and the member selector means different things in different places. Each can be fixed independently — the rename alone has the highest leverage.</div>
+  </div>
+
+  <!-- ── PROBLEM 1 ── -->
+  <section>
+    <h2>Problem 1 — Taxonomy rot</h2>
+
+    <p style="font-size:14px; color:var(--text-muted); margin-bottom:16px;">The words "Timesheet" and "Time Log" have been stretched beyond their original meaning. The approval workflow hijacked the word <em>Timesheets</em>, and the view/edit page got the leftover name <em>Time Log</em>. Neither name tells you what you'll find.</p>
+
+    <div style="margin-bottom:16px;">
+      <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color:var(--text-muted); margin-bottom:8px;">What these things actually are</div>
+      <div class="entity-diagram">
+        <div class="entity-row">
+          <div class="entity-box entry">Time Entry</div>
+          <div class="entity-desc">— the atomic unit: one logged block (start/stop, project, activity)</div>
+        </div>
+        <div class="entity-connector">↓</div>
+        <div class="entity-row">
+          <div class="entity-box log">Time Log</div>
+          <div class="entity-desc">— a reading of entries by date range (formerly "View &amp; Edit")</div>
+        </div>
+        <div class="entity-connector">↓</div>
+        <div class="entity-row">
+          <div class="entity-box sheet">Timesheet</div>
+          <div class="entity-desc">— entries grouped around a pay period</div>
+        </div>
+        <div class="entity-connector">↓</div>
+        <div class="entity-row">
+          <div class="entity-box approval">Approvals</div>
+          <div class="entity-desc">— the workflow: submit → review → approve → paid</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color:var(--text-muted); margin-bottom:8px;">The naming collision → proposed fix</div>
+    <div class="name-diagram">
+      <div class="name-col">
+        <div class="name-col-header bad">Current — confusing</div>
+        <div class="name-item">
+          <span class="nav-tag">Time Log</span>
+          <span style="color:var(--text-muted);">view/edit your time entries</span>
+        </div>
+        <div class="name-item">
+          <span class="nav-tag">Timesheets</span>
+          <span style="color:var(--text-muted);">approval workflow for pay periods</span>
+        </div>
+      </div>
+      <div class="name-arrow">→</div>
+      <div class="name-col">
+        <div class="name-col-header good">Proposed — clear</div>
+        <div class="name-item">
+          <span class="nav-tag new">Timesheets</span>
+          <span style="color:var(--text-muted);">view/edit your time (it IS a sheet of time)</span>
+        </div>
+        <div class="name-item">
+          <span class="nav-tag new">Approvals</span>
+          <span style="color:var(--text-muted);">approval workflow for pay periods</span>
+        </div>
+      </div>
+    </div>
+
+    <blockquote class="card quote" style="margin-top:12px;">
+      <p>"Why isn't it just called Approvals? If that's what it was built for, it's the approval process. All of the time you want to see is already on the other page."</p>
+      <cite>— Cody Rogers, June 30</cite>
+    </blockquote>
+  </section>
+
+  <!-- ── PROBLEM 2 ── -->
+  <section>
+    <h2>Problem 2 — Navigation architecture</h2>
+
+    <p style="font-size:14px; color:var(--text-muted); margin-bottom:16px;">Multi-member and single-member aren't two pages — they're two <strong>zoom levels</strong> of the same data. But they're implemented as separate routes, so switching triggers navigation: back buttons, URL changes, new tabs.</p>
+
+    <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color:var(--text-muted); margin-bottom:8px;">The zoom model</div>
+    <div class="zoom-diagram">
+      <div class="zoom-panel">
+        <div class="zoom-panel-header">Multi-member — Zoom Out</div>
+        <div class="zoom-panel-body">
+          <div class="zoom-row"><span>Helen</span><span style="color:var(--text-muted);">6h</span></div>
+          <div class="zoom-row highlight"><span>Alex ← click</span><span>4h</span></div>
+          <div class="zoom-row"><span>Cody</span><span style="color:var(--text-muted);">8h</span></div>
+          <div class="zoom-row"><span style="color:var(--border);">· · ·</span></div>
+        </div>
+      </div>
+      <div class="zoom-arrow">
+        <span>→</span>
+        <span class="zoom-arrow-label">zoom in</span>
+      </div>
+      <div class="zoom-panel">
+        <div class="zoom-panel-header">Single-member — Zoom In</div>
+        <div class="zoom-panel-body">
+          <div class="zoom-time-block">
+            <div style="font-weight:600; font-size:12px;">June 30</div>
+            <div style="color:var(--text-muted); font-size:11px;">10:00–12:00 · Design</div>
+            <div class="zoom-bar" style="width:80%;"></div>
+          </div>
+          <div class="zoom-time-block">
+            <div style="font-weight:600; font-size:12px;">June 29</div>
+            <div style="color:var(--text-muted); font-size:11px;">09:30–11:30 · Dev</div>
+            <div class="zoom-bar" style="width:60%;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p style="font-size:14px; color:var(--text-muted); margin-bottom:10px; margin-top:16px;">Because the zoom is a page change, it causes:</p>
+    <div class="findings">
+      <div class="finding bad">
+        <span class="finding-icon">✗</span>
+        <div class="finding-body">
+          <div class="finding-text">A back button on a top-level menu item</div>
+          <div class="finding-detail">Users arrive via a top-level nav click — not by drilling down — so the back button reads as a bug, not a feature.</div>
+        </div>
+      </div>
+      <div class="finding bad">
+        <span class="finding-icon">✗</span>
+        <div class="finding-body">
+          <div class="finding-text">Header filters jump when switching views</div>
+          <div class="finding-detail">Multi-member and single-member share a header, but the filter set changes on switch — causing a visible layout jump that reads as broken.</div>
+        </div>
+      </div>
+      <div class="finding bad">
+        <span class="finding-icon">✗</span>
+        <div class="finding-body">
+          <div class="finding-text">Member click opened a new browser tab (until recently)</div>
+          <div class="finding-detail">Two tabs for what felt like the same page — a symptom of treating the zoom as a separate route.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PROBLEM 3 ── -->
+  <section>
+    <h2>Problem 3 — Filter behavior inconsistency</h2>
+
+    <p style="font-size:14px; color:var(--text-muted); margin-bottom:16px;">The member selector looks identical in both pages but does fundamentally different things. Victor named it precisely: <em>"Selecting and unselecting isn't the same as filtering — it's going back and forth in granularity of data."</em></p>
+
+    <div class="filter-demo">
+      <div class="filter-panel">
+        <div class="filter-panel-title">Timesheets (Approvals)</div>
+        <div class="filter-panel-body">
+          <div class="filter-select">Helen <span>▾</span></div>
+          <div class="filter-result-label">Result in table</div>
+          <div class="filter-row">Helen · June 30 · 6h · Submitted</div>
+          <div class="filter-meaning filter-type">Selecting a member filters the table — same structure, fewer rows.</div>
+        </div>
+      </div>
+      <div class="filter-panel">
+        <div class="filter-panel-title">Time Log</div>
+        <div class="filter-panel-body">
+          <div class="filter-select">Helen <span>▾</span></div>
+          <div class="filter-result-label">Result in table</div>
+          <div class="filter-row">June 30 · 10:00–12:00 · Design</div>
+          <div class="filter-row">June 29 · 09:30–11:30 · Dev</div>
+          <div class="filter-meaning navigate-type">Selecting a member changes the entire UI — different data structure, different page feel.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flag">
+      <strong>Why this matters for the fix</strong>
+      Any solution that tries to unify the header between the two views will run into this. The member selector has different semantics in each context — unifying the header without resolving this just moves the confusion around.
+    </div>
+  </section>
+
+  <!-- ── SOLUTIONS ── -->
+  <section>
+    <h2>Solution options</h2>
+
+    <div class="solution-cards">
+
+      <!-- A -->
+      <div class="solution-card">
+        <div class="solution-header">
+          <div class="solution-title">A — Rename + one-page zoom</div>
+          <div class="solution-badge now">Do now</div>
+        </div>
+        <div class="solution-body">
+          <p>Rename <strong>Time Log → Timesheets</strong> and <strong>Timesheets → Approvals</strong> to fix the taxonomy. Default to multi-member view. Selecting one member changes the content beneath a static header — no new page, no new tab. Keep the back link as a conservative safety net.</p>
+          <div class="pro-con">
+            <div class="pro-con-col pros">
+              <h4>Pros</h4>
+              <ul class="pro-con-list">
+                <li>Low dev effort</li>
+                <li>Highest leverage — fixes naming for everyone: users, CSMs, devs</li>
+                <li>No new patterns to learn</li>
+                <li>Matches the agreed mental model (multi-member as default)</li>
+              </ul>
+            </div>
+            <div class="pro-con-col cons">
+              <h4>Cons</h4>
+              <ul class="pro-con-list">
+                <li>Member selector still has dual semantics</li>
+                <li>Header filter inconsistency not fully resolved</li>
+                <li>Back button/deselect logic still awkward at the edges</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- B -->
+      <div class="solution-card recommended">
+        <div class="solution-header">
+          <div class="solution-title">B — Side drawer &nbsp;·&nbsp; <span style="font-weight:400; font-size:13px; color:var(--green);">Solves all three problems</span></div>
+          <div class="solution-badge later">Follow-up project</div>
+        </div>
+        <div class="solution-body">
+          <p>Multi-member is always the base state. Clicking a member opens a side drawer with their detail view. No navigation — header never changes, filters stay put, zoom in/out is just open/close.</p>
+
+          <div class="drawer-diagram">
+            <div class="drawer-main">
+              <div class="drawer-main-header">All Members</div>
+              <div class="drawer-main-body">
+                <div class="drawer-main-row"><span>Helen</span><span style="color:var(--text-muted);">6h</span></div>
+                <div class="drawer-main-row selected"><span>Alex ← selected</span><span>4h</span></div>
+                <div class="drawer-main-row"><span>Cody</span><span style="color:var(--text-muted);">8h</span></div>
+              </div>
+            </div>
+            <div class="drawer-panel">
+              <div class="drawer-panel-header">Alex — June 2026</div>
+              <div class="drawer-panel-body">
+                <div class="drawer-entry"><strong>June 30</strong></div>
+                <div class="drawer-entry"><span class="drawer-time">10:00–12:00</span> · Design</div>
+                <div class="drawer-entry"><span class="drawer-time">13:00–15:30</span> · Dev</div>
+                <div class="drawer-entry"><strong>June 29</strong></div>
+                <div class="drawer-entry"><span class="drawer-time">09:30–11:30</span> · Review</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pro-con">
+            <div class="pro-con-col pros">
+              <h4>Pros</h4>
+              <ul class="pro-con-list">
+                <li>Permanently resolves the navigation problem</li>
+                <li>No back button, ever</li>
+                <li>Header never changes or jumps</li>
+                <li>Member selector semantic ambiguity disappears</li>
+                <li>Click through members stays fast</li>
+                <li>Zone already has the component</li>
+              </ul>
+            </div>
+            <div class="pro-con-col cons">
+              <h4>Cons</h4>
+              <ul class="pro-con-list">
+                <li>Higher dev effort — can't ship in current fix</li>
+                <li>Weekly/calendar view may be cramped in a drawer — needs prototype validation</li>
+                <li>Needs full design spec for drawer behavior and filtering</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- C -->
+      <div class="solution-card">
+        <div class="solution-header">
+          <div class="solution-title">C — Explicit breadcrumb / zoom indicator</div>
+          <div class="solution-badge consider">Consider</div>
+        </div>
+        <div class="solution-body">
+          <p>Frame the zoom levels as a hierarchy with a breadcrumb: <strong>All Members → Helen</strong>. "All Members" is always clickable and acts as "clear selection." More explicit than deselecting, less confusing than a back button.</p>
+          <div class="pro-con">
+            <div class="pro-con-col pros">
+              <h4>Pros</h4>
+              <ul class="pro-con-list">
+                <li>Familiar pattern (file explorer, breadcrumb nav)</li>
+                <li>Makes zoom level explicit</li>
+                <li>Minimal component changes</li>
+              </ul>
+            </div>
+            <div class="pro-con-col cons">
+              <h4>Cons</h4>
+              <ul class="pro-con-list">
+                <li>Doesn't resolve filter semantics</li>
+                <li>Logic gets messy when teams + members both selected</li>
+                <li>Doesn't fix header jump</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── MATRIX ── -->
+  <section>
+    <h2>Options at a glance</h2>
+    <div class="matrix-wrap card" style="padding:0; overflow:hidden;">
+      <table class="matrix">
+        <thead>
+          <tr>
+            <th>Criterion</th>
+            <th>A — Rename + zoom</th>
+            <th>B — Side drawer</th>
+            <th>C — Breadcrumb</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="criterion">Fixes naming confusion</td>
+            <td class="cell-good">Yes</td>
+            <td class="cell-mid">Partial</td>
+            <td class="cell-bad">No</td>
+          </tr>
+          <tr>
+            <td class="criterion">Eliminates back button</td>
+            <td class="cell-mid">Mostly</td>
+            <td class="cell-good">Fully</td>
+            <td class="cell-mid">Replaces it</td>
+          </tr>
+          <tr>
+            <td class="criterion">Header stops jumping</td>
+            <td class="cell-mid">Mostly</td>
+            <td class="cell-good">Fully</td>
+            <td class="cell-mid">Partially</td>
+          </tr>
+          <tr>
+            <td class="criterion">Resolves filter semantics</td>
+            <td class="cell-bad">No</td>
+            <td class="cell-good">Yes</td>
+            <td class="cell-bad">No</td>
+          </tr>
+          <tr>
+            <td class="criterion">Dev effort</td>
+            <td class="cell-good">Low</td>
+            <td class="cell-bad">High</td>
+            <td class="cell-mid">Medium</td>
+          </tr>
+          <tr>
+            <td class="criterion">Ships in current project</td>
+            <td class="cell-good">Yes</td>
+            <td class="cell-bad">No</td>
+            <td class="cell-mid">Maybe</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ── RECOMMENDATION ── -->
+  <section>
+    <h2>Recommended path</h2>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-marker">01</div>
+        <div class="step-content card">
+          <h3>Now — Option A (Rename + one-page zoom)</h3>
+          <p style="font-size:14px; color:var(--text-muted);">Ship the rename and navigation fix in the current project. Time Log → Timesheets, Timesheets → Approvals. Default to multi-member. Single-member is a content swap, not a page nav. Keep the back link as a safety net — known pattern, low risk.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-marker">02</div>
+        <div class="step-content card">
+          <h3>Next — Prototype the side drawer</h3>
+          <p style="font-size:14px; color:var(--text-muted);">Validate whether the daily/weekly timeline view actually works inside a drawer. Zone has the component. If it fits, the drawer becomes the follow-up project that permanently resolves filter semantics and the header jump.</p>
+        </div>
+      </div>
+      <div class="step" style="padding-bottom:0;">
+        <div class="step-marker">03</div>
+        <div class="step-content card">
+          <h3>After shipping — confirm the rename landed</h3>
+          <p style="font-size:14px; color:var(--text-muted);">The rename has the highest leverage of any change here — it corrects the mental model for users, CSMs, engineers, and future designers. After shipping, check support volume to see if "Timesheets vs. Approvals" confusion drops.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>

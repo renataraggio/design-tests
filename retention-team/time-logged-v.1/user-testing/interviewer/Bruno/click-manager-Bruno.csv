@@ -1,0 +1,87 @@
+Participant,Track,Date,Duration (s)
+Bruno,manager,2026-07-08,1048
+
+t_ms,t_iso,type,label,detail
+0,2026-07-08T15:10:55.602Z,milestone,session_start,track=manager
+30801,2026-07-08T15:11:26.403Z,click,Select team,div#tl-team-select
+38185,2026-07-08T15:11:33.787Z,click,SSales,li
+42749,2026-07-08T15:11:38.351Z,click,"Sun, Jun 29, 2026: 0:00:00 hrskeyboard_arrow_down",div
+148148,2026-07-08T15:13:23.750Z,click,Add time,button#tl-add-time-btn
+148149,2026-07-08T15:13:23.751Z,milestone,add_time_button_clicked,
+148156,2026-07-08T15:13:23.758Z,milestone,add_time_modal_opened,mode=multi/batch
+148156,2026-07-08T15:13:23.758Z,milestone,batch_selection_changed,count=0
+151847,2026-07-08T15:13:27.449Z,click,Select teams,div
+154882,2026-07-08T15:13:30.484Z,click,Select members,span
+158381,2026-07-08T15:13:33.983Z,click,James Miller,span
+158382,2026-07-08T15:13:33.984Z,milestone,batch_selection_changed,count=1
+159464,2026-07-08T15:13:35.066Z,click,Ryan Davis,span
+159464,2026-07-08T15:13:35.066Z,milestone,batch_selection_changed,count=1
+161697,2026-07-08T15:13:37.299Z,click,Members ADD MEMBERS OR TEAMS * Select teams keyboard_arrow_d,div#utm-members-section
+163014,2026-07-08T15:13:38.616Z,click,Date,input
+168414,2026-07-08T15:13:44.016Z,click,From time,input
+176730,2026-07-08T15:13:52.332Z,click,To time,input
+180347,2026-07-08T15:13:55.949Z,click,Time selection bolt Add time in batch DATE calendar_today FR,div
+183997,2026-07-08T15:13:59.599Z,click,Select a project / work order keyboard_arrow_down,div#utm-proj-select
+188048,2026-07-08T15:14:03.650Z,click,Product home,span
+189896,2026-07-08T15:14:05.498Z,click,Why are you adding this time entry?,span
+198546,2026-07-08T15:14:14.148Z,click,Forgot to start/stop timer,span
+209230,2026-07-08T15:14:24.832Z,click,add Add time span,button#utm-add-span-btn
+212947,2026-07-08T15:14:28.549Z,click,From time,input
+219446,2026-07-08T15:14:35.048Z,click,Date,input
+243262,2026-07-08T15:14:58.864Z,click,Remove time span,button
+252615,2026-07-08T15:15:08.217Z,click,Time selection bolt Add time in batch,div
+263262,2026-07-08T15:15:18.864Z,click,add Add time span,button#utm-add-span-btn
+280178,2026-07-08T15:15:35.780Z,click,Save,button#utm-save-btn
+280178,2026-07-08T15:15:35.780Z,milestone,add_time_save_clicked,selectedMembersCount=1
+280178,2026-07-08T15:15:35.780Z,milestone,add_time_modal_closed,mode=multi/batch
+360281,2026-07-08T15:16:55.883Z,click,View Ryan Davis's time logged,button
+360281,2026-07-08T15:16:55.883Z,milestone,member_row_drill_in,memberId=rd
+360281,2026-07-08T15:16:55.883Z,click,Daily,button
+360281,2026-07-08T15:16:55.883Z,milestone,view_switched,view=Daily
+381477,2026-07-08T15:17:17.079Z,click,"Tue, Jul 1, 2026: 8:32:00 hrsnotesexpand_more",div
+451142,2026-07-08T15:18:26.744Z,click,Select date range,div#tl-date-range-btn
+600273,2026-07-08T15:20:55.875Z,click,arrow_back Back,button#tl-breadcrumb-btn
+632139,2026-07-08T15:21:27.741Z,click,View Ryan Davis's time logged,button
+632139,2026-07-08T15:21:27.741Z,milestone,member_row_drill_in,memberId=rd
+632139,2026-07-08T15:21:27.741Z,click,Daily,button
+632139,2026-07-08T15:21:27.741Z,milestone,view_switched,view=Daily
+635022,2026-07-08T15:21:30.624Z,click,Add time,button#tl-add-time-btn
+635022,2026-07-08T15:21:30.624Z,milestone,add_time_button_clicked,
+635024,2026-07-08T15:21:30.626Z,milestone,add_time_modal_opened,mode=single
+643355,2026-07-08T15:21:38.957Z,click,Save,button#utm-save-btn
+643355,2026-07-08T15:21:38.957Z,milestone,add_time_save_clicked,selectedMembersCount=1
+643355,2026-07-08T15:21:38.957Z,milestone,add_time_modal_closed,mode=single
+674670,2026-07-08T15:22:10.272Z,click,arrow_back Back,button#tl-breadcrumb-btn
+679770,2026-07-08T15:22:15.372Z,click,Select team,div#tl-team-select
+681038,2026-07-08T15:22:16.640Z,click,Unselect all,button#tl-ts-unselect-all
+683537,2026-07-08T15:22:19.139Z,click,Select member,div#tl-member-select
+692237,2026-07-08T15:22:27.839Z,click,Sarah Chen,li
+696238,2026-07-08T15:22:31.840Z,click,Daily time loggedDailyWeeklyMonthlySoonview_columncollapse_a,div
+709237,2026-07-08T15:22:44.839Z,click,Select member,div#tl-member-select
+772053,2026-07-08T15:23:47.655Z,click,"Sun, Jun 29, 2026: 0:00:00 hrskeyboard_arrow_down",div
+773953,2026-07-08T15:23:49.555Z,click,View Sarah Chen's time logged,button
+773953,2026-07-08T15:23:49.555Z,milestone,member_row_drill_in,memberId=sc
+773953,2026-07-08T15:23:49.555Z,click,Daily,button
+773953,2026-07-08T15:23:49.555Z,milestone,view_switched,view=Daily
+778635,2026-07-08T15:23:54.237Z,click,"Tue, Jul 1, 2026: 8:27:00 hrsnotesexpand_more",div
+779935,2026-07-08T15:23:55.537Z,click,"Wed, Jul 2, 2026: 8:18:00 hrsnotesexpand_more",div
+791052,2026-07-08T15:24:06.654Z,click,"Thu, Jul 3, 2026: 4:01:00 hrsnotesexpand_more",div
+810286,2026-07-08T15:24:25.888Z,click,arrow_back Back,button#tl-breadcrumb-btn
+814719,2026-07-08T15:24:30.321Z,click,Helene Engelsnorth_eastView time loggedhelene.engels@hubstaf,div
+814719,2026-07-08T15:24:30.321Z,milestone,member_row_drill_in,memberId=he
+817268,2026-07-08T15:24:32.870Z,click,Close,button#ssm-close
+838234,2026-07-08T15:24:53.836Z,click,Actionsexpand_more,button
+840551,2026-07-08T15:24:56.153Z,click,Actionsexpand_more,button
+841651,2026-07-08T15:24:57.253Z,click,Daily time loggedDailyWeeklyMonthlySoonview_columncollapse_a,div
+859534,2026-07-08T15:25:15.136Z,click,Actionsexpand_more,button
+864400,2026-07-08T15:25:20.002Z,click,View time logged,button
+864401,2026-07-08T15:25:20.003Z,click,Daily,button
+864401,2026-07-08T15:25:20.003Z,milestone,view_switched,view=Daily
+868534,2026-07-08T15:25:24.136Z,click,arrow_back Back,button#tl-breadcrumb-btn
+875767,2026-07-08T15:25:31.369Z,click,view_column,button
+876967,2026-07-08T15:25:32.569Z,click,view_column,button
+878070,2026-07-08T15:25:33.672Z,click,collapse_all,button
+878934,2026-07-08T15:25:34.536Z,click,collapse_all,button
+977634,2026-07-08T15:27:13.236Z,click,Helene Engelsnorth_eastView time loggedhelene.engels@hubstaf,div
+977634,2026-07-08T15:27:13.236Z,milestone,member_row_drill_in,memberId=he
+980818,2026-07-08T15:27:16.420Z,click,Close,button#ssm-close
