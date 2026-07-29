@@ -32,8 +32,14 @@
   }
 
   // Tabs row (MEMBERS / ALL / ME) — allow wrapping instead of overflowing the page.
+  // Selector matches the shared Zone-tabs baseline (border-bottom) rather than
+  // the old align-items: flex-end, since the tab row was rebuilt to match the
+  // real Zone Tabs component (shared 1px baseline + per-tab padding instead of
+  // per-tab border-bottom).
   function fixTabsRow() {
-    var rows = document.querySelectorAll('div[style*="align-items: flex-end"]');
+    var rows = document.querySelectorAll(
+      'div[style*="border-bottom: 1px solid rgb(229, 231, 235)"]'
+    );
     rows.forEach(function (row) {
       row.style.setProperty("flex-wrap", "wrap", "important");
       row.style.setProperty("row-gap", "8px", "important");
