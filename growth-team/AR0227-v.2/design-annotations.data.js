@@ -1,6 +1,6 @@
 window.DESIGN_ANNOTATIONS_DATA = {
   pages: [
-    { id: "onboarding", label: "AR0228 — Onboarding", route: "index.html" },
+    { id: "onboarding", label: "AR0227-v.2 — Onboarding", route: "index.html" },
   ],
 
   annotations: [
@@ -10,7 +10,7 @@ window.DESIGN_ANNOTATIONS_DATA = {
       kind: "suggestion",
       title: "The old \"Download the desktop app\" screen has been removed",
       description:
-        "AR0227 (and AR0228's first draft) opened with a dedicated screen: an org-requires-this alert, a preview of the utilization/activity widgets, and a \"Download the desktop app\" button gating Continue. Per direct product feedback, that screen is now cut entirely — this experiment starts on what used to be Step 2, and the \"Download the app\" item in its 3-step story is the only place download happens now (see \"setup-download-is-the-primary-path\" below). The tradeoff: this shortens the flow by a full screen, but loses the explicit \"your organization requires this\" framing and the motivating preview of the utilization/activity widgets before asking for the install.",
+        "AR0227-v.1 (and AR0227-v.2's first draft) opened with a dedicated screen: an org-requires-this alert, a preview of the utilization/activity widgets, and a \"Download the desktop app\" button gating Continue. Per direct product feedback, that screen is now cut entirely — this experiment starts on what used to be Step 2, and the \"Download the app\" item in its 3-step story is the only place download happens now (see \"setup-download-is-the-primary-path\" below). The tradeoff: this shortens the flow by a full screen, but loses the explicit \"your organization requires this\" framing and the motivating preview of the utilization/activity widgets before asking for the install.",
       target: "#setup-step-download",
       sub: ["Confirm losing the \"org requires this\" framing and widget preview is acceptable, or find another place for that messaging if not"],
     },
@@ -32,11 +32,11 @@ window.DESIGN_ANNOTATIONS_DATA = {
       id: "ar0228-pivot-from-ar0227",
       page: "onboarding",
       kind: "suggestion",
-      title: "This experiment is a pivot away from AR0227's fake-app-window approach — now down to 2 steps",
+      title: "This experiment is a pivot away from AR0227-v.1's fake-app-window approach — now down to 2 steps",
       description:
-        "AR0227's Step 2 mimicked the real desktop app in a browser mockup (traffic-light titlebar, a fake play button, a fake counting timer) — feedback was that this made it look like you could actually track time from the web page, when tracking can only ever happen in the real desktop app. AR0228 started as a duplicate of AR0227 with that idea replaced by a 3-step \"story\" (Download → Open the app → Press play) plus an honest \"Waiting to hear back from your desktop app…\" status line. It has since also dropped AR0227's separate \"Download the desktop app\" screen entirely — this experiment is now 2 steps total: the setup story (with download folded in), then \"Get familiar with Hubstaff.\"",
+        "AR0227-v.1's Step 2 mimicked the real desktop app in a browser mockup (traffic-light titlebar, a fake play button, a fake counting timer) — feedback was that this made it look like you could actually track time from the web page, when tracking can only ever happen in the real desktop app. AR0227-v.2 started as a duplicate of AR0227-v.1 with that idea replaced by a 3-step \"story\" (Download → Open the app → Press play) plus an honest \"Waiting to hear back from your desktop app…\" status line. It has since also dropped AR0227-v.1's separate \"Download the desktop app\" screen entirely — this experiment is now 2 steps total: the setup story (with download folded in), then \"Get familiar with Hubstaff.\"",
       target: ".setup-story",
-      sub: ["Compare directly against AR0227 with stakeholders before deciding which direction to carry forward"],
+      sub: ["Compare directly against AR0227-v.1 with stakeholders before deciding which direction to carry forward"],
     },
     {
       id: "step2-signal-simulated",
@@ -44,7 +44,7 @@ window.DESIGN_ANNOTATIONS_DATA = {
       kind: "required",
       title: "\"Simulate\" link stands in for the real desktop-app signal — no real signal exists yet",
       description:
-        "The 3-step list and \"Waiting to hear back…\" status are driven entirely by the \"Simulate: desktop app started tracking\" link, since this static prototype has no way to hear from a real desktop app. Clicking it marks \"Open Hubstaff\" and \"Press play\" complete and unlocks Continue. It's explicitly marked as a testing affordance (dashed border, \"Simulate:\" copy) and isn't part of the real design — and it always succeeds, so it can't reproduce a \"no project assigned\" or \"app never reports back\" failure case the way AR0227's build attempted to.",
+        "The 3-step list and \"Waiting to hear back…\" status are driven entirely by the \"Simulate: desktop app started tracking\" link, since this static prototype has no way to hear from a real desktop app. Clicking it marks \"Open Hubstaff\" and \"Press play\" complete and unlocks Continue. It's explicitly marked as a testing affordance (dashed border, \"Simulate:\" copy) and isn't part of the real design — and it always succeeds, so it can't reproduce a \"no project assigned\" or \"app never reports back\" failure case the way AR0227-v.1's build attempted to.",
       target: "#simulate-tracking",
       priority: "high",
       sub: [

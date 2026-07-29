@@ -1,6 +1,6 @@
 window.DESIGN_ANNOTATIONS_DATA = {
   pages: [
-    { id: "onboarding", label: "AR0227 — Onboarding", route: "index.html" },
+    { id: "onboarding", label: "AR0227-v.1 — Onboarding", route: "index.html" },
   ],
 
   annotations: [
