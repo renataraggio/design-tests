@@ -1,0 +1,268 @@
+/* ────────────────────────────────────────────────────────────────
+   Hubstaff Zone Design System — tokens
+   colors_and_type.css
+
+   Drop this into any HTML file:
+   <link rel="stylesheet" href="colors_and_type.css" />
+
+   Fonts are loaded from Google Fonts. The Material Symbols
+   Rounded icon font is also pulled in so `<span class="material-symbols-rounded">add</span>`
+   just works.
+   ──────────────────────────────────────────────────────────────── */
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Inter:wght@400;500;600;700&family=Source+Code+Pro:wght@400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&display=block");
+
+/* Brand display face — uploaded by the user.
+   Use sparingly: hero numbers, KPI stats, eye-catching headlines. */
+@font-face {
+  font-family: "Roboto Condensed";
+  src: url("./fonts/Roboto_Condensed-Black.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* ── PRIMARY (BLUE) ──────────────────────────────────────────── */
+  --blue-50:  #EAF6FF;
+  --blue-100: #DBEEFE;
+  --blue-200: #BFE0FE;
+  --blue-300: #69B2FF; /* hover / lighter accents */
+  --blue-400: #45B2FF;
+  --blue-500: #2AA7FF; /* PRIMARY ACTION — buttons, headings on dark */
+  --blue-600: #0092FF;
+  --blue-700: #1C64F2; /* link / focus / "deep" primary */
+  --blue-800: #0D69D4; /* sidebar active, table sort */
+  --blue-900: #1724C9;
+  --blue-950: #111827; /* near-navy used on dark thumbnails */
+
+  /* ── NEUTRAL (GRAY) ──────────────────────────────────────────── */
+  --gray-50:  #F9FAFB; /* page background */
+  --gray-100: #F2F2F2;
+  --gray-200: #E5E7EB; /* subtle borders, separators */
+  --gray-300: #D1D5DB; /* default borders, disabled */
+  --gray-400: #9CA3AF; /* secondary text on white */
+  --gray-500: #6B7280; /* placeholder, icon, muted text */
+  --gray-600: #4B5563; /* body text, button label */
+  --gray-700: #374151; /* strong text */
+  --gray-800: #2D3137; /* dark surface */
+  --gray-900: #111827; /* primary text */
+  --black:    #000000;
+  --white:    #FFFFFF;
+
+  /* ── DARK SLATES (for toasts, dark cards) ────────────────────── */
+  --slate-900: #1F2937;
+  --slate-950: #0F1729;
+
+  /* ── SEMANTIC ────────────────────────────────────────────────── */
+  --success-50:  #F3FAF7;
+  --success-100: #DEF7EC;
+  --success-500: #007D00; /* deep brand green */
+  --success-600: #057A55; /* alert border */
+  --success-700: #046C4E; /* button hover */
+  --success-900: #03543F; /* text on tinted */
+
+  --warning-50:  #FFFAEB;
+  --warning-100: #FEECDC;
+  --warning-500: #F9A825;
+  --warning-600: #C27803;
+  --warning-700: #8E4B10;
+  --warning-900: #633112;
+
+  --danger-50:  #FDF2F2;
+  --danger-100: #FDE8E8;
+  --danger-500: #C81E1E; /* primary red */
+  --danger-600: #C54600; /* deep red used for spec labels */
+  --danger-700: #9B1C1C;
+  --danger-900: #851F41;
+
+  --info-50:  #EAF6FF;
+  --info-500: var(--blue-500);
+  --info-700: var(--blue-800);
+
+  /* ── SEMANTIC ALIASES (use these in components) ──────────────── */
+  --fg-1: var(--gray-900);   /* primary text */
+  --fg-2: var(--gray-700);   /* secondary text */
+  --fg-3: var(--gray-500);   /* tertiary / icons */
+  --fg-4: var(--gray-400);   /* disabled / muted */
+  --fg-on-dark: var(--white);
+  --fg-link: var(--blue-700);
+
+  --surface-app:    var(--gray-50);    /* page bg */
+  --surface-card:   var(--white);      /* card / table bg */
+  --surface-muted:  var(--gray-100);   /* hover rows, chips */
+  --surface-dark:   var(--slate-900);  /* toast, dark thumbnail */
+  --surface-overlay: rgba(17, 24, 39, 0.5);
+
+  --border-subtle:  var(--gray-200);
+  --border:         var(--gray-300);
+  --border-strong:  var(--gray-400);
+  --border-focus:   var(--blue-700);
+
+  --btn-primary:     var(--blue-500);
+  --btn-primary-hov: #1E96EE;
+  --btn-primary-pre: #1A85D2;
+  --btn-primary-fg:  var(--white);
+
+  --btn-danger:      var(--danger-500);
+  --btn-success:     var(--success-500);
+  --btn-warning:     var(--warning-500);
+
+  /* ── TYPOGRAPHY ──────────────────────────────────────────────── */
+  --font-sans:    "Roboto", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Roboto Condensed", "Roboto", system-ui, sans-serif;
+  --font-spec:    "Inter", "Roboto", system-ui, sans-serif;
+  --font-mono:    "Source Code Pro", ui-monospace, "SF Mono", Menlo, monospace;
+  --font-icon:    "Material Symbols Rounded";
+
+  /* Type scale — Roboto, line-height included */
+  --t-h1-size: 48px;   --t-h1-line: 72px;   --t-h1-weight: 700;
+  --t-h2-size: 36px;   --t-h2-line: 54px;   --t-h2-weight: 400;
+  --t-h3-size: 24px;   --t-h3-line: 36px;   --t-h3-weight: 700;
+  --t-h4-size: 18px;   --t-h4-line: 27px;   --t-h4-weight: 400;
+  --t-body-size: 16px; --t-body-line: 24px; --t-body-weight: 400;
+  --t-small-size: 14px;--t-small-line: 20px;--t-small-weight: 400;
+  --t-caption-size: 12px; --t-caption-line: 16px; --t-caption-weight: 400;
+
+  /* ── SPACING (4px base) ──────────────────────────────────────── */
+  --s-1:  4px;
+  --s-2:  8px;
+  --s-3:  12px;
+  --s-4:  16px;
+  --s-5:  20px;
+  --s-6:  24px;
+  --s-8:  32px;
+  --s-10: 40px;
+  --s-12: 48px;
+  --s-14: 56px;
+  --s-16: 64px;
+
+  /* ── RADIUS ──────────────────────────────────────────────────── */
+  --r-xs: 4px;   /* inputs, small pills */
+  --r-sm: 6px;   /* buttons */
+  --r-md: 8px;   /* cards, alerts */
+  --r-lg: 12px;
+  --r-pill: 9999px;
+
+  /* ── SHADOW ──────────────────────────────────────────────────── */
+  --shadow-0: none;
+  --shadow-1: 0 1px 2px 0 rgba(0,0,0,0.05);
+  --shadow-2: 0 8px 24px -4px rgba(0,0,0,0.10), 0 2px 6px -2px rgba(0,0,0,0.06);
+  --shadow-3: 0 16px 40px -8px rgba(17,24,39,0.20);
+
+  /* ── MOTION ──────────────────────────────────────────────────── */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 120ms;
+  --dur:      180ms;
+  --dur-slow: 320ms;
+
+  /* ── LAYOUT ──────────────────────────────────────────────────── */
+  --sidebar-w: 240px;
+  --header-h:  56px;
+  --content-max: 1200px;
+}
+
+/* ────────────────────────────────────────────────────────────────
+   Semantic type classes — use INSTEAD of inline font-size/family.
+   ──────────────────────────────────────────────────────────────── */
+
+html, body {
+  font-family: var(--font-sans);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: var(--fg-1);
+  background: var(--surface-app);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.h1, h1.zone {
+  font-family: var(--font-sans);
+  font-weight: var(--t-h1-weight);
+  font-size: var(--t-h1-size);
+  line-height: var(--t-h1-line);
+  color: var(--fg-1);
+  margin: 0;
+}
+.h2, h2.zone {
+  font-family: var(--font-sans);
+  font-weight: var(--t-h2-weight);
+  font-size: var(--t-h2-size);
+  line-height: var(--t-h2-line);
+  color: var(--fg-1);
+  margin: 0;
+}
+.h3, h3.zone {
+  font-family: var(--font-sans);
+  font-weight: var(--t-h3-weight);
+  font-size: var(--t-h3-size);
+  line-height: var(--t-h3-line);
+  color: var(--fg-1);
+  margin: 0;
+}
+.h4, h4.zone {
+  font-family: var(--font-sans);
+  font-weight: var(--t-h4-weight);
+  font-size: var(--t-h4-size);
+  line-height: var(--t-h4-line);
+  color: var(--fg-1);
+  margin: 0;
+}
+
+.body  { font-size: var(--t-body-size);  line-height: var(--t-body-line);  font-weight: 400; }
+.small { font-size: var(--t-small-size); line-height: var(--t-small-line); font-weight: 400; }
+.caption { font-size: var(--t-caption-size); line-height: var(--t-caption-line); font-weight: 400; }
+
+.label {
+  font-size: var(--t-small-size);
+  line-height: var(--t-small-line);
+  font-weight: 500;
+  color: var(--fg-2);
+}
+.eyebrow {
+  font-size: var(--t-caption-size);
+  line-height: var(--t-caption-line);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--fg-3);
+}
+.mono { font-family: var(--font-mono); }
+
+/* Display class — for hero numbers / stats / oversized headlines.
+   Uses the brand-uploaded Roboto Condensed Black. */
+.display {
+  font-family: var(--font-display);
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  color: var(--fg-1);
+}
+
+/* Material Symbols helper — keep label rules simple */
+.material-symbols-rounded {
+  font-family: "Material Symbols Rounded";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 18px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  font-feature-settings: "liga";
+  -webkit-font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+  user-select: none;
+  vertical-align: middle;
+}
+.material-symbols-rounded.sm { font-size: 18px; }
+.material-symbols-rounded.md { font-size: 24px; }
+.material-symbols-rounded.lg { font-size: 32px; }
+.material-symbols-rounded.filled { font-variation-settings: "FILL" 1; }
+
+*, *::before, *::after { box-sizing: border-box; }

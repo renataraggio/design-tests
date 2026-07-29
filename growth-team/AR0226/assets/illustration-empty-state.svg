@@ -1,0 +1,13 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" width="98" height="94" viewBox="0 0 98 94" fill="none">
+  <g transform="translate(10 10)">
+    
+    <path d="M 71.883 19.871 C 77.692 29.667 80.715 42.448 74.763 52.098 C 69.211 61.097 56.416 59.442 46.034 61.775 C 36.019 64.024 25.935 70.058 16.931 65.09 C 6.694 59.443 0.909 48.023 0.123 36.446 C -0.659 24.911 1.806 11.74 11.057 4.881 C 20.118 -1.836 32.879 0.103 43.952 1.86 C 54.624 3.554 66.176 10.247 71.883 19.871 Z" fill="#F1F7FF" transform="matrix(-1 0 0 1 78 7)"></path>
+    
+    <g transform="translate(7 0)">
+      <rect width="64.915" height="33.596" rx="2.436" fill="#B8C9E0"></rect>
+      <rect y="14" width="64.915" height="33.596" rx="2.436" fill="#B8C9E0" opacity="0.85"></rect>
+      <rect y="28" width="64.915" height="33.596" rx="2.436" fill="#B8C9E0" opacity="0.7"></rect>
+    </g>
+  </g>
+</svg>
