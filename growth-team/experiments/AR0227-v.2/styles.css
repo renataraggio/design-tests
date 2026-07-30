@@ -500,9 +500,9 @@ button {
 
 /* ── Step 2: setup story (new direction) ─────────────────────────────────
    Replaces the old fake-app-window mockup entirely. Tells the story of
-   what we expect — download, open the app, press play — as a 3-item
-   sequence, then honestly shows this page just listening for a signal
-   rather than pretending to host the control itself.
+   what we expect — download, then press play — as a 2-item sequence,
+   then honestly shows this page just listening for a signal rather than
+   pretending to host the control itself.
    ────────────────────────────────────────────────────────────────────── */
 
 .setup-story {
@@ -664,52 +664,12 @@ button {
   font-size: 13px;
 }
 
-.signal-status__waves {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.signal-status__dot {
   flex-shrink: 0;
-  width: 16px;
-  height: 16px;
-}
-
-.signal-status__waves span {
-  position: absolute;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  border: 1.5px solid var(--primary-500);
-  animation: signal-wave 1.8s ease-out infinite;
-}
-
-.signal-status__waves span:nth-child(1) {
-  width: 4px;
-  height: 4px;
   background: var(--primary-500);
-  border: none;
-  animation: none;
-}
-
-.signal-status__waves span:nth-child(2) {
-  width: 16px;
-  height: 16px;
-  animation-delay: 0s;
-}
-
-.signal-status__waves span:nth-child(3) {
-  width: 16px;
-  height: 16px;
-  animation-delay: 0.9s;
-}
-
-@keyframes signal-wave {
-  0% {
-    opacity: 0.6;
-    transform: scale(0.3);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(1);
-  }
 }
 
 .signal-status__check {
@@ -723,11 +683,8 @@ button {
   color: #0a6b3f;
 }
 
-.signal-status.is-confirmed .signal-status__waves {
-  display: none;
-}
-
-.signal-status.is-bypassed .signal-status__waves {
+.signal-status.is-confirmed .signal-status__dot,
+.signal-status.is-bypassed .signal-status__dot {
   display: none;
 }
 

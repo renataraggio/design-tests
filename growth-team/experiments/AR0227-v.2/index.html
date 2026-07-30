@@ -59,7 +59,7 @@
           </div>
 
           <!-- Storytelling illustration: what we expect the user to do, told
-               as a 3-step sequence, plus an honest "we're watching for it"
+               as a 2-step sequence, plus an honest "we're watching for it"
                signal — no fake app window, no fake interactive timer. -->
           <div class="setup-story">
             <ol class="setup-steps" id="setup-steps">
@@ -71,13 +71,6 @@
                 <span class="setup-step__label">Download the app</span>
                 <button type="button" class="setup-step__cta" id="setup-step-download-cta" hidden>Download</button>
               </li>
-              <li class="setup-step is-current" id="setup-step-open">
-                <span class="setup-step__icon" aria-hidden="true">
-                  <span class="setup-step__pulse"></span>
-                  <img src="assets/logo-mark.svg" alt="" class="setup-step__logo" />
-                </span>
-                <span class="setup-step__label">Open Hubstaff on your computer</span>
-              </li>
               <li class="setup-step is-pending" id="setup-step-play">
                 <span class="setup-step__icon" aria-hidden="true">
                   <span class="setup-step__pulse"></span>
@@ -88,9 +81,7 @@
             </ol>
 
             <p class="signal-status" id="signal-status">
-              <span class="signal-status__waves" aria-hidden="true">
-                <span></span><span></span><span></span>
-              </span>
+              <span class="signal-status__dot" aria-hidden="true"></span>
               <span class="material-symbols-rounded signal-status__check" id="signal-status-check" aria-hidden="true" hidden>check_circle</span>
               <span id="signal-status-text">Waiting to hear back from your desktop app…</span>
             </p>

@@ -20,7 +20,7 @@ window.DESIGN_ANNOTATIONS_DATA = {
       kind: "required",
       title: "\"Download the app\" always starts unconfirmed — this is the only download entry point now",
       description:
-        "With the old download screen gone, this experiment now starts directly on the 3-step story with nothing downloaded yet. \"Download the app\" shows a download icon, a pulsing highlight, and an inline \"Download\" button (confirmDownload()) — clicking it just flips local state; it doesn't detect OS, trigger a real download, or confirm the app was actually installed. \"Open Hubstaff\"/\"Press play\" stay dimmed until it's done.",
+        "With the old download screen gone, this experiment now starts directly on the 2-step story with nothing downloaded yet. \"Download the app\" shows a download icon, a blue-outline highlight, and an inline \"Download\" button (confirmDownload()) — clicking it just flips local state; it doesn't detect OS, trigger a real download, or confirm the app was actually installed. \"Press play\" stays dimmed until download completes, then picks up that same blue-outline active highlight while it waits on tracking. Matches the final Figma hand-off (AR0227 — Aggressive track version), which also dropped the pulsing/wave animations this build originally had in favor of static highlight states.",
       target: "#setup-step-download-cta",
       priority: "high",
       sub: [
@@ -32,9 +32,9 @@ window.DESIGN_ANNOTATIONS_DATA = {
       id: "ar0228-pivot-from-ar0227",
       page: "onboarding",
       kind: "suggestion",
-      title: "This experiment is a pivot away from AR0227-v.1's fake-app-window approach — now down to 2 steps",
+      title: "This experiment is a pivot away from AR0227-v.1's fake-app-window approach — now down to 2 screens and a 2-item story",
       description:
-        "AR0227-v.1's Step 2 mimicked the real desktop app in a browser mockup (traffic-light titlebar, a fake play button, a fake counting timer) — feedback was that this made it look like you could actually track time from the web page, when tracking can only ever happen in the real desktop app. AR0227-v.2 started as a duplicate of AR0227-v.1 with that idea replaced by a 3-step \"story\" (Download → Open the app → Press play) plus an honest \"Waiting to hear back from your desktop app…\" status line. It has since also dropped AR0227-v.1's separate \"Download the desktop app\" screen entirely — this experiment is now 2 steps total: the setup story (with download folded in), then \"Get familiar with Hubstaff.\"",
+        "AR0227-v.1's Step 2 mimicked the real desktop app in a browser mockup (traffic-light titlebar, a fake play button, a fake counting timer) — feedback was that this made it look like you could actually track time from the web page, when tracking can only ever happen in the real desktop app. AR0227-v.2 started as a duplicate of AR0227-v.1 with that idea replaced by a 3-step \"story\" (Download → Open the app → Press play) plus an honest \"Waiting to hear back from your desktop app…\" status line. It has since dropped AR0227-v.1's separate \"Download the desktop app\" screen entirely, and — matching the final Figma hand-off (AR0227 — Aggressive track version) — also dropped the middle \"Open Hubstaff\" item, since it had no distinct signal to promote it to active on its own. The story is now just 2 items: Download the app → Press play to start the timer. This experiment is 2 screens total: the setup story (with download folded in), then \"Get familiar with Hubstaff.\"",
       target: ".setup-story",
       sub: ["Compare directly against AR0227-v.1 with stakeholders before deciding which direction to carry forward"],
     },
@@ -44,7 +44,7 @@ window.DESIGN_ANNOTATIONS_DATA = {
       kind: "required",
       title: "\"Simulate\" link stands in for the real desktop-app signal — no real signal exists yet",
       description:
-        "The 3-step list and \"Waiting to hear back…\" status are driven entirely by the \"Simulate: desktop app started tracking\" link, since this static prototype has no way to hear from a real desktop app. Clicking it marks \"Open Hubstaff\" and \"Press play\" complete and unlocks Continue. It's explicitly marked as a testing affordance (dashed border, \"Simulate:\" copy) and isn't part of the real design — and it always succeeds, so it can't reproduce a \"no project assigned\" or \"app never reports back\" failure case the way AR0227-v.1's build attempted to.",
+        "The 2-step list and \"Waiting to hear back…\" status are driven entirely by the \"Simulate: desktop app started tracking\" link, since this static prototype has no way to hear from a real desktop app. Clicking it marks \"Download the app\" and \"Press play\" complete (even if the Download CTA was never explicitly clicked) and unlocks Continue. It's explicitly marked as a testing affordance (dashed border, \"Simulate:\" copy) and isn't part of the real design — and it always succeeds, so it can't reproduce a \"no project assigned\" or \"app never reports back\" failure case the way AR0227-v.1's build attempted to.",
       target: "#simulate-tracking",
       priority: "high",
       sub: [
@@ -80,11 +80,11 @@ window.DESIGN_ANNOTATIONS_DATA = {
       id: "progress-bar-value-inferred",
       page: "onboarding",
       kind: "suggestion",
-      title: "Progress bar now fills per-step — Figma showed the same fixed amount on every screen",
+      title: "Progress bar fills per-step — confirmed against the final Figma hand-off",
       description:
-        "The final hand-off (a 5-screen, 3-step version of this flow) used a single continuous bar (Zone DS \"ProgressBars\" component) that rendered at the same fixed ~25% fill on every screen, suggesting it may represent progress through a larger onboarding checklist outside this experiment, not progress through these screens specifically. This build instead scales the fill by currentStep/2 so it visibly advances across this now-2-step flow, since a bar that never moves would look broken in an isolated prototype — but that per-step scaling is this build's inference, not something the hand-off actually shows.",
+        "This build scales the fill by currentStep/2 (50% on the setup-story screen, 100% on \"Get familiar\"). The final Figma hand-off (AR0227 — Aggressive track version, node 23:1611) shows the same: its 5 screens go from a half-filled bar through the setup-story states to a fully-filled bar on \"Get familiar,\" confirming this per-step scaling matches the intended design rather than being an unconfirmed inference.",
       target: "#progress-fill",
-      sub: ["Confirm with design whether this bar should track progress through this experiment specifically, or reflect something broader that this prototype can't represent in isolation"],
+      sub: ["No action needed — resolved by the final hand-off"],
     },
     {
       id: "step2-video-descoped",

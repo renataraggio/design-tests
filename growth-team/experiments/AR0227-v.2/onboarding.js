@@ -123,13 +123,12 @@
   // Nothing here is a real control — a web page can't start, stop, or even
   // observe the real desktop app's timer, so there's no fake app window or
   // fake clickable timer. Instead this tells the story of what we expect
-  // (download → open the app → press play) and honestly shows that this
-  // page is just listening for a signal, not hosting the action itself.
-  // The "Simulate" link stands in for that real signal, for demo purposes.
+  // (download → press play) and honestly shows that this page is just
+  // listening for a signal, not hosting the action itself. The "Simulate"
+  // link stands in for that real signal, for demo purposes.
 
   var setupStepDownload = document.getElementById("setup-step-download");
   var setupStepDownloadCta = document.getElementById("setup-step-download-cta");
-  var setupStepOpen = document.getElementById("setup-step-open");
   var setupStepPlay = document.getElementById("setup-step-play");
   var signalStatus = document.getElementById("signal-status");
   var signalStatusText = document.getElementById("signal-status-text");
@@ -149,7 +148,7 @@
     icon.appendChild(span);
   }
 
-  // Keeps the 3-step story honest about what actually happened — nothing
+  // Keeps the 2-step story honest about what actually happened — nothing
   // downloads the app until the CTA here is clicked.
   function syncSetupStory() {
     if (appDownloaded) {
@@ -162,16 +161,12 @@
       setupStepDownloadCta.hidden = false;
     }
 
-    // Only one step is ever the active/highlighted one — "Open Hubstaff"
-    // while we wait on the download, then "Press play" stays dimmed until
-    // tracking is actually confirmed (there's no distinct "app opened"
-    // signal to promote it to active on its own).
+    // "Press play" becomes the active step once the app is downloaded —
+    // it has no in-page action of its own (it happens in the real desktop
+    // app), but it should still read as "this is what we're waiting on now".
     if (!trackingConfirmed) {
-      setupStepOpen.classList.remove("is-current", "is-pending");
-      setupStepOpen.classList.add(appDownloaded ? "is-current" : "is-pending");
-
       setupStepPlay.classList.remove("is-current", "is-pending");
-      setupStepPlay.classList.add("is-pending");
+      setupStepPlay.classList.add(appDownloaded ? "is-current" : "is-pending");
     }
   }
 
@@ -189,8 +184,10 @@
   function reportTrackingStarted() {
     if (trackingConfirmed) return;
     trackingConfirmed = true;
+    appDownloaded = true;
 
-    markStepComplete(setupStepOpen, "check");
+    markStepComplete(setupStepDownload, "check");
+    setupStepDownloadCta.hidden = true;
     markStepComplete(setupStepPlay, "check");
 
     signalStatus.classList.add("is-confirmed");
