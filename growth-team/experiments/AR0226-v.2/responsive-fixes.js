@@ -10,8 +10,15 @@
  * clicking pills/tabs/menus can reset inline styles on the nodes it re-renders).
  */
 (function () {
-  var SIDEBAR_BREAKPOINT = 900;
-  var DAY_COLUMN_BREAKPOINT = 720;
+  // Breakpoints reverse-engineered from the 4 breakpoint mockups in the final
+  // Figma file (1920/1280/768/480 frames, node 10780:9030): the sidebar stays
+  // fully expanded at 768px and only collapses by 480px, while the metric-card
+  // and day-column grids step down between the 1920/1280 frames and again
+  // between the 1280/768 frames.
+  var SIDEBAR_BREAKPOINT = 700;
+  var WIDE_BREAKPOINT = 1600; // >= this: metric cards 4-col, day columns 7-col
+  var NARROW_BREAKPOINT = 900; // < this: metric cards 1-col, day columns 2-col
+  // (between NARROW and WIDE: metric cards 2-col, day columns 4-col)
   var PINS_ROW_BREAKPOINT = 640;
 
   // Bug fix, not width-gated: the profile header row (avatar + name/status +
@@ -46,11 +53,10 @@
     });
   }
 
-  // Remembers each element's ORIGINAL inline width/flex (captured the first time
-  // we touch it) so restoring the "wide" state puts back the app's real value
+  // Remembers each element's ORIGINAL inline width (captured the first time we
+  // touch it) so restoring the "wide" state puts back the app's real value
   // instead of an empty property that the app itself won't necessarily refill.
   var originalWidth = new WeakMap();
-  var originalFlex = new WeakMap();
 
   // Sidebar — auto-collapse to an icon-only rail below tablet width so the fixed
   // 240px column stops forcing the whole page into horizontal scroll.
@@ -140,21 +146,23 @@
     });
   }
 
-  // Time & activity day columns — per spec, below 720px columns should stop
-  // shrinking at 88px and let the row's existing overflow-x: auto scroll instead
-  // of squeezing 7 columns unreadably thin.
-  function fixDayColumns(narrow) {
-    document.querySelectorAll(".hs-days > div").forEach(function (col) {
-      if (!originalFlex.has(col)) {
-        originalFlex.set(col, col.style.flex || "1 1 0%");
-      }
-      if (narrow) {
-        col.style.setProperty("flex", "0 0 88px", "important");
-        col.style.setProperty("min-width", "88px", "important");
-      } else {
-        col.style.setProperty("flex", originalFlex.get(col), "important");
-        col.style.removeProperty("min-width");
-      }
+  // Time & activity day columns — the final mockup wraps this into a 7/4/2-col
+  // grid across the three width tiers rather than scrolling horizontally.
+  function fixDayGrid() {
+    var w = window.innerWidth;
+    var cols = w >= WIDE_BREAKPOINT ? 7 : w >= NARROW_BREAKPOINT ? 4 : 2;
+    document.querySelectorAll(".hs-days").forEach(function (grid) {
+      grid.style.setProperty("grid-template-columns", "repeat(" + cols + ", 1fr)", "important");
+    });
+  }
+
+  // Metric cards (Total work time / Avg. activity / Idle time / Manual time) —
+  // same 4/2/1-col stepping as the day-columns grid, per the same mockups.
+  function fixMetricGrid() {
+    var w = window.innerWidth;
+    var cols = w >= WIDE_BREAKPOINT ? 4 : w >= NARROW_BREAKPOINT ? 2 : 1;
+    document.querySelectorAll(".hs-metrics").forEach(function (grid) {
+      grid.style.setProperty("grid-template-columns", "repeat(" + cols + ", 1fr)", "important");
     });
   }
 
@@ -167,7 +175,8 @@
     fixProfileRow();
     fixTabsRow();
     fixSidebar(w <= SIDEBAR_BREAKPOINT);
-    fixDayColumns(w <= DAY_COLUMN_BREAKPOINT);
+    fixDayGrid();
+    fixMetricGrid();
     fixPinsRow(w <= PINS_ROW_BREAKPOINT);
     observer.observe(document.documentElement, {
       childList: true,
