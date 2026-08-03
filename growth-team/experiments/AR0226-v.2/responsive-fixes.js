@@ -150,7 +150,7 @@
   // grid across the three width tiers rather than scrolling horizontally.
   function fixDayGrid() {
     var w = window.innerWidth;
-    var cols = w >= WIDE_BREAKPOINT ? 7 : w >= NARROW_BREAKPOINT ? 4 : 2;
+    var cols = w >= WIDE_BREAKPOINT ? 8 : w >= NARROW_BREAKPOINT ? 4 : 2;
     document.querySelectorAll(".hs-days").forEach(function (grid) {
       grid.style.setProperty("grid-template-columns", "repeat(" + cols + ", 1fr)", "important");
     });
