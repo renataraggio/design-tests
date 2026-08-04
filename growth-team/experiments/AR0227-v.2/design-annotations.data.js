@@ -20,12 +20,12 @@ window.DESIGN_ANNOTATIONS_DATA = {
       kind: "required",
       title: "\"Download the app\" always starts unconfirmed — this is the only download entry point now",
       description:
-        "With the old download screen gone, this experiment now starts directly on the 2-step story with nothing downloaded yet. \"Download the app\" shows a download icon, a blue-outline highlight, and an inline \"Download\" button (confirmDownload()) — clicking it just flips local state; it doesn't detect OS, trigger a real download, or confirm the app was actually installed. \"Press play\" stays dimmed until download completes, then picks up that same blue-outline active highlight while it waits on tracking. Matches the final Figma hand-off (AR0227 — Aggressive track version), which also dropped the pulsing/wave animations this build originally had in favor of static highlight states.",
+        "With the old download screen gone, this experiment now starts directly on the 2-step story with nothing downloaded yet. \"Download the app\" shows a download icon, a blue-outline highlight, and two CTAs — \"Download\" and \"I already did this\" (confirmDownload()) — clicking either just flips local state; neither detects OS, triggers a real download, nor confirms the app was actually installed. \"Press play\" stays dimmed until download completes, then its icon picks up that same blue-outline highlight while it waits on tracking — its label stays dimmed until it actually completes, matching the final Figma hand-off (AR0227 — Aggressive track version, node 23:1611), which also dropped the pulsing/wave animations this build originally had in favor of static highlight states (the pulse was later restored on this build per direct product feedback).",
       target: "#setup-step-download-cta",
       priority: "high",
       sub: [
-        "Wire to real OS detection + the actual desktop app installer link",
-        "Consider gating progress on a real \"app installed\" signal instead of the click alone",
+        "Wire \"Download\" to real OS detection + the actual desktop app installer link",
+        "Consider gating progress on a real \"app installed\" signal instead of either click alone",
       ],
     },
     {
@@ -42,39 +42,30 @@ window.DESIGN_ANNOTATIONS_DATA = {
       id: "step2-signal-simulated",
       page: "onboarding",
       kind: "required",
-      title: "\"Simulate\" link stands in for the real desktop-app signal — no real signal exists yet",
+      title: "Two \"Simulate\" links stand in for the real desktop-app signal — no real signal exists yet",
       description:
-        "The 2-step list and \"Waiting to hear back…\" status are driven entirely by the \"Simulate: desktop app started tracking\" link, since this static prototype has no way to hear from a real desktop app. Clicking it marks \"Download the app\" and \"Press play\" complete (even if the Download CTA was never explicitly clicked) and unlocks Continue. It's explicitly marked as a testing affordance (dashed border, \"Simulate:\" copy) and isn't part of the real design — and it always succeeds, so it can't reproduce a \"no project assigned\" or \"app never reports back\" failure case the way AR0227-v.1's build attempted to.",
+        "The 2-step list and \"Waiting to hear back…\" status are driven entirely by two testing affordances (dashed border, \"Simulate:\" copy), since this static prototype has no way to hear from a real desktop app. \"Simulate: desktop app started tracking\" marks \"Download the app\" and \"Press play\" complete (even if the Download CTA was never explicitly clicked), fades out the top reminder alert and \"Need help\" link, and unlocks Continue. \"Simulate: no project detected\" — added per the final Figma hand-off (AR0227 — Aggressive track version, node 23:1611) — marks only \"Download the app\" complete, shows an amber \"No project detected for time tracking. An email was sent to your manager.\" notice, and also unlocks Continue without ever confirming tracking, resolving this build's earlier open question about how to represent that failure case.",
       target: "#simulate-tracking",
       priority: "high",
       sub: [
-        "Replace with a real signal: desktop-app heartbeat / tracking-session-started event tied to that specific user",
-        "Decide how (or whether) to represent a \"no project assigned\" failure case in this new illustration style before this ships",
-        "Remove the \"Simulate\" link once a real signal exists",
+        "Replace both with a real signal: desktop-app heartbeat / tracking-session-started event (with or without a project) tied to that specific user",
+        "Confirm the real \"no project detected\" notice should actually unlock Continue, or whether it should block until a project is assigned",
+        "Wire the email-to-manager mentioned in the no-project copy to a real notification",
+        "Remove both \"Simulate\" links once real signals exist",
       ],
     },
     {
-      id: "help-modal-bypass-vs-skip",
+      id: "help-modal-bypass-behavior",
       page: "onboarding",
       kind: "suggestion",
-      title: "Modal's \"Continue without tracking time\" is distinct from the footer's Skip — inferred",
+      title: "Modal's \"Continue without tracking time\" bypasses this step only — inferred",
       description:
-        "The final hand-off replaced the modal's old \"Skip\" + \"Request project\" footer buttons with a single \"Continue without tracking time\" button, and moved \"Reach out to our support team\" into the modal body. This build interprets the new button as unlocking Continue for this step only (bypassing the tracking gate without exiting onboarding) — separate from the page footer's \"Skip\" (which exits the whole flow via the onboarding:skip event). That distinction was inferred from the wording, not explicitly confirmed. The \"Request a project\" button on the main view (not just in the modal) simply opens this same help modal — there's still no real project-request flow behind it.",
+        "The final hand-off replaced the modal's old \"Skip\" + \"Request project\" footer buttons with a single \"Continue without tracking time\" button, and moved \"Reach out to our support team\" into the modal body. This build interprets the new button as unlocking Continue for this step only (bypassing the tracking gate without exiting onboarding) — that was inferred from the wording, not explicitly confirmed. The page footer's own Skip button has since been removed entirely (there's no other exit from onboarding left in this build). The main view's standalone \"Request a project\" button has also been removed to match the final hand-off — none of its 5 screens show it; the \"no project detected\" case is instead handled automatically (see \"step2-signal-simulated\").",
       target: "#help-modal-bypass",
       sub: [
         "Confirm \"Continue without tracking time\" should only bypass this step's gate, not skip the whole experiment",
-        "Wire \"Request a project\" to a real org/manager lookup or in-app request flow instead of just opening the help modal",
+        "Decide whether onboarding needs its own exit/skip path now that the footer button is gone",
       ],
-    },
-    {
-      id: "skip-exits-onboarding",
-      page: "onboarding",
-      kind: "suggestion",
-      title: "\"Skip\" now always exits the whole flow",
-      description:
-        "Earlier rounds of this experiment went back and forth on whether Skip should exist at all, then gave Step 1 its own \"just advance, don't exit\" behavior since it was possible to reach Step 2 without downloading. Now that the download screen is gone and downloading is folded into this step's own story (with its own \"Download\" CTA), there's no separate screen left to \"just advance\" past — Skip is shown on this step and hidden on the final \"Get familiar\" screen, and always dispatches the full onboarding:skip exit.",
-      target: "#btn-skip",
-      sub: ["No action needed unless product wants a softer Skip behavior on this step"],
     },
     {
       id: "progress-bar-value-inferred",
@@ -100,12 +91,12 @@ window.DESIGN_ANNOTATIONS_DATA = {
       id: "footer-navigation-local-only",
       page: "onboarding",
       kind: "required",
-      title: "Back / Continue / Skip only manage local step state",
+      title: "Back / Continue only manage local step state",
       description:
-        "Navigation currently just moves an in-memory currentStep counter and dispatches onboarding:complete (Finish) or onboarding:skip (Skip) events. No real routing, progress persistence, or analytics tracking is wired up yet.",
+        "Navigation currently just moves an in-memory currentStep counter and dispatches onboarding:complete on Finish. No real routing, progress persistence, or analytics tracking is wired up yet.",
       target: ".onboarding-footer__actions",
       sub: [
-        "Wire onboarding:complete / onboarding:skip to real app routing",
+        "Wire onboarding:complete to real app routing",
         "Add analytics events per step transition before this ships",
       ],
     },

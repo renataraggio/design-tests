@@ -297,6 +297,7 @@ button {
   background: #eaf6ff;
   border: 1px solid var(--primary-700);
   border-radius: 8px;
+  transition: opacity var(--transition);
 }
 
 .onboarding-alert__icon {
@@ -326,29 +327,20 @@ button {
   color: var(--primary-700);
   font-size: 14px;
   text-decoration: underline;
+  transition: opacity var(--transition);
 }
 
 .help-link:hover {
   color: var(--primary-800);
 }
 
-.request-project-btn {
-  align-self: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 6px 12px;
-  background: var(--white);
-  border: 1px solid var(--gray-300);
-  border-radius: 6px;
-  color: var(--gray-600);
-  font-size: 14px;
-  line-height: 20px;
-  transition: background var(--transition-fast);
-}
-
-.request-project-btn:hover {
-  background: var(--gray-100);
+/* Fades out once tracking is confirmed — the reminder and escape hatch are
+   no longer relevant, but keeping them at ~0 opacity (rather than removing
+   them) preserves layout so the card above doesn't jump. */
+.onboarding-alert--top.is-faded,
+.help-link.is-faded {
+  opacity: 0.01;
+  pointer-events: none;
 }
 
 .help-modal-overlay {
@@ -511,7 +503,7 @@ button {
   align-items: center;
   gap: 24px;
   width: 100%;
-  max-width: 420px;
+  max-width: 500px;
   padding: 32px 24px;
   background: var(--white);
   border: 1px solid #d6dbe6;
@@ -573,8 +565,10 @@ button {
 }
 
 .setup-step__label {
+  flex-shrink: 0;
   font-size: 15px;
   color: var(--gray-700);
+  white-space: nowrap;
 }
 
 /* Completed step — solid primary badge with a checkmark */
@@ -600,6 +594,19 @@ button {
 .setup-step.is-current .setup-step__label {
   color: var(--gray-900);
   font-weight: 500;
+}
+
+/* Next step — up next once the step before it completes, but not itself
+   actionable from this page (e.g. "Press play" happens in the real desktop
+   app). Gets the same active ring on its icon as is-current, but the label
+   stays dimmed like is-pending until this step actually completes. */
+.setup-step.is-next .setup-step__icon {
+  opacity: 1;
+  border-color: var(--primary-500);
+}
+
+.setup-step.is-next .setup-step__label {
+  opacity: 0.5;
 }
 
 .setup-step__pulse {
@@ -631,23 +638,47 @@ button {
   display: none;
 }
 
-/* Inline CTA shown next to a step that needs the user to act from here
-   (e.g. "Download" if Step 1 was skipped without confirming the download) */
-.setup-step__cta {
+/* Inline CTAs shown next to the step that needs the user to act from here.
+   "Download" is the primary path; "I already did this" is a secondary path
+   for users who installed the app before reaching this screen — it reaches
+   the same confirmed state, since this page can't detect a real install
+   either way. */
+.setup-step__actions {
   margin-left: auto;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.setup-step__cta {
+  flex-shrink: 0;
   padding: 6px 14px;
-  background: var(--primary-700);
   border: none;
   border-radius: 6px;
-  color: var(--white);
   font-size: 13px;
   font-weight: 500;
+  white-space: nowrap;
   transition: background var(--transition-fast);
 }
 
-.setup-step__cta:hover {
-  background: var(--primary-800);
+.setup-step__cta--solid {
+  background: var(--primary-500);
+  color: var(--white);
+}
+
+.setup-step__cta--solid:hover {
+  background: var(--primary-600);
+}
+
+.setup-step__cta--outline {
+  background: var(--white);
+  border: 1px solid var(--gray-300);
+  color: var(--gray-600);
+}
+
+.setup-step__cta--outline:hover {
+  background: var(--gray-100);
 }
 
 /* Honest status line: this page is only listening, not controlling anything */
@@ -691,6 +722,34 @@ button {
 .signal-status.is-bypassed {
   background: var(--gray-100);
   color: var(--gray-600);
+}
+
+/* Shown when the desktop app reports tracking with no project assigned —
+   an automated notice (the org's manager already got an email), not
+   something the user needs to act on directly. Unlocks Continue like a
+   bypass, since this page can't get a real "waiting" signal to resolve. */
+.no-project-alert {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  width: 100%;
+  max-width: 500px;
+  background: #fdfdea;
+  border: 1px solid #9f580a;
+  border-radius: 8px;
+  color: #723b13;
+}
+
+.no-project-alert .material-symbols-rounded {
+  font-size: 18px;
+  color: #723b13;
+}
+
+.no-project-alert p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
 }
 
 /* Prototype-only stand-in for the real desktop app reporting that tracking
@@ -747,21 +806,6 @@ button {
    instead of relying on a two-item split. */
 #btn-back {
   margin-right: auto;
-}
-
-.footer-skip {
-  display: flex;
-  align-items: center;
-  background: none;
-  border: none;
-  padding: 4px 8px;
-  color: var(--primary-700);
-  font-size: 14px;
-}
-
-.footer-skip:hover {
-  color: var(--primary-800);
-  text-decoration: underline;
 }
 
 .onboarding-btn {

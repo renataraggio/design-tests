@@ -53,7 +53,7 @@
 
         <!-- Step 1: Install the desktop app and track time to a project -->
         <div class="step-panel" id="step-panel-1" data-step="1">
-          <div class="onboarding-alert onboarding-alert--top">
+          <div class="onboarding-alert onboarding-alert--top" id="step2-alert">
             <span class="material-symbols-rounded onboarding-alert__icon" aria-hidden="true">info</span>
             <p class="onboarding-alert__text" id="step2-alert-text">We’ll let you know the moment we can see you tracking time.</p>
           </div>
@@ -69,7 +69,10 @@
                   <span class="material-symbols-rounded" id="setup-step-download-icon">check</span>
                 </span>
                 <span class="setup-step__label">Download the app</span>
-                <button type="button" class="setup-step__cta" id="setup-step-download-cta" hidden>Download</button>
+                <span class="setup-step__actions" id="setup-step-download-actions" hidden>
+                  <button type="button" class="setup-step__cta setup-step__cta--outline" id="setup-step-already-did-cta">I already did this</button>
+                  <button type="button" class="setup-step__cta setup-step__cta--solid" id="setup-step-download-cta">Download</button>
+                </span>
               </li>
               <li class="setup-step is-pending" id="setup-step-play">
                 <span class="setup-step__icon" aria-hidden="true">
@@ -87,16 +90,25 @@
             </p>
           </div>
 
-          <button type="button" class="request-project-btn" id="btn-request-project">Request a project</button>
+          <div class="no-project-alert" id="no-project-alert" hidden>
+            <span class="material-symbols-rounded" aria-hidden="true">info</span>
+            <p>No project detected for time tracking. An email was sent to your manager.</p>
+          </div>
 
           <button type="button" class="help-link" id="help-link">Need help, can’t track, or doesn’t apply?</button>
 
-          <!-- Prototype-only: stands in for the real desktop app reporting
-               that tracking started, since this page can't observe the real
-               app. Not part of the actual product design. -->
+          <!-- Prototype-only: stand in for the real desktop app reporting
+               that tracking started (or that it started with no project
+               assigned), since this page can't observe the real app. Not
+               part of the actual product design. -->
           <button type="button" class="simulate-link" id="simulate-tracking">
             <span class="material-symbols-rounded" aria-hidden="true">science</span>
             Simulate: desktop app started tracking
+          </button>
+
+          <button type="button" class="simulate-link" id="simulate-no-project">
+            <span class="material-symbols-rounded" aria-hidden="true">science</span>
+            Simulate: no project detected
           </button>
 
           <div class="help-modal-overlay" id="help-modal-overlay" hidden>
@@ -151,7 +163,6 @@
       <button type="button" class="onboarding-btn" id="btn-back" disabled hidden>Back</button>
 
       <div class="onboarding-footer__actions">
-        <button type="button" class="footer-skip" id="btn-skip" hidden>Skip</button>
         <span class="continue-wrap" id="continue-wrap">
           <span class="onboarding-tooltip" id="continue-tooltip" hidden>Wait for the desktop app to confirm tracking</span>
           <button type="button" class="onboarding-btn onboarding-btn--primary" id="btn-continue" disabled>

@@ -7,12 +7,12 @@
   var appDownloaded = false; // gated by the "Download" CTA in the setup story
   var trackingConfirmed = false; // gated by the desktop app reporting tracking started
   var trackingBypassed = false; // gated by "Continue without tracking time" in the help modal
+  var noProjectDetected = false; // gated by the desktop app reporting tracking with no project assigned
 
   var sidebar = document.getElementById("sidebar-toggle");
   var segmentsRoot = document.getElementById("segments");
   var progressFill = document.getElementById("progress-fill");
   var btnBack = document.getElementById("btn-back");
-  var btnSkip = document.getElementById("btn-skip");
   var btnContinue = document.getElementById("btn-continue");
   var continueTooltip = document.getElementById("continue-tooltip");
   var step2AlertText = document.getElementById("step2-alert-text");
@@ -39,7 +39,7 @@
   };
 
   function isContinueUnlocked() {
-    if (currentStep === 1) return trackingConfirmed || trackingBypassed;
+    if (currentStep === 1) return trackingConfirmed || trackingBypassed || noProjectDetected;
     return true;
   }
 
@@ -74,9 +74,6 @@
     // Back button hidden only on step 1 (nothing to go back to)
     btnBack.hidden = currentStep === 1;
     btnBack.disabled = currentStep === 1;
-
-    // Skip is available on step 1, hidden on the final step
-    btnSkip.hidden = currentStep === TOTAL_STEPS;
 
     // Continue/Finish button state
     setContinueButtonContent();
@@ -115,10 +112,6 @@
     }
   });
 
-  btnSkip.addEventListener("click", function () {
-    window.dispatchEvent(new CustomEvent("onboarding:skip"));
-  });
-
   // ── Setup story + signal status ────────────────────────────────────────────
   // Nothing here is a real control — a web page can't start, stop, or even
   // observe the real desktop app's timer, so there's no fake app window or
@@ -128,16 +121,20 @@
   // link stands in for that real signal, for demo purposes.
 
   var setupStepDownload = document.getElementById("setup-step-download");
+  var setupStepDownloadActions = document.getElementById("setup-step-download-actions");
   var setupStepDownloadCta = document.getElementById("setup-step-download-cta");
+  var setupStepAlreadyDidCta = document.getElementById("setup-step-already-did-cta");
   var setupStepPlay = document.getElementById("setup-step-play");
   var signalStatus = document.getElementById("signal-status");
   var signalStatusText = document.getElementById("signal-status-text");
   var signalStatusCheck = document.getElementById("signal-status-check");
-  var btnRequestProject = document.getElementById("btn-request-project");
+  var step2Alert = document.getElementById("step2-alert");
+  var noProjectAlert = document.getElementById("no-project-alert");
   var simulateTracking = document.getElementById("simulate-tracking");
+  var simulateNoProject = document.getElementById("simulate-no-project");
 
   function markStepComplete(stepEl, glyph) {
-    stepEl.classList.remove("is-current", "is-pending");
+    stepEl.classList.remove("is-current", "is-next", "is-pending");
     stepEl.classList.add("is-complete");
     var icon = stepEl.querySelector(".setup-step__icon");
     icon.innerHTML = "";
@@ -149,24 +146,25 @@
   }
 
   // Keeps the 2-step story honest about what actually happened — nothing
-  // downloads the app until the CTA here is clicked.
+  // downloads the app until one of the CTAs here is clicked.
   function syncSetupStory() {
     if (appDownloaded) {
       markStepComplete(setupStepDownload, "check");
-      setupStepDownloadCta.hidden = true;
+      setupStepDownloadActions.hidden = true;
     } else {
       setupStepDownload.classList.remove("is-complete", "is-pending");
       setupStepDownload.classList.add("is-current");
       document.getElementById("setup-step-download-icon").textContent = "download";
-      setupStepDownloadCta.hidden = false;
+      setupStepDownloadActions.hidden = false;
     }
 
-    // "Press play" becomes the active step once the app is downloaded —
-    // it has no in-page action of its own (it happens in the real desktop
-    // app), but it should still read as "this is what we're waiting on now".
+    // "Press play" picks up the same active ring on its icon once the app is
+    // downloaded — it has no in-page action of its own (it happens in the
+    // real desktop app) so its label stays dimmed until it actually
+    // completes, unlike Download's label which is live from the start.
     if (!trackingConfirmed) {
-      setupStepPlay.classList.remove("is-current", "is-pending");
-      setupStepPlay.classList.add(appDownloaded ? "is-current" : "is-pending");
+      setupStepPlay.classList.remove("is-next", "is-pending");
+      setupStepPlay.classList.add(appDownloaded ? "is-next" : "is-pending");
     }
   }
 
@@ -177,6 +175,7 @@
   }
 
   setupStepDownloadCta.addEventListener("click", confirmDownload);
+  setupStepAlreadyDidCta.addEventListener("click", confirmDownload);
 
   // Represents the desktop app reporting that tracking started. There's no
   // "undo" from here — this page never had a way to stop the real app's
@@ -187,15 +186,17 @@
     appDownloaded = true;
 
     markStepComplete(setupStepDownload, "check");
-    setupStepDownloadCta.hidden = true;
+    setupStepDownloadActions.hidden = true;
     markStepComplete(setupStepPlay, "check");
 
     signalStatus.classList.add("is-confirmed");
     signalStatusCheck.hidden = false;
     signalStatusText.textContent = "Got it — we can see you’re tracking time.";
 
-    btnRequestProject.hidden = true;
+    step2Alert.classList.add("is-faded");
+    helpLink.classList.add("is-faded");
     simulateTracking.hidden = true;
+    simulateNoProject.hidden = true;
 
     if (currentStep === 1) {
       btnContinue.disabled = false;
@@ -204,6 +205,28 @@
   }
 
   simulateTracking.addEventListener("click", reportTrackingStarted);
+
+  // Represents the desktop app reporting tracking with no project assigned —
+  // an automated notice, not something the user resolves from this page
+  // (the org's manager already got an email). Unlocks Continue like a
+  // bypass, since there's no real "waiting" signal left to resolve here.
+  function reportNoProjectDetected() {
+    if (noProjectDetected) return;
+    noProjectDetected = true;
+    appDownloaded = true;
+    syncSetupStory();
+
+    noProjectAlert.hidden = false;
+    simulateTracking.hidden = true;
+    simulateNoProject.hidden = true;
+
+    if (currentStep === 1) {
+      btnContinue.disabled = false;
+      continueTooltip.hidden = true;
+    }
+  }
+
+  simulateNoProject.addEventListener("click", reportNoProjectDetected);
 
   // ── "Need help" modal ──────────────────────────────────────────────────────
 
@@ -221,13 +244,13 @@
   }
 
   // "Continue without tracking time" unlocks Continue for this step without
-  // actually starting the timer — distinct from the footer's Skip, which
-  // exits the whole onboarding flow.
+  // actually starting the timer.
   function bypassTracking() {
     trackingBypassed = true;
     signalStatus.classList.add("is-bypassed");
     signalStatusText.textContent = "Continuing without tracking time for now.";
     simulateTracking.hidden = true;
+    simulateNoProject.hidden = true;
     if (currentStep === 1) {
       btnContinue.disabled = false;
       continueTooltip.hidden = true;
@@ -238,7 +261,6 @@
   helpLink.addEventListener("click", openHelpModal);
   helpModalClose.addEventListener("click", closeHelpModal);
   helpModalBypass.addEventListener("click", bypassTracking);
-  btnRequestProject.addEventListener("click", openHelpModal);
 
   helpModalOverlay.addEventListener("click", function (event) {
     if (event.target === helpModalOverlay) closeHelpModal();
