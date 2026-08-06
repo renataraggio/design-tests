@@ -39,7 +39,7 @@ dialog already works.
 | **Alert** (small, node 20634:8254) | Smart Notifications page, persistent | This is a *settings* page — the user is already in a configuring mindset. A quiet cross-sell back to real Unusual Activity data fits better than a full pitch. |
 | **Banner** (node 20635:8314) | Unusual Activity page, persistent while disconnected | This is where the real evidence (the flagged-members table) already lives — the ask sits directly next to the proof, mirroring the "show real detected value, then ask" pattern that's already worked for this feature via email (HUB-14281: +293% Insights trial starts, +368% first charges, sending a one-time email with *real* detected unusual activity to non-subscribers). |
 | **Modal** (node 20635:8548, "New unusual activity detected") | Unusual Activity page, auto-opens once per browser | The higher-intensity "moment of detection" surface — fires once, respects "Don't show again" (permanent, `localStorage`), never stacks with the banner (closing it just reveals the banner underneath, it doesn't add a second nag). |
-| **Pop-up** (node 20635:8700, "Get alerts pushed to Slack") | Shared fork, both pages | The decision point once someone starts a *create* action pre-connect: "Create alert" (skip Slack, plain rule) vs. "Connect Slack" (the growth path). Once Slack is already connected, this fork is skipped entirely — every CTA goes straight to the prefilled, Slack-checked form. |
+| **Pop-up** (node 20635:8700, "Get alerts pushed to Slack") | Shared fork, both pages | The decision point once someone starts a *create* action pre-connect: "Create notification" (skip Slack, plain rule) vs. "Connect Slack" (the growth path). Once Slack is already connected, this fork is skipped entirely — every CTA goes straight to the prefilled, Slack-checked form. |
 
 ## Flow logic
 
@@ -52,7 +52,7 @@ reverse. That gives three real states, not two:
 | State | `orgConnected` | `usedHere` | CTA copy | Connect-flow behavior |
 |---|---|---|---|---|
 | Never connected Slack | ✗ | ✗ | "Connect Slack" | Full 2-step flow: Allow → choose channel |
-| Connected, but not for this feature | ✓ | ✗ | "Turn on Slack alerts" / "Use Slack" | Skips "Allow" entirely — jumps straight to choose-channel, with copy acknowledging Slack's already connected |
+| Connected, but not for this feature | ✓ | ✗ | "Turn on Slack notifications" / "Use Slack" | Skips "Allow" entirely — jumps straight to choose-channel, with copy acknowledging Slack's already connected |
 | Fully set up | ✓ | ✓ | *(no CTA — banner/alert replaced by a connected confirmation strip)* | N/A |
 
 This matters because re-running an OAuth "Allow" screen for an org that already
@@ -62,7 +62,7 @@ read as broken, not helpful — the real gate on the "Send to Slack" checkbox in
 should ask the same question the backend actually cares about, nothing more.
 
 ```
-Any "Connect Slack" / "Turn on Slack" CTA (banner / alert / modal footer)
+Any "Connect Slack" / "Turn on Slack notifications" CTA (banner / alert / modal footer)
   → embedded connect flow (kept in-page)
       if not orgConnected: step 1 "Allow Hubstaff to access Slack" → step 2
       if orgConnected already: opens directly on step 2, copy says so
@@ -74,7 +74,7 @@ Any "Connect Slack" / "Turn on Slack" CTA (banner / alert / modal footer)
 entry point
   → if usedHere: prefilled form opens directly, Slack pre-checked
   → otherwise: the pop-up fork opens first
-       "Create alert"        → plain form; Slack checkbox enabled if orgConnected,
+       "Create notification"        → plain form; Slack checkbox enabled if orgConnected,
                                  disabled otherwise, but never pre-checked
        "Connect Slack"/"Use Slack" → same embedded connect flow as above
 ```
