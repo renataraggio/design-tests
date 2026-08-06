@@ -94,7 +94,7 @@
           <p data-if="org-not-connected">Connect Slack to receive unusual activity alerts in real time instead of checking here.</p>
           <p data-if="connected-unused">You already have Slack connected — turn on real-time alerts for unusual activity instead of checking here.</p>
         </div>
-        <a href="#" class="btn btn-primary btn-sm" data-action="open-connect">
+        <a href="#" class="btn btn-primary btn-sm" data-action="handle-connect-cta">
           <span data-if="org-not-connected">Connect Slack</span>
           <span data-if="connected-unused">Turn on Slack notifications</span>
         </a>
@@ -218,7 +218,7 @@
     </div>
     <div class="modal-footer between">
       <a href="#" class="btn-text" data-action="dismiss-detect-permanent">Don't show again</a>
-      <a href="#" class="btn btn-primary" data-action="open-connect">
+      <a href="#" class="btn btn-primary" data-action="handle-connect-cta">
         <span data-if="org-not-connected">Connect Slack</span>
         <span data-if="connected-unused">Turn on Slack notifications</span>
       </a>
@@ -238,7 +238,7 @@
       <p>Instead of checking back here, have unusual activity alerts sent straight to Slack as they happen.</p>
       <div class="btn-row">
         <a href="#" class="btn btn-primary" data-action="open-create-form" data-arg="plain">Create notification</a>
-        <a href="#" class="btn btn-outline" data-action="open-connect">
+        <a href="#" class="btn btn-outline" data-action="handle-connect-cta">
           <svg width="16" height="16" viewBox="0 0 122.8 122.8" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
             <path d="M25.8 77.6c0 7.1-5.8 12.9-12.9 12.9S0 84.7 0 77.6s5.8-12.9 12.9-12.9h12.9v12.9z" fill="#e01e5a"/>
             <path d="M32.3 77.6c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9v32.3c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V77.6z" fill="#e01e5a"/>
@@ -279,9 +279,7 @@
       <button class="btn btn-primary" style="width:100%;" id="connect-authorize-btn" data-action="connect-step1-continue">Allow</button>
     </div>
     <div id="connect-step-2" class="modal-body modal-centered d-none" style="padding-top:0;">
-      <h4 data-if="org-not-connected">Where should alerts appear?</h4>
-      <h4 data-if="org-connected">Slack is already connected</h4>
-      <p data-if="org-connected" style="margin-bottom:1.6rem;">Choose where unusual activity alerts should go — this can be a different channel than your existing Slack notifications.</p>
+      <h4>Where should alerts appear?</h4>
       <div class="channel-field">
         <label>Slack channel</label>
         <span class="channel-chip"><span class="material-symbols-rounded" style="font-size:1.4rem;">tag</span>hubstaff-alerts</span>
@@ -337,7 +335,10 @@
           <div class="form-field"><label>&nbsp;</label><input type="text" value="00:30" /></div>
         </div>
       </div>
-      <p class="form-hint d-none" id="cf-ua-hint">Triggers whenever a monitored member is classified <strong>Unusual</strong> or higher.</p>
+      <div class="metric-info-box d-none" id="cf-ua-hint">
+        <span class="material-symbols-rounded">info</span>
+        <span>This notification will inform you of the total duration of unusual activity for each monitored member, based on the chosen frequency.</span>
+      </div>
 
       <div class="audience-toggle-row">
         <div class="toggle on"><div class="knob"></div></div>
@@ -357,7 +358,7 @@
         <span data-if="org-not-connected" style="margin-left:auto; color:var(--gray-400); font-size:1.2rem;">Connect Slack to enable this</span>
         <span data-if="org-connected" style="margin-left:auto; color:var(--primary-700); font-size:1.2rem; font-weight:500;">Will post to #hubstaff-alerts</span>
       </label>
-      <a href="#" class="btn-text" data-if="org-not-connected" style="font-size:1.3rem; margin-top:.4rem; display:inline-block;" data-action="open-connect">Connect Slack →</a>
+      <a href="#" class="btn-text" data-if="org-not-connected" style="font-size:1.3rem; margin-top:.4rem; display:inline-block;" data-action="handle-connect-cta">Connect Slack →</a>
     </div>
     <div class="modal-footer">
       <a href="#" class="btn btn-outline" data-action="close-modal" data-arg="create-form">Cancel</a>

@@ -262,6 +262,11 @@ button { font-family: inherit; }
   width: 100%; border: 1px solid var(--gray-300); border-radius: var(--radius); padding: .9rem 1.1rem; font-size: 1.4rem; color: var(--gray-800); background: #fff;
 }
 .form-hint { color: var(--gray-500); font-size: 1.25rem; margin: -.6rem 0 1.6rem; }
+.metric-info-box {
+  display: flex; gap: .8rem; background: var(--blue-50); color: var(--primary-700); border-radius: var(--radius);
+  padding: 1.2rem 1.4rem; font-size: 1.35rem; line-height: 1.45; margin: 0 0 1.6rem;
+}
+.metric-info-box .material-symbols-rounded { font-size: 1.7rem; flex-shrink: 0; }
 .form-divider { border: none; border-top: 1px solid var(--gray-200); margin: 2rem 0; }
 .form-section-title { font-size: 1.6rem; font-weight: 600; margin: 0 0 .4rem; color: var(--gray-900); }
 

@@ -95,17 +95,34 @@
     }
   }
 
+  // Only ever called pre-connect — the real product has one Slack channel for
+  // the whole integration (set once here), not a per-notification choice, so an
+  // already-connected org never re-enters this modal at all (see handleConnectCta).
   function openConnectFlow() {
-    var step1 = $("#connect-step-1"), step2 = $("#connect-step-2");
-    if (state.orgConnected) {
-      // Already authorized — never re-run "Allow", jump straight to channel choice.
-      if (step1) hide(step1);
-      if (step2) show(step2);
-    } else {
-      if (step1) show(step1);
-      if (step2) hide(step2);
-    }
+    show($("#connect-step-1"));
+    hide($("#connect-step-2"));
     openModal("connect");
+  }
+
+  // Single entry point for every "Connect Slack" / "Turn on Slack notifications"
+  // CTA. Branches on org-level status so an org that already authorized Slack
+  // (e.g. for its existing timer/task notifications) skips straight to turning
+  // this feature on — no re-auth, no channel prompt, matching how the real
+  // "Send to Slack" checkbox behaves once Slack is already connected.
+  function handleConnectCta() {
+    if (state.orgConnected) {
+      turnOnSlackHere();
+    } else {
+      openConnectFlow();
+    }
+  }
+
+  function turnOnSlackHere() {
+    state.usedHere = true;
+    persist();
+    render();
+    showToast("Slack notifications turned on — sent to " + DEFAULT_CHANNEL + ".");
+    setTimeout(function () { openCreateForm(true); }, 450);
   }
 
   function connectStep1Continue() {
@@ -124,7 +141,7 @@
     persist();
     render();
     closeModal("connect");
-    showToast("Slack alerts are on — sent to " + DEFAULT_CHANNEL + ".");
+    showToast("Slack notifications turned on — sent to " + DEFAULT_CHANNEL + ".");
     setTimeout(function () { openCreateForm(true); }, 450);
   }
 
@@ -191,7 +208,7 @@
         var arg = el.getAttribute("data-arg");
         switch (action) {
           case "growth-entry": openGrowthEntry(); break;
-          case "open-connect": openConnectFlow(); break;
+          case "handle-connect-cta": handleConnectCta(); break;
           case "connect-step1-continue": connectStep1Continue(); break;
           case "connect-step2-finish": connectStep2Finish(); break;
           case "open-create-form": openCreateForm(arg === "slack"); break;

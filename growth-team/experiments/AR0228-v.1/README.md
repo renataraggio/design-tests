@@ -49,46 +49,78 @@ this for its existing timer/task notifications) and `usedHere` (this feature has
 an active Slack-delivered alert). `usedHere` implies `orgConnected`, never the
 reverse. That gives three real states, not two:
 
-| State | `orgConnected` | `usedHere` | CTA copy | Connect-flow behavior |
+| State | `orgConnected` | `usedHere` | CTA copy | What happens on click |
 |---|---|---|---|---|
-| Never connected Slack | ✗ | ✗ | "Connect Slack" | Full 2-step flow: Allow → choose channel |
-| Connected, but not for this feature | ✓ | ✗ | "Turn on Slack notifications" / "Use Slack" | Skips "Allow" entirely — jumps straight to choose-channel, with copy acknowledging Slack's already connected |
+| Never connected Slack | ✗ | ✗ | "Connect Slack" | Full 2-step flow: Allow → choose channel → prefilled form |
+| Connected, but not for this feature | ✓ | ✗ | "Turn on Slack notifications" / "Use Slack" | No modal at all — flips on immediately (toast), then opens the prefilled form |
 | Fully set up | ✓ | ✓ | *(no CTA — banner/alert replaced by a connected confirmation strip)* | N/A |
 
-This matters because re-running an OAuth "Allow" screen for an org that already
-authorized Slack (e.g. for its existing "starts/stops timer" notifications) would
-read as broken, not helpful — the real gate on the "Send to Slack" checkbox in
-`SmartNotificationsDialog.vue` is org-level integration status, so the UI here
-should ask the same question the backend actually cares about, nothing more.
+This matters because re-running an OAuth "Allow" screen — or asking again which
+channel to use — for an org that already authorized Slack (e.g. for its existing
+"starts/stops timer" notifications) would read as broken, not helpful. Verified
+directly against the live app (see below): the real Slack integration has **one
+channel for the entire integration**, set once on the Settings > Integrations >
+Slack page ("Where do you want these notifications to appear in Slack?"). Checking
+"Send to Slack" on a rule in an already-connected org doesn't prompt for a channel
+at all — it just checks. So the connect-flow modal here is now *only* reachable
+pre-connect; an already-connected org skips it entirely.
 
 ```
-Any "Connect Slack" / "Turn on Slack notifications" CTA (banner / alert / modal footer)
-  → embedded connect flow (kept in-page)
-      if not orgConnected: step 1 "Allow Hubstaff to access Slack" → step 2
-      if orgConnected already: opens directly on step 2, copy says so
-  → step 2: choose channel → on finish, orgConnected + usedHere both true,
-    auto-advances into the prefilled "Add a smart notification" form with
-    Send to Slack checked
+"Connect Slack" CTA (banner / alert / modal footer, pre-connect only)
+  → embedded connect flow: step 1 "Allow Hubstaff to access Slack" → step 2 choose channel
+  → on finish: orgConnected + usedHere both true, auto-advances into the prefilled
+    "Add a smart notification" form with Send to Slack checked
 
-"Create notification" / "New notification" header buttons, or any ambiguous
-entry point
+"Turn on Slack notifications" / "Use Slack" CTA (org already connected, not used here)
+  → no modal — usedHere flips true immediately, toast confirms, then the prefilled
+    form opens the same way
+
+"Create notification" / "New notification" header buttons, or any ambiguous entry point
   → if usedHere: prefilled form opens directly, Slack pre-checked
   → otherwise: the pop-up fork opens first
-       "Create notification"        → plain form; Slack checkbox enabled if orgConnected,
-                                 disabled otherwise, but never pre-checked
-       "Connect Slack"/"Use Slack" → same embedded connect flow as above
+       "Create notification" → plain form; Slack checkbox enabled if orgConnected,
+                                disabled otherwise, but never pre-checked
+       "Connect Slack"/"Use Slack" → routes through the same branch as above
 ```
 
-The embedded connect flow defaults the channel to **`#hubstaff-alerts`** with an
-explicit "we recommend a private, admin-only channel" note — unusual-activity data
-is sensitive, and it's worth being upfront that anyone in the chosen Slack channel
-will see it, rather than defaulting to `#general`. This also lets an
-already-connected org pick a *different* channel for unusual-activity alerts than
-whatever channel their existing timer/task notifications already post to.
+The embedded connect flow (pre-connect only) defaults the channel to
+**`#hubstaff-alerts`** with an explicit "we recommend a private, admin-only
+channel" note — unusual-activity data is sensitive, and it's worth being upfront
+that anyone in the chosen Slack channel will see it, rather than defaulting to
+`#general`.
 
 The "Prototype controls" panel exposes all three states directly (not just a
 connected/disconnected toggle) so a reviewer can check the copy and flow for the
 middle state without replaying the full connect flow.
+
+## Verified against the live app
+
+Beyond the repo/screenshot research, this was cross-checked directly against
+`app.hubstaff.com` (org 13) via an authenticated session:
+
+- The real Unusual Activity page layout matches this mockup almost exactly,
+  down to the disclaimer copy being word-for-word identical ("Hubstaff doesn't
+  recommend making employment decisions based solely on unusual activity data.").
+- The real "Add a smart notification" dialog has the same Name/Frequency → When
+  (Metric + threshold) → Monitored audience → Then (Send to/Delivery channel)
+  structure this prototype uses. "Unusual activity" is a real metric option.
+  Selecting it swaps the threshold row for an info box — this prototype now uses
+  the **exact real copy**: "This notification will inform you of the total
+  duration of unusual activity for each monitored member, based on the chosen
+  frequency."
+- "Send to Slack" is a real checkbox, enabled (not disabled) on this test org
+  because it already has Slack connected — confirming the disabled-until-connected
+  gating this prototype models is correct for a never-connected org.
+- **One correction this made to the design**: the real Slack integration has a
+  single shared channel, not a per-notification choice (see above) — the
+  original build had an already-connected org still pick a channel, which
+  doesn't match reality and has been removed.
+- **One thing this confirms is worth fixing**: today, the real "Create
+  notification" button on the Unusual Activity page just navigates away to the
+  Smart Notifications page — a full page load that drops the date range,
+  member filter, and classification-pill selection. That's exactly the
+  context-loss problem this prototype's in-page modal approach is designed to
+  avoid, not a hypothetical one.
 
 ## Known simplifications (be upfront about these in review)
 
