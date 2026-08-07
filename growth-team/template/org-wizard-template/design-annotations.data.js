@@ -76,6 +76,18 @@ window.DESIGN_ANNOTATIONS_DATA = {
       sub: ["Affects every Zone form control, not just this flow"],
     },
 
+    {
+      id: "ds-untokenized-colours",
+      page: "step-1",
+      kind: "suggestion",
+      group: "Design-system gaps",
+      title: "Three colours in the preview have no Zone token",
+      description:
+        "Toggle Dev Mode and inspect the preview: #617083 (Figma \"Neutral/Supporting dark\"), #dce2e8 and #eaedf0 (illustration greys) resolve to no Zone token. They came from the Figma source, not from this build. Every other colour on every screen maps to a named Zone token.",
+      target: "#step-1 .mock-app__sidebar",
+      sub: ["Either add them to Zone or replace them with Gray 300 / Gray 200"],
+    },
+
     /* ── Wiring left for engineering ────────────────────────────────────── */
     {
       id: "wire-navigation",

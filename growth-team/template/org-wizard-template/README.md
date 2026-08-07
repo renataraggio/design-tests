@@ -18,6 +18,23 @@ python3 -m http.server 4005 --directory templates/org-wizard-template
 
 Right-click anywhere, press <kbd>⌘⇧A</kbd>, or use the **Annotations** button to open the design-task drawer.
 
+### Dev Mode
+
+`dev-mode.js` is vendored unmodified from `NetsoftHoldings/product-team` →
+`design/template/`. The **Dev Mode** toggle sits beside *Design tasks*: hover for a
+box-model overlay, click any element for its resolved specs mapped back to Zone
+tokens, click a colour row to recolour it live.
+
+Use it to check this build actually uses the design system. Every colour on every
+screen resolves to a named Zone token except three carried over from the Figma
+source — `#617083`, `#dce2e8`, `#eaedf0` — which are flagged as a design task.
+
+> One integration note: the engine inserts its toggle after the *Design tasks*
+> button. That button is `position: fixed`, so the new one lands in static body
+> flow — below the fold in this `100dvh; overflow: hidden` shell and unreachable.
+> `styles.css` pins `.dm-tc-btn` instead. `dev-mode.js` itself is a fixed
+> dependency and must not be edited.
+
 ### Design annotations
 
 The engine is vendored unmodified from the canonical source —
@@ -27,7 +44,7 @@ and `APPLY-DESIGN-ANNOTATIONS.md`).
 This flow is a **single-page, four-step app**, so it's wired in SPA mode (Step 4B of
 the apply guide): each wizard step is registered as a *page*, with a `currentPageId`
 resolver, a `navigate` adapter, and a `reveal` handler for the collapsed
-"Or, invite your users" disclosure. That matters — 4 of the 11 tasks target elements
+"Or, invite your users" disclosure. That matters — 4 of the 12 tasks target elements
 that don't exist in the DOM until you're on the right step with the right section
 open, so a single-page registration would leave their highlights dead.
 
@@ -36,7 +53,7 @@ One wrinkle worth knowing: the engine's cross-page path stashes the intent in
 the `navigate` adapter switches the step and re-enters `goToAnnotation`, which then
 takes the same-page reveal-and-highlight branch.
 
-All 11 tasks verified: each navigates to its step, reveals if needed, and highlights
+All 12 tasks verified: each navigates to its step, reveals if needed, and highlights
 exactly one element.
 
 ---
@@ -150,6 +167,7 @@ index.html                  4 steps + shared shell
 styles.css                  tokens → components → responsive
 org-wizard.js               step config, radio groups, preview state, invites
 design-annotations.js       vendored review tool (unmodified)
-design-annotations.data.js  11 design tasks, one page per wizard step
+design-annotations.data.js  12 design tasks, one page per wizard step
+dev-mode.js                 vendored Zone-token inspector (unmodified)
 assets/                     logo-mark.svg, arrow-right.svg
 ```

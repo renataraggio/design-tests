@@ -474,7 +474,9 @@
     topOffset: 0,
     trigger: ['contextmenu', 'button'],
     taskCenter: true,
-    currentPageId: function () { return window.OrgWizard.currentPageId(); },
+    currentPageId: function () {
+      return window.OrgWizard ? window.OrgWizard.currentPageId() : 'step-1';
+    },
     // The engine's cross-page path hands off via sessionStorage and expects a
     // real page load to consume it. There isn't one here, so switch the step and
     // re-enter goToAnnotation — it then takes the same-page reveal + highlight
@@ -494,6 +496,13 @@
   window.addEventListener('orgwizard:stepchange', function (event) {
     da.setContext(event.detail.pageId);
   });
+</script>
+
+<script src="dev-mode.js"></script>
+<script>
+  // Zone-token inspector. Its toggle auto-inserts after the "Design tasks"
+  // button, so it must init after DesignAnnotations.
+  DevMode.init({ mount: '#wizard', topOffset: 0 });
 </script>
 </body>
 </html>

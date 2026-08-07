@@ -22,24 +22,25 @@
   --gray-700: #374151;
   --gray-900: #111827;
 
-  --primary-50: #eff8ff;
-  --primary-100: #e0f0fe;
+  --primary-50: #eaf6ff;
+  --primary-100: #d4edff;
   --primary-200: #a7d9fc;
   --primary-500: #2aa7ff;
   --primary-600: #2f8af4;
   --primary-700: #0168dd;
   --primary-800: #0a4b96;
 
-  --purple-100: #f3e8ff;
-  --purple-700: #7e22ce;
-  --purple-glow: rgba(139, 29, 255, 0.3);
+  --purple-100: #e8d2ff;
+  --purple-700: #7335da;
+  --purple-glow: rgba(139, 29, 255, 0.3); /* Purple 500 @ 30% — from the Figma shell */
 
   --red-200: #fbd5d5;
-  --supporting-dark: #617083;
 
-  /* Primitive — skeleton greys used by the in-product preview illustration */
-  --skeleton-strong: #dce2e8;
-  --skeleton-soft: #eaedf0;
+  /* Off-Zone values carried over from the Figma source. Dev Mode will report
+     these as untokenized — that's accurate, and flagged as a design task. */
+  --supporting-dark: #617083; /* Figma "Neutral/Supporting dark" */
+  --skeleton-strong: #dce2e8; /* preview illustration only */
+  --skeleton-soft: #eaedf0; /* preview illustration only */
 
   /* Semantic */
   --surface: var(--white);
@@ -1324,11 +1325,24 @@ body .da-fab {
   left: 20px;
 }
 
+/* Dev Mode inserts its toggle right after #da-tc-btn. That button is fixed, so
+   the new one lands in static body flow — below the fold in a 100dvh,
+   overflow:hidden shell, and unreachable. Pin it beside Design tasks instead.
+   (dev-mode.js is a fixed dependency and must not be edited.) */
+body .dm-tc-btn {
+  position: fixed;
+  z-index: 2147483000;
+  top: 20px;
+  right: 170px; /* clears the 142px-wide Design tasks button at right: 20px */
+  margin-left: 0;
+}
+
 /* At mobile widths the top row is the page title, and the footer stacks to
-   ~114px, so float both dev buttons just above it instead. */
+   ~114px, so float the dev buttons just above it instead. */
 @media (max-width: 640px) {
   body .da-fab,
-  body .da-tc-btn--float {
+  body .da-tc-btn--float,
+  body .dm-tc-btn {
     top: auto;
     bottom: 126px;
   }
@@ -1339,5 +1353,9 @@ body .da-fab {
 
   body .da-tc-btn--float {
     right: var(--space-4);
+  }
+
+  body .dm-tc-btn {
+    right: 166px;
   }
 }

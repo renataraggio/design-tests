@@ -334,7 +334,8 @@
     }
   });
 
-  var AVATAR_COLORS = ["#1c64f2", "#e02424", "#7e3af2", "#0e9f6e", "#ff5a1f", "#0694a2"];
+  /* Zone: Blue 600, Red 600, Purple 600, Green 500, Orange 600, Teal 500. */
+  var AVATAR_COLORS = ["#2f8af4", "#e02424", "#7f3cf2", "#0e9f6e", "#e7721a", "#0694a2"];
   var invitePreviewGrid = document.getElementById("invite-preview-grid");
   var step4 = document.getElementById("step-4");
 
