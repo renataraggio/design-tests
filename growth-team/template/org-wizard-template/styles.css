@@ -440,6 +440,7 @@ button {
 /* ── 7. Link-style button ("+ Add another …") ──────────────────────────── */
 
 .link-btn {
+  position: relative;
   align-self: flex-start;
   padding: 0;
   border: none;
@@ -449,6 +450,14 @@ button {
   font-weight: var(--font-weight-medium);
   color: var(--primary-700);
   border-radius: var(--radius-sm);
+}
+
+/* The visible text is only 20px tall. Expand the hit area to 44px without
+   changing layout, rather than padding the control and shifting the design. */
+.link-btn::after {
+  content: "";
+  position: absolute;
+  inset: -12px -8px;
 }
 
 .link-btn:hover {
@@ -603,6 +612,7 @@ button {
 }
 
 .disclosure__toggle {
+  position: relative;
   display: flex;
   align-items: center;
   gap: var(--space-2-5);
@@ -615,6 +625,13 @@ button {
   font-weight: var(--font-weight-medium);
   color: var(--text);
   border-radius: var(--radius-md);
+}
+
+/* Same 44px hit-area expansion as .link-btn — the row itself is only 24px. */
+.disclosure__toggle::after {
+  content: "";
+  position: absolute;
+  inset: -10px -8px;
 }
 
 .disclosure__chevron {
@@ -1301,6 +1318,54 @@ button {
   .mock-phone {
     display: none;
   }
+
+  /* Only the first two columns survive at this width; the rest just clip. */
+  .mock-table th:nth-child(n + 3),
+  .mock-table td:nth-child(n + 3) {
+    display: none;
+  }
+}
+
+/* ── Short viewports ───────────────────────────────────────────────────────
+   Width breakpoints alone leave landscape phones and short laptop windows
+   cramped: the 36px title, 56px padding and fixed-height preview mocks eat the
+   whole screen. These compress the vertical rhythm instead. ─────────────── */
+
+@media (max-height: 720px) {
+  :root {
+    --shell-pad-y: var(--space-6);
+  }
+
+  .wizard__body {
+    gap: var(--space-6);
+  }
+
+  .mock-app {
+    height: 220px;
+  }
+
+  .mock-window__body {
+    height: 190px;
+  }
+}
+
+@media (max-height: 560px) {
+  :root {
+    --shell-pad-y: var(--space-4);
+    --font-size-4xl: 24px;
+    --line-height-4xl: 32px;
+  }
+
+  .wizard__body {
+    gap: var(--space-4);
+  }
+
+  /* The preview is illustrative; the controls are the functional part. At this
+     height it would push them off-screen, so drop it and the ambient glow. */
+  .preview,
+  .wizard__glow {
+    display: none;
+  }
 }
 
 .wizard-footer__actions {
@@ -1338,7 +1403,8 @@ body .dm-tc-btn {
 }
 
 /* At mobile widths the top row is the page title, and the footer stacks to
-   ~114px, so float the dev buttons just above it instead. */
+   ~114px, so float the dev buttons just above it instead. All three together
+   need ~381px of row, so Dev Mode gets its own row above the other two. */
 @media (max-width: 640px) {
   body .da-fab,
   body .da-tc-btn--float,
@@ -1351,11 +1417,12 @@ body .dm-tc-btn {
     left: var(--space-4);
   }
 
-  body .da-tc-btn--float {
+  body .da-tc-btn--float,
+  body .dm-tc-btn {
     right: var(--space-4);
   }
 
   body .dm-tc-btn {
-    right: 166px;
+    bottom: 168px;
   }
 }

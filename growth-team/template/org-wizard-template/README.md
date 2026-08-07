@@ -154,11 +154,27 @@ All flagged in-app as design tasks (Annotations drawer, `group: "Design-system g
 
 ## Responsive
 
-Verified with no horizontal overflow on any step at 375 / 768 / 1440.
+**Width**
 
 - ≤1200 — shell padding drops to `--space-10`
 - ≤900 — cards to 2 columns, title to 28px, preview sidebar and phone narrow (kept, not cut: they carry the "your workspace changes with this choice" signal)
-- ≤640 — single column, title 24px, footer stacks (Back above Continue), heaviest preview chrome drops out
+- ≤640 — single column, title 24px, footer stacks (Back above Continue), heaviest preview chrome drops out, the mock table keeps only its first two columns
+
+**Height** — width breakpoints alone left landscape phones and short laptop
+windows cramped, since the 36px title, 56px padding and fixed-height preview
+mocks ate the whole screen.
+
+- ≤720 — tighter vertical rhythm, preview mocks shrink
+- ≤560 — title to 24px, and the preview and ambient glow drop out entirely so the controls stay on screen
+
+**Touch targets** — "+ Add another…" is 20px tall and the "Or, invite your
+users" disclosure is 24px. Both now carry a `::after` that expands the hit area
+to 44px without changing layout, so the visual design is untouched.
+
+Verified across **320×640, 375×667, 768×1024, 812×375, 1024×768, 1440×900 and
+1920×1080** on all four steps with the invite disclosure expanded: no horizontal
+scrolling, every control reachable, and no interactive element under 40px of
+effective hit area.
 
 ## Files
 
