@@ -29,11 +29,12 @@ Use it to check this build actually uses the design system. Every colour on ever
 screen resolves to a named Zone token except three carried over from the Figma
 source — `#617083`, `#dce2e8`, `#eaedf0` — which are flagged as a design task.
 
-> One integration note: the engine inserts its toggle after the *Design tasks*
-> button. That button is `position: fixed`, so the new one lands in static body
-> flow — below the fold in this `100dvh; overflow: hidden` shell and unreachable.
-> `styles.css` pins `.dm-tc-btn` instead. `dev-mode.js` itself is a fixed
-> dependency and must not be edited.
+> Layout note: Dev Mode places its toggle immediately after `#da-tc-btn`, so
+> mounting the Design tasks button into `#review-toolbar` (via the annotations
+> engine's supported `taskCenter: { mount }` option) lands both buttons in that
+> one container. They render as a single grouped control — one border, one
+> shadow, a hairline between segments — and can't drift apart. Both engines
+> stay unmodified fixed dependencies.
 
 ### Design annotations
 

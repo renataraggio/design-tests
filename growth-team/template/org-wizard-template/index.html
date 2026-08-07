@@ -461,6 +461,10 @@
 
 </div>
 
+<!-- Both review engines mount their buttons here (see the init calls below), so
+     they render as one grouped toolbar instead of separate floating pills. -->
+<div class="review-toolbar" id="review-toolbar"></div>
+
 <script src="org-wizard.js"></script>
 <script src="design-annotations.js"></script>
 <script src="design-annotations.data.js"></script>
@@ -473,7 +477,7 @@
     mount: '#wizard',
     topOffset: 0,
     trigger: ['contextmenu', 'button'],
-    taskCenter: true,
+    taskCenter: { mount: '#review-toolbar' },
     currentPageId: function () {
       return window.OrgWizard ? window.OrgWizard.currentPageId() : 'step-1';
     },
@@ -502,29 +506,10 @@
 <script>
   // Zone-token inspector. Its toggle auto-inserts after the "Design tasks"
   // button, so it must init after DesignAnnotations.
+  // Dev Mode places its toggle immediately after #da-tc-btn, so mounting the
+  // Design tasks button into #review-toolbar above lands both in that one
+  // container — no positioning maths, and they can never drift apart.
   DevMode.init({ mount: '#wizard', topOffset: 0 });
-
-  // Dev Mode and Design tasks are fixed, right-anchored, and created by two
-  // different engines, so there's no shared parent to lay them out in. Measure
-  // the Design tasks chip — its width moves with the task-count badge — and
-  // place Dev Mode an exact 8px to its left. Below 640px they stack, and the
-  // stylesheet owns the position.
-  (function placeDevModeChip() {
-    var tasks = document.getElementById('da-tc-btn');
-    var dev = document.getElementById('dm-toggle');
-    if (!tasks || !dev) return;
-
-    // Publish the measurement as a custom property rather than an inline style,
-    // so the ≤640px rule that stacks the chips can still win.
-    var place = function () {
-      document.documentElement.style.setProperty(
-        '--dm-chip-right', 20 + tasks.offsetWidth + 8 + 'px'
-      );
-    };
-
-    place();
-    if (window.ResizeObserver) new ResizeObserver(place).observe(tasks);
-  })();
 </script>
 </body>
 </html>
