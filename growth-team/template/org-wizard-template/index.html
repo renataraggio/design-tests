@@ -465,13 +465,34 @@
 <script src="design-annotations.js"></script>
 <script src="design-annotations.data.js"></script>
 <script>
-  DesignAnnotations.init({
+  // Single-page app adapter: each wizard step is a "page", so the drawer shows
+  // the current step's tasks and cross-step links jump to the right step first.
+  var da = DesignAnnotations.init({
     pages: window.DESIGN_ANNOTATIONS_DATA.pages,
     annotations: window.DESIGN_ANNOTATIONS_DATA.annotations,
     mount: '#wizard',
     topOffset: 0,
     trigger: ['contextmenu', 'button'],
     taskCenter: true,
+    currentPageId: function () { return window.OrgWizard.currentPageId(); },
+    // The engine's cross-page path hands off via sessionStorage and expects a
+    // real page load to consume it. There isn't one here, so switch the step and
+    // re-enter goToAnnotation — it then takes the same-page reveal + highlight
+    // branch. (APPLY-DESIGN-ANNOTATIONS.md, Step 4B.)
+    navigate: function (pageId, page, intent) {
+      // goToPage renders synchronously and fires stepchange, so setContext has
+      // already run by the time this returns — re-enter directly rather than
+      // deferring, which a backgrounded tab would throttle.
+      window.OrgWizard.goToPage(pageId);
+      if (intent && intent.annotationId) da.goToAnnotation(intent.annotationId);
+    },
+    reveal: {
+      'expand-invite-users': function () { window.OrgWizard.expandInviteUsers(); },
+    },
+  });
+
+  window.addEventListener('orgwizard:stepchange', function (event) {
+    da.setContext(event.detail.pageId);
   });
 </script>
 </body>

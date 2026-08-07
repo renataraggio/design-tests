@@ -16,7 +16,28 @@ Vanilla HTML/CSS/JS, no build step — same architecture as `../getting-started-
 python3 -m http.server 4005 --directory templates/org-wizard-template
 ```
 
-Right-click anywhere (or use the **Annotations** button) to open the design-task drawer.
+Right-click anywhere, press <kbd>⌘⇧A</kbd>, or use the **Annotations** button to open the design-task drawer.
+
+### Design annotations
+
+The engine is vendored unmodified from the canonical source —
+`NetsoftHoldings/design-team` → `general/design-annotations/` (see its `AUTHORING.md`
+and `APPLY-DESIGN-ANNOTATIONS.md`).
+
+This flow is a **single-page, four-step app**, so it's wired in SPA mode (Step 4B of
+the apply guide): each wizard step is registered as a *page*, with a `currentPageId`
+resolver, a `navigate` adapter, and a `reveal` handler for the collapsed
+"Or, invite your users" disclosure. That matters — 4 of the 11 tasks target elements
+that don't exist in the DOM until you're on the right step with the right section
+open, so a single-page registration would leave their highlights dead.
+
+One wrinkle worth knowing: the engine's cross-page path stashes the intent in
+`sessionStorage` and expects a real page load to consume it. There isn't one here, so
+the `navigate` adapter switches the step and re-enters `goToAnnotation`, which then
+takes the same-page reveal-and-highlight branch.
+
+All 11 tasks verified: each navigates to its step, reveals if needed, and highlights
+exactly one element.
 
 ---
 
@@ -92,7 +113,7 @@ Four steps, all driven from `STEPS` in `org-wizard.js`:
 
 ## Design-system gaps
 
-Flagged in-app as design tasks (Annotations drawer) — nothing was invented that Zone already covers.
+All flagged in-app as design tasks (Annotations drawer, `group: "Design-system gaps"`) — nothing was invented that Zone already covers.
 
 1. **No accessible primary-button token.** Figma's `primary/500` (#2aa7ff) with white text is **2.2:1** — fails WCAG AA. Shipped default is `primary/700` (#0168dd) at **5.22:1**. One token to revert: `--btn-primary-bg`. `getting-started-template` has the same issue.
 2. **No "selected" semantic token.** Source used `#294dff` for chips and a different blue for cards. Unified on `primary/700` + a `primary/50` tint at 2px (5.22:1, clears the 3:1 non-text bar).
@@ -129,6 +150,6 @@ index.html                  4 steps + shared shell
 styles.css                  tokens → components → responsive
 org-wizard.js               step config, radio groups, preview state, invites
 design-annotations.js       vendored review tool (unmodified)
-design-annotations.data.js  the 9 design tasks above
+design-annotations.data.js  11 design tasks, one page per wizard step
 assets/                     logo-mark.svg, arrow-right.svg
 ```

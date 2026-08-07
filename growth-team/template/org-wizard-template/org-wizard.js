@@ -72,12 +72,34 @@
 
     announcer.textContent = "Step " + currentStep + " of " + STEPS.length + ": " + config.title;
     scroller.scrollTop = 0;
+
+    // Design Annotations treats each step as a "page" — keep it in sync.
+    window.dispatchEvent(
+      new CustomEvent("orgwizard:stepchange", { detail: { pageId: config.id } })
+    );
   }
 
   function goTo(step) {
     currentStep = Math.min(Math.max(step, 1), STEPS.length);
     renderStep();
   }
+
+  /* Public API — used by the Design Annotations SPA adapter in index.html. */
+  window.OrgWizard = {
+    goToPage: function (pageId) {
+      var index = STEPS.findIndex(function (s) {
+        return s.id === pageId;
+      });
+      if (index >= 0) goTo(index + 1);
+    },
+    currentPageId: function () {
+      return STEPS[currentStep - 1].id;
+    },
+    expandInviteUsers: function () {
+      var toggle = document.getElementById("invite-users-toggle");
+      if (toggle.getAttribute("aria-expanded") !== "true") toggle.click();
+    },
+  };
 
   btnBack.addEventListener("click", function () {
     if (currentStep > 1) goTo(currentStep - 1);
