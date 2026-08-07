@@ -225,9 +225,11 @@ button { font-family: inherit; }
    notification" type-choice dialog — Figma section 04, now merged into the
    real dialog rather than a standalone fork screen. */
 .promo-card {
-  border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 2rem;
+  border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 2rem; cursor: pointer;
   box-shadow: 0 2px 2px -2px rgba(0,0,0,.05), 0 4px 3px -2px rgba(0,0,0,.1); margin-bottom: 1.6rem;
+  transition: border-color .1s, box-shadow .1s;
 }
+.promo-card:hover { border-color: var(--primary-500); box-shadow: 0 2px 4px -2px rgba(42,167,255,.15), 0 4px 6px -2px rgba(42,167,255,.15); }
 .promo-card .promo-head { display: flex; align-items: center; justify-content: space-between; gap: 1.2rem; margin-bottom: .8rem; }
 .promo-card .promo-title { display: flex; align-items: center; gap: 1rem; }
 .promo-card .promo-title strong { font-size: 1.8rem; color: var(--gray-900); }

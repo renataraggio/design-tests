@@ -1,4 +1,4 @@
-# AR0228 — Unusual Activity / Smart Notifications → Slack activation
+# ARXXXX — Slack nudge for smart notifications alerts
 
 A clickable HTML prototype for a growth experiment: get more orgs to connect Slack
 via the two surfaces that already show them real, specific value — **Insights →
