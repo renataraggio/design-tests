@@ -295,36 +295,26 @@ button { font-family: inherit; }
   border-radius: var(--radius-lg); padding: .8rem 1.2rem; font-size: 1.35rem; line-height: 1.5;
 }
 
-/* ---------- Connect-flow step 4: delivered Slack message (Figma node
-   20679:14853) — the payoff screen shown after saving a Slack-delivered
-   notification, demonstrating the interactive triage buttons from the
-   original growth research (Looks fine / Investigate / Not useful). ---------- */
-.slack-delivered { border-radius: 10px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,.12); }
-.slack-delivered .channel-header { background: #350d36; color: #fff; padding: 1.4rem 1.6rem; font-size: 1.4rem; font-weight: 500; }
-.slack-delivered .msg-body { padding: 1.6rem; display: flex; gap: 1rem; }
-.slack-delivered .msg-avatar {
-  width: 3.6rem; height: 3.6rem; border-radius: 6px; background: var(--primary-700); color: #fff;
-  display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.5rem; flex-shrink: 0;
+/* Multi-channel select (connect flow, step 2) — chips + dropdown of
+   available channels, matching the "choose one or more channels" copy. */
+.channel-multiselect {
+  border: 1px solid var(--gray-300); border-radius: var(--radius); padding: .8rem; position: relative; text-align: left;
 }
-.slack-delivered .msg-content { flex: 1; min-width: 0; }
-.slack-delivered .msg-meta { display: flex; align-items: center; gap: .7rem; margin-bottom: .4rem; }
-.slack-delivered .msg-meta .sender { font-weight: 700; color: var(--gray-900); font-size: 1.35rem; }
-.slack-delivered .msg-meta .app-badge {
-  display: inline-flex; align-items: center; gap: .3rem; background: var(--gray-100); color: var(--gray-800);
-  font-size: 1.1rem; padding: .1rem .6rem; border-radius: var(--radius); font-weight: 500;
+.channel-chips { display: flex; flex-wrap: wrap; gap: .6rem; margin-bottom: .6rem; }
+.channel-chips:empty { margin-bottom: 0; }
+.channel-chip { cursor: default; }
+.channel-chip .remove { margin-left: .5rem; cursor: pointer; color: var(--primary-700); font-weight: 700; }
+.channel-chip .remove:hover { color: var(--gray-900); }
+.channel-input {
+  width: 100%; border: none; outline: none; font-size: 1.4rem; color: var(--gray-500); background: transparent; cursor: pointer; padding: .3rem 0;
 }
-.slack-delivered .msg-meta .app-badge .material-symbols-rounded { font-size: 1.3rem; }
-.slack-delivered .msg-meta .timestamp { color: var(--gray-500); font-size: 1.1rem; }
-.slack-delivered .msg-title { font-weight: 700; color: var(--gray-900); font-size: 1.35rem; margin: 0 0 .5rem; }
-.slack-delivered .msg-tag-row { display: flex; align-items: center; gap: .6rem; margin-bottom: .6rem; }
-.slack-delivered .msg-tag { background: #f5e1b8; color: #7a5a15; font-weight: 700; font-size: 1.25rem; padding: .1rem .6rem; border-radius: 3px; }
-.slack-delivered .msg-timerange { color: var(--gray-500); font-size: 1.25rem; }
-.slack-delivered .msg-desc { color: var(--gray-900); font-size: 1.35rem; margin: 0 0 .8rem; }
-.slack-delivered .msg-confidence {
-  display: inline-flex; background: #ff9725; color: #fff; font-size: 1.15rem; padding: .2rem .8rem; border-radius: var(--radius-sm); margin-bottom: 1rem;
+.channel-dropdown {
+  position: absolute; top: 100%; left: 0; right: 0; margin-top: .4rem; background: #fff; border: 1px solid var(--gray-300);
+  border-radius: var(--radius); box-shadow: var(--shadow-modal); z-index: 10; max-height: 180px; overflow-y: auto;
 }
-.slack-delivered .msg-actions { display: flex; gap: .8rem; flex-wrap: wrap; }
-.slack-delivered .msg-actions .btn { padding: .6rem 1.2rem; font-size: 1.3rem; }
+.channel-dropdown .option { padding: .9rem 1.2rem; font-size: 1.4rem; cursor: pointer; display: flex; align-items: center; gap: .6rem; }
+.channel-dropdown .option:hover { background: var(--gray-50); }
+.channel-dropdown .empty { padding: .9rem 1.2rem; font-size: 1.3rem; color: var(--gray-500); }
 
 /* ---------- Modals ---------- */
 .modal-backdrop { position: fixed; inset: 0; background: rgba(17, 24, 39, .5); z-index: 900; }

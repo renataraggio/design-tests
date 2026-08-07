@@ -194,7 +194,7 @@
      Auto-opens once per browser on load, pre-connect, unless dismissed permanently. -->
 <div id="detect-backdrop" class="modal-backdrop d-none" data-action="dismiss-detect"></div>
 <div id="detect" class="modal-wrap d-none">
-  <div class="modal-box w-lg" onclick="event.stopPropagation()">
+  <div class="modal-box w-lg">
     <div class="modal-header">
       <h4>New unusual activity detected</h4>
       <button class="modal-close" data-action="dismiss-detect">&times;</button>
@@ -250,7 +250,7 @@
      if not connected yet, straight to the prefilled form if already connected. -->
 <div id="popup-backdrop" class="modal-backdrop d-none" data-action="close-modal" data-arg="popup"></div>
 <div id="popup" class="modal-wrap d-none">
-  <div class="modal-box w-lg" onclick="event.stopPropagation()">
+  <div class="modal-box w-lg">
     <div class="modal-header">
       <h4>Add a smart notification</h4>
       <button class="modal-close" data-action="close-modal" data-arg="popup">&times;</button>
@@ -304,7 +304,7 @@
      component (node 20666:13546) instead of a hand-rolled note box. ============ -->
 <div id="connect-backdrop" class="modal-backdrop d-none" data-action="close-modal" data-arg="connect"></div>
 <div id="connect" class="modal-wrap d-none">
-  <div class="modal-box w-sm" onclick="event.stopPropagation()">
+  <div class="modal-box w-sm">
     <div class="modal-header"><span></span><button class="modal-close" data-action="close-modal" data-arg="connect">&times;</button></div>
     <div id="connect-step-1" class="modal-body oauth-mock" style="padding-top:0;">
       <div class="oauth-icons">
@@ -340,8 +340,12 @@
       <h4>Where should alerts appear?</h4>
       <p style="text-align:left; margin:0 0 1.6rem; color:var(--gray-700); font-size:1.4rem;">Choose one or more Slack channels to receive unusual activity and Slack-enabled smart notifications.</p>
       <div class="channel-field">
-        <label>Slack channel</label>
-        <span class="channel-chip"><span class="material-symbols-rounded" style="font-size:1.4rem;">tag</span>hubstaff-alerts</span>
+        <label>Slack channels</label>
+        <div class="channel-multiselect" id="channel-select">
+          <div class="channel-chips" id="channel-chips"></div>
+          <input type="text" class="channel-input" id="channel-input" placeholder="Add a channel…" autocomplete="off" data-action="toggle-channel-dropdown" readonly>
+          <div class="channel-dropdown d-none" id="channel-dropdown"></div>
+        </div>
       </div>
       <div class="alert-warning">
         <span class="material-symbols-rounded" style="font-size:1.7rem; flex-shrink:0;">warning</span>
@@ -352,48 +356,13 @@
   </div>
 </div>
 
-<!-- ============ Connect-flow step 4: delivered Slack message (Figma node
-     20679:14853) — shown after saving a Slack-delivered notification, so the
-     payoff isn't just a toast. Demonstrates the interactive triage buttons
-     from the original growth research (Looks fine / Investigate / Not useful). ============ -->
-<div id="delivered-backdrop" class="modal-backdrop d-none" data-action="close-modal" data-arg="delivered"></div>
-<div id="delivered" class="modal-wrap d-none">
-  <div class="modal-box w-sm" onclick="event.stopPropagation()" style="background:transparent; box-shadow:none;">
-    <div class="slack-delivered">
-      <div class="channel-header"># hubstaff-alerts</div>
-      <div class="msg-body">
-        <div class="msg-avatar">H</div>
-        <div class="msg-content">
-          <div class="msg-meta">
-            <span class="sender">Hubstaff</span>
-            <span class="app-badge"><span class="material-symbols-rounded">bolt</span>APP</span>
-            <span class="timestamp">Just now</span>
-          </div>
-          <p class="msg-title">⚠️ Unusual activity detected</p>
-          <div class="msg-tag-row">
-            <span class="msg-tag">@priya.shah</span>
-            <span class="msg-timerange">· Today, 9:12–10:40 AM</span>
-          </div>
-          <p class="msg-desc">What we saw: Low keyboard/mouse activity for 88 min while clocked in on Admin — outside Priya's usual pattern for this project.</p>
-          <div class="msg-confidence">Confidence: Medium</div>
-          <div class="msg-actions">
-            <a href="#" class="btn btn-outline" data-action="close-modal" data-arg="delivered">Looks fine 👍</a>
-            <a href="#" class="btn btn-outline" data-action="close-modal" data-arg="delivered">Investigate 🔍</a>
-            <a href="#" class="btn btn-outline" data-action="close-modal" data-arg="delivered">Not useful 🚫</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- ============ Real "Add a smart notification" form, prefilled for the Unusual
      activity metric and (when arriving from the Slack flow) with Send to Slack
      pre-checked. Fields mirror SmartNotificationsDialog.vue's real structure:
      name/frequency, metric+condition, monitored audience, delivery channel. ============ -->
 <div id="create-form-backdrop" class="modal-backdrop d-none" data-action="close-modal" data-arg="create-form"></div>
 <div id="create-form" class="modal-wrap d-none">
-  <div class="modal-box w-lg" onclick="event.stopPropagation()">
+  <div class="modal-box w-lg">
     <div class="modal-header">
       <h4>Add a smart notification</h4>
       <button class="modal-close" data-action="close-modal" data-arg="create-form">&times;</button>

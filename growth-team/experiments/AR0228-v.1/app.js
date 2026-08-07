@@ -123,9 +123,63 @@
   // the whole integration (set once here), not a per-notification choice, so an
   // already-connected org never re-enters this modal at all (see handleConnectCta).
   function openConnectFlow() {
+    resetChannelSelection();
     show($("#connect-step-1"));
     hide($("#connect-step-2"));
     openModal("connect");
+  }
+
+  // ---------- Multi-channel select (connect flow, step 2) ----------
+  var CHANNEL_OPTIONS = ["hubstaff-alerts", "managers", "leadership", "general"];
+  var selectedChannels = [];
+
+  function resetChannelSelection() {
+    selectedChannels = ["hubstaff-alerts"];
+    renderChannelChips();
+  }
+
+  function renderChannelChips() {
+    var chipsEl = $("#channel-chips");
+    if (!chipsEl) return;
+    chipsEl.innerHTML = selectedChannels.map(function (c) {
+      return '<span class="channel-chip"><span class="material-symbols-rounded" style="font-size:1.4rem;">tag</span>' + c +
+        '<span class="remove" data-action="remove-channel" data-arg="' + c + '">&times;</span></span>';
+    }).join("");
+    var finishBtn = $('[data-action="connect-step2-finish"]');
+    if (finishBtn) finishBtn.disabled = selectedChannels.length === 0;
+  }
+
+  function renderChannelDropdown() {
+    var dropdown = $("#channel-dropdown");
+    if (!dropdown) return;
+    var available = CHANNEL_OPTIONS.filter(function (c) { return selectedChannels.indexOf(c) === -1; });
+    dropdown.innerHTML = available.length
+      ? available.map(function (c) {
+          return '<div class="option" data-action="add-channel" data-arg="' + c + '"><span class="material-symbols-rounded" style="font-size:1.4rem; color:var(--gray-500);">tag</span>' + c + '</div>';
+        }).join("")
+      : '<div class="empty">All available channels added</div>';
+  }
+
+  function toggleChannelDropdown() {
+    var dropdown = $("#channel-dropdown");
+    if (!dropdown) return;
+    if (dropdown.classList.contains("d-none")) {
+      renderChannelDropdown();
+      show(dropdown);
+    } else {
+      hide(dropdown);
+    }
+  }
+
+  function addChannel(name) {
+    if (selectedChannels.indexOf(name) === -1) selectedChannels.push(name);
+    renderChannelChips();
+    hide($("#channel-dropdown"));
+  }
+
+  function removeChannel(name) {
+    selectedChannels = selectedChannels.filter(function (c) { return c !== name; });
+    renderChannelChips();
   }
 
   // Single entry point for every "Connect Slack" / "Turn on Slack notifications"
@@ -160,12 +214,14 @@
   }
 
   function connectStep2Finish() {
+    if (!selectedChannels.length) return;
     state.orgConnected = true;
     state.usedHere = true;
     persist();
     render();
     closeModal("connect");
-    showToast("Slack notifications turned on — sent to " + DEFAULT_CHANNEL + ".");
+    var channelList = selectedChannels.map(function (c) { return "#" + c; }).join(", ");
+    showToast("Slack notifications turned on — sent to " + channelList + ".");
     setTimeout(function () { openCreateForm(true); }, 450);
   }
 
@@ -222,51 +278,53 @@
   }
 
   // ---------- Wire up on load ----------
+  // Event delegation on document, not per-element listeners — the channel
+  // chips and dropdown options are rendered dynamically after load, so a
+  // one-time querySelectorAll pass would never see them.
   document.addEventListener("DOMContentLoaded", function () {
     render();
 
-    $all("[data-action]").forEach(function (el) {
-      el.addEventListener("click", function (e) {
-        e.preventDefault();
-        var action = el.getAttribute("data-action");
-        var arg = el.getAttribute("data-arg");
-        switch (action) {
-          case "growth-entry": openGrowthEntry(); break;
-          case "handle-connect-cta":
-            if (el.closest("#detect")) trackEvent("detection_modal_slack_nudge_clicked");
-            else if (el.closest(".growth-banner")) trackEvent("banner_slack_nudge_clicked");
-            else if (el.closest(".growth-alert")) trackEvent("alert_slack_nudge_clicked");
-            handleConnectCta();
-            break;
-          case "start-notification-creation":
-            trackEvent("popup_fork_slack_nudge_clicked", { choice: arg });
-            startNotificationCreation();
-            break;
-          case "connect-step1-continue": connectStep1Continue(); break;
-          case "connect-step2-finish": connectStep2Finish(); break;
-          case "open-create-form": openCreateForm(arg === "slack"); break;
-          case "close-modal": closeModal(arg); break;
-          case "dismiss-detect": dismissDetectModal(false); break;
-          case "dismiss-detect-permanent": dismissDetectModal(true); break;
-          case "dismiss-banner": hide(el.closest(".growth-banner")); break;
-          case "dismiss-alert": hide(el.closest(".growth-alert")); break;
-          case "proto-set-state": protoSetState(arg); break;
-          case "proto-reset": protoReset(); break;
-          case "save-notification":
-            var slackWasChecked = $("#cf-slack-checkbox") && $("#cf-slack-checkbox").checked;
-            closeModal("create-form");
-            // Payoff step (Figma "05 · Connect Slack flow / 4") — show what
-            // actually lands in Slack instead of just a toast, when Slack
-            // delivery is on. Plain toast otherwise.
-            if (slackWasChecked) {
-              openModal("delivered");
-            } else {
-              showToast("Notification saved.");
-            }
-            break;
-          case "noop": break;
-        }
-      });
+    document.addEventListener("click", function (e) {
+      var channelSelect = $("#channel-select");
+      if (channelSelect && !channelSelect.contains(e.target)) hide($("#channel-dropdown"));
+
+      var el = e.target.closest("[data-action]");
+      if (!el) return;
+      e.preventDefault();
+      var action = el.getAttribute("data-action");
+      var arg = el.getAttribute("data-arg");
+      switch (action) {
+        case "growth-entry": openGrowthEntry(); break;
+        case "handle-connect-cta":
+          if (el.closest("#detect")) trackEvent("detection_modal_slack_nudge_clicked");
+          else if (el.closest(".growth-banner")) trackEvent("banner_slack_nudge_clicked");
+          else if (el.closest(".growth-alert")) trackEvent("alert_slack_nudge_clicked");
+          handleConnectCta();
+          break;
+        case "start-notification-creation":
+          trackEvent("popup_fork_slack_nudge_clicked", { choice: arg });
+          startNotificationCreation();
+          break;
+        case "connect-step1-continue": connectStep1Continue(); break;
+        case "connect-step2-finish": connectStep2Finish(); break;
+        case "toggle-channel-dropdown": toggleChannelDropdown(); break;
+        case "add-channel": addChannel(arg); break;
+        case "remove-channel": removeChannel(arg); break;
+        case "open-create-form": openCreateForm(arg === "slack"); break;
+        case "close-modal": closeModal(arg); break;
+        case "dismiss-detect": dismissDetectModal(false); break;
+        case "dismiss-detect-permanent": dismissDetectModal(true); break;
+        case "dismiss-banner": hide(el.closest(".growth-banner")); break;
+        case "dismiss-alert": hide(el.closest(".growth-alert")); break;
+        case "proto-set-state": protoSetState(arg); break;
+        case "proto-reset": protoReset(); break;
+        case "save-notification":
+          var slackWasChecked = $("#cf-slack-checkbox") && $("#cf-slack-checkbox").checked;
+          closeModal("create-form");
+          showToast("Notification saved" + (slackWasChecked ? " — sent to Slack." : "."));
+          break;
+        case "noop": break;
+      }
     });
 
     var metricField = $("#cf-metric");
