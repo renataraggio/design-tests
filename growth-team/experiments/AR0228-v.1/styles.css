@@ -267,6 +267,65 @@ button { font-family: inherit; }
 .slack-msg .field-row .classification.medium { color: var(--orange-800); }
 .slack-msg .field-row .classification.low { color: var(--green-800); }
 
+/* ---------- Connect-flow step 1: real Slack OAuth consent screen mockup
+   (Figma node 20666:13647) — a screenshot of the real Slack authorization
+   page, recreated in markup here rather than embedding an expiring asset. ---------- */
+.oauth-mock { text-align: left; }
+.oauth-mock .oauth-icons { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 1.6rem; }
+.oauth-mock .oauth-icons .swap { color: var(--gray-400); font-size: 1.8rem; }
+.oauth-mock h4 { text-align: center; font-size: 1.7rem; line-height: 1.35; margin: 0 0 2rem; }
+.oauth-mock .oauth-section-label { font-size: 1.3rem; font-weight: 700; color: var(--gray-900); margin: 0 0 .6rem; }
+.oauth-mock .oauth-row {
+  display: flex; align-items: center; gap: 1.2rem; padding: 1rem 0; border-top: 1px solid var(--gray-200); font-size: 1.35rem; color: var(--gray-700);
+}
+.oauth-mock .oauth-row .material-symbols-rounded.leading { color: var(--gray-500); font-size: 2rem; flex-shrink: 0; }
+.oauth-mock .oauth-row span.label { flex: 1; }
+.oauth-mock .oauth-row .material-symbols-rounded.chevron { color: var(--gray-400); font-size: 1.8rem; }
+.oauth-mock .oauth-group { margin-bottom: 1.6rem; }
+.oauth-mock .oauth-footer { display: flex; gap: 1.2rem; margin-top: 2rem; }
+.oauth-mock .oauth-footer .btn { flex: 1; }
+.btn-slack-allow { background: #007a5a; color: #fff; }
+.btn-slack-allow:hover { background: #00593f; }
+
+/* Warning-tone Alert (Zone DS "Alert" component, warning variant) — Figma
+   node 20666:13546, replaces the hand-rolled orange channel-note box. */
+.alert-warning {
+  display: flex; gap: 1.2rem; align-items: flex-start; text-align: left;
+  background: #fdfdea; border: 1px solid #9f580a; color: #723b13;
+  border-radius: var(--radius-lg); padding: .8rem 1.2rem; font-size: 1.35rem; line-height: 1.5;
+}
+
+/* ---------- Connect-flow step 4: delivered Slack message (Figma node
+   20679:14853) — the payoff screen shown after saving a Slack-delivered
+   notification, demonstrating the interactive triage buttons from the
+   original growth research (Looks fine / Investigate / Not useful). ---------- */
+.slack-delivered { border-radius: 10px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,.12); }
+.slack-delivered .channel-header { background: #350d36; color: #fff; padding: 1.4rem 1.6rem; font-size: 1.4rem; font-weight: 500; }
+.slack-delivered .msg-body { padding: 1.6rem; display: flex; gap: 1rem; }
+.slack-delivered .msg-avatar {
+  width: 3.6rem; height: 3.6rem; border-radius: 6px; background: var(--primary-700); color: #fff;
+  display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.5rem; flex-shrink: 0;
+}
+.slack-delivered .msg-content { flex: 1; min-width: 0; }
+.slack-delivered .msg-meta { display: flex; align-items: center; gap: .7rem; margin-bottom: .4rem; }
+.slack-delivered .msg-meta .sender { font-weight: 700; color: var(--gray-900); font-size: 1.35rem; }
+.slack-delivered .msg-meta .app-badge {
+  display: inline-flex; align-items: center; gap: .3rem; background: var(--gray-100); color: var(--gray-800);
+  font-size: 1.1rem; padding: .1rem .6rem; border-radius: var(--radius); font-weight: 500;
+}
+.slack-delivered .msg-meta .app-badge .material-symbols-rounded { font-size: 1.3rem; }
+.slack-delivered .msg-meta .timestamp { color: var(--gray-500); font-size: 1.1rem; }
+.slack-delivered .msg-title { font-weight: 700; color: var(--gray-900); font-size: 1.35rem; margin: 0 0 .5rem; }
+.slack-delivered .msg-tag-row { display: flex; align-items: center; gap: .6rem; margin-bottom: .6rem; }
+.slack-delivered .msg-tag { background: #f5e1b8; color: #7a5a15; font-weight: 700; font-size: 1.25rem; padding: .1rem .6rem; border-radius: 3px; }
+.slack-delivered .msg-timerange { color: var(--gray-500); font-size: 1.25rem; }
+.slack-delivered .msg-desc { color: var(--gray-900); font-size: 1.35rem; margin: 0 0 .8rem; }
+.slack-delivered .msg-confidence {
+  display: inline-flex; background: #ff9725; color: #fff; font-size: 1.15rem; padding: .2rem .8rem; border-radius: var(--radius-sm); margin-bottom: 1rem;
+}
+.slack-delivered .msg-actions { display: flex; gap: .8rem; flex-wrap: wrap; }
+.slack-delivered .msg-actions .btn { padding: .6rem 1.2rem; font-size: 1.3rem; }
+
 /* ---------- Modals ---------- */
 .modal-backdrop { position: fixed; inset: 0; background: rgba(17, 24, 39, .5); z-index: 900; }
 .modal-wrap { position: fixed; inset: 0; z-index: 901; display: flex; align-items: center; justify-content: center; padding: 2.4rem; }

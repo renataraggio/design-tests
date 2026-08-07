@@ -253,8 +253,16 @@
           case "proto-set-state": protoSetState(arg); break;
           case "proto-reset": protoReset(); break;
           case "save-notification":
+            var slackWasChecked = $("#cf-slack-checkbox") && $("#cf-slack-checkbox").checked;
             closeModal("create-form");
-            showToast("Notification saved" + ($("#cf-slack-checkbox") && $("#cf-slack-checkbox").checked ? " — sent to Slack." : "."));
+            // Payoff step (Figma "05 · Connect Slack flow / 4") — show what
+            // actually lands in Slack instead of just a toast, when Slack
+            // delivery is on. Plain toast otherwise.
+            if (slackWasChecked) {
+              openModal("delivered");
+            } else {
+              showToast("Notification saved.");
+            }
             break;
           case "noop": break;
         }

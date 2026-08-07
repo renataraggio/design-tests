@@ -226,36 +226,90 @@
   </div>
 </div>
 
+<!-- Figma "05 · Shared — Connect Slack flow". Step 1 recreates the real Slack
+     OAuth consent screen (node 20666:13647) rather than a generic
+     Hubstaff-branded dialog; step 2 adds the real warning-toned Alert
+     component (node 20666:13546) instead of a hand-rolled note box. -->
 <div id="connect-backdrop" class="modal-backdrop d-none" data-action="close-modal" data-arg="connect"></div>
 <div id="connect" class="modal-wrap d-none">
   <div class="modal-box w-sm" onclick="event.stopPropagation()">
     <div class="modal-header"><span></span><button class="modal-close" data-action="close-modal" data-arg="connect">&times;</button></div>
-    <div id="connect-step-1" class="modal-body modal-centered" style="padding-top:0;">
-      <svg width="48" height="48" viewBox="0 0 122.8 122.8" xmlns="http://www.w3.org/2000/svg" style="margin-bottom:1.4rem;">
-        <path d="M25.8 77.6c0 7.1-5.8 12.9-12.9 12.9S0 84.7 0 77.6s5.8-12.9 12.9-12.9h12.9v12.9z" fill="#e01e5a"/>
-        <path d="M32.3 77.6c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9v32.3c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V77.6z" fill="#e01e5a"/>
-        <path d="M45.2 25.8c-7.1 0-12.9-5.8-12.9-12.9S38.1 0 45.2 0s12.9 5.8 12.9 12.9v12.9H45.2z" fill="#36c5f0"/>
-        <path d="M45.2 32.3c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H12.9C5.8 58.1 0 52.3 0 45.2s5.8-12.9 12.9-12.9h32.3z" fill="#36c5f0"/>
-        <path d="M97 45.2c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9-5.8 12.9-12.9 12.9H97V45.2z" fill="#2eb67d"/>
-        <path d="M90.5 45.2c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V12.9C64.7 5.8 70.5 0 77.6 0s12.9 5.8 12.9 12.9v32.3z" fill="#2eb67d"/>
-        <path d="M77.6 97c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9-12.9-5.8-12.9-12.9V97h12.9z" fill="#ecb22e"/>
-        <path d="M77.6 90.5c-7.1 0-12.9-5.8-12.9-12.9s5.8-12.9 12.9-12.9h32.3c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H77.6z" fill="#ecb22e"/>
-      </svg>
-      <h4>Allow Hubstaff to access Slack</h4>
-      <p>Hubstaff will post unusual activity and smart notification alerts to a channel you choose. You can disconnect any time from Settings → Integrations.</p>
-      <button class="btn btn-primary" style="width:100%;" id="connect-authorize-btn" data-action="connect-step1-continue">Allow</button>
+    <div id="connect-step-1" class="modal-body oauth-mock" style="padding-top:0;">
+      <div class="oauth-icons">
+        <svg width="32" height="32" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#2AA7FF"/></svg>
+        <span class="material-symbols-rounded swap">swap_horiz</span>
+        <svg width="32" height="32" viewBox="0 0 122.8 122.8" xmlns="http://www.w3.org/2000/svg">
+          <path d="M25.8 77.6c0 7.1-5.8 12.9-12.9 12.9S0 84.7 0 77.6s5.8-12.9 12.9-12.9h12.9v12.9z" fill="#e01e5a"/>
+          <path d="M32.3 77.6c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9v32.3c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V77.6z" fill="#e01e5a"/>
+          <path d="M45.2 25.8c-7.1 0-12.9-5.8-12.9-12.9S38.1 0 45.2 0s12.9 5.8 12.9 12.9v12.9H45.2z" fill="#36c5f0"/>
+          <path d="M45.2 32.3c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H12.9C5.8 58.1 0 52.3 0 45.2s5.8-12.9 12.9-12.9h32.3z" fill="#36c5f0"/>
+          <path d="M97 45.2c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9-5.8 12.9-12.9 12.9H97V45.2z" fill="#2eb67d"/>
+          <path d="M90.5 45.2c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V12.9C64.7 5.8 70.5 0 77.6 0s12.9 5.8 12.9 12.9v32.3z" fill="#2eb67d"/>
+          <path d="M77.6 97c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9-12.9-5.8-12.9-12.9V97h12.9z" fill="#ecb22e"/>
+          <path d="M77.6 90.5c-7.1 0-12.9-5.8-12.9-12.9s5.8-12.9 12.9-12.9h32.3c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H77.6z" fill="#ecb22e"/>
+        </svg>
+      </div>
+      <h4>Hubstaff is requesting permission to access your Slack workspace</h4>
+      <div class="oauth-group">
+        <p class="oauth-section-label">WHAT WILL HUBSTAFF BE ABLE TO VIEW?</p>
+        <div class="oauth-row"><span class="material-symbols-rounded leading">tag</span><span class="label">Content and info about channels &amp; conversations</span><span class="material-symbols-rounded chevron">chevron_right</span></div>
+        <div class="oauth-row"><span class="material-symbols-rounded leading">grid_view</span><span class="label">Content and info about your workspace</span><span class="material-symbols-rounded chevron">chevron_right</span></div>
+      </div>
+      <div class="oauth-group">
+        <p class="oauth-section-label">WHAT WILL HUBSTAFF BE ABLE TO DO?</p>
+        <div class="oauth-row"><span class="material-symbols-rounded leading">bolt</span><span class="label">Perform actions in channels &amp; conversations</span><span class="material-symbols-rounded chevron">chevron_right</span></div>
+      </div>
+      <div class="oauth-footer">
+        <a href="#" class="btn btn-outline" data-action="close-modal" data-arg="connect">Cancel</a>
+        <button class="btn btn-slack-allow" id="connect-authorize-btn" data-action="connect-step1-continue">Allow</button>
+      </div>
     </div>
     <div id="connect-step-2" class="modal-body modal-centered d-none" style="padding-top:0;">
       <h4>Where should alerts appear?</h4>
+      <p style="text-align:left; margin:0 0 1.6rem; color:var(--gray-700); font-size:1.4rem;">Choose one or more Slack channels to receive unusual activity and Slack-enabled smart notifications.</p>
       <div class="channel-field">
         <label>Slack channel</label>
         <span class="channel-chip"><span class="material-symbols-rounded" style="font-size:1.4rem;">tag</span>hubstaff-alerts</span>
       </div>
-      <div class="channel-note">
-        <span class="material-symbols-rounded">info</span>
+      <div class="alert-warning">
+        <span class="material-symbols-rounded" style="font-size:1.7rem; flex-shrink:0;">warning</span>
         <span>We recommend a private, admin-only channel — unusual activity data is sensitive and everyone in the channel will see it.</span>
       </div>
-      <button class="btn btn-primary" style="width:100%; margin-top:2rem;" data-action="connect-step2-finish">Connect #hubstaff-alerts</button>
+      <button class="btn btn-primary" style="width:100%; margin-top:2rem;" data-action="connect-step2-finish">Connect channels</button>
+    </div>
+  </div>
+</div>
+
+<!-- Connect-flow step 4: delivered Slack message (Figma node 20679:14853) —
+     shown after saving a Slack-delivered notification, so the payoff isn't
+     just a toast. -->
+<div id="delivered-backdrop" class="modal-backdrop d-none" data-action="close-modal" data-arg="delivered"></div>
+<div id="delivered" class="modal-wrap d-none">
+  <div class="modal-box w-sm" onclick="event.stopPropagation()" style="background:transparent; box-shadow:none;">
+    <div class="slack-delivered">
+      <div class="channel-header"># hubstaff-alerts</div>
+      <div class="msg-body">
+        <div class="msg-avatar">H</div>
+        <div class="msg-content">
+          <div class="msg-meta">
+            <span class="sender">Hubstaff</span>
+            <span class="app-badge"><span class="material-symbols-rounded">bolt</span>APP</span>
+            <span class="timestamp">Just now</span>
+          </div>
+          <p class="msg-title">⚠️ Unusual activity detected</p>
+          <div class="msg-tag-row">
+            <span class="msg-tag">@priya.shah</span>
+            <span class="msg-timerange">· Today, 9:12–10:40 AM</span>
+          </div>
+          <p class="msg-desc">What we saw: Low keyboard/mouse activity for 88 min while clocked in on Admin — outside Priya's usual pattern for this project.</p>
+          <div class="msg-confidence">Confidence: Medium</div>
+          <div class="msg-actions">
+            <a href="#" class="btn btn-outline" data-action="close-modal" data-arg="delivered">Looks fine 👍</a>
+            <a href="#" class="btn btn-outline" data-action="close-modal" data-arg="delivered">Investigate 🔍</a>
+            <a href="#" class="btn btn-outline" data-action="close-modal" data-arg="delivered">Not useful 🚫</a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

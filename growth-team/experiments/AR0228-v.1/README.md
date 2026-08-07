@@ -111,11 +111,28 @@ proposed names — `banner_slack_nudge_clicked`, `alert_slack_nudge_clicked`,
 `detection_modal_slack_nudge_clicked`, `popup_fork_slack_nudge_clicked` — so
 the call sites are already correct for whoever wires up the real pipeline.
 
-The embedded connect flow (pre-connect only) defaults the channel to
-**`#hubstaff-alerts`** with an explicit "we recommend a private, admin-only
-channel" note — unusual-activity data is sensitive, and it's worth being upfront
-that anyone in the chosen Slack channel will see it, rather than defaulting to
-`#general`.
+The embedded connect flow (pre-connect only, Figma "05 · Shared — Connect
+Slack flow") is four steps, not two:
+
+1. **Real Slack OAuth consent screen** — recreated from the actual captured
+   screenshot in the source Figma file (node 20666:13647), not a generic
+   "Allow Hubstaff to access Slack" branded dialog. Shows the real permission
+   grant language ("What will Hubstaff be able to view/do?") and Slack's own
+   green "Allow" button, not Hubstaff blue.
+2. **Channel picker**, defaulting to **`#hubstaff-alerts`**, with the real
+   warning-toned Alert component (yellow, node 20666:13546) — "we recommend a
+   private, admin-only channel" — since unusual-activity data is sensitive
+   and everyone in the chosen channel will see it, rather than defaulting to
+   `#general`.
+3. **The prefilled notification form** (already covered above), Slack
+   pre-checked.
+4. **The delivered Slack message** (node 20679:14853) — shown after saving a
+   Slack-delivered notification instead of a plain toast. Recreates the exact
+   message payload from the original growth research (member tag, time
+   range, plain-language description, confidence label) plus the three
+   interactive triage buttons — "Looks fine 👍 / Investigate 🔍 / Not useful
+   🚫" — proposed there as the highest-leverage addition over today's
+   plain-text bot messages.
 
 The "Prototype controls" panel exposes all three states directly (not just a
 connected/disconnected toggle) so a reviewer can check the copy and flow for the
