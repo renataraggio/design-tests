@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Org wizard — Hubstaff</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<div class="wizard" id="wizard">
+  <div class="wizard__glow" aria-hidden="true"></div>
+
+  <div class="wizard__body">
+
+    <!-- ── Shared heading: progress + title + subtitle ──────────────────── -->
+    <header class="wizard-heading">
+      <div class="wizard-progress" id="progress" role="progressbar"
+           aria-label="Setup progress" aria-valuemin="1" aria-valuemax="4" aria-valuenow="1"
+           aria-valuetext="Step 1 of 4">
+        <span class="wizard-progress__seg"></span>
+        <span class="wizard-progress__seg"></span>
+        <span class="wizard-progress__seg"></span>
+        <span class="wizard-progress__seg"></span>
+      </div>
+
+      <div class="wizard-heading__text">
+        <h1 class="wizard-heading__title" id="step-title">Create your organization</h1>
+        <p class="wizard-heading__subtitle" id="step-subtitle">This is how your workspace will display to your team.</p>
+      </div>
+    </header>
+
+    <p class="visually-hidden" role="status" aria-live="polite" id="step-announcer"></p>
+
+    <!-- ══ Step 1 — Create your organization ════════════════════════════ -->
+    <section class="wizard-step" id="step-1" aria-labelledby="step-title">
+
+      <div class="wizard-step__content wizard-step__content--form">
+        <div class="stack stack--lg">
+
+          <div class="field-grid">
+            <div class="field">
+              <label class="field__label" for="org-name">
+                Organization name <span class="field__required" aria-hidden="true">*</span>
+              </label>
+              <input class="input" type="text" id="org-name" required aria-required="true"
+                     autocomplete="organization" value="Wayne Enterprises Long Name Very Long" />
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="org-website">Website</label>
+              <input class="input" type="url" id="org-website" autocomplete="url"
+                     placeholder="https://example.com" value="https://waynetech.com" />
+            </div>
+          </div>
+
+          <div class="stack stack--sm">
+            <span class="field__label" id="team-size-label">How big is your team?</span>
+            <div class="chip-group" role="radiogroup" aria-labelledby="team-size-label" data-radiogroup id="team-size">
+              <button type="button" class="chip" role="radio" aria-checked="false" value="1-2">1-2</button>
+              <button type="button" class="chip" role="radio" aria-checked="true"  value="3-6">3-6</button>
+              <button type="button" class="chip" role="radio" aria-checked="false" value="7-10">7-10</button>
+              <button type="button" class="chip" role="radio" aria-checked="false" value="11-50">11-50</button>
+              <button type="button" class="chip" role="radio" aria-checked="false" value="51-250">51-250</button>
+              <button type="button" class="chip" role="radio" aria-checked="false" value="250-500">250-500</button>
+              <button type="button" class="chip" role="radio" aria-checked="false" value="500+">500+</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="preview">
+        <div class="preview__frame">
+          <div class="mock-app" aria-hidden="true">
+            <div class="mock-app__sidebar">
+              <span class="mock-app__logo"><img src="assets/logo-mark.svg" alt="" />Hubstaff</span>
+              <div class="mock-nav">
+                <div class="sk-row"><span class="sk-dot"></span><span class="sk-bar sk-bar--strong"></span></div>
+                <div class="sk-row"><span class="sk-dot"></span><span class="sk-bar sk-bar--strong"></span></div>
+                <div class="sk-row"><span class="sk-dot"></span><span class="sk-bar sk-bar--strong"></span></div>
+                <div class="sk-row"><span class="sk-dot"></span><span class="sk-bar sk-bar--strong"></span></div>
+              </div>
+            </div>
+            <div class="mock-app__main">
+              <div class="mock-app__topbar"></div>
+              <div class="mock-app__canvas">
+                <div class="sk-grid">
+                  <div class="sk-row"><span class="sk-dot"></span><span class="sk-bar"></span></div>
+                  <div class="sk-row"><span class="sk-dot"></span><span class="sk-bar"></span></div>
+                  <div class="sk-row"><span class="sk-dot"></span><span class="sk-bar"></span></div>
+                </div>
+                <div class="sk-widgets">
+                  <div class="sk-widget">
+                    <div class="sk-widget__col">
+                      <span class="sk-bar sk-bar--strong" style="width:64px"></span>
+                      <span class="sk-bar"></span>
+                      <span class="sk-bar sk-bar--strong" style="width:64px"></span>
+                      <span class="sk-bar"></span>
+                    </div>
+                    <div class="sk-donut"></div>
+                  </div>
+                  <div class="sk-widget">
+                    <div class="sk-widget__col">
+                      <span class="sk-bar sk-bar--strong" style="width:36px"></span>
+                      <div class="sk-legend"><span class="sk-swatch" style="background:var(--primary-200)"></span><span class="sk-bar" style="flex:1"></span></div>
+                      <div class="sk-legend"><span class="sk-swatch" style="background:var(--supporting-dark)"></span><span class="sk-bar" style="flex:1"></span></div>
+                      <div class="sk-legend"><span class="sk-swatch" style="background:var(--red-200)"></span><span class="sk-bar" style="flex:1"></span></div>
+                      <div class="sk-stack">
+                        <span style="flex:5;background:var(--primary-200)"></span>
+                        <span style="flex:3;background:var(--supporting-dark)"></span>
+                        <span style="flex:1;background:var(--red-200)"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ══ Step 2 — Set your goals ══════════════════════════════════════ -->
+    <section class="wizard-step" id="step-2" aria-labelledby="step-title" hidden>
+
+      <div class="wizard-step__content">
+        <div class="card-group" role="radiogroup" aria-labelledby="step-title" data-radiogroup id="goals">
+
+          <button type="button" class="option-card" role="radio" aria-checked="true" value="monitor">
+            <span class="option-card__head">
+              <span class="material-symbols-rounded option-card__icon" aria-hidden="true">desktop_windows</span>
+              <span class="option-card__title">Monitor our employees</span>
+              <span class="option-card__radio" aria-hidden="true"></span>
+            </span>
+            <span class="option-card__desc">Track time, see what your team is working on, view screenshots, and better understand how you can improve your performance, and more.</span>
+          </button>
+
+          <button type="button" class="option-card" role="radio" aria-checked="false" value="schedules">
+            <span class="option-card__head">
+              <span class="material-symbols-rounded option-card__icon" aria-hidden="true">calendar_month</span>
+              <span class="option-card__title">Manage our schedules</span>
+              <span class="option-card__radio" aria-hidden="true"></span>
+            </span>
+            <span class="option-card__desc">Create shifts, time limits, set time off policies, approve and deny over time requests, and more.</span>
+          </button>
+
+          <button type="button" class="option-card" role="radio" aria-checked="false" value="pay">
+            <span class="option-card__head">
+              <span class="material-symbols-rounded option-card__icon" aria-hidden="true">account_balance_wallet</span>
+              <span class="option-card__title">Pay our staff</span>
+              <span class="option-card__radio" aria-hidden="true"></span>
+            </span>
+            <span class="option-card__desc">Set pay rates, send payments to staff, connect with third-party payroll providers, and streamline back office operations.</span>
+          </button>
+
+          <button type="button" class="option-card" role="radio" aria-checked="false" value="productivity">
+            <span class="option-card__head">
+              <span class="material-symbols-rounded option-card__icon" aria-hidden="true">timer</span>
+              <span class="option-card__title">Track our productivity</span>
+              <span class="option-card__radio" aria-hidden="true"></span>
+            </span>
+            <span class="option-card__desc">See where our team can be more productive, decrease the risk of underworking and overpayment, improve team efficiency.</span>
+          </button>
+
+          <button type="button" class="option-card" role="radio" aria-checked="false" value="exploring">
+            <span class="option-card__head">
+              <span class="material-symbols-rounded option-card__icon" aria-hidden="true">explore</span>
+              <span class="option-card__title">Just exploring</span>
+              <span class="option-card__radio" aria-hidden="true"></span>
+            </span>
+            <span class="option-card__desc">Explore our range of features and discover the tools that will best enhance your team's productivity.</span>
+          </button>
+
+        </div>
+      </div>
+
+      <div class="preview">
+        <div class="preview__frame">
+          <div class="mock-app" aria-hidden="true">
+            <div class="mock-app__sidebar">
+              <span class="mock-app__logo"><img src="assets/logo-mark.svg" alt="" />Hubstaff</span>
+              <div class="mock-nav" id="goals-nav"></div>
+            </div>
+            <div class="mock-app__main">
+              <div class="mock-app__topbar">
+                <span class="mock-member__avatar" style="background:#0e9f6e">W</span>
+                <span>Wayne Enterprises Long Name Very Long</span>
+              </div>
+              <div class="mock-app__canvas">
+                <div class="sk-grid">
+                  <div class="sk-row"><span class="sk-dot"></span><span class="sk-bar"></span></div>
+                  <div class="sk-row"><span class="sk-dot"></span><span class="sk-bar"></span></div>
+                  <div class="sk-row"><span class="sk-dot"></span><span class="sk-bar"></span></div>
+                </div>
+                <div class="sk-widgets">
+                  <div class="sk-widget">
+                    <div class="sk-widget__col">
+                      <span class="sk-bar sk-bar--strong" style="width:64px"></span>
+                      <span class="sk-bar"></span>
+                      <span class="sk-bar sk-bar--strong" style="width:64px"></span>
+                      <span class="sk-bar"></span>
+                    </div>
+                    <div class="sk-donut"></div>
+                  </div>
+                  <div class="sk-widget">
+                    <div class="sk-widget__col">
+                      <span class="sk-bar sk-bar--strong" style="width:36px"></span>
+                      <div class="sk-legend"><span class="sk-swatch" style="background:var(--primary-200)"></span><span class="sk-bar" style="flex:1"></span></div>
+                      <div class="sk-legend"><span class="sk-swatch" style="background:var(--supporting-dark)"></span><span class="sk-bar" style="flex:1"></span></div>
+                      <div class="sk-legend"><span class="sk-swatch" style="background:var(--red-200)"></span><span class="sk-bar" style="flex:1"></span></div>
+                      <div class="sk-stack">
+                        <span style="flex:5;background:var(--primary-200)"></span>
+                        <span style="flex:3;background:var(--supporting-dark)"></span>
+                        <span style="flex:1;background:var(--red-200)"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ══ Step 3 — How do you want your team to track time? ════════════ -->
+    <section class="wizard-step" id="step-3" aria-labelledby="step-title" hidden>
+
+      <div class="wizard-step__content">
+        <div class="card-group" role="radiogroup" aria-labelledby="step-title" data-radiogroup id="tracking">
+
+          <button type="button" class="option-card" role="radio" aria-checked="true" value="desktop">
+            <span class="badge">
+              <span class="material-symbols-rounded" aria-hidden="true">auto_awesome</span>
+              Recommended, most used
+            </span>
+            <span class="option-card__head">
+              <span class="material-symbols-rounded option-card__icon" aria-hidden="true">desktop_windows</span>
+              <span class="option-card__title">Desktop app</span>
+              <span class="option-card__radio" aria-hidden="true"></span>
+            </span>
+            <span class="option-card__desc">You'll get team activity, URL logging, and screenshots out of the box.</span>
+          </button>
+
+          <button type="button" class="option-card" role="radio" aria-checked="false" value="all">
+            <span class="option-card__head">
+              <span class="material-symbols-rounded option-card__icon" aria-hidden="true">devices</span>
+              <span class="option-card__title">All platforms</span>
+              <span class="option-card__radio" aria-hidden="true"></span>
+            </span>
+            <span class="option-card__desc">Track time from the browser, mobile, or desktop application.</span>
+          </button>
+
+          <button type="button" class="option-card" role="radio" aria-checked="false" value="silent">
+            <span class="option-card__head">
+              <span class="material-symbols-rounded option-card__icon" aria-hidden="true">lan</span>
+              <span class="option-card__title">Silent app</span>
+              <span class="option-card__radio" aria-hidden="true"></span>
+            </span>
+            <span class="option-card__desc">You're interested in silently tracking time and activity on company-owned devices.</span>
+          </button>
+
+        </div>
+      </div>
+
+      <div class="preview">
+        <div class="preview__frame" style="border:none;box-shadow:none;background:transparent;overflow:visible">
+          <div class="mock-devices" aria-hidden="true">
+
+            <div class="mock-stack" id="silent-stack" hidden>
+              <div class="mock-stack__card">Jennifer Wilson: MacOS 16.7</div>
+              <div class="mock-stack__card">Carl Biggers: MacOS 16.7</div>
+            </div>
+
+            <div class="mock-window">
+              <div class="mock-window__chrome">
+                <span class="mock-window__dot"></span>
+                <span class="mock-window__dot"></span>
+                <span class="mock-window__dot"></span>
+              </div>
+              <div class="mock-window__body">
+                <div class="mock-timer">
+                  <span class="mock-timer__title">Budget review</span>
+                  <span class="mock-timer__pill">
+                    <span class="material-symbols-rounded" aria-hidden="true">stop_circle</span>
+                    02:45:14
+                  </span>
+                  <span class="mock-timer__meta"><span>Worked today</span><span>02:45:14 / 10:00:00</span></span>
+                  <span class="mock-timer__track"><span></span></span>
+                  <span class="mock-field"><span class="material-symbols-rounded" aria-hidden="true">search</span>Search</span>
+                  <span class="mock-timer__meta"><span>ALL PROJECTS (48)</span></span>
+                  <span class="mock-timer__meta"><span>Announcements</span></span>
+                </div>
+                <div class="mock-issues">
+                  <div class="mock-issues__head">
+                    <span class="mock-issues__crumb">
+                      <span class="material-symbols-rounded" aria-hidden="true">folder</span>Budget review
+                    </span>
+                    <span class="mock-pill-outline">
+                      <span class="material-symbols-rounded" aria-hidden="true">stop_circle</span>Stop
+                    </span>
+                  </div>
+                  <div class="mock-issues__head">
+                    <span class="mock-field" style="width:140px">Filter by status</span>
+                    <span class="mock-field" style="flex:1"><span class="material-symbols-rounded" aria-hidden="true">search</span>Find issues</span>
+                  </div>
+                  <table class="mock-table">
+                    <thead>
+                      <tr><th>Issue</th><th>Description</th><th>Status</th><th>Created at</th></tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>Update annual spre…</td><td>Text</td><td>Text</td><td>Text</td></tr>
+                      <tr><td>Catalogue receipts</td><td>Text</td><td>Text</td><td>Text</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="mock-phone" id="all-platforms-phone" hidden>
+              <div class="mock-phone__screen">
+                <span class="mock-member__role">Timer</span>
+                <span class="mock-phone__dial">
+                  00:00:00
+                  <span class="mock-phone__label">Product design</span>
+                </span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ══ Step 4 — Invite your team ════════════════════════════════════ -->
+    <section class="wizard-step" id="step-4" aria-labelledby="step-title" hidden>
+
+      <div class="wizard-step__content wizard-step__content--form">
+        <div class="stack stack--lg">
+
+          <div class="stack">
+            <h2 class="section-title">Invite your first manager</h2>
+            <div class="stack stack--sm" id="manager-list">
+              <div class="input-group">
+                <input class="input" type="email" aria-label="Manager email address"
+                       autocomplete="off" value="adriangoia@wayne.com" />
+                <select class="input-group__addon" aria-label="Role for adriangoia@wayne.com">
+                  <option selected>Manager</option>
+                  <option>Member</option>
+                  <option>Viewer</option>
+                </select>
+              </div>
+            </div>
+            <button type="button" class="link-btn" data-add-row="manager-list" data-role="Manager">+ Add another manager</button>
+          </div>
+
+          <div class="disclosure">
+            <button type="button" class="disclosure__toggle" id="invite-users-toggle"
+                    aria-expanded="false" aria-controls="invite-users-panel">
+              <span class="disclosure__chevron material-symbols-rounded" aria-hidden="true">chevron_right</span>
+              Or, invite your users
+            </button>
+
+            <div class="disclosure__panel" id="invite-users-panel" hidden>
+              <p class="section-body">Hubstaff is best when used with your team. You can invite team members to your organization using the link below or send them an invite via email.</p>
+
+              <div class="field-grid">
+                <div class="stack">
+                  <div class="stack" style="gap:var(--space-1)">
+                    <h3 class="section-title">Invite members via email</h3>
+                    <span class="field__hint">You can always invite more members later</span>
+                  </div>
+                  <div class="stack stack--sm" id="member-list">
+                    <div class="input-group">
+                      <input class="input" type="email" aria-label="Member email address"
+                             autocomplete="off" value="kylewalter@wayne.com" />
+                      <select class="input-group__addon" aria-label="Role for kylewalter@wayne.com">
+                        <option selected>Member</option>
+                        <option>Manager</option>
+                        <option>Viewer</option>
+                      </select>
+                    </div>
+                  </div>
+                  <button type="button" class="link-btn" data-add-row="member-list" data-role="Member">+ Add another member</button>
+                </div>
+
+                <div class="stack">
+                  <div class="stack" style="gap:var(--space-1)">
+                    <h3 class="section-title">Send an invite link</h3>
+                    <span class="field__hint">Copy the link below to send to your team</span>
+                  </div>
+                  <div class="input-group">
+                    <input class="input" type="text" id="invite-link" readonly
+                           aria-label="Organization invite link"
+                           value="https://app.staging.hbstf.co/organizations/invite/9f2c" />
+                    <button type="button" class="input-group__addon input-group__addon--action" id="copy-link">Copy</button>
+                  </div>
+                  <span class="visually-hidden" role="status" aria-live="polite" id="copy-status"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="preview">
+        <div class="preview__frame">
+          <div class="mock-app" aria-hidden="true">
+            <div class="mock-app__sidebar">
+              <span class="mock-app__logo"><img src="assets/logo-mark.svg" alt="" />Hubstaff</span>
+              <div class="mock-nav">
+                <span class="mock-nav__group"><span class="material-symbols-rounded" aria-hidden="true">monitoring</span>Activity</span>
+                <span class="mock-nav__item">Screenshots</span>
+                <span class="mock-nav__item">Apps &amp; URLs</span>
+                <span class="mock-nav__group"><span class="material-symbols-rounded" aria-hidden="true">bar_chart</span>Insights</span>
+                <span class="mock-nav__item">Performance</span>
+                <span class="mock-nav__item">Unusual activity</span>
+              </div>
+            </div>
+            <div class="mock-app__main">
+              <div class="mock-app__topbar">
+                <span class="mock-member__avatar" style="background:#0e9f6e">W</span>
+                <span>Wayne Enterprises Long Name Very Long</span>
+              </div>
+              <div class="mock-app__canvas">
+                <div class="sk-grid" id="invite-preview-grid"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <!-- ── Shared footer ─────────────────────────────────────────────────── -->
+  <footer class="wizard-footer">
+    <button type="button" class="btn" id="btn-back">
+      <span class="material-symbols-rounded" aria-hidden="true">arrow_back</span>
+      Back
+    </button>
+
+    <div class="wizard-footer__actions">
+      <button type="button" class="btn btn--primary" id="btn-continue">
+        <span id="btn-continue-label">Continue</span>
+        <span class="material-symbols-rounded" aria-hidden="true">arrow_forward</span>
+      </button>
+    </div>
+  </footer>
+
+</div>
+
+<script src="org-wizard.js"></script>
+<script src="design-annotations.js"></script>
+<script src="design-annotations.data.js"></script>
+<script>
+  DesignAnnotations.init({
+    pages: window.DESIGN_ANNOTATIONS_DATA.pages,
+    annotations: window.DESIGN_ANNOTATIONS_DATA.annotations,
+    mount: '#wizard',
+    topOffset: 0,
+    trigger: ['contextmenu', 'button'],
+    taskCenter: true,
+  });
+</script>
+</body>
+</html>
