@@ -5,9 +5,17 @@ via the two surfaces that already show them real, specific value — **Insights 
 Unusual Activity** and **Smart Notifications**. Built fresh for this experiment
 (not reusing the earlier `experiments/slack-smart-notifications/` mockups or its
 strategy doc) — grounded instead in a fresh read of the live `hubstaff-server` repo,
-the real production screenshots taken directly from `app.hubstaff.com`, the four
-Figma component specs linked in the brief, and
+the real production screenshots taken directly from `app.hubstaff.com`, the
+numbered Figma spec (node `20688:23147`), and
 [support.hubstaff.com/slack-integration-setup](https://support.hubstaff.com/slack-integration-setup/).
+
+The underlying experiment design doc (real cohort data: orgs that adopt
+Slack-delivered notifications within 30 days see 89%/86% M2/M3 retention vs.
+79%/74% for orgs that don't; today's organic adoption after a detected
+unusual-activity event is 0.14% — 15 of 10,754 eligible orgs) frames this as a
+channel-expansion of HUB-14281's already-validated "show real detected value,
+then ask" mechanic (email → +293% Insights trial starts, +368% first charges),
+not a net-new growth bet.
 
 ## Pages
 
@@ -34,12 +42,16 @@ dialog already works.
 
 ## The four Figma concepts, and where each landed
 
+Revised against the full numbered spec at Figma node `20688:23147` ("ARXXXX —
+Slack nudge for smart notifications alerts", sections 00–06), which formalized
+this exact placement/rationale and added detail this build now follows:
+
 | Figma idea | Placement | Why |
 |---|---|---|
-| **Alert** (small, node 20634:8254) | Smart Notifications page, persistent | This is a *settings* page — the user is already in a configuring mindset. A quiet cross-sell back to real Unusual Activity data fits better than a full pitch. |
-| **Banner** (node 20635:8314) | Unusual Activity page, persistent while disconnected | This is where the real evidence (the flagged-members table) already lives — the ask sits directly next to the proof, mirroring the "show real detected value, then ask" pattern that's already worked for this feature via email (HUB-14281: +293% Insights trial starts, +368% first charges, sending a one-time email with *real* detected unusual activity to non-subscribers). |
-| **Modal** (node 20635:8548, "New unusual activity detected") | Unusual Activity page, auto-opens once per browser | The higher-intensity "moment of detection" surface — fires once, respects "Don't show again" (permanent, `localStorage`), never stacks with the banner (closing it just reveals the banner underneath, it doesn't add a second nag). |
-| **Pop-up** (node 20635:8700, "Get alerts pushed to Slack") | Shared fork, both pages | The decision point once someone starts a *create* action pre-connect: "Create notification" (skip Slack, plain rule) vs. "Connect Slack" (the growth path). Once Slack is already connected, this fork is skipped entirely — every CTA goes straight to the prefilled, Slack-checked form. |
+| **01 · Alert** (compact, node 20634:8254) | Smart Notifications page, persistent | This is a *settings* page — the user is already in a configuring mindset. A quiet cross-sell back to real Unusual Activity data fits better than a full pitch. Unchanged copy/style from the first pass — confirmed still gray/neutral in the updated spec, not the blue treatment the Banner got. |
+| **02 · Banner** (node 20688:19901/19938) | Unusual Activity page, persistent while disconnected | Sits directly next to the real evidence (the flagged-members table) — show data, then ask. Updated spec moved this to the **blue "info" treatment** (`primary/50` bg, `primary/700` border) instead of the neutral gray card from the first pass — more attention-grabbing on a page with no other blue. |
+| **03 · Detection modal** ("New unusual activity detected", node 20652:8378) | Unusual Activity page, auto-opens once per browser | The higher-intensity "moment of detection" surface — fires once, respects "Don't show again," never stacks with the banner. **New in this revision:** the body now shows a mocked Slack message (bot avatar, attachment card, per-member classification fields) instead of a generic in-app list — showing literally what the pushed alert would look like is a stronger "aha" than restating the data in different chrome. |
+| **04 · Pop-up fork** ("Get alerts pushed to Slack", node 20688:20571) | **Merged into the real "Add a smart notification" type-choice dialog**, both pages | No longer a standalone fork screen. A promo card ("Create a notification for Slack" + a Not‑connected/Connected pill) now sits on top of the real dialog's two existing options (Create a custom notification / Choose from our templates) — both of which honor current Slack status automatically. See "Open question" below on whether this surface is ever fully suppressed. |
 
 ## Flow logic
 
@@ -76,12 +88,28 @@ pre-connect; an already-connected org skips it entirely.
     form opens the same way
 
 "Create notification" / "New notification" header buttons, or any ambiguous entry point
-  → if usedHere: prefilled form opens directly, Slack pre-checked
-  → otherwise: the pop-up fork opens first
-       "Create notification" → plain form; Slack checkbox enabled if orgConnected,
-                                disabled otherwise, but never pre-checked
-       "Connect Slack"/"Use Slack" → routes through the same branch as above
+  → always opens the type-choice dialog (promo card + the two real option cards)
+  → clicking either option card:
+       if orgConnected: prefilled form opens directly, Slack pre-checked
+       if not: same embedded connect flow as above, then the prefilled form
 ```
+
+**Open question, carried over from the spec rather than silently resolved:**
+the spec's own flow-overview text says surface 04 is "skipped entirely once
+already connected," but the actual mockups include a distinct *connected*
+variant of the promo card (different pill + copy, not absent). This build
+follows the concrete mockups — the type-choice dialog always shows, with the
+promo card's content branching on `orgConnected` — since a visual mock is a
+firmer spec than a one-line summary. Flagging the discrepancy rather than
+picking a side unilaterally; worth confirming with design before this ships.
+
+**Click tracking**: the spec doc calls out that none of the four nudge
+surfaces have click events today ("needs to be built, doesn't exist"). This
+prototype can't wire real analytics, but every nudge CTA now calls a
+`trackEvent(name)` stub (visible in the browser console) using the exact
+proposed names — `banner_slack_nudge_clicked`, `alert_slack_nudge_clicked`,
+`detection_modal_slack_nudge_clicked`, `popup_fork_slack_nudge_clicked` — so
+the call sites are already correct for whoever wires up the real pipeline.
 
 The embedded connect flow (pre-connect only) defaults the channel to
 **`#hubstaff-alerts`** with an explicit "we recommend a private, admin-only

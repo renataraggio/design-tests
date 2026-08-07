@@ -86,12 +86,36 @@
     });
   }
 
+  // Click-tracking stub for the four events the spec doc flags as "to be
+  // built, no baseline exists" (alert/banner/detection_modal/popup_fork
+  // _slack_nudge_clicked). No analytics backend in a static prototype, so
+  // this just logs — but every real CTA fires it, so the event names and
+  // call sites are already correct for whoever wires up the real pipeline.
+  function trackEvent(name, detail) {
+    console.info("[track]", name, Object.assign({ orgConnected: state.orgConnected, usedHere: state.usedHere }, detail || {}));
+  }
+
   // ---------- Growth entry points ----------
+  // Always opens the type-choice dialog (Figma section 04) — per the actual
+  // mockups (not the flow-overview summary text, which claims this surface
+  // is "skipped entirely once connected") the promo card still shows once
+  // connected, just with different copy. Flagged as an open question in the
+  // spec itself; implemented per the concrete mocks. See README.
   function openGrowthEntry() {
-    if (state.usedHere) {
+    render();
+    openModal("popup");
+  }
+
+  // Fires when either option card in the type-choice dialog is clicked.
+  // Both cards honor current Slack status the same way the promo card
+  // promises: connect-then-create if not connected, straight to the
+  // prefilled form if already connected.
+  function startNotificationCreation() {
+    closeModal("popup");
+    if (state.orgConnected) {
       openCreateForm(true);
     } else {
-      openModal("popup");
+      openConnectFlow();
     }
   }
 
@@ -208,7 +232,16 @@
         var arg = el.getAttribute("data-arg");
         switch (action) {
           case "growth-entry": openGrowthEntry(); break;
-          case "handle-connect-cta": handleConnectCta(); break;
+          case "handle-connect-cta":
+            if (el.closest("#detect")) trackEvent("detection_modal_slack_nudge_clicked");
+            else if (el.closest(".growth-banner")) trackEvent("banner_slack_nudge_clicked");
+            else if (el.closest(".growth-alert")) trackEvent("alert_slack_nudge_clicked");
+            handleConnectCta();
+            break;
+          case "start-notification-creation":
+            trackEvent("popup_fork_slack_nudge_clicked", { choice: arg });
+            startNotificationCreation();
+            break;
           case "connect-step1-continue": connectStep1Continue(); break;
           case "connect-step2-finish": connectStep2Finish(); break;
           case "open-create-form": openCreateForm(arg === "slack"); break;

@@ -186,16 +186,19 @@ button { font-family: inherit; }
 .rec-card.view-all:hover { background: var(--gray-50); }
 
 /* ---------- Growth surfaces ---------- */
-/* Banner — Figma node 20635:8314 */
+/* Banner — Figma node 20688:19901/19938. Updated spec moved this to the
+   blue "info" treatment (primary/50 bg, primary/700 border) instead of the
+   neutral gray card used in the first pass — more attention-grabbing since
+   it sits next to the real evidence table on a page with no other blue. */
 .growth-banner {
-  background: var(--gray-50); border: 1px solid var(--gray-600); border-radius: var(--radius-lg);
-  padding: 1.6rem 2rem; display: flex; align-items: center; gap: 1.6rem; margin-bottom: 2rem;
+  background: var(--blue-50); border: 1px solid var(--primary-700); border-radius: var(--radius-lg);
+  padding: 1.5rem 1.6rem; display: flex; align-items: center; gap: 1.6rem; margin-bottom: 2rem;
 }
 .growth-banner .icon { flex-shrink: 0; }
 .growth-banner .content { flex: 1; }
 .growth-banner .content strong { display: block; font-size: 1.6rem; color: var(--gray-800); margin-bottom: .3rem; }
 .growth-banner .content p { margin: 0; font-size: 1.4rem; color: var(--gray-800); }
-.growth-banner .dismiss { flex-shrink: 0; color: var(--gray-400); cursor: pointer; }
+.growth-banner .dismiss { flex-shrink: 0; color: var(--primary-700); cursor: pointer; }
 
 /* Alert — Figma node 20634:8254, compact variant */
 .growth-alert {
@@ -212,6 +215,55 @@ button { font-family: inherit; }
   padding: 1.2rem 1.6rem; display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; color: var(--green-800); font-size: 1.4rem;
 }
 .connected-strip .material-symbols-rounded { color: #0e9f6e; }
+
+/* Status pill (not connected / connected) — Figma "Pill - Read only" */
+.status-pill { display: inline-flex; align-items: center; padding: .3rem 1rem; border-radius: 999px; font-size: 1.2rem; flex-shrink: 0; }
+.status-pill.not-connected { background: var(--gray-100); color: var(--gray-600); }
+.status-pill.connected { background: var(--green-100); color: var(--green-800); }
+
+/* Promo card + two-option layout inside the redesigned "Add a smart
+   notification" type-choice dialog — Figma section 04, now merged into the
+   real dialog rather than a standalone fork screen. */
+.promo-card {
+  border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 2rem;
+  box-shadow: 0 2px 2px -2px rgba(0,0,0,.05), 0 4px 3px -2px rgba(0,0,0,.1); margin-bottom: 1.6rem;
+}
+.promo-card .promo-head { display: flex; align-items: center; justify-content: space-between; gap: 1.2rem; margin-bottom: .8rem; }
+.promo-card .promo-title { display: flex; align-items: center; gap: 1rem; }
+.promo-card .promo-title strong { font-size: 1.8rem; color: var(--gray-900); }
+.promo-card .promo-desc { color: var(--gray-500); font-size: 1.4rem; margin: 0; line-height: 1.5; }
+
+.choice-cards { display: flex; gap: 1.6rem; }
+.choice-card {
+  flex: 1; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 2rem;
+  display: flex; flex-direction: column; align-items: center; text-align: center; gap: .8rem; cursor: pointer;
+}
+.choice-card:hover { background: var(--gray-50); }
+.choice-card .material-symbols-rounded { font-size: 3.6rem; color: var(--primary-700); }
+.choice-card strong { font-size: 1.6rem; color: var(--gray-900); }
+.choice-card p { margin: 0; color: var(--gray-500); font-size: 1.4rem; line-height: 1.4; }
+
+/* Slack message mockup embedded in the detection modal — Figma section 03's
+   "Slack Message" frame, showing exactly what the pushed alert would look like. */
+.slack-msg { display: flex; gap: 1.2rem; align-items: flex-start; margin-top: 1.6rem; }
+.slack-msg .bot-avatar {
+  width: 3.6rem; height: 3.6rem; border-radius: 6px; background: var(--primary-900); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.6rem;
+}
+.slack-msg .content { flex: 1; min-width: 0; }
+.slack-msg .meta-row { display: flex; align-items: center; gap: .8rem; margin-bottom: .4rem; }
+.slack-msg .sender { font-weight: 700; font-size: 1.4rem; color: var(--gray-800); }
+.slack-msg .bot-badge { background: #edf2f7; color: var(--gray-600); font-size: 1rem; font-weight: 700; padding: .1rem .5rem; border-radius: 3px; }
+.slack-msg .attachment { border-left: 4px solid var(--gray-200); padding: .4rem 0 .4rem 1.6rem; }
+.slack-msg .alert-title { font-weight: 800; color: var(--gray-900); font-size: 1.4rem; margin: 0 0 .6rem; }
+.slack-msg .alert-summary { color: var(--gray-700); font-size: 1.4rem; margin: 0 0 .8rem; }
+.slack-msg .fields-table { display: flex; flex-direction: column; gap: .6rem; }
+.slack-msg .field-row { display: flex; gap: 1.2rem; align-items: center; font-size: 1.35rem; }
+.slack-msg .field-row .who { width: 120px; flex-shrink: 0; font-weight: 500; color: var(--gray-800); }
+.slack-msg .field-row .classification { font-size: 1.2rem; font-weight: 500; }
+.slack-msg .field-row .classification.high { color: var(--red-700); }
+.slack-msg .field-row .classification.medium { color: var(--orange-800); }
+.slack-msg .field-row .classification.low { color: var(--green-800); }
 
 /* ---------- Modals ---------- */
 .modal-backdrop { position: fixed; inset: 0; background: rgba(17, 24, 39, .5); z-index: 900; }

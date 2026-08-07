@@ -90,7 +90,7 @@
           <path d="M77.6 90.5c-7.1 0-12.9-5.8-12.9-12.9s5.8-12.9 12.9-12.9h32.3c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H77.6z" fill="#ecb22e"/>
         </svg>
         <div class="content">
-          <strong>Get unusual activity flagged the moment it happens!</strong>
+          <strong>Get unusual activity flagged the moment they happen!</strong>
           <p data-if="org-not-connected">Connect Slack to receive unusual activity alerts in real time instead of checking here.</p>
           <p data-if="connected-unused">You already have Slack connected — turn on real-time alerts for unusual activity instead of checking here.</p>
         </div>
@@ -200,19 +200,33 @@
       <button class="modal-close" data-action="dismiss-detect">&times;</button>
     </div>
     <div class="modal-body">
-      <p style="margin:0 0 1.6rem; font-size:1.4rem; color:var(--gray-700);"><strong style="color:var(--gray-900);">3 members</strong> were flagged for unusual activity this week. Don't want to keep checking back? Get flags like this pushed to Slack.</p>
-      <div class="detect-list">
-        <div class="detect-row">
-          <div class="who"><span class="avatar" style="background:#c0392b; width:2.4rem; height:2.4rem; font-size:1rem;">PS</span>Priya Shah</div>
-          <div class="meta"><span class="confidence-badge high">Highly unusual</span><span>3 instances · Aug 5, 2026</span></div>
+      <p style="margin:0 0 .4rem; font-size:1.4rem; color:var(--gray-700);"><strong style="color:var(--gray-900);">3 members</strong> were flagged for unusual activity this week. Don't want to keep checking back? Get flags like this pushed to Slack.</p>
+      <!-- Slack message mockup — Figma node 20679:14598, shows exactly what the
+           pushed alert would look like rather than a generic in-app list. -->
+      <div class="slack-msg">
+        <div class="bot-avatar">
+          <svg width="20" height="20" viewBox="0 0 122.8 122.8" xmlns="http://www.w3.org/2000/svg">
+            <path d="M25.8 77.6c0 7.1-5.8 12.9-12.9 12.9S0 84.7 0 77.6s5.8-12.9 12.9-12.9h12.9v12.9z" fill="#e01e5a"/>
+            <path d="M32.3 77.6c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9v32.3c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V77.6z" fill="#e01e5a"/>
+            <path d="M45.2 25.8c-7.1 0-12.9-5.8-12.9-12.9S38.1 0 45.2 0s12.9 5.8 12.9 12.9v12.9H45.2z" fill="#36c5f0"/>
+            <path d="M45.2 32.3c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H12.9C5.8 58.1 0 52.3 0 45.2s5.8-12.9 12.9-12.9h32.3z" fill="#36c5f0"/>
+            <path d="M97 45.2c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9-5.8 12.9-12.9 12.9H97V45.2z" fill="#2eb67d"/>
+            <path d="M90.5 45.2c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V12.9C64.7 5.8 70.5 0 77.6 0s12.9 5.8 12.9 12.9v32.3z" fill="#2eb67d"/>
+            <path d="M77.6 97c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9-12.9-5.8-12.9-12.9V97h12.9z" fill="#ecb22e"/>
+            <path d="M77.6 90.5c-7.1 0-12.9-5.8-12.9-12.9s5.8-12.9 12.9-12.9h32.3c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H77.6z" fill="#ecb22e"/>
+          </svg>
         </div>
-        <div class="detect-row">
-          <div class="who"><span class="avatar" style="background:#8e44ad; width:2.4rem; height:2.4rem; font-size:1rem;">MW</span>Marcus Webb</div>
-          <div class="meta"><span class="confidence-badge medium">Unusual</span><span>2 instances · Aug 5, 2026</span></div>
-        </div>
-        <div class="detect-row">
-          <div class="who"><span class="avatar" style="background:#2980b9; width:2.4rem; height:2.4rem; font-size:1rem;">ET</span>Elena Torres</div>
-          <div class="meta"><span class="confidence-badge medium">Unusual</span><span>1 instance · Aug 4, 2026</span></div>
+        <div class="content">
+          <div class="meta-row"><span class="sender">Slack Alerts</span><span class="bot-badge">APP</span></div>
+          <div class="attachment">
+            <p class="alert-title">🚨 Unusual Activity Detected</p>
+            <p class="alert-summary"><strong>3 members</strong> were flagged for unusual activity this week.</p>
+            <div class="fields-table">
+              <div class="field-row"><span class="who">Priya Shah</span><span class="classification high">Highly unusual (3 instances)</span></div>
+              <div class="field-row"><span class="who">Marcus Webb</span><span class="classification medium">Unusual (2 instances)</span></div>
+              <div class="field-row"><span class="who">Elena Torres</span><span class="classification medium">Unusual (1 instance)</span></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -226,33 +240,59 @@
   </div>
 </div>
 
-<!-- ============ GROWTH SURFACE: Pop-up / fork (Figma node 20635:8700) ============
-     Shown pre-connect when the user starts a "create notification" action — decides
-     whether to connect Slack now or just create a plain rule. -->
+<!-- ============ GROWTH SURFACE: type-choice dialog + Slack promo card
+     (Figma node 20688:20571 / 20700:2701, "04 · Pop-up fork") ============
+     Updated design merges the growth fork directly into the real "Add a smart
+     notification" type-choice dialog (Create custom / Choose from templates)
+     instead of a separate screen — a promo card on top explains what Slack
+     delivery means, but the two real options underneath are the actual choice.
+     Both cards honor current Slack status automatically: connect-then-create
+     if not connected yet, straight to the prefilled form if already connected. -->
 <div id="popup-backdrop" class="modal-backdrop d-none" data-action="close-modal" data-arg="popup"></div>
 <div id="popup" class="modal-wrap d-none">
-  <div class="modal-box w-sm" onclick="event.stopPropagation()">
-    <div class="modal-body modal-centered" style="padding-top:2.8rem;">
-      <div class="icon-circle"><span class="material-symbols-rounded">notifications_active</span></div>
-      <h4>Get alerts pushed to Slack</h4>
-      <p>Instead of checking back here, have unusual activity alerts sent straight to Slack as they happen.</p>
-      <div class="btn-row">
-        <a href="#" class="btn btn-primary" data-action="open-create-form" data-arg="plain">Create notification</a>
-        <a href="#" class="btn btn-outline" data-action="handle-connect-cta">
-          <svg width="16" height="16" viewBox="0 0 122.8 122.8" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
-            <path d="M25.8 77.6c0 7.1-5.8 12.9-12.9 12.9S0 84.7 0 77.6s5.8-12.9 12.9-12.9h12.9v12.9z" fill="#e01e5a"/>
-            <path d="M32.3 77.6c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9v32.3c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V77.6z" fill="#e01e5a"/>
-            <path d="M45.2 25.8c-7.1 0-12.9-5.8-12.9-12.9S38.1 0 45.2 0s12.9 5.8 12.9 12.9v12.9H45.2z" fill="#36c5f0"/>
-            <path d="M45.2 32.3c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H12.9C5.8 58.1 0 52.3 0 45.2s5.8-12.9 12.9-12.9h32.3z" fill="#36c5f0"/>
-            <path d="M97 45.2c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9-5.8 12.9-12.9 12.9H97V45.2z" fill="#2eb67d"/>
-            <path d="M90.5 45.2c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V12.9C64.7 5.8 70.5 0 77.6 0s12.9 5.8 12.9 12.9v32.3z" fill="#2eb67d"/>
-            <path d="M77.6 97c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9-12.9-5.8-12.9-12.9V97h12.9z" fill="#ecb22e"/>
-            <path d="M77.6 90.5c-7.1 0-12.9-5.8-12.9-12.9s5.8-12.9 12.9-12.9h32.3c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H77.6z" fill="#ecb22e"/>
-          </svg>
-          <span data-if="org-not-connected">Connect Slack</span>
-          <span data-if="connected-unused">Use Slack</span>
-        </a>
+  <div class="modal-box w-lg" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h4>Add a smart notification</h4>
+      <button class="modal-close" data-action="close-modal" data-arg="popup">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="promo-card">
+        <div class="promo-head">
+          <div class="promo-title">
+            <svg width="24" height="24" viewBox="0 0 122.8 122.8" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+              <path d="M25.8 77.6c0 7.1-5.8 12.9-12.9 12.9S0 84.7 0 77.6s5.8-12.9 12.9-12.9h12.9v12.9z" fill="#e01e5a"/>
+              <path d="M32.3 77.6c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9v32.3c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V77.6z" fill="#e01e5a"/>
+              <path d="M45.2 25.8c-7.1 0-12.9-5.8-12.9-12.9S38.1 0 45.2 0s12.9 5.8 12.9 12.9v12.9H45.2z" fill="#36c5f0"/>
+              <path d="M45.2 32.3c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H12.9C5.8 58.1 0 52.3 0 45.2s5.8-12.9 12.9-12.9h32.3z" fill="#36c5f0"/>
+              <path d="M97 45.2c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9-5.8 12.9-12.9 12.9H97V45.2z" fill="#2eb67d"/>
+              <path d="M90.5 45.2c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V12.9C64.7 5.8 70.5 0 77.6 0s12.9 5.8 12.9 12.9v32.3z" fill="#2eb67d"/>
+              <path d="M77.6 97c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9-12.9-5.8-12.9-12.9V97h12.9z" fill="#ecb22e"/>
+              <path d="M77.6 90.5c-7.1 0-12.9-5.8-12.9-12.9s5.8-12.9 12.9-12.9h32.3c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H77.6z" fill="#ecb22e"/>
+            </svg>
+            <strong>Create a notification for Slack</strong>
+          </div>
+          <span class="status-pill not-connected" data-if="org-not-connected">Not connected</span>
+          <span class="status-pill connected" data-if="connected-unused">Connected</span>
+          <span class="status-pill connected" data-if="used-here">Connected</span>
+        </div>
+        <p class="promo-desc" data-if="org-not-connected">We'll connect your workspace first, then open a new smart notification with Slack delivery already switched on.</p>
+        <p class="promo-desc" data-if="org-connected">Start a new smart notification with Slack delivery already switched on — just choose what it should watch.</p>
       </div>
+      <div class="choice-cards">
+        <div class="choice-card" data-action="start-notification-creation" data-arg="custom">
+          <span class="material-symbols-rounded">notifications</span>
+          <strong>Create a custom notification</strong>
+          <p>Build it from scratch — choose the trigger, who it watches and where it lands.</p>
+        </div>
+        <div class="choice-card" data-action="start-notification-creation" data-arg="template">
+          <span class="material-symbols-rounded">grid_view</span>
+          <strong>Choose from our templates</strong>
+          <p>Start from a ready-made notification and adjust it to fit your team.</p>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a href="#" class="btn btn-outline" data-action="close-modal" data-arg="popup">Cancel</a>
     </div>
   </div>
 </div>
@@ -349,16 +389,23 @@
       <p class="form-section-title">Then</p>
       <p class="sub" style="margin:0 0 1.2rem;">Select who receives the notification and where.</p>
 
+      <!-- Not-connected nudge reuses the same real "Alert" component as the
+           compact Alert on Smart Notifications (Figma node 20652:9915) — sits
+           above the checkboxes, not a stray link below them. -->
+      <div class="growth-alert" data-if="org-not-connected" style="margin-bottom:1.2rem;">
+        <span class="material-symbols-rounded">notifications_active</span>
+        <div class="content">Get notified in Slack the moment it happens.</div>
+        <a href="#" class="btn btn-outline-dark btn-sm" data-action="handle-connect-cta">Connect Slack</a>
+      </div>
       <label class="check-row"><input type="checkbox" checked disabled /><span>Show on Highlights page</span><span class="material-symbols-rounded info">info</span></label>
       <label class="check-row"><input type="checkbox" /><span>Send via email</span></label>
       <label class="check-row" id="cf-slack-row">
         <input type="checkbox" id="cf-slack-checkbox" />
         <span>Send to Slack</span>
         <span class="material-symbols-rounded info">info</span>
-        <span data-if="org-not-connected" style="margin-left:auto; color:var(--gray-400); font-size:1.2rem;">Connect Slack to enable this</span>
         <span data-if="org-connected" style="margin-left:auto; color:var(--primary-700); font-size:1.2rem; font-weight:500;">Will post to #hubstaff-alerts</span>
       </label>
-      <a href="#" class="btn-text" data-if="org-not-connected" style="font-size:1.3rem; margin-top:.4rem; display:inline-block;" data-action="handle-connect-cta">Connect Slack →</a>
+      <p class="form-hint" data-if="org-connected" style="margin-top:-.2rem;">The Slack channel can be modified at Settings &gt; Integrations &gt; Slack.</p>
     </div>
     <div class="modal-footer">
       <a href="#" class="btn btn-outline" data-action="close-modal" data-arg="create-form">Cancel</a>
