@@ -1374,7 +1374,69 @@ button {
   gap: var(--space-2-5);
 }
 
-/* ── 15. Design Annotations overrides ──────────────────────────────────── */
+/* ── 15. Review-tool chips (Annotations / Dev Mode / Design tasks) ───────
+   The three overlay controls ship from two different engines and don't match.
+   Design tasks and Annotations get a floating treatment (9px 14px + shadow)
+   while Dev Mode keeps its inline size (5px 8px, no shadow), and their radii
+   disagree (99px vs 6px). Normalise all three to one chip; colour still
+   carries the role. Both engines are fixed dependencies — override, don't edit.
+   ─────────────────────────────────────────────────────────────────────── */
+
+body .da-fab,
+body .da-tc-btn--float,
+body .dm-tc-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 34px;
+  margin: 0;
+  padding: 0 var(--space-3-5);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  line-height: 1;
+  box-shadow: 0 4px 14px rgba(17, 24, 39, 0.16);
+}
+
+body .da-fab .material-symbols-rounded,
+body .da-tc-btn--float .material-symbols-rounded,
+body .dm-tc-btn .material-symbols-rounded {
+  font-size: var(--font-size-md) !important;
+}
+
+/* Secondary chips — Dev Mode and Design tasks sit next to each other. */
+body .da-tc-btn--float,
+body .dm-tc-btn {
+  background: var(--white);
+  border: 1px solid var(--border);
+  color: var(--text-body);
+}
+
+body .da-tc-btn--float:hover,
+body .dm-tc-btn:hover {
+  background: var(--gray-100);
+  color: var(--text);
+}
+
+/* Dev Mode's on-state already uses Blue 700 — keep it, match the border. */
+body .dm-tc-btn.is-active {
+  background: var(--primary-700);
+  border-color: var(--primary-700);
+  color: var(--white);
+}
+
+/* Primary chip — the drawer toggle stays dark so the set reads as a hierarchy. */
+body .da-fab {
+  background: var(--gray-900);
+  border: 1px solid var(--gray-900);
+  color: var(--white);
+}
+
+body .da-fab:hover {
+  background: #000;
+  transform: none;
+}
 
 body .da-tc-btn--float {
   top: 20px;
@@ -1398,8 +1460,9 @@ body .dm-tc-btn {
   position: fixed;
   z-index: 2147483000;
   top: 20px;
-  right: 170px; /* clears the 142px-wide Design tasks button at right: 20px */
-  margin-left: 0;
+  /* index.html measures the Design tasks chip and publishes --dm-chip-right,
+     since that chip's width moves with the task-count badge. */
+  right: var(--dm-chip-right, 175px);
 }
 
 /* At mobile widths the top row is the page title, and the footer stacks to
