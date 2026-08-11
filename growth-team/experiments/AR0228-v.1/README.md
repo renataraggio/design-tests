@@ -1,4 +1,4 @@
-# ARXXXX — Slack nudge for smart notifications alerts
+# AR0229 — Slack nudge for smart notifications alerts
 
 A clickable HTML prototype for a growth experiment: get more orgs to connect Slack
 via the two surfaces that already show them real, specific value — **Insights →
@@ -42,7 +42,7 @@ dialog already works.
 
 ## The four Figma concepts, and where each landed
 
-Revised against the full numbered spec at Figma node `20688:23147` ("ARXXXX —
+Revised against the full numbered spec at Figma node `20688:23147` ("AR0229 —
 Slack nudge for smart notifications alerts", sections 00–06), which formalized
 this exact placement/rationale and added detail this build now follows:
 
