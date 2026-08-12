@@ -98,7 +98,35 @@
     .status-template    { background: rgba(255, 255, 255, 0.08); color: #9ca3af; }
     .status-archived    { background: rgba(255, 255, 255, 0.06); color: #9ca3af; }
     .secondary-link { color: #6b7280; }
+  
+  .groupby__btn { background: #111318; border-color: rgba(255,255,255,0.12); color: #9ca3af; }
+  .groupby__btn:hover { border-color: rgba(255,255,255,0.24); color: #e5e7eb; }
+  .groupby__btn.is-active { background: #e5e7eb; border-color: #e5e7eb; color: #111827; }
+  .card-team { background: rgba(255,255,255,0.06); color: #9ca3af; }
+  .group-count { color: #4b5563; }
+}
+
+  /* group-by control */
+  .groupby { display: flex; align-items: center; gap: 8px; margin: -24px 0 40px; }
+  .groupby__label { font-size: 12px; color: #9ca3af; margin-right: 2px; }
+  .groupby__btn {
+    font: inherit; font-size: 12px; font-weight: 600;
+    padding: 5px 12px; border-radius: 9999px; cursor: pointer;
+    border: 1px solid #e5e7eb; background: #ffffff; color: #6b7280;
   }
+  .groupby__btn:hover { border-color: #d1d5db; color: #4b5563; }
+  .groupby__btn.is-active { background: #111827; border-color: #111827; color: #ffffff; }
+  .group-count { font-weight: 400; color: #d1d5db; margin-left: 6px; }
+
+  /* team chip: replaces the status badge when grouping by status, so the
+     footer carries exactly one chip either way */
+  .card-team {
+    display: none; align-items: center; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.02em; padding: 3px 9px; border-radius: 9999px;
+    background: #f3f4f6; color: #6b7280; white-space: nowrap;
+  }
+  body.group-status .status { display: none; }
+  body.group-status .card-team { display: inline-flex; }
 </style>
 </head>
 <body>
@@ -106,6 +134,13 @@
 <h1>Design Tests</h1>
 <p class="subtitle">Prototypes and design handoffs for review.</p>
 
+<div class="groupby" role="group" aria-label="Group prototypes by">
+  <span class="groupby__label">Group by</span>
+  <button type="button" class="groupby__btn is-active" data-group="team">Team</button>
+  <button type="button" class="groupby__btn" data-group="status">Status</button>
+</div>
+
+<div id="view-team">
 <h2>Growth Team</h2>
 <div class="grid">
 
@@ -444,6 +479,101 @@
   </div>
 
 </div>
+</div>
+
+<div id="view-status" hidden></div>
+
+
+<script>
+(function () {
+  'use strict';
+
+  /* Statuses are read off the cards themselves, so this stays correct as
+     prototypes are added — there is no second list to keep in sync. */
+  var ORDER = ['In design', 'In development', 'In A/B testing',
+               'In user testing', 'In review', 'Template', 'Archived'];
+
+  var teamView = document.getElementById('view-team');
+  var statusView = document.getElementById('view-status');
+  var grids = [].slice.call(teamView.querySelectorAll('.grid'));
+
+  /* Remember each grid's original card order so "Team" can restore exactly. */
+  var home = grids.map(function (g) {
+    return { grid: g, cards: [].slice.call(g.querySelectorAll(':scope > .card')) };
+  });
+
+  home.forEach(function (entry) {
+    var team = entry.grid.previousElementSibling.textContent.replace(/\s*Team\s*$/i, '').trim();
+    entry.cards.forEach(function (card) {
+      card.dataset.team = team;
+      var badge = card.querySelector('.status');
+      card.dataset.status = badge ? badge.textContent.trim() : 'Unlabelled';
+      var footer = card.querySelector('.card-footer');
+      if (footer && !footer.querySelector('.card-team')) {
+        var chip = document.createElement('span');
+        chip.className = 'card-team';
+        chip.textContent = team;
+        footer.insertBefore(chip, footer.firstChild);
+      }
+    });
+  });
+
+  var all = home.reduce(function (acc, e) { return acc.concat(e.cards); }, []);
+
+  function buildStatusView() {
+    statusView.innerHTML = '';
+    var seen = {};
+    all.forEach(function (c) { (seen[c.dataset.status] = seen[c.dataset.status] || []).push(c); });
+
+    /* Known statuses first in lifecycle order, then anything unrecognised so a
+       new label shows up rather than silently vanishing. */
+    var labels = ORDER.filter(function (s) { return seen[s]; })
+      .concat(Object.keys(seen).filter(function (s) { return ORDER.indexOf(s) === -1; }).sort());
+
+    labels.forEach(function (label) {
+      var h2 = document.createElement('h2');
+      h2.textContent = label;
+      var count = document.createElement('span');
+      count.className = 'group-count';
+      count.textContent = seen[label].length;
+      h2.appendChild(count);
+
+      var grid = document.createElement('div');
+      grid.className = 'grid';
+      seen[label].forEach(function (c) { grid.appendChild(c); });
+
+      statusView.appendChild(h2);
+      statusView.appendChild(grid);
+    });
+  }
+
+  function restoreTeamView() {
+    home.forEach(function (e) { e.cards.forEach(function (c) { e.grid.appendChild(c); }); });
+    statusView.innerHTML = '';
+  }
+
+  function apply(mode) {
+    if (mode === 'status') { buildStatusView(); } else { restoreTeamView(); }
+    teamView.hidden = mode === 'status';
+    statusView.hidden = mode !== 'status';
+    document.body.classList.toggle('group-status', mode === 'status');
+    [].forEach.call(document.querySelectorAll('.groupby__btn'), function (b) {
+      b.classList.toggle('is-active', b.dataset.group === mode);
+      b.setAttribute('aria-pressed', String(b.dataset.group === mode));
+    });
+    try { localStorage.setItem('design-tests:groupBy', mode); } catch (e) {}
+  }
+
+  document.querySelector('.groupby').addEventListener('click', function (e) {
+    var btn = e.target.closest('.groupby__btn');
+    if (btn) { apply(btn.dataset.group); }
+  });
+
+  var saved = null;
+  try { saved = localStorage.getItem('design-tests:groupBy'); } catch (e) {}
+  apply(saved === 'status' ? 'status' : 'team');
+}());
+</script>
 
 </body>
 </html>
