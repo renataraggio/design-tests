@@ -1,41 +1,33 @@
 (function () {
   "use strict";
 
-  var TOTAL_STEPS = 3;
+  var TOTAL_STEPS = 2;
   var currentStep = 1;
 
-  var step1Confirmed = false; // gated by clicking "Download the desktop app"
-  var step2TimerStarted = false; // gated by pressing play on the timer
-  var step2Bypassed = false; // gated by "Continue without tracking time" in the help modal
-  var step2ProjectAssigned = false; // no project means there's nothing to track time to
+  var appDownloaded = false; // gated by the "Download" CTA in the setup story
+  var trackingConfirmed = false; // gated by the desktop app reporting tracking started
+  var trackingBypassed = false; // gated by "Continue without tracking time" in the help modal
+  var noProjectDetected = false; // gated by the desktop app reporting tracking with no project assigned
 
   var sidebar = document.getElementById("sidebar-toggle");
   var segmentsRoot = document.getElementById("segments");
   var progressFill = document.getElementById("progress-fill");
   var btnBack = document.getElementById("btn-back");
-  var btnSkip = document.getElementById("btn-skip");
   var btnContinue = document.getElementById("btn-continue");
   var continueTooltip = document.getElementById("continue-tooltip");
-  var onboardingRoot = document.getElementById("onboarding");
-  var mainAction = document.getElementById("main-action");
   var step2AlertText = document.getElementById("step2-alert-text");
 
   var stepPanels = {
     1: document.getElementById("step-panel-1"),
     2: document.getElementById("step-panel-2"),
-    3: document.getElementById("step-panel-3"),
   };
 
   var STEP_COPY = {
     1: {
-      title: "Download the desktop app",
-      body: "This is used to track time to your projects and tasks",
-    },
-    2: {
       title: "Install the desktop app and track time to a project",
       body: "Start the timer on the desktop app to confirm your setup",
     },
-    3: {
+    2: {
       title: "Get familiar with Hubstaff",
       body: "Check out the video below and learn more about how to use Hubstaff",
     },
@@ -43,13 +35,11 @@
 
   // Tooltip copy for a disabled Continue — only steps with a real gate need one
   var CONTINUE_TOOLTIP_COPY = {
-    1: "Click the Download button for the desktop app to continue",
-    2: "Wait for the desktop app to confirm tracking",
+    1: "Wait for the desktop app to confirm tracking",
   };
 
   function isContinueUnlocked() {
-    if (currentStep === 1) return step1Confirmed;
-    if (currentStep === 2) return step2TimerStarted || step2Bypassed;
+    if (currentStep === 1) return trackingConfirmed || trackingBypassed || noProjectDetected;
     return true;
   }
 
@@ -66,12 +56,10 @@
   }
 
   function renderStep() {
-    // Copy — static per step; step 2 no longer swaps copy on tracking start
-    // (the final Figma hand-off only shows one title/body/alert state for it).
     document.getElementById("onboarding-title").textContent = STEP_COPY[currentStep].title;
     document.getElementById("onboarding-body").textContent = STEP_COPY[currentStep].body;
-    if (currentStep === 2) {
-      step2AlertText.textContent = "This timer will turn blue when you start tracking time. We’ll make sure everything is set up right.";
+    if (currentStep === 1) {
+      step2AlertText.textContent = "We’ll let you know the moment we can see you tracking time.";
     }
 
     // Progress bar — continuous fill (matches the Figma "ProgressBars" component)
@@ -83,15 +71,9 @@
       stepPanels[key].hidden = Number(key) !== currentStep;
     });
 
-    // Main action button only exists on step 1
-    onboardingRoot.classList.toggle("has-main-action", currentStep === 1);
-
     // Back button hidden only on step 1 (nothing to go back to)
     btnBack.hidden = currentStep === 1;
     btnBack.disabled = currentStep === 1;
-
-    // Skip is available on steps 1-2, hidden on the final step
-    btnSkip.hidden = currentStep === TOTAL_STEPS;
 
     // Continue/Finish button state
     setContinueButtonContent();
@@ -104,6 +86,7 @@
       continueTooltip.textContent = tooltipText;
     }
 
+    syncSetupStory();
   }
 
   sidebar.addEventListener("click", function () {
@@ -129,139 +112,123 @@
     }
   });
 
-  function skipOnboarding() {
-    window.dispatchEvent(new CustomEvent("onboarding:skip"));
-  }
-
-  btnSkip.addEventListener("click", function () {
-    // On Step 1, Skip just moves past the download prompt to Step 2 — it
-    // doesn't exit the whole flow (there's nothing to skip to yet on Step 1).
-    if (currentStep === 1) {
-      currentStep = 2;
-      renderStep();
-      return;
-    }
-    skipOnboarding();
-  });
-
-  // ── Step 1: "Download the desktop app" main action ──────────────────────
-
-  mainAction.addEventListener("click", function () {
-    if (step1Confirmed) return;
-    step1Confirmed = true;
-    mainAction.disabled = true;
-    mainAction.classList.add("is-confirmed");
-    mainAction.textContent = "";
-    var label = document.createElement("span");
-    label.textContent = "Downloaded";
-    mainAction.appendChild(label);
-    var icon = document.createElement("span");
-    icon.className = "material-symbols-rounded";
-    icon.setAttribute("aria-hidden", "true");
-    icon.textContent = "check";
-    mainAction.appendChild(icon);
-    if (currentStep === 1) {
-      btnContinue.disabled = false;
-      continueTooltip.hidden = true;
-    }
-  });
-
-  // ── Step 2: timer status ──────────────────────────────────────────────────
+  // ── Setup story + signal status ────────────────────────────────────────────
   // Nothing here is a real control — a web page can't start, stop, or even
-  // observe the real desktop app's timer. The mockup only mirrors what
-  // tracking looks like once the desktop app reports it started; the
-  // "Simulate" link below stands in for that real report, for demo purposes.
+  // observe the real desktop app's timer, so there's no fake app window or
+  // fake clickable timer. Instead this tells the story of what we expect
+  // (download → press play) and honestly shows that this page is just
+  // listening for a signal, not hosting the action itself. The "Simulate"
+  // link stands in for that real signal, for demo purposes.
 
-  var timerBar = document.getElementById("timer-bar");
-  var timerBarReadout = document.getElementById("timer-bar-readout");
-  var timerStatus = document.getElementById("timer-status");
-  var taskRowStatus = document.getElementById("task-row-status");
-  var taskRowTime = document.getElementById("task-row-time");
-  var projectAlert = document.getElementById("project-alert");
-  var groupLabel = document.getElementById("group-label");
-  var taskRow = document.getElementById("task-row");
-  var waitingIndicator = document.getElementById("waiting-indicator");
-  var btnRequestProject = document.getElementById("btn-request-project");
+  var setupStepDownload = document.getElementById("setup-step-download");
+  var setupStepDownloadActions = document.getElementById("setup-step-download-actions");
+  var setupStepDownloadCta = document.getElementById("setup-step-download-cta");
+  var setupStepAlreadyDidCta = document.getElementById("setup-step-already-did-cta");
+  var setupStepPlay = document.getElementById("setup-step-play");
+  var signalStatus = document.getElementById("signal-status");
+  var signalStatusText = document.getElementById("signal-status-text");
+  var signalStatusCheck = document.getElementById("signal-status-check");
+  var step2Alert = document.getElementById("step2-alert");
+  var noProjectAlert = document.getElementById("no-project-alert");
   var simulateTracking = document.getElementById("simulate-tracking");
+  var simulateNoProject = document.getElementById("simulate-no-project");
 
-  var elapsedSeconds = 0;
-  var timerInterval = null;
-
-  function pad(n) {
-    return String(n).padStart(2, "0");
+  function markStepComplete(stepEl, glyph) {
+    stepEl.classList.remove("is-current", "is-next", "is-pending");
+    stepEl.classList.add("is-complete");
+    var icon = stepEl.querySelector(".setup-step__icon");
+    icon.innerHTML = "";
+    var span = document.createElement("span");
+    span.className = "material-symbols-rounded";
+    span.setAttribute("aria-hidden", "true");
+    span.textContent = glyph;
+    icon.appendChild(span);
   }
 
-  function formatHHMMSS(totalSeconds) {
-    var h = Math.floor(totalSeconds / 3600);
-    var m = Math.floor((totalSeconds % 3600) / 60);
-    var s = totalSeconds % 60;
-    return pad(h) + ":" + pad(m) + ":" + pad(s);
-  }
-
-  function formatShort(totalSeconds) {
-    var h = Math.floor(totalSeconds / 3600);
-    var m = Math.floor((totalSeconds % 3600) / 60);
-    var s = totalSeconds % 60;
-    return h > 0 ? h + ":" + pad(m) + ":" + pad(s) : m + ":" + pad(s);
-  }
-
-  function tick() {
-    elapsedSeconds += 1;
-    timerBarReadout.textContent = formatHHMMSS(elapsedSeconds);
-    taskRowTime.textContent = formatShort(elapsedSeconds);
-  }
-
-  function flashProjectAlert() {
-    projectAlert.classList.remove("is-shaking");
-    // Force a reflow so re-adding the class restarts the animation even if
-    // it's already mid-shake from a previous click.
-    void projectAlert.offsetWidth;
-    projectAlert.classList.add("is-shaking");
-  }
-
-  // Represents the desktop app reporting that tracking started — there's no
-  // "pause" from here, because this page never had a way to stop the real
-  // app's timer either. Once it starts, it just keeps counting.
-  function startTimer() {
-    // No project assigned means there's nothing to track time to — the
-    // timer can't start. Draw attention to the alert instead.
-    if (!step2ProjectAssigned) {
-      flashProjectAlert();
-      return;
+  // Keeps the 2-step story honest about what actually happened — nothing
+  // downloads the app until one of the CTAs here is clicked.
+  function syncSetupStory() {
+    if (appDownloaded) {
+      markStepComplete(setupStepDownload, "check");
+      setupStepDownloadActions.hidden = true;
+    } else {
+      setupStepDownload.classList.remove("is-complete", "is-pending");
+      setupStepDownload.classList.add("is-current");
+      document.getElementById("setup-step-download-icon").textContent = "download";
+      setupStepDownloadActions.hidden = false;
     }
 
-    if (step2TimerStarted) return;
-    step2TimerStarted = true;
+    // "Press play" picks up the same active ring on its icon once the app is
+    // downloaded — it has no in-page action of its own (it happens in the
+    // real desktop app) so its label stays dimmed until it actually
+    // completes, unlike Download's label which is live from the start.
+    if (!trackingConfirmed) {
+      setupStepPlay.classList.remove("is-next", "is-pending");
+      setupStepPlay.classList.add(appDownloaded ? "is-next" : "is-pending");
+    }
+  }
 
-    // Resolve the "no project assigned" mockup state — swap the empty-state
-    // UI for the assigned-project task row.
-    timerBar.hidden = false;
-    projectAlert.hidden = true;
-    groupLabel.hidden = false;
-    taskRow.hidden = false;
-    waitingIndicator.hidden = true;
+  function confirmDownload() {
+    if (appDownloaded) return;
+    appDownloaded = true;
+    syncSetupStory();
+  }
+
+  setupStepDownloadCta.addEventListener("click", confirmDownload);
+  setupStepAlreadyDidCta.addEventListener("click", confirmDownload);
+
+  // Represents the desktop app reporting that tracking started. There's no
+  // "undo" from here — this page never had a way to stop the real app's
+  // timer either, only to hear that it started.
+  function reportTrackingStarted() {
+    if (trackingConfirmed) return;
+    trackingConfirmed = true;
+    appDownloaded = true;
+
+    markStepComplete(setupStepDownload, "check");
+    setupStepDownloadActions.hidden = true;
+    markStepComplete(setupStepPlay, "check");
+
+    signalStatus.classList.add("is-confirmed");
+    signalStatusCheck.hidden = false;
+    signalStatusText.textContent = "Got it — we can see you’re tracking time.";
+
+    step2Alert.classList.add("is-faded");
+    helpLink.classList.add("is-faded");
     simulateTracking.hidden = true;
-    btnRequestProject.hidden = true;
+    simulateNoProject.hidden = true;
 
-    timerBar.classList.add("is-running");
-    timerStatus.classList.add("is-running");
-    taskRowStatus.classList.add("is-running");
-    timerBarReadout.textContent = formatHHMMSS(elapsedSeconds);
-    taskRowTime.textContent = formatShort(elapsedSeconds);
-    timerInterval = window.setInterval(tick, 1000);
-
-    if (currentStep === 2) {
+    if (currentStep === 1) {
       btnContinue.disabled = false;
       continueTooltip.hidden = true;
     }
   }
 
-  simulateTracking.addEventListener("click", function () {
-    step2ProjectAssigned = true;
-    startTimer();
-  });
+  simulateTracking.addEventListener("click", reportTrackingStarted);
 
-  // ── Step 2: "need help" modal ─────────────────────────────────────────────
+  // Represents the desktop app reporting tracking with no project assigned —
+  // an automated notice, not something the user resolves from this page
+  // (the org's manager already got an email). Unlocks Continue like a
+  // bypass, since there's no real "waiting" signal left to resolve here.
+  function reportNoProjectDetected() {
+    if (noProjectDetected) return;
+    noProjectDetected = true;
+    appDownloaded = true;
+    syncSetupStory();
+
+    noProjectAlert.hidden = false;
+    simulateTracking.hidden = true;
+    simulateNoProject.hidden = true;
+
+    if (currentStep === 1) {
+      btnContinue.disabled = false;
+      continueTooltip.hidden = true;
+    }
+  }
+
+  simulateNoProject.addEventListener("click", reportNoProjectDetected);
+
+  // ── "Need help" modal ──────────────────────────────────────────────────────
 
   var helpLink = document.getElementById("help-link");
   var helpModalOverlay = document.getElementById("help-modal-overlay");
@@ -277,13 +244,14 @@
   }
 
   // "Continue without tracking time" unlocks Continue for this step without
-  // actually starting the timer — distinct from the footer's Skip, which
-  // exits the whole onboarding flow.
+  // actually starting the timer.
   function bypassTracking() {
-    step2Bypassed = true;
-    waitingIndicator.hidden = true;
+    trackingBypassed = true;
+    signalStatus.classList.add("is-bypassed");
+    signalStatusText.textContent = "Continuing without tracking time for now.";
     simulateTracking.hidden = true;
-    if (currentStep === 2) {
+    simulateNoProject.hidden = true;
+    if (currentStep === 1) {
       btnContinue.disabled = false;
       continueTooltip.hidden = true;
     }
@@ -293,7 +261,6 @@
   helpLink.addEventListener("click", openHelpModal);
   helpModalClose.addEventListener("click", closeHelpModal);
   helpModalBypass.addEventListener("click", bypassTracking);
-  btnRequestProject.addEventListener("click", openHelpModal);
 
   helpModalOverlay.addEventListener("click", function (event) {
     if (event.target === helpModalOverlay) closeHelpModal();

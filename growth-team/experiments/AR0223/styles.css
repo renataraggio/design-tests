@@ -278,48 +278,6 @@ button {
   border-radius: 6px;
 }
 
-.onboarding-main-action {
-  display: none;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  flex-shrink: 0;
-  padding: 12px 24px;
-  background: var(--primary-700);
-  border: none;
-  border-radius: 6px;
-  color: var(--white);
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  transition: background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
-}
-
-.onboarding-main-action:hover:not(:disabled) {
-  background: var(--primary-800);
-}
-
-.onboarding-main-action:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 3px var(--primary-700);
-}
-
-.onboarding.has-main-action .onboarding-main-action {
-  display: flex;
-}
-
-/* Confirmed state — outline primary with a checkbox icon, not a dimmed/disabled look */
-.onboarding-main-action.is-confirmed {
-  background: var(--white);
-  border: 1px solid var(--primary-700);
-  color: var(--primary-700);
-  cursor: default;
-}
-
-.onboarding-main-action.is-confirmed .material-symbols-rounded {
-  color: var(--primary-700);
-}
-
 /* ── Step content ─────────────────────────────────────────────────────── */
 
 .step-panel {
@@ -339,6 +297,7 @@ button {
   background: #eaf6ff;
   border: 1px solid var(--primary-700);
   border-radius: 8px;
+  transition: opacity var(--transition);
 }
 
 .onboarding-alert__icon {
@@ -368,29 +327,20 @@ button {
   color: var(--primary-700);
   font-size: 14px;
   text-decoration: underline;
+  transition: opacity var(--transition);
 }
 
 .help-link:hover {
   color: var(--primary-800);
 }
 
-.request-project-btn {
-  align-self: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 6px 12px;
-  background: var(--white);
-  border: 1px solid var(--gray-300);
-  border-radius: 6px;
-  color: var(--gray-600);
-  font-size: 14px;
-  line-height: 20px;
-  transition: background var(--transition-fast);
-}
-
-.request-project-btn:hover {
-  background: var(--gray-100);
+/* Fades out once tracking is confirmed — the reminder and escape hatch are
+   no longer relevant, but keeping them at ~0 opacity (rather than removing
+   them) preserves layout so the card above doesn't jump. */
+.onboarding-alert--top.is-faded,
+.help-link.is-faded {
+  opacity: 0.01;
+  pointer-events: none;
 }
 
 .help-modal-overlay {
@@ -539,535 +489,267 @@ button {
   background: var(--gray-100);
 }
 
-/* ── Step 1: widget row (Utilization + timer mockup + Activity) ──────────
-   Faithful-but-simplified recreation of the Figma dashboard widgets
-   (gauge chart, activity benchmark bar, floating avatar badges).
+
+/* ── Step 2: setup story (new direction) ─────────────────────────────────
+   Replaces the old fake-app-window mockup entirely. Tells the story of
+   what we expect — download, then press play — as a 2-item sequence,
+   then honestly shows this page just listening for a signal rather than
+   pretending to host the control itself.
    ────────────────────────────────────────────────────────────────────── */
 
-.widgets-row {
+.setup-story {
   display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
   gap: 24px;
   width: 100%;
-}
-
-.widget-card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  width: 220px;
-  flex-shrink: 0;
-  padding: 15px;
+  max-width: 500px;
+  padding: 32px 24px;
   background: var(--white);
   border: 1px solid #d6dbe6;
-  border-radius: 8px;
-  box-shadow: 6px 12px 16px rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
 }
 
-.widget-avatar {
-  position: absolute;
-  top: -14px;
-  right: -14px;
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  overflow: hidden;
-}
-
-.widget-avatar img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.widget-avatar--purple {
-  background: linear-gradient(153deg, #bfabff 16%, #8b73ff 100%);
-}
-
-.widget-avatar--teal {
-  background: linear-gradient(153deg, #1cf1d0 19%, #0ecb95 90%);
-}
-
-.widget-card__label-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 12px;
-}
-
-.widget-card__label {
-  font-family: "Inter", sans-serif;
-  font-weight: 500;
-  font-size: 12px;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  color: #617083;
-}
-
-.widget-card__info-icon {
-  font-size: 14px;
-  color: #9ca3af;
-}
-
-.widget-card__stat-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-}
-
-.widget-card__stat-value {
-  margin: 0;
-  font-family: "Inter", sans-serif;
-  font-weight: 600;
-  font-size: 22px;
-  color: #2d3137;
-}
-
-.widget-card__stat-caption {
-  margin: 2px 0 0;
-  font-size: 12px;
-  color: #617083;
-}
-
-.widget-card__stat-subcaption {
-  margin: 6px 0 0;
-  font-size: 11px;
-  color: #617083;
-}
-
-/* Utilization gauge (CSS conic-gradient half-donut + rotated needle) */
-
-.gauge {
-  position: relative;
-  width: 96px;
-  height: 48px;
-  flex-shrink: 0;
-  overflow: hidden;
-}
-
-.gauge__arc {
-  width: 96px;
-  height: 96px;
-  border-radius: 50%;
-  background: conic-gradient(from 180deg, #d1d5db 0deg 128deg, #9ca3af 128deg 138deg, var(--primary-500) 138deg 180deg);
-  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 10px), #000 calc(100% - 10px));
-  mask: radial-gradient(farthest-side, transparent calc(100% - 10px), #000 calc(100% - 10px));
-}
-
-.gauge__needle {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 2px;
-  height: 38px;
-  background: #2d3137;
-  border-radius: 2px;
-  transform-origin: bottom center;
-  transform: translateX(-50%) rotate(46deg);
-}
-
-.gauge__needle::after {
-  content: "";
-  position: absolute;
-  bottom: -3px;
-  left: 50%;
-  width: 6px;
-  height: 6px;
-  background: #2d3137;
-  border-radius: 50%;
-  transform: translateX(-50%);
-}
-
-.gauge__value {
-  align-self: center;
-  margin: 4px 0 0;
-  font-family: "Inter", sans-serif;
-  font-weight: 500;
-  font-size: 16px;
-  color: #7a8798;
-}
-
-/* Activity widget */
-
-.widget-card__pill {
-  align-self: flex-end;
-  margin: 0 0 8px;
-  padding: 6px 12px;
-  background: #18d06b;
-  border-radius: 16px;
-  color: var(--white);
-  font-family: "Inter", sans-serif;
-  font-weight: 500;
-  font-size: 15px;
-}
-
-.widget-card__sparkline {
-  display: block;
-  width: 100%;
-  height: 12px;
-  margin-bottom: 16px;
-}
-
-.benchmark-bar {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding-top: 16px;
-  border-top: 1px solid #f1f3f5;
-  font-size: 11px;
-  color: #333;
-}
-
-.benchmark-bar__track {
-  position: relative;
-  flex: 1 1 0;
-  height: 6px;
-  background: #f4f6f9;
-  border-radius: 3px;
-}
-
-.benchmark-bar__tick {
-  position: absolute;
-  top: 0;
-  width: 3px;
-  height: 100%;
-  border-radius: 2px;
-  transform: translateX(-50%);
-}
-
-.benchmark-bar__tick--org {
-  background: #ebc604;
-}
-
-.benchmark-bar__tick--job {
-  background: #b066ff;
-}
-
-.benchmark-bar__marker {
-  position: absolute;
-  bottom: 100%;
+.setup-steps {
   display: flex;
   flex-direction: column;
+  gap: 0;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.setup-step {
+  position: relative;
+  display: flex;
   align-items: center;
-  transform: translateX(-50%);
+  gap: 16px;
+  padding: 10px 0;
 }
 
-.benchmark-bar__marker::after {
+/* Connecting line between steps, like a vertical timeline/stepper */
+.setup-step:not(:last-child)::after {
   content: "";
+  position: absolute;
+  left: 19px;
+  top: calc(100% - 6px);
   width: 2px;
-  height: 16px;
-  background: #2d3137;
+  height: 12px;
+  background: var(--gray-300);
 }
 
-.benchmark-bar__marker-value {
-  margin-bottom: 2px;
-  font-size: 11px;
-  color: #333;
+.setup-step__icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  background: var(--white);
+  border: 1px solid var(--gray-300);
+  border-radius: 50%;
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.setup-step__icon .material-symbols-rounded {
+  font-size: 20px;
+  color: var(--gray-500);
+}
+
+.setup-step__logo {
+  width: 20px;
+  height: 20px;
+}
+
+.setup-step__label {
+  flex-shrink: 0;
+  font-size: 15px;
+  color: var(--gray-700);
   white-space: nowrap;
 }
 
-/* ── Fake desktop app window (steps 1 & 2) ───────────────────────────────
-   Illustrative recreation of the Figma "snazzy-image" app mockup — traffic
-   lights, timer bar, project row — kept lightweight rather than pixel
-   -cloning every gauge/avatar from the design's decorative widgets.
-   ────────────────────────────────────────────────────────────────────── */
-
-.app-window {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 334px;
-  background: var(--white);
-  border: 1px solid #d6dbe6;
-  border-radius: 8px;
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
-  overflow: hidden;
+/* Completed step — solid primary badge with a checkmark */
+.setup-step.is-complete .setup-step__icon {
+  background: var(--primary-700);
+  border-color: var(--primary-700);
 }
 
-.app-window--center {
-  width: 300px;
-  flex-shrink: 0;
-}
-
-.app-window__titlebar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 6px;
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--gray-100);
-}
-
-.app-window__titlebar-label {
-  font-size: 11px;
-  letter-spacing: 0.02em;
-  color: var(--gray-500);
-}
-
-.app-window__dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-}
-
-.app-window__dot--red {
-  background: #ff5f57;
-}
-
-.app-window__dot--yellow {
-  background: #febc2e;
-}
-
-.app-window__dot--green {
-  background: #28c840;
-}
-
-.app-window__body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  padding: 20px 24px 24px;
-}
-
-/* Step 1 decorative timer mockup (matches the Figma "Image 3" widget) */
-
-.timer-mock {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-  width: 100%;
-  padding: 24px;
-}
-
-.timer-mock__bar-row {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.timer-mock__icon-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 36px;
-  height: 36px;
-  background: var(--white);
-  border: 1px solid var(--gray-300);
-  border-radius: 44px;
-}
-
-.timer-mock__icon-btn .material-symbols-rounded {
-  font-size: 16px;
-  color: var(--gray-500);
-}
-
-.timer-mock__bar {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 182px;
-  height: 36px;
-  background: var(--primary-600);
-  border-radius: 6px;
-}
-
-.timer-mock__bar-time {
-  font-family: "Inter", sans-serif;
-  font-weight: 600;
-  font-size: 18px;
+.setup-step.is-complete .setup-step__icon .material-symbols-rounded {
   color: var(--white);
 }
 
-.timer-mock__bar-badge {
-  position: absolute;
-  right: 8px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-  background: var(--white);
-  border-radius: 4px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-}
-
-.timer-mock__bar-badge .material-symbols-rounded {
-  font-size: 14px;
-  color: var(--primary-600);
-}
-
-.timer-mock__project {
-  margin: 0;
-  font-family: "Inter", sans-serif;
-  font-weight: 600;
-  font-size: 18px;
+.setup-step.is-complete .setup-step__label {
   color: var(--gray-900);
+  font-weight: 500;
 }
 
-.timer-mock__control {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 52px;
-  height: 52px;
-  background: var(--white);
-  border: 1px solid var(--gray-300);
-  border-radius: 44px;
+/* Current step — the one we expect the user to be doing right now */
+.setup-step.is-current .setup-step__icon {
+  border-color: var(--primary-500);
 }
 
-.timer-mock__control-icon {
-  width: 20px;
-  height: 20px;
-  background: var(--primary-700);
-  border-radius: 4px;
-}
-
-.timer-mock__footer {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  width: 100%;
-  padding-top: 16px;
-  border-top: 1px solid var(--gray-300);
-  font-size: 12px;
+.setup-step.is-current .setup-step__label {
   color: var(--gray-900);
+  font-weight: 500;
 }
 
-.timer-mock__footer-stat {
-  flex: 1 1 0;
-  text-align: center;
+/* Next step — up next once the step before it completes, but not itself
+   actionable from this page (e.g. "Press play" happens in the real desktop
+   app). Gets the same active ring on its icon as is-current, but the label
+   stays dimmed like is-pending until this step actually completes. */
+.setup-step.is-next .setup-step__icon {
+  opacity: 1;
+  border-color: var(--primary-500);
 }
 
-.timer-mock__footer-divider {
-  width: 1px;
-  height: 20px;
-  background: var(--gray-300);
+.setup-step.is-next .setup-step__label {
+  opacity: 0.5;
 }
 
-.app-window__project-title {
-  margin: 0;
-  font-family: "Inter", sans-serif;
-  font-weight: 600;
-  font-size: 18px;
-  color: var(--gray-900);
-}
-
-.timer-bar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 36px;
-  background: var(--gray-300);
-  border-radius: 6px;
-  transition: background var(--transition);
-}
-
-.timer-bar.is-running {
-  background: var(--primary-700);
-}
-
-.timer-bar__readout {
-  font-family: "Inter", sans-serif;
-  font-weight: 600;
-  font-size: 18px;
-  color: var(--white);
-}
-
-/* Decorative status indicator — NOT a button. It mirrors what the timer
-   looks like inside the real desktop app; tracking can only ever be started
-   there, so this never responds to clicks. Grey + pulsing while waiting,
-   solid green once the desktop app has reported tracking started. */
-.timer-status {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 52px;
-  height: 52px;
-  background: var(--white);
-  border: 1px solid var(--gray-300);
-  border-radius: 44px;
-}
-
-.timer-status__icon {
-  position: relative;
-  width: 20px;
-  height: 20px;
-  background: var(--gray-500);
-  border-radius: 4px;
-  transition: background var(--transition);
-}
-
-.timer-status.is-running .timer-status__icon {
-  background: #18d06b;
-}
-
-.timer-status__pulse {
-  display: block;
+.setup-step__pulse {
   position: absolute;
   inset: 0;
-  border-radius: 44px;
-  background: var(--gray-300);
-  animation: timer-status-pulse 2s linear infinite;
+  border-radius: 50%;
+  background: var(--primary-500);
+  animation: setup-step-pulse 2s linear infinite;
 }
 
-.timer-status.is-running .timer-status__pulse {
-  display: none;
-}
-
-@keyframes timer-status-pulse {
+@keyframes setup-step-pulse {
   0% {
-    opacity: 0.6;
+    opacity: 0.45;
     transform: scale(1);
   }
   100% {
     opacity: 0;
-    transform: scale(1.6);
+    transform: scale(1.5);
   }
 }
 
-/* Page-level status line — lives outside the app-window mockup on purpose,
-   to make clear the browser tab is only watching for a signal from the
-   desktop app, not hosting the control that starts it. */
-.waiting-indicator {
+/* Pending step — dimmed until the one before it completes */
+.setup-step.is-pending .setup-step__icon,
+.setup-step.is-pending .setup-step__label {
+  opacity: 0.5;
+}
+
+.setup-step.is-pending .setup-step__pulse {
+  display: none;
+}
+
+/* Inline CTAs shown next to the step that needs the user to act from here.
+   "Download" is the primary path; "I already did this" is a secondary path
+   for users who installed the app before reaching this screen — it reaches
+   the same confirmed state, since this page can't detect a real install
+   either way. */
+.setup-step__actions {
+  margin-left: auto;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+.setup-step__cta {
+  flex-shrink: 0;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background var(--transition-fast);
+}
+
+.setup-step__cta--solid {
+  background: var(--primary-500);
+  color: var(--white);
+}
+
+.setup-step__cta--solid:hover {
+  background: var(--primary-600);
+}
+
+.setup-step__cta--outline {
+  background: var(--white);
+  border: 1px solid var(--gray-300);
+  color: var(--gray-600);
+}
+
+.setup-step__cta--outline:hover {
+  background: var(--gray-100);
+}
+
+/* Honest status line: this page is only listening, not controlling anything */
+.signal-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   margin: 0;
+  padding: 10px 16px;
+  width: 100%;
+  background: var(--gray-100);
+  border-radius: 8px;
   color: var(--gray-600);
   font-size: 13px;
 }
 
-.waiting-indicator__dot {
+.signal-status__dot {
+  flex-shrink: 0;
   width: 8px;
   height: 8px;
-  flex-shrink: 0;
   border-radius: 50%;
   background: var(--primary-500);
-  animation: waiting-dot-pulse 1.4s ease-in-out infinite;
 }
 
-@keyframes waiting-dot-pulse {
-  0%,
-  100% {
-    opacity: 0.3;
-    transform: scale(0.85);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1);
-  }
+.signal-status__check {
+  flex-shrink: 0;
+  font-size: 18px;
+  color: #18d06b;
+}
+
+.signal-status.is-confirmed {
+  background: #eafff4;
+  color: #0a6b3f;
+}
+
+.signal-status.is-confirmed .signal-status__dot,
+.signal-status.is-bypassed .signal-status__dot {
+  display: none;
+}
+
+.signal-status.is-bypassed {
+  background: var(--gray-100);
+  color: var(--gray-600);
+}
+
+/* Shown when the desktop app reports tracking with no project assigned —
+   an automated notice (the org's manager already got an email), not
+   something the user needs to act on directly. Unlocks Continue like a
+   bypass, since this page can't get a real "waiting" signal to resolve. */
+.no-project-alert {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  width: 100%;
+  max-width: 500px;
+  background: #fdfdea;
+  border: 1px solid #9f580a;
+  border-radius: 8px;
+  color: #723b13;
+}
+
+.no-project-alert .material-symbols-rounded {
+  font-size: 18px;
+  color: #723b13;
+}
+
+.no-project-alert p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
 }
 
 /* Prototype-only stand-in for the real desktop app reporting that tracking
@@ -1094,112 +776,6 @@ button {
 
 .simulate-link .material-symbols-rounded {
   font-size: 14px;
-}
-
-/* Step 2 "no project assigned" mockup alert (empty state, before tracking) */
-
-.project-alert {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  padding: 8px;
-  background: #fdfdea;
-  border: 1px solid #9f580a;
-  border-radius: 8px;
-  color: #723b13;
-  font-size: 13px;
-}
-
-.project-alert .material-symbols-rounded {
-  font-size: 18px;
-  flex-shrink: 0;
-}
-
-.project-alert p {
-  margin: 0;
-}
-
-/* Draws attention to the alert when play is pressed with no project assigned
-   — the timer can't start, so this is the only feedback the click gets. */
-.project-alert.is-shaking {
-  animation: project-alert-shake 400ms ease;
-}
-
-@keyframes project-alert-shake {
-  0%, 100% {
-    transform: translateX(0);
-  }
-  20%, 60% {
-    transform: translateX(-4px);
-  }
-  40%, 80% {
-    transform: translateX(4px);
-  }
-}
-
-.app-window__search {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  width: 100%;
-  height: 32px;
-  padding: 0 12px;
-  background: var(--white);
-  border: 1px solid var(--gray-300);
-  border-radius: 6px;
-  color: var(--gray-500);
-  font-size: 14px;
-}
-
-.app-window__search .material-symbols-rounded {
-  font-size: 18px;
-}
-
-.app-window__group-label {
-  align-self: flex-start;
-  width: 100%;
-  padding: 6px 4px;
-  background: var(--gray-100);
-  font-family: "Inter", sans-serif;
-  font-weight: 600;
-  font-size: 14px;
-  color: var(--gray-700);
-}
-
-.app-window__task-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  padding: 6px 4px;
-  background: #eaf6ff;
-}
-
-/* Decorative only — same reasoning as .timer-status above. */
-.task-row__status {
-  display: block;
-  width: 18px;
-  height: 18px;
-  flex-shrink: 0;
-  background: var(--gray-500);
-  border-radius: 44px;
-  transition: background var(--transition);
-}
-
-.task-row__status.is-running {
-  background: #18d06b;
-}
-
-.task-row__label {
-  flex: 1 1 0;
-  font-size: 14px;
-  color: var(--gray-900);
-}
-
-.task-row__time {
-  font-size: 14px;
-  color: var(--gray-900);
 }
 
 /* ── Step 3: static video-promo image ─────────────────────────────────── */
@@ -1230,21 +806,6 @@ button {
    instead of relying on a two-item split. */
 #btn-back {
   margin-right: auto;
-}
-
-.footer-skip {
-  display: flex;
-  align-items: center;
-  background: none;
-  border: none;
-  padding: 4px 8px;
-  color: var(--primary-700);
-  font-size: 14px;
-}
-
-.footer-skip:hover {
-  color: var(--primary-800);
-  text-decoration: underline;
 }
 
 .onboarding-btn {

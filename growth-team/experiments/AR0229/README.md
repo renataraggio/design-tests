@@ -190,9 +190,9 @@ show again" state) and reloads.
 ## Run it
 
 ```bash
-python3 -m http.server 4004 --directory experiments/AR0229-v.1   # from growth-team/
+python3 -m http.server 4004 --directory experiments/AR0229   # from growth-team/
 ```
 
-Also wired into this team's `.claude/launch.json` as `AR0229-v.1` (port 4004).
+Also wired into this team's `.claude/launch.json` as `AR0229` (port 4004).
 Works as a plain `file://` open too — there's no build step or bundled asset
 dependency.

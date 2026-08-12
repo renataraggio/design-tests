@@ -9,10 +9,10 @@ in `hubstaff-server`.
 ## Run it
 
 ```bash
-python3 -m http.server 4006 --directory experiments/AR0228-v.1
+python3 -m http.server 4006 --directory experiments/AR0228
 ```
 
-Wired into `.claude/launch.json` as `AR0228-v.1` (port 4006). Opens as a plain
+Wired into `.claude/launch.json` as `AR0228` (port 4006). Opens as a plain
 `file://` too — no build step.
 
 ## Flow
