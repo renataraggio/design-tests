@@ -1,4 +1,4 @@
-/* AR0228 — Unusual Activity → Slack activation
+/* AR0229 — Unusual Activity → Slack activation
    Shared vanilla-JS state/behavior for both mockup pages. No framework, no CDN
    dependency — plain DOM. State persists in localStorage so the two pages (and
    reloads) stay in sync for a reviewer walking the flow.

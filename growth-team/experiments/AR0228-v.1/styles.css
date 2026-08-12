@@ -1,403 +1,610 @@
-/* AR0228 — Unusual Activity → Slack activation
-   Design tokens below match the real values confirmed in hubstaff-server's
-   config/zone/tailwind-tokens.json and app/assets/stylesheets/hubstaff-variables.scss
-   (gray/primary/red/orange/green ramps), not guessed. */
+/* AR0228 — Essentials VSMB churn discount offer
+ *
+ * Page + dialog styles. Shell chrome lives in hubstaff-shell.js (prefix `hs-`)
+ * and is not touched here.
+ *
+ * Token values are the ones resolved from the Figma file's own variable
+ * collection (get_variable_defs on node 55:7529), cross-checked against
+ * hubstaff-server. Where the two disagree the conflict is noted inline.
+ */
 
+/* ── Zone tokens ───────────────────────────────────────────────────────
+ * Every value below is verified against the SHIPPED token source,
+ * hubstaff-server `config/zone/tailwind-tokens.json` — not against the Figma
+ * file, which disagrees with it in two places (see "Off-system" below).
+ * Zone's rem base is 10px, so spacing/4 = 1.6rem = 16px.
+ */
 :root {
-  --gray-50: #f9fafb;
-  --gray-100: #f3f4f6;
-  --gray-200: #e5e7eb;
-  --gray-300: #d1d5db;
-  --gray-400: #9ca3af;
-  --gray-500: #6b7280;
-  --gray-600: #4b5563;
-  --gray-700: #374151;
-  --gray-800: #1f2937;
-  --gray-900: #111827;
+  --z-white:        #ffffff;
+  --z-black:        #000000;
 
-  --primary-100: #d4edff;
-  --primary-500: #2aa7ff;
-  --primary-600: #2f8af4;
-  --primary-700: #0168dd;
-  --primary-900: #1f2e54;
-  --blue-50: #eaf6ff;
+  --z-gray-50:      #f9fafb;
+  --z-gray-200:     #e5e7eb;
+  --z-gray-300:     #d1d5db;
+  --z-gray-500:     #6b7280;
+  --z-gray-600:     #4b5563;
+  --z-gray-700:     #374151;
+  --z-gray-800:     #1f2937;
+  --z-gray-900:     #111827;
 
-  --red-100: #fde8e8;
-  --red-700: #c81e1e;
-  --orange-100: #ffead3;
-  --orange-800: #c04601;
-  --green-100: #def7ec;
-  --green-800: #03543f;
+  --z-red-700:      #c81e1e;
+  --z-red-800:      #9b1c1c;
 
-  --radius-sm: 4px;
-  --radius: 6px;
-  --radius-lg: 8px;
-  --sidebar-width: 240px;
-  --topbar-height: 46px;
+  --z-green-50:     #f3faf7;
+  --z-green-100:    #def7ec;
+  --z-green-500:    #0e9f6e;
+  --z-green-600:    #057a55;
+  --z-green-800:    #03543f;
 
-  --shadow-modal: 0 20px 40px -8px rgba(17, 24, 39, .25), 0 8px 16px -8px rgba(17, 24, 39, .12);
+  --z-primary-500:  #2aa7ff;
+  /* Unused by the design, kept as the documented accessible alternative:
+     primary/500 on white is 2.2:1, primary/700 is 5.22:1. See README. */
+  --z-primary-700:  #0168dd;
+
+  /* Border radius — Zone `borderRadius` */
+  --z-r-sm:  4px;   /* DEFAULT 0.4rem */
+  --z-r-md:  6px;   /* md      0.6rem */
+  --z-r-lg:  8px;   /* lg      0.8rem */
+  --z-r-xl:  12px;  /* xl      1.2rem */
+
+  /* Spacing — Zone `spacing`, the only steps this prototype needs */
+  --z-s-2:   8px;
+  --z-s-2-5: 10px;
+  --z-s-3:   12px;
+  --z-s-4:   16px;
+  --z-s-5:   20px;
+
+  /* ── Off-system: NOT Zone tokens ────────────────────────────────────
+   * These are values the AR0228 design uses that have no Zone equivalent.
+   * Quarantined here so the drift stays visible instead of masquerading as
+   * design-system usage. Nearest Zone value noted for each.
+   *
+   * The Organizations page itself predates Zone and uses the legacy
+   * "Product DSM" palette; the four new dialogs use Zone properly. The two
+   * systems meet on this screen.
+   */
+  --x-legacy-ink:      #2d3137;  /* Neutral/Primary          ~ gray/800 #1f2937 */
+  --x-legacy-muted:    #7a8798;  /* Neutral/Supporting light ~ gray/500 #6b7280 */
+
+  /* A SECOND red ramp. The archive modal binds `semantics/red/*`, which is a
+     different collection from Zone's `red/*` and disagrees with it at every
+     stop. Reproduced as designed, but this is a real fork worth resolving. */
+  --x-sem-red-50:      #fff1f1;  /* vs Zone red/50  #fdf2f2 */
+  --x-sem-red-100:     #fcdada;  /* vs Zone red/100 #fde8e8 */
+  --x-sem-red-800:     #970909;  /* vs Zone red/800 #9b1c1c */
+
+  --z-shadow-dialog: 0 4px 12px 0 rgba(0, 0, 0, .25);
+  /* Zone `shadow-md` (from the Toast component spec) */
+  --z-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, .1), 0 2px 4px -2px rgba(0, 0, 0, .05);
 }
 
-* { box-sizing: border-box; }
-html { font-size: 62.5%; } /* 1rem = 10px, matches Zone token convention */
-body {
-  margin: 0;
-  font-size: 1.4rem;
-  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-  color: var(--gray-800);
-  background: #fff;
-}
-a { color: inherit; text-decoration: none; }
-button { font-family: inherit; }
-.material-symbols-rounded { font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 20; line-height: 1; vertical-align: middle; }
+/* Zone's Colors collection ships a Light mode only — there are no dark-mode
+   token values — so the prototype pins the light scheme rather than inheriting
+   the viewer's preference and rendering dark text on a dark surface. */
+:root { color-scheme: light; }
+/* Figma frame dimensions are border-box: node 141:6262 is 600px wide *including*
+   its 1px border, and the 57px Header includes its 20/10 padding. Without this
+   the offer modal measures 602 x 598 instead of 600 x 566. */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { background: var(--z-white); }
+body { font-family: Roboto, sans-serif; color: var(--x-legacy-ink); }
 
-/* ---------- App shell ---------- */
-.app-shell { display: flex; min-height: 100vh; }
+/* ── Shared button ────────────────────────────────────────────────────── */
 
-.sidebar {
-  width: var(--sidebar-width);
-  flex-shrink: 0;
-  background: #fff;
-  border-right: 1px solid var(--gray-200);
-  padding: 1.6rem 0;
-  overflow-y: auto;
-}
-.sidebar-logo { display: flex; align-items: center; gap: .8rem; padding: 0 2rem 1.6rem; font-weight: 700; font-size: 1.8rem; color: var(--gray-900); }
-.sidebar-logo svg { flex-shrink: 0; }
-.sidebar-group { padding: .4rem 0 1.2rem; border-bottom: 1px solid var(--gray-100); margin-bottom: .8rem; }
-.sidebar-item {
-  display: flex; align-items: center; gap: 1rem;
-  padding: .8rem 2rem; font-size: 1.4rem; color: var(--gray-700); cursor: pointer;
-}
-.sidebar-item .material-symbols-rounded { font-size: 2rem; color: var(--gray-500); }
-.sidebar-item:hover { background: var(--gray-50); }
-.sidebar-item.active { background: var(--blue-50); color: var(--primary-600); font-weight: 500; }
-.sidebar-item.active .material-symbols-rounded { color: var(--primary-600); }
-.sidebar-sub { padding-left: 2rem; }
-.sidebar-sub .sidebar-item { padding: .6rem 2rem .6rem 3.4rem; font-size: 1.35rem; }
-
-.main-col { flex: 1; min-width: 0; display: flex; flex-direction: column; }
-.topbar {
-  height: var(--topbar-height); flex-shrink: 0; border-bottom: 1px solid var(--gray-200);
-  display: flex; align-items: center; justify-content: flex-end; gap: 1.8rem; padding: 0 2.4rem; background: #fff;
-}
-.topbar .material-symbols-rounded { color: var(--gray-500); font-size: 2.1rem; cursor: pointer; }
-.topbar-avatar { width: 2.8rem; height: 2.8rem; border-radius: 50%; background: var(--primary-900); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: 600; }
-
-.page { padding: 2.8rem 3.2rem 6rem; max-width: 1180px; }
-.page-heading { font-size: 2.4rem; font-weight: 400; color: var(--gray-800); margin: 0; }
-
-/* prototype-only chrome — never part of real production, kept visually distinct */
-.proto-banner {
-  background: var(--primary-900); color: #fff; font-size: 1.3rem;
-  padding: .8rem 2.4rem; display: flex; align-items: center; justify-content: space-between; gap: 1.6rem;
-}
-.proto-banner a { color: #bfe0ff; font-weight: 500; }
-.proto-banner a:hover { text-decoration: underline; }
-.proto-controls {
-  position: fixed; bottom: 1.8rem; left: 1.8rem; z-index: 500;
-  background: #fff; border: 1px solid var(--gray-300); border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-modal); padding: 1.4rem 1.6rem; font-size: 1.25rem; width: 280px;
-}
-.proto-controls .label { text-transform: uppercase; letter-spacing: .04em; font-size: 1.05rem; color: var(--gray-500); font-weight: 600; margin-bottom: .8rem; }
-.proto-controls .row { display: flex; align-items: center; justify-content: space-between; margin-bottom: .6rem; }
-.proto-controls .reset { color: var(--primary-600); cursor: pointer; font-size: 1.2rem; }
-.proto-option-row { display: flex; flex-direction: column; gap: .5rem; }
-.proto-option {
-  display: block; text-align: left; padding: .6rem .9rem; border-radius: var(--radius); border: 1px solid var(--gray-200);
-  color: var(--gray-700); font-size: 1.25rem; cursor: pointer;
-}
-.proto-option:hover { background: var(--gray-50); }
-.proto-option.active { background: var(--blue-50); border-color: var(--primary-600); color: var(--primary-700); font-weight: 500; }
-
-/* ---------- Buttons ---------- */
 .btn {
-  display: inline-flex; align-items: center; gap: .6rem; justify-content: center;
-  font-size: 1.4rem; padding: 1rem 2rem; border-radius: var(--radius); cursor: pointer;
-  border: 1px solid transparent; white-space: nowrap; line-height: 1.4;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  max-height: 40px;
+  padding: 10px 20px;
+  border: 0;
+  border-radius: var(--z-r-md);
+  background: transparent;
+  font: 400 14px/20px Roboto, sans-serif;
+  color: var(--z-gray-600);
+  cursor: pointer;
 }
-.btn-sm { padding: .6rem 1.2rem; font-size: 1.4rem; }
-.btn-icon-only { padding: .8rem; }
-.btn-primary { background: var(--primary-500); color: #fff; }
-.btn-primary:hover { background: var(--primary-700); }
-.btn-outline { background: #fff; border-color: var(--gray-300); color: var(--gray-700); }
-.btn-outline:hover { background: var(--gray-50); }
-.btn-outline-dark { background: #fff; border-color: var(--gray-600); color: var(--gray-600); }
-.btn-outline-dark:hover { background: var(--gray-50); }
-.btn-text { background: transparent; color: var(--primary-600); padding: 1rem 0; }
-.btn-text:hover { text-decoration: underline; }
-.btn[disabled] { opacity: .55; cursor: not-allowed; }
+.btn--primary { background: var(--z-primary-500); color: var(--z-white); }
+.btn--primary:hover { filter: brightness(.95); }
+/* gray/600 border — "Go back" (141:6753) */
+.btn--outline { box-shadow: inset 0 0 0 1px var(--z-gray-600); background: var(--z-white); }
+.btn--outline:hover { background: var(--z-gray-50); }
+/* gray/300 border — the offer's "Archive organization" (141:6314) is a
+   lighter-weight secondary than "Go back". Two distinct outline treatments. */
+.btn--subtle { box-shadow: inset 0 0 0 1px var(--z-gray-300); background: var(--z-white); }
+.btn--subtle:hover { background: var(--z-gray-50); }
+/* red/700 destructive — "Archive organization" (141:6752) */
+.btn--danger { background: var(--z-red-700); color: var(--z-white); }
+.btn--danger:hover { filter: brightness(.95); }
+.btn--block { width: 100%; }
+.btn[disabled] { opacity: .45; cursor: not-allowed; filter: none; }
 
-/* ---------- Confidence pills / filters ---------- */
-.filters-row { display: flex; align-items: center; gap: 1.2rem; margin: 2rem 0 1.6rem; flex-wrap: wrap; }
-.filter-select {
-  display: flex; align-items: center; gap: .8rem; border: 1px solid var(--gray-300); border-radius: var(--radius);
-  padding: .8rem 1.2rem; font-size: 1.4rem; color: var(--gray-800); background: #fff; cursor: pointer;
+/* Figma draws this as plain 12px text with no underline (node 63:16292).
+   Matched at rest; underlined on hover/focus so it is still discoverable as a
+   control. Flagged in the README — an undecorated text button is a real
+   affordance problem, not something to silently "fix" in a replication. */
+.linkish {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: 400 12px/16px Roboto, sans-serif;
+  color: var(--z-gray-600);
+  text-decoration: none;
+  cursor: pointer;
 }
-.filter-select .material-symbols-rounded { font-size: 1.8rem; color: var(--gray-500); }
-.tz-note { color: var(--gray-500); font-size: 1.3rem; display: flex; align-items: center; gap: .5rem; }
+.linkish:hover, .linkish:focus-visible { text-decoration: underline; }
 
-.confidence-pills { display: flex; gap: 1rem; margin-bottom: 2.4rem; }
-.confidence-pill {
-  background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 999px;
-  color: var(--gray-500); padding: .6rem 1.4rem; font-size: 1.3rem; cursor: pointer;
-  display: inline-flex; align-items: center; gap: .5rem;
-}
-.confidence-pill:hover { background: var(--gray-100); }
-.confidence-pill.active { color: var(--primary-600); background: var(--blue-50); border-color: var(--primary-600); }
+/* ── Organizations page ───────────────────────────────────────────────── */
 
-/* ---------- Stat tiles ---------- */
-.stat-row { display: flex; gap: 1.6rem; margin-bottom: 2.8rem; }
-.stat-tile { border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 1.8rem 2.2rem; min-width: 150px; }
-.stat-tile .value { font-size: 2.8rem; color: var(--gray-900); line-height: 1; }
-.stat-tile .label { color: var(--gray-500); font-size: 1.3rem; margin-top: .6rem; }
+/* Geometry below is measured off the flattened Organizations screenshot in the
+   Figma (node 55:7689, a 2374px capture of a 1200px layout — 1.978x). The page
+   is a bitmap, so its vector layers can't be read; these are pixel measurements
+   rather than transcribed values. Key results:
+     content box   x 30 → 1170  (1140 wide, 30px gutters both sides)
+     table rules   #e5e9ef ≈ gray/200, header 2px, rows 1px, full-bleed
+     cell content  inset 16px from the left rule edge, flush right
+     row pitch     ~64px, avatar 30px, vertically centred
+   The shell's `.page` wrapper is styled here because it lives in page CSS, not
+   in hubstaff-shell.js. */
+.page { padding: 30px; }
 
-/* ---------- Section headers ---------- */
-.section-head { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 1.6rem; gap: 2rem; }
-.section-head h5 { margin: 0 0 .4rem; font-size: 1.6rem; font-weight: 600; color: var(--gray-900); }
-.section-head .sub { color: var(--gray-500); font-size: 1.3rem; margin: 0; max-width: 620px; }
-.section-actions { display: flex; align-items: center; gap: 1.6rem; flex-shrink: 0; padding-top: .4rem; }
-.section-actions a:not(.btn) { color: var(--primary-600); font-size: 1.35rem; display: inline-flex; align-items: center; gap: .5rem; white-space: nowrap; }
-.section-actions a:not(.btn):hover { text-decoration: underline; }
+.orgs { max-width: 1140px; }
 
-/* ---------- Table ---------- */
-.data-table-card { background: #fff; border: 1px solid var(--gray-200); border-radius: var(--radius); overflow: hidden; }
-.data-table { width: 100%; border-collapse: collapse; font-size: 1.4rem; }
-.data-table th { text-align: left; font-weight: 600; color: var(--gray-900); padding: 1.3rem 1.8rem; border-bottom: 1px solid var(--gray-200); background: var(--gray-50); white-space: nowrap; }
-.data-table td { padding: 1.3rem 1.8rem; border-bottom: 1px solid var(--gray-100); vertical-align: middle; color: var(--gray-800); }
-.data-table tr:last-child td { border-bottom: none; }
-.member-cell { display: flex; align-items: center; gap: 1rem; }
-.avatar { width: 2.8rem; height: 2.8rem; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.1rem; font-weight: 600; }
-.confidence-badge { display: inline-flex; padding: .4rem 1rem; border-radius: var(--radius-sm); font-size: 1.25rem; font-weight: 500; }
-.confidence-badge.high { background: var(--red-100); color: var(--red-700); }
-.confidence-badge.medium { background: var(--orange-100); color: var(--orange-800); }
-.confidence-badge.low { background: var(--green-100); color: var(--green-800); }
-
-/* ---------- Recommended notification cards (Smart Notifications page) ---------- */
-.rec-cards { display: flex; gap: 1.6rem; flex-wrap: wrap; margin-bottom: 3rem; }
-.rec-card { width: 240px; border: 1px solid var(--gray-200); border-radius: var(--radius); overflow: hidden; background: #fff; }
-.rec-card .art { height: 96px; background: linear-gradient(135deg, var(--blue-50), var(--primary-100)); display: flex; align-items: center; justify-content: center; }
-.rec-card .art .material-symbols-rounded { font-size: 3.2rem; color: var(--primary-600); }
-.rec-card .body { padding: 1.4rem 1.6rem; }
-.rec-card .name { font-weight: 600; font-size: 1.4rem; color: var(--gray-900); margin: 0 0 .8rem; }
-.rec-card .meta { display: flex; gap: 1.4rem; color: var(--gray-500); font-size: 1.2rem; }
-.rec-card .meta span { display: inline-flex; align-items: center; gap: .4rem; }
-.rec-card.view-all { display: flex; align-items: center; justify-content: center; flex-direction: column; gap: .6rem; color: var(--gray-700); cursor: pointer; min-height: 168px; }
-.rec-card.view-all:hover { background: var(--gray-50); }
-
-/* ---------- Growth surfaces ---------- */
-/* Banner — Figma node 20688:19901/19938. Updated spec moved this to the
-   blue "info" treatment (primary/50 bg, primary/700 border) instead of the
-   neutral gray card used in the first pass — more attention-grabbing since
-   it sits next to the real evidence table on a page with no other blue. */
-.growth-banner {
-  background: var(--blue-50); border: 1px solid var(--primary-700); border-radius: var(--radius-lg);
-  padding: 1.5rem 1.6rem; display: flex; align-items: center; gap: 1.6rem; margin-bottom: 2rem;
-}
-.growth-banner .icon { flex-shrink: 0; }
-.growth-banner .content { flex: 1; }
-.growth-banner .content strong { display: block; font-size: 1.6rem; color: var(--gray-800); margin-bottom: .3rem; }
-.growth-banner .content p { margin: 0; font-size: 1.4rem; color: var(--gray-800); }
-.growth-banner .dismiss { flex-shrink: 0; color: var(--primary-700); cursor: pointer; }
-
-/* Alert — Figma node 20634:8254, compact variant */
-.growth-alert {
-  background: var(--gray-50); border: 1px solid var(--gray-600); border-radius: var(--radius-lg);
-  padding: .9rem 1.2rem; display: flex; align-items: center; gap: 1.2rem; margin-bottom: 2rem;
-}
-.growth-alert .material-symbols-rounded { color: var(--gray-800); font-size: 1.8rem; flex-shrink: 0; }
-.growth-alert .content { flex: 1; font-size: 1.4rem; color: var(--gray-800); }
-.growth-alert .content strong { font-weight: 700; }
-
-/* Connected confirmation strip */
-.connected-strip {
-  background: var(--green-100); border: 1px solid #9be6c1; border-radius: var(--radius-lg);
-  padding: 1.2rem 1.6rem; display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; color: var(--green-800); font-size: 1.4rem;
-}
-.connected-strip .material-symbols-rounded { color: #0e9f6e; }
-
-/* Status pill (not connected / connected) — Figma "Pill - Read only" */
-.status-pill { display: inline-flex; align-items: center; padding: .3rem 1rem; border-radius: 999px; font-size: 1.2rem; flex-shrink: 0; }
-.status-pill.not-connected { background: var(--gray-100); color: var(--gray-600); }
-.status-pill.connected { background: var(--green-100); color: var(--green-800); }
-
-/* Promo card + two-option layout inside the redesigned "Add a smart
-   notification" type-choice dialog — Figma section 04, now merged into the
-   real dialog rather than a standalone fork screen. */
-.promo-card {
-  border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 2rem; cursor: pointer;
-  box-shadow: 0 2px 2px -2px rgba(0,0,0,.05), 0 4px 3px -2px rgba(0,0,0,.1); margin-bottom: 1.6rem;
-  transition: border-color .1s, box-shadow .1s;
-}
-.promo-card:hover { border-color: var(--primary-500); box-shadow: 0 2px 4px -2px rgba(42,167,255,.15), 0 4px 6px -2px rgba(42,167,255,.15); }
-.promo-card .promo-head { display: flex; align-items: center; justify-content: space-between; gap: 1.2rem; margin-bottom: .8rem; }
-.promo-card .promo-title { display: flex; align-items: center; gap: 1rem; }
-.promo-card .promo-title strong { font-size: 1.8rem; color: var(--gray-900); }
-.promo-card .promo-desc { color: var(--gray-500); font-size: 1.4rem; margin: 0; line-height: 1.5; }
-
-.choice-cards { display: flex; gap: 1.6rem; }
-.choice-card {
-  flex: 1; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 2rem;
-  display: flex; flex-direction: column; align-items: center; text-align: center; gap: .8rem; cursor: pointer;
-}
-.choice-card:hover { background: var(--gray-50); }
-.choice-card .material-symbols-rounded { font-size: 3.6rem; color: var(--primary-700); }
-.choice-card strong { font-size: 1.6rem; color: var(--gray-900); }
-.choice-card p { margin: 0; color: var(--gray-500); font-size: 1.4rem; line-height: 1.4; }
-
-/* Slack message mockup embedded in the detection modal — Figma section 03's
-   "Slack Message" frame, showing exactly what the pushed alert would look like. */
-.slack-msg { display: flex; gap: 1.2rem; align-items: flex-start; margin-top: 1.6rem; }
-.slack-msg .bot-avatar {
-  width: 3.6rem; height: 3.6rem; border-radius: 6px; background: var(--primary-900); flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.6rem;
-}
-.slack-msg .content { flex: 1; min-width: 0; }
-.slack-msg .meta-row { display: flex; align-items: center; gap: .8rem; margin-bottom: .4rem; }
-.slack-msg .sender { font-weight: 700; font-size: 1.4rem; color: var(--gray-800); }
-.slack-msg .bot-badge { background: #edf2f7; color: var(--gray-600); font-size: 1rem; font-weight: 700; padding: .1rem .5rem; border-radius: 3px; }
-.slack-msg .attachment { border-left: 4px solid var(--gray-200); padding: .4rem 0 .4rem 1.6rem; }
-.slack-msg .alert-title { font-weight: 800; color: var(--gray-900); font-size: 1.4rem; margin: 0 0 .6rem; }
-.slack-msg .alert-summary { color: var(--gray-700); font-size: 1.4rem; margin: 0 0 .8rem; }
-.slack-msg .fields-table { display: flex; flex-direction: column; gap: .6rem; }
-.slack-msg .field-row { display: flex; gap: 1.2rem; align-items: center; font-size: 1.35rem; }
-.slack-msg .field-row .who { width: 120px; flex-shrink: 0; font-weight: 500; color: var(--gray-800); }
-.slack-msg .field-row .classification { font-size: 1.2rem; font-weight: 500; }
-.slack-msg .field-row .classification.high { color: var(--red-700); }
-.slack-msg .field-row .classification.medium { color: var(--orange-800); }
-.slack-msg .field-row .classification.low { color: var(--green-800); }
-
-/* ---------- Connect-flow step 1: real Slack OAuth consent screen mockup
-   (Figma node 20666:13647) — a screenshot of the real Slack authorization
-   page, recreated in markup here rather than embedding an expiring asset. ---------- */
-.oauth-mock { text-align: left; }
-.oauth-mock .oauth-icons { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 1.6rem; }
-.oauth-mock .oauth-icons .swap { color: var(--gray-400); font-size: 1.8rem; }
-.oauth-mock h4 { text-align: center; font-size: 1.7rem; line-height: 1.35; margin: 0 0 2rem; }
-.oauth-mock .oauth-section-label { font-size: 1.3rem; font-weight: 700; color: var(--gray-900); margin: 0 0 .6rem; }
-.oauth-mock .oauth-row {
-  display: flex; align-items: center; gap: 1.2rem; padding: 1rem 0; border-top: 1px solid var(--gray-200); font-size: 1.35rem; color: var(--gray-700);
-}
-.oauth-mock .oauth-row .material-symbols-rounded.leading { color: var(--gray-500); font-size: 2rem; flex-shrink: 0; }
-.oauth-mock .oauth-row span.label { flex: 1; }
-.oauth-mock .oauth-row .material-symbols-rounded.chevron { color: var(--gray-400); font-size: 1.8rem; }
-.oauth-mock .oauth-group { margin-bottom: 1.6rem; }
-.oauth-mock .oauth-footer { display: flex; gap: 1.2rem; margin-top: 2rem; }
-.oauth-mock .oauth-footer .btn { flex: 1; }
-.btn-slack-allow { background: #007a5a; color: #fff; }
-.btn-slack-allow:hover { background: #00593f; }
-
-/* Warning-tone Alert (Zone DS "Alert" component, warning variant) — Figma
-   node 20666:13546, replaces the hand-rolled orange channel-note box. */
-.alert-warning {
-  display: flex; gap: 1.2rem; align-items: flex-start; text-align: left;
-  background: #fdfdea; border: 1px solid #9f580a; color: #723b13;
-  border-radius: var(--radius-lg); padding: .8rem 1.2rem; font-size: 1.35rem; line-height: 1.5;
+.orgs__title {
+  margin: 0 0 26px;
+  font: 400 30px/40px Roboto, sans-serif;
+  color: var(--x-legacy-ink);
 }
 
-/* Multi-channel select (connect flow, step 2) — chips + dropdown of
-   available channels, matching the "choose one or more channels" copy. */
-.channel-multiselect {
-  border: 1px solid var(--gray-300); border-radius: var(--radius); padding: .8rem; position: relative; text-align: left;
+/* fit-content matters: the tab strip's bottom border stops at the end of the
+   tabs (measured x 30 → 245.7), it does not run the full 1140px table width.
+   Tabs butt together with no gap — the 16px inset on each is the tab's own
+   padding, which is why the labels start at x 46 while the underline and every
+   table rule start at x 30. */
+.tabs {
+  display: flex;
+  gap: 0;
+  width: fit-content;
+  border-bottom: 1px solid var(--z-gray-200);
 }
-.channel-chips { display: flex; flex-wrap: wrap; gap: .6rem; margin-bottom: .6rem; }
-.channel-chips:empty { margin-bottom: 0; }
-.channel-chip { cursor: default; }
-.channel-chip .remove { margin-left: .5rem; cursor: pointer; color: var(--primary-700); font-weight: 700; }
-.channel-chip .remove:hover { color: var(--gray-900); }
-.channel-input {
-  width: 100%; border: none; outline: none; font-size: 1.4rem; color: var(--gray-500); background: transparent; cursor: pointer; padding: .3rem 0;
+.tabs__tab {
+  padding: 0 var(--z-s-4) 6px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  background: none;
+  font: 500 12px/16px Roboto, sans-serif;
+  /* Solved for, not guessed: .8px reproduces the measured 98.6px active-tab
+     underline and 215.4px strip width. At .4px the strip runs 8px narrow. */
+  letter-spacing: .8px;
+  color: var(--x-legacy-muted);
+  cursor: pointer;
 }
-.channel-dropdown {
-  position: absolute; top: 100%; left: 0; right: 0; margin-top: .4rem; background: #fff; border: 1px solid var(--gray-300);
-  border-radius: var(--radius); box-shadow: var(--shadow-modal); z-index: 10; max-height: 180px; overflow-y: auto;
+.tabs__tab.is-active { color: var(--z-primary-500); border-bottom-color: var(--z-primary-500); }
+
+.orgs__toolbar { display: flex; justify-content: flex-end; padding-top: 31px; }
+
+.orgs__table { width: 100%; margin-top: 37px; border-collapse: collapse; }
+.orgs__th {
+  padding: 0 0 14px var(--z-s-4);
+  border-bottom: 2px solid var(--z-gray-200);
+  font: 500 14px/20px Roboto, sans-serif;
+  text-align: left;
+  color: var(--x-legacy-ink);
 }
-.channel-dropdown .option { padding: .9rem 1.2rem; font-size: 1.4rem; cursor: pointer; display: flex; align-items: center; gap: .6rem; }
-.channel-dropdown .option:hover { background: var(--gray-50); }
-.channel-dropdown .empty { padding: .9rem 1.2rem; font-size: 1.3rem; color: var(--gray-500); }
-
-/* ---------- Modals ---------- */
-.modal-backdrop { position: fixed; inset: 0; background: rgba(17, 24, 39, .5); z-index: 900; }
-.modal-wrap { position: fixed; inset: 0; z-index: 901; display: flex; align-items: center; justify-content: center; padding: 2.4rem; }
-.modal-box { background: #fff; border-radius: var(--radius-lg); box-shadow: var(--shadow-modal); width: 100%; max-height: 90vh; display: flex; flex-direction: column; overflow: hidden; }
-.modal-box.w-sm { max-width: 420px; }
-.modal-box.w-md { max-width: 480px; }
-.modal-box.w-lg { max-width: 620px; }
-.modal-header { display: flex; align-items: flex-start; justify-content: space-between; padding: 2rem 2rem 1rem; flex-shrink: 0; }
-.modal-header h4 { margin: 0; font-size: 1.8rem; font-weight: 600; color: var(--gray-900); }
-.modal-close { background: none; border: none; color: var(--gray-500); cursor: pointer; font-size: 1.8rem; padding: 0; line-height: 1; }
-.modal-close:hover { color: var(--gray-800); }
-.modal-body { padding: .5rem 2rem 2rem; overflow-y: auto; }
-.modal-footer { padding: 1.6rem 2rem 2rem; display: flex; align-items: center; justify-content: flex-end; gap: 1.2rem; flex-shrink: 0; }
-.modal-footer.between { justify-content: space-between; }
-
-/* Centered variants (popup / connect flow) */
-.modal-centered { text-align: center; padding: 3.2rem 3.6rem 3.6rem; }
-.modal-centered .icon-circle { width: 5.6rem; height: 5.6rem; border-radius: 50%; background: var(--primary-100); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.6rem; }
-.modal-centered .icon-circle .material-symbols-rounded { font-size: 2.8rem; color: var(--primary-900); }
-.modal-centered h4 { font-size: 1.8rem; margin: 0 0 1rem; }
-.modal-centered p { color: var(--gray-700); font-size: 1.4rem; line-height: 1.5; margin: 0 0 2.4rem; }
-.modal-centered .btn-row { display: flex; gap: 1rem; }
-.modal-centered .btn-row .btn { flex: 1; }
-
-/* Detected-members list inside the proactive modal */
-.detect-list { display: flex; flex-direction: column; gap: 1.4rem; margin-top: 1.6rem; max-height: 260px; overflow-y: auto; }
-.detect-row { display: flex; flex-direction: column; gap: .5rem; }
-.detect-row .who { display: flex; align-items: center; gap: .8rem; font-size: 1.3rem; font-weight: 600; color: var(--gray-900); }
-.detect-row .who .avatar { width: 2.4rem; height: 2.4rem; font-size: 1rem; }
-.detect-row .meta { display: flex; align-items: center; gap: .8rem; font-size: 1.2rem; color: var(--gray-700); }
-
-/* Channel picker (connect flow) */
-.channel-field { text-align: left; margin: 1.6rem 0; }
-.channel-field label { display: block; font-size: 1.2rem; font-weight: 600; letter-spacing: .03em; color: var(--gray-600); text-transform: uppercase; margin-bottom: .6rem; }
-.channel-chip {
-  display: inline-flex; align-items: center; gap: .6rem; background: var(--blue-50); border: 1px solid #b6dcff;
-  border-radius: var(--radius-sm); padding: .5rem 1rem; font-size: 1.35rem; color: var(--primary-900);
+.orgs__td {
+  padding: var(--z-s-4) 0 17px var(--z-s-4);
+  border-bottom: 1px solid var(--z-gray-200);
+  vertical-align: middle;
 }
-.channel-note { display: flex; gap: .8rem; background: var(--orange-100); border-radius: var(--radius); padding: 1rem 1.2rem; font-size: 1.25rem; color: #8a4a0a; margin-top: 1.2rem; text-align: left; }
-.channel-note .material-symbols-rounded { font-size: 1.7rem; flex-shrink: 0; }
+/* Cell padding is symmetric: the Actions button's right edge measures x 1155,
+   16px inside the rule edge at 1170. */
+.orgs__th--actions,
+.orgs__td--actions { padding-right: var(--z-s-4); padding-left: 0; text-align: right; }
 
-/* Create-notification form */
-.form-row { display: flex; gap: 1.6rem; margin-bottom: 1.6rem; }
-.form-field { flex: 1; min-width: 0; }
-.form-field label { display: block; font-size: 1.2rem; font-weight: 600; letter-spacing: .03em; color: var(--gray-600); text-transform: uppercase; margin-bottom: .6rem; }
-.form-field input[type=text], .form-field select {
-  width: 100%; border: 1px solid var(--gray-300); border-radius: var(--radius); padding: .9rem 1.1rem; font-size: 1.4rem; color: var(--gray-800); background: #fff;
+.orgs__name { display: flex; align-items: center; gap: 12px; }
+.orgs__name-link { font: 400 14px/20px Roboto, sans-serif; color: var(--z-primary-500); text-decoration: none; }
+.orgs__name-link:hover { text-decoration: underline; }
+/* Not in the Figma — added so the switch has a visible outcome on the list.
+   Kept on Zone's scale (xs 12/16, spacing 2/6, radius DEFAULT) since there is
+   no design to be faithful to here. */
+.orgs__plan {
+  margin-left: var(--z-s-2);
+  padding: 0 6px;
+  border-radius: var(--z-r-sm);
+  background: var(--z-gray-200);
+  font: 400 12px/16px Roboto, sans-serif;
+  color: var(--z-gray-700);
 }
-.form-hint { color: var(--gray-500); font-size: 1.25rem; margin: -.6rem 0 1.6rem; }
-.metric-info-box {
-  display: flex; gap: .8rem; background: var(--blue-50); color: var(--primary-700); border-radius: var(--radius);
-  padding: 1.2rem 1.4rem; font-size: 1.35rem; line-height: 1.45; margin: 0 0 1.6rem;
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  font: 500 12px/12px Roboto, sans-serif;
+  color: var(--z-white);
 }
-.metric-info-box .material-symbols-rounded { font-size: 1.7rem; flex-shrink: 0; }
-.form-divider { border: none; border-top: 1px solid var(--gray-200); margin: 2rem 0; }
-.form-section-title { font-size: 1.6rem; font-weight: 600; margin: 0 0 .4rem; color: var(--gray-900); }
+.avatar--lg { width: 30px; height: 30px; }  /* measured off the page bitmap */
 
-.check-row { display: flex; align-items: center; gap: .9rem; padding: .7rem 0; font-size: 1.4rem; color: var(--gray-800); }
-.check-row input[type=checkbox] { width: 1.6rem; height: 1.6rem; accent-color: var(--primary-600); }
-.check-row.disabled { color: var(--gray-400); }
-.check-row .material-symbols-rounded.info { font-size: 1.5rem; color: var(--gray-400); }
-.check-row.slack-highlight { background: var(--blue-50); border: 1px solid var(--primary-500); border-radius: var(--radius); padding: .8rem 1.2rem; margin: .4rem 0; }
-.check-row .slack-caption { color: var(--primary-700); font-size: 1.2rem; margin-left: auto; font-weight: 500; }
+/* Actions split button + menu */
+.actions { position: relative; display: inline-block; }
+/* 30px tall, matching the avatar, so the row lands on its measured 64px pitch. */
+.actions__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--z-s-2);
+  padding: 4px var(--z-s-3);
+  border: 1px solid var(--z-gray-300);
+  border-radius: var(--z-r-md);
+  background: var(--z-white);
+  font: 400 14px/20px Roboto, sans-serif;
+  color: var(--x-legacy-ink);
+  cursor: pointer;
+}
+.actions__btn:hover { background: var(--z-gray-50); }
+.actions__btn .material-symbols-rounded { font-size: 18px; color: var(--z-gray-500); }
+.actions__menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 4px);
+  z-index: 40;
+  min-width: 200px;
+  padding: 4px;
+  border: 1px solid var(--z-gray-200);
+  border-radius: var(--z-r-md);
+  background: var(--z-white);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .12);
+  text-align: left;
+}
+.actions__menu[hidden] { display: none; }
+.actions__item {
+  display: block;
+  width: 100%;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: var(--z-r-sm);
+  background: none;
+  font: 400 14px/20px Roboto, sans-serif;
+  color: var(--z-gray-800);
+  text-align: left;
+  cursor: pointer;
+}
+.actions__item:hover { background: var(--z-gray-50); }
 
-.toggle { width: 3.6rem; height: 2rem; border-radius: 999px; position: relative; cursor: pointer; flex-shrink: 0; transition: background .15s; background: var(--gray-300); }
-.toggle .knob { position: absolute; top: .2rem; left: .2rem; width: 1.6rem; height: 1.6rem; border-radius: 50%; background: #fff; transition: left .15s; }
-.toggle.on { background: var(--primary-600); }
-.toggle.on .knob { left: 1.8rem; }
+/* ── Dialog layer ─────────────────────────────────────────────────────── */
 
-.audience-toggle-row { display: flex; align-items: center; gap: 1.2rem; margin: 1.6rem 0; font-size: 1.4rem; }
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  background: rgba(17, 24, 39, .45);
+}
+.scrim[hidden] { display: none; }
 
-/* success toast */
+.dialog {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 950;
+  background: var(--z-white);
+  box-shadow: var(--z-shadow-dialog);
+}
+.dialog[hidden] { display: none; }
+
+/* ── Shared modal shell ───────────────────────────────────────────────
+ * Figma 141:6262 and 141:6710 are the same Zone modal: white, gray/200
+ * border, radius 8, Header(57) / Body / Footer. Only width and body content
+ * differ, so the chrome is defined once.
+ */
+.mdl__header {
+  display: flex;
+  align-items: center;
+  gap: var(--z-s-4);
+  height: 57px;
+  padding: var(--z-s-5) var(--z-s-5) var(--z-s-2-5);
+  background: var(--z-white);
+}
+.mdl__title {
+  flex: 1 0 0;
+  min-width: 0;
+  margin: 0;
+  font: 600 18px/26px Roboto, sans-serif;
+  color: var(--z-gray-900);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.mdl__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 0;
+  border-radius: 9999px;
+  background: none;
+  cursor: pointer;
+}
+.mdl__close .material-symbols-rounded { font-size: 18px; color: var(--z-gray-500); }
+
+.mdl__body { padding: var(--z-s-2-5) var(--z-s-5); overflow: hidden; }
+.mdl__content { display: flex; flex-direction: column; gap: var(--z-s-4); overflow: hidden; }
+
+.mdl__footer { display: flex; align-items: center; padding: var(--z-s-5); }
+.mdl__footer--end { justify-content: flex-end; gap: var(--z-s-5); }
+/* The archive footer nests an extra 8px top pad and a 16px inner gap
+   (Figma 141:6749 / 141:6751), so it is not the same as the offer footer. */
+.mdl__footer--archive { justify-content: flex-end; gap: var(--z-s-4); padding-top: 28px; align-items: flex-end; }
+
+/* 01 · Switch to Essentials instead — Figma 141:6262 (600 × 566) */
+.dialog--offer {
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  box-shadow: inset 0 0 0 1px var(--z-gray-200);
+  border-radius: var(--z-r-lg);
+  overflow: hidden;
+}
+.offer__content { height: 409px; }
+.offer__lede { margin: 0; font: 400 16px/24px Roboto, sans-serif; color: var(--z-gray-700); }
+.offer__lede strong { font-weight: 700; }
+
+.plans {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+  padding: var(--z-s-5);
+  box-shadow: inset 0 0 0 1px var(--z-gray-300);
+  border-radius: var(--z-r-xl);
+}
+.plans__col { display: flex; flex-direction: column; gap: 4px; white-space: nowrap; }
+.plans__col--to { padding-right: var(--z-s-4); }
+.plans__name { margin: 0; font: 500 14px/20px Roboto, sans-serif; color: var(--z-gray-800); }
+.plans__price { margin: 0; }
+/* 30px Light — the price is font-weight 300, not the semibold the wrapper
+   node declares; the spans override it. */
+.plans__amount { font: 300 30px/40px Roboto, sans-serif; color: var(--z-black); }
+.plans__amount--new { color: var(--z-green-500); }
+.plans__per { font: 300 12px/16px Roboto, sans-serif; color: var(--z-gray-500); }
+.plans__arrow { flex: none; font-size: 24px; color: var(--z-gray-500); }
+
+.keeplose { display: flex; gap: var(--z-s-3); height: 193px; overflow: hidden; }
+.keeplose__col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--z-s-2);
+  flex: 1 0 0;
+  min-width: 0;
+  padding: 14px;
+  border-radius: var(--z-r-lg);
+  background: var(--z-gray-50);
+  overflow: hidden;
+}
+/* 14px medium — the earlier design used 12px bold here. */
+.keeplose__title { margin: 0; font: 500 14px/20px Roboto, sans-serif; color: var(--z-gray-800); }
+.keeplose__row { display: flex; align-items: center; gap: var(--z-s-2); overflow: hidden; }
+.keeplose__row p { flex: 1 0 0; min-width: 0; margin: 0; font: 400 14px/20px Roboto, sans-serif; color: var(--z-gray-800); }
+
+.offer__cap { margin: 0; font: 400 12px/16px Roboto, sans-serif; color: var(--z-gray-500); }
+
+/* Tick / cross are 3-layer exported vectors, composed exactly as in Figma. */
+.ico { position: relative; flex: none; width: 18px; height: 18px; overflow: hidden; }
+.ico img { position: absolute; display: block; }
+.ico--tick .ico__f1 { inset: 7.81%;  width: 84.38%; height: 84.38%; }
+.ico--tick .ico__f3 { top: 35.1%; right: 28.73%; bottom: 35.01%; left: 40.54%; width: 30.73%; height: 29.89%; }
+.ico--tick .ico__f5 { top: 48.8%; right: 50.94%; bottom: 35.01%; left: 31.93%; width: 17.13%; height: 16.19%; }
+.ico--cross .ico__f1 { inset: 7.81%;  width: 84.38%; height: 84.38%; }
+.ico--cross .ico__f3 { inset: 35.49%; width: 29.02%; height: 29.02%; }
+.ico--cross .ico__f5 { inset: 35.49%; width: 29.02%; height: 29.02%; }
+
+/* 02 · Archive organization — Figma 141:6710 (600 × 497) */
+.dialog--archive {
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  box-shadow: inset 0 0 0 1px var(--z-gray-200);
+  border-radius: var(--z-r-lg);
+  overflow: hidden;
+}
+.archive__content { height: 332px; }
+.archive__lede { margin: 0; font: 400 16px/24px Roboto, sans-serif; color: var(--z-gray-700); }
+
+.warnblock { display: flex; flex-direction: column; gap: var(--z-s-2); }
+.warnblock__label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+  font: 700 12px/16px Roboto, sans-serif;
+  text-transform: uppercase;
+  color: var(--z-gray-600);
+}
+.warnblock__label .material-symbols-rounded { font-size: 18px; }
+.warnblock__label--danger { color: var(--x-sem-red-800); }
+.warnblock__label--danger .material-symbols-rounded { color: var(--z-red-800); }
+
+.warnblock__panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--z-s-2-5);
+  padding: var(--z-s-4);
+  box-shadow: inset 0 0 0 1px var(--z-gray-200);
+  border-radius: var(--z-r-lg);
+  background: var(--z-gray-50);
+}
+.warnblock__panel--danger { box-shadow: inset 0 0 0 1px var(--x-sem-red-100); background: var(--x-sem-red-50); }
+.warnblock__row { display: flex; align-items: center; gap: var(--z-s-2); }
+.warnblock__row p { flex: 1 0 0; min-width: 0; margin: 0; font: 400 12px/16px Roboto, sans-serif; color: var(--z-gray-800); }
+.warnblock__panel--danger .warnblock__row p { color: var(--x-sem-red-800); }
+
+.errico { position: relative; flex: none; width: 14px; height: 14px; overflow: hidden; }
+.errico img { position: absolute; display: block; }
+.errico img:nth-child(1) { inset: 4.17%;  width: 91.66%; height: 91.66%; }
+.errico img:nth-child(2) { inset: 29.17%; width: 41.66%; height: 41.66%; }
+
+/* 04 · Confirmation — Figma 93:21731 (410 × 420, radius 8, gray/200 border)
+ *
+ * Redesigned: this replaces the earlier 63:14978 layout (500 × 443, radius 12,
+ * title above the art). Now a Body/Footer modal with the illustration on top,
+ * a 20px semibold title and 16px body copy. Unlike its predecessor it sits on
+ * Zone's scale throughout — 28 / 20 / 16 padding and gaps.
+ */
+.dialog--done {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 410px;
+  box-shadow: inset 0 0 0 1px var(--z-gray-200);
+  border-radius: var(--z-r-lg);
+  overflow: hidden;
+}
+.done__body { padding: 28px var(--z-s-5) 0; overflow: hidden; }
+.done__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--z-s-4);
+  align-items: center;
+  justify-content: center;
+  height: 312px;
+  overflow: hidden;
+}
+
+.done__illustration {
+  position: relative;
+  flex: none;
+  width: 370px;
+  height: 220px;
+  border-radius: 20px;
+  background: linear-gradient(to right, #eaf2ff, #f5f3ff);
+  overflow: hidden;
+}
+/* Layer boxes are set inline (generated); this only establishes the mode.
+   Several layers overflow the 370px frame by design and are clipped. */
+.done__illustration > img { position: absolute; display: block; }
+.done__depth {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 410px;   /* wider than the frame in Figma too — clipped */
+  height: 220px;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, .04));
+}
+
+.done__text { width: 100%; text-align: center; }
+.done__title {
+  margin: 0;
+  font: 600 20px/28px Roboto, sans-serif;
+  color: var(--z-gray-900);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.done__copy { margin: 0; font: 400 16px/24px Roboto, sans-serif; color: var(--z-gray-700); }
+
+.done__footer { display: flex; align-items: center; justify-content: center; padding: var(--z-s-5); }
+
+/* ── Toast — Figma 141:6635 (Zone DS Toast, 350 × 96) ─────────────────
+ * Placed at x 1066 / y 146 in the 1440-wide frame: 24px in from the right
+ * edge and 25px below the 121px browser-bar + top-bar stack, so it is
+ * anchored to the top-right of the app viewport rather than the page.
+ */
 .toast {
-  position: fixed; bottom: 2.4rem; right: 2.4rem; background: var(--gray-900); color: #fff; border-radius: var(--radius);
-  padding: 1.2rem 1.8rem; display: flex; align-items: center; gap: 1rem; box-shadow: var(--shadow-modal); z-index: 950; font-size: 1.4rem;
+  position: fixed;
+  right: 24px;
+  top: 73px;
+  z-index: 960;
+  display: flex;
+  flex-direction: column;
+  /* 8px, not 12: Figma nests a zero-padding `Content` wrapper whose gap is 8.
+     The toast's own 12px gap never applies — it has a single child. */
+  gap: var(--z-s-2);
+  width: 350px;
+  padding: var(--z-s-3);
+  border-radius: var(--z-r-lg);
+  background: var(--z-green-50);
+  box-shadow: inset 0 0 0 1px var(--z-green-100), var(--z-shadow-md);
+  overflow: hidden;
 }
-.toast .material-symbols-rounded { color: #4ade80; }
-
-.d-none { display: none !important; }
-
-@media (max-width: 900px) {
-  .sidebar { display: none; }
-  .page { padding: 2rem 1.6rem 6rem; }
-  .stat-row { flex-wrap: wrap; }
+.toast[hidden] { display: none; }
+.toast__header { display: flex; align-items: center; gap: var(--z-s-3); }
+.toast__title {
+  display: flex;
+  align-items: center;
+  gap: var(--z-s-2);
+  flex: 1 0 0;
+  min-width: 0;
+  margin: 0;
+  font: 600 16px/24px Roboto, sans-serif;
+  color: var(--z-green-800);
 }
+.toast__title .material-symbols-rounded { font-size: 18px; }
+.toast__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 0;
+  border-radius: 9999px;
+  background: none;
+  cursor: pointer;
+}
+.toast__close .material-symbols-rounded { font-size: 18px; color: var(--z-green-600); }
+.toast__copy { margin: 0; font: 400 14px/20px Roboto, sans-serif; color: var(--z-green-800); }
+
+/* ── Demo mode (NOT part of the design) ───────────────────────────────
+ * Deliberately small and bottom-left: the previous control panel was large
+ * enough to sit permanently on top of the third organization row.
+ */
+.demo {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 1000;
+  display: flex;
+  gap: var(--z-s-2);
+}
+.demo button {
+  padding: 6px var(--z-s-3);
+  border: 0;
+  border-radius: 9999px;
+  background: rgba(16, 19, 26, .9);
+  color: #e5e7eb;
+  font: 500 12px/16px Roboto, sans-serif;
+  cursor: pointer;
+}
+.demo button:hover { background: #10131a; }
+.demo__play { min-width: 84px; }
+
+.demo__caption {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  z-index: 1000;
+  max-width: 560px;
+  margin: 0;
+  padding: var(--z-s-2) var(--z-s-4);
+  border-radius: 9999px;
+  background: rgba(16, 19, 26, .92);
+  color: #f9fafb;
+  font: 400 13px/18px Roboto, sans-serif;
+  text-align: center;
+}
+.demo__caption[hidden] { display: none; }
+
+/* While the demo drives itself, the cursor shouldn't imply the viewer is
+   the one clicking. */
+body.is-demo .actions__btn,
+body.is-demo .actions__item,
+body.is-demo .dialog .btn { cursor: default; }

@@ -1,457 +1,301 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Unusual activity — Hubstaff (AR0229 prototype)</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,0..200&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AR0228 — Essentials VSMB churn discount offer</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@18,400,0,0;24,400,0,0&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-<div class="proto-banner">
-  <span><strong>AR0229 — Slack nudge for smart notifications alerts</strong> — Insights → Unusual activity, with Slack-activation concepts (banner + moment-of-detection modal). Not a real page.</span>
-  <a href="smart-notifications.html">View the Smart Notifications page →</a>
-</div>
-
-<div class="app-shell">
-  <nav class="sidebar">
-    <div class="sidebar-logo">
-      <svg width="22" height="22" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#2AA7FF"/></svg>
-      Hubstaff
-    </div>
-    <div class="sidebar-group">
-      <div class="sidebar-item"><span class="material-symbols-rounded">grid_view</span>Dashboard</div>
-      <div class="sidebar-item"><span class="material-symbols-rounded">schedule</span>Timesheets</div>
-      <div class="sidebar-item"><span class="material-symbols-rounded">show_chart</span>Activity</div>
-    </div>
-    <div class="sidebar-group">
-      <div class="sidebar-item active"><span class="material-symbols-rounded">lightbulb</span>Insights</div>
-      <div class="sidebar-sub">
-        <div class="sidebar-item"><span class="material-symbols-rounded" style="visibility:hidden">•</span>Performance</div>
-        <div class="sidebar-item"><span class="material-symbols-rounded" style="visibility:hidden">•</span>Highlights</div>
-        <div class="sidebar-item"><span class="material-symbols-rounded" style="visibility:hidden">•</span>Timeline</div>
-        <div class="sidebar-item active"><span class="material-symbols-rounded" style="visibility:hidden">•</span>Unusual activity</div>
-        <a href="smart-notifications.html" style="text-decoration:none;"><div class="sidebar-item"><span class="material-symbols-rounded" style="visibility:hidden">•</span>Smart notifications</div></a>
-        <div class="sidebar-item"><span class="material-symbols-rounded" style="visibility:hidden">•</span>Output</div>
-      </div>
-    </div>
-    <div class="sidebar-group">
-      <div class="sidebar-item"><span class="material-symbols-rounded">location_on</span>Locations</div>
-      <div class="sidebar-item"><span class="material-symbols-rounded">checklist</span>Project management</div>
-      <div class="sidebar-item"><span class="material-symbols-rounded">calendar_today</span>Calendar</div>
-      <div class="sidebar-item"><span class="material-symbols-rounded">description</span>Reports</div>
-      <div class="sidebar-item"><span class="material-symbols-rounded">group</span>People</div>
-      <div class="sidebar-item"><span class="material-symbols-rounded">payments</span>Financials</div>
-    </div>
-    <div class="sidebar-group" style="border-bottom:none;">
-      <div class="sidebar-item"><span class="material-symbols-rounded">settings</span>Settings</div>
-    </div>
-  </nav>
-
-  <div class="main-col">
-    <div class="topbar">
-      <span class="material-symbols-rounded">help</span>
-      <span class="material-symbols-rounded">notifications</span>
-      <span class="material-symbols-rounded">apps</span>
-      <div class="topbar-avatar">RR</div>
-    </div>
-
+  <div id="shell-content">
     <div class="page">
-      <div class="section-head" style="margin-bottom:2rem;">
-        <h2 class="page-heading">Unusual activity</h2>
-        <div class="section-actions">
-          <a href="#" class="btn btn-outline btn-sm" data-action="noop"><span class="material-symbols-rounded" style="font-size:1.6rem;">help</span>What is unusual activity?</a>
-          <a href="#" class="btn btn-primary btn-sm" data-action="growth-entry"><span class="material-symbols-rounded" style="font-size:1.6rem;">notifications</span>Create notification</a>
-          <a href="#" class="btn btn-outline btn-sm btn-icon-only" data-action="noop"><span class="material-symbols-rounded">settings</span></a>
-          <a href="#" class="btn btn-outline btn-sm btn-icon-only" data-action="noop"><span class="material-symbols-rounded">list</span></a>
+
+      <!-- ── Settings › Organizations ─────────────────────────────────── -->
+      <div class="orgs">
+        <h1 class="orgs__title">Organizations</h1>
+
+        <div class="tabs" role="tablist">
+          <button class="tabs__tab is-active" role="tab" aria-selected="true">ACTIVE (3)</button>
+          <button class="tabs__tab" role="tab" aria-selected="false">ARCHIVED (1)</button>
         </div>
-      </div>
 
-      <!-- ============ GROWTH SURFACE: Banner (Figma node 20635:8314) ============
-           Persistent while this feature isn't sending to Slack yet — this is the
-           page where the real value (flagged members below) already lives, so the
-           ask sits right next to the proof. Copy/CTA branch on whether Slack is
-           already connected at the org level (see the "connected-unused" spans) —
-           an org that already authorized Slack for its timer/task notifications
-           should never see "Connect Slack" again, that reads as broken. Swaps for
-           a green confirmation strip once this feature is actually using Slack. -->
-      <div class="growth-banner" data-if="not-used-here">
-        <svg class="icon" width="30" height="30" viewBox="0 0 122.8 122.8" xmlns="http://www.w3.org/2000/svg">
-          <path d="M25.8 77.6c0 7.1-5.8 12.9-12.9 12.9S0 84.7 0 77.6s5.8-12.9 12.9-12.9h12.9v12.9z" fill="#e01e5a"/>
-          <path d="M32.3 77.6c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9v32.3c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V77.6z" fill="#e01e5a"/>
-          <path d="M45.2 25.8c-7.1 0-12.9-5.8-12.9-12.9S38.1 0 45.2 0s12.9 5.8 12.9 12.9v12.9H45.2z" fill="#36c5f0"/>
-          <path d="M45.2 32.3c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H12.9C5.8 58.1 0 52.3 0 45.2s5.8-12.9 12.9-12.9h32.3z" fill="#36c5f0"/>
-          <path d="M97 45.2c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9-5.8 12.9-12.9 12.9H97V45.2z" fill="#2eb67d"/>
-          <path d="M90.5 45.2c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V12.9C64.7 5.8 70.5 0 77.6 0s12.9 5.8 12.9 12.9v32.3z" fill="#2eb67d"/>
-          <path d="M77.6 97c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9-12.9-5.8-12.9-12.9V97h12.9z" fill="#ecb22e"/>
-          <path d="M77.6 90.5c-7.1 0-12.9-5.8-12.9-12.9s5.8-12.9 12.9-12.9h32.3c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H77.6z" fill="#ecb22e"/>
-        </svg>
-        <div class="content">
-          <strong>Get unusual activity flagged the moment they happen!</strong>
-          <p data-if="org-not-connected">Connect Slack to receive unusual activity alerts in real time instead of checking here.</p>
-          <p data-if="connected-unused">You already have Slack connected — turn on real-time alerts for unusual activity instead of checking here.</p>
+        <div class="orgs__toolbar">
+          <button type="button" class="btn btn--primary">Add organization</button>
         </div>
-        <a href="#" class="btn btn-primary btn-sm" data-action="handle-connect-cta">
-          <span data-if="org-not-connected">Connect Slack</span>
-          <span data-if="connected-unused">Turn on Slack notifications</span>
-        </a>
-        <span class="dismiss material-symbols-rounded" data-action="dismiss-banner" style="cursor:pointer;">close</span>
-      </div>
 
-      <div class="connected-strip" data-if="used-here">
-        <span class="material-symbols-rounded">check_circle</span>
-        <span>Unusual activity alerts are on — sent to <strong>Slack</strong> the moment they're detected.</span>
-      </div>
-
-      <div class="filters-row">
-        <div class="filter-select"><span class="material-symbols-rounded">group</span>All Members</div>
-        <div class="filter-select"><span class="material-symbols-rounded">calendar_month</span>2026-08-01 – 2026-08-06</div>
-        <div class="tz-note">EDT <span class="material-symbols-rounded" style="font-size:1.5rem;">info</span></div>
-      </div>
-
-      <div class="confidence-pills">
-        <span class="confidence-pill" style="color:var(--red-700);">Highly unusual (1)</span>
-        <span class="confidence-pill active">Unusual (2)</span>
-        <span class="confidence-pill">Slightly unusual (4)</span>
-      </div>
-
-      <div class="stat-row">
-        <div class="stat-tile"><div class="value">7</div><div class="label">Members</div></div>
-        <div class="stat-tile"><div class="value">12</div><div class="label">Instances</div></div>
-        <div class="stat-tile"><div class="value">48:45</div><div class="label">Total time (h:m)</div></div>
-      </div>
-
-      <div class="section-head">
-        <div>
-          <h5>Members with unusual activity</h5>
-          <p class="sub">Hubstaff doesn't recommend making employment decisions based solely on unusual activity data.</p>
-        </div>
-        <div class="section-actions">
-          <a href="#" data-action="noop"><span class="material-symbols-rounded" style="font-size:1.6rem;">check_circle</span>Mark all as reviewed</a>
-          <a href="#" data-action="noop"><span class="material-symbols-rounded" style="font-size:1.6rem;">download</span>Export report</a>
-        </div>
-      </div>
-
-      <div class="data-table-card">
-        <table class="data-table">
+        <table class="orgs__table">
           <thead>
-            <tr><th>Member</th><th>Total time</th><th>Previous 60 days</th><th>Highest classification</th><th></th></tr>
+            <tr><th class="orgs__th">Name</th><th class="orgs__th orgs__th--actions"></th></tr>
           </thead>
-          <tbody>
-            <tr>
-              <td><div class="member-cell"><span class="avatar" style="background:#c0392b;">PS</span>Priya Shah</div></td>
-              <td>9:40</td><td>2:10</td>
-              <td><span class="confidence-badge high">Highly unusual</span></td>
-              <td style="text-align:right;"><a href="#" class="btn btn-outline btn-sm" data-action="noop">Review</a></td>
-            </tr>
-            <tr>
-              <td><div class="member-cell"><span class="avatar" style="background:#8e44ad;">MW</span>Marcus Webb</div></td>
-              <td>6:05</td><td>15:30</td>
-              <td><span class="confidence-badge medium">Unusual</span></td>
-              <td style="text-align:right;"><a href="#" class="btn btn-outline btn-sm" data-action="noop">Review</a></td>
-            </tr>
-            <tr>
-              <td><div class="member-cell"><span class="avatar" style="background:#2980b9;">ET</span>Elena Torres</div></td>
-              <td>5:50</td><td>12:45</td>
-              <td><span class="confidence-badge medium">Unusual</span></td>
-              <td style="text-align:right;"><a href="#" class="btn btn-outline btn-sm" data-action="noop">Review</a></td>
-            </tr>
-            <tr>
-              <td><div class="member-cell"><span class="avatar" style="background:#16a085;">SO</span>Sam Okafor</div></td>
-              <td>8:20</td><td>22:10</td>
-              <td><span class="confidence-badge low">Slightly unusual</span></td>
-              <td style="text-align:right;"><a href="#" class="btn btn-outline btn-sm" data-action="noop">Review</a></td>
-            </tr>
-            <tr>
-              <td><div class="member-cell"><span class="avatar" style="background:#d35400;">JL</span>Jamie Lindqvist</div></td>
-              <td>7:15</td><td>19:00</td>
-              <td><span class="confidence-badge low">Slightly unusual</span></td>
-              <td style="text-align:right;"><a href="#" class="btn btn-outline btn-sm" data-action="noop">Review</a></td>
-            </tr>
-            <tr>
-              <td><div class="member-cell"><span class="avatar" style="background:#27ae60;">NK</span>Noah Kessler</div></td>
-              <td>6:40</td><td>30:05</td>
-              <td><span class="confidence-badge low">Slightly unusual</span></td>
-              <td style="text-align:right;"><a href="#" class="btn btn-outline btn-sm" data-action="noop">Review</a></td>
-            </tr>
-            <tr>
-              <td><div class="member-cell"><span class="avatar" style="background:#7f8c8d;">AB</span>Aisha Bello</div></td>
-              <td>4:55</td><td>11:20</td>
-              <td><span class="confidence-badge low">Slightly unusual</span></td>
-              <td style="text-align:right;"><a href="#" class="btn btn-outline btn-sm" data-action="noop">Review</a></td>
-            </tr>
-          </tbody>
+          <tbody id="org-rows"><!-- rendered by flow.js --></tbody>
         </table>
       </div>
+
     </div>
   </div>
-</div>
 
-<!-- ============ GROWTH SURFACE: Modal, "moment of detection" (Figma node 20635:8548) ============
-     Auto-opens once per browser on load, pre-connect, unless dismissed permanently. -->
-<div id="detect-backdrop" class="modal-backdrop d-none" data-action="dismiss-detect"></div>
-<div id="detect" class="modal-wrap d-none">
-  <div class="modal-box w-lg">
-    <div class="modal-header">
-      <h4>New unusual activity detected</h4>
-      <button class="modal-close" data-action="dismiss-detect">&times;</button>
+  <!-- ── Dialog layer ───────────────────────────────────────────────── -->
+  <div class="scrim" id="scrim" hidden></div>
+
+  <!-- 01 · Switch to Essentials instead  (Figma 141:6262 — 600 × 566) -->
+  <div class="dialog dialog--offer" id="dlg-offer" role="dialog" aria-modal="true" aria-labelledby="of-title" hidden>
+    <div class="mdl__header">
+      <p class="mdl__title" id="of-title">Switch to Essentials instead</p>
+      <button class="mdl__close" type="button" data-close aria-label="Close">
+        <span class="material-symbols-rounded">close</span>
+      </button>
     </div>
-    <div class="modal-body">
-      <p style="margin:0 0 .4rem; font-size:1.4rem; color:var(--gray-700);"><strong style="color:var(--gray-900);">3 members</strong> were flagged for unusual activity this week. Don't want to keep checking back? Get flags like this pushed to Slack.</p>
-      <!-- Slack message mockup — Figma node 20679:14598, shows exactly what the
-           pushed alert would look like rather than a generic in-app list. -->
-      <div class="slack-msg">
-        <div class="bot-avatar">
-          <svg width="20" height="20" viewBox="0 0 122.8 122.8" xmlns="http://www.w3.org/2000/svg">
-            <path d="M25.8 77.6c0 7.1-5.8 12.9-12.9 12.9S0 84.7 0 77.6s5.8-12.9 12.9-12.9h12.9v12.9z" fill="#e01e5a"/>
-            <path d="M32.3 77.6c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9v32.3c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V77.6z" fill="#e01e5a"/>
-            <path d="M45.2 25.8c-7.1 0-12.9-5.8-12.9-12.9S38.1 0 45.2 0s12.9 5.8 12.9 12.9v12.9H45.2z" fill="#36c5f0"/>
-            <path d="M45.2 32.3c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H12.9C5.8 58.1 0 52.3 0 45.2s5.8-12.9 12.9-12.9h32.3z" fill="#36c5f0"/>
-            <path d="M97 45.2c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9-5.8 12.9-12.9 12.9H97V45.2z" fill="#2eb67d"/>
-            <path d="M90.5 45.2c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V12.9C64.7 5.8 70.5 0 77.6 0s12.9 5.8 12.9 12.9v32.3z" fill="#2eb67d"/>
-            <path d="M77.6 97c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9-12.9-5.8-12.9-12.9V97h12.9z" fill="#ecb22e"/>
-            <path d="M77.6 90.5c-7.1 0-12.9-5.8-12.9-12.9s5.8-12.9 12.9-12.9h32.3c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H77.6z" fill="#ecb22e"/>
-          </svg>
+
+    <div class="mdl__body">
+      <div class="mdl__content offer__content">
+        <p class="offer__lede">Instead of archiving, switch to Essentials when your current annual plan ends on <strong>&lt;plan end date&gt;</strong>. Nothing changes before then.</p>
+
+        <div class="plans">
+          <div class="plans__col">
+            <p class="plans__name">Team Annual</p>
+            <p class="plans__price"><span class="plans__amount">$12.00</span> <span class="plans__per">/seat/mo</span></p>
+          </div>
+          <span class="plans__arrow material-symbols-rounded" aria-hidden="true">arrow_forward</span>
+          <div class="plans__col plans__col--to">
+            <p class="plans__name">Essentials</p>
+            <p class="plans__price"><span class="plans__amount plans__amount--new">$3.99</span> <span class="plans__per">/seat/mo</span></p>
+          </div>
         </div>
-        <div class="content">
-          <div class="meta-row"><span class="sender">Slack Alerts</span><span class="bot-badge">APP</span></div>
-          <div class="attachment">
-            <p class="alert-title">🚨 Unusual Activity Detected</p>
-            <p class="alert-summary"><strong>3 members</strong> were flagged for unusual activity this week.</p>
-            <div class="fields-table">
-              <div class="field-row"><span class="who">Priya Shah</span><span class="classification high">Highly unusual (3 instances)</span></div>
-              <div class="field-row"><span class="who">Marcus Webb</span><span class="classification medium">Unusual (2 instances)</span></div>
-              <div class="field-row"><span class="who">Elena Torres</span><span class="classification medium">Unusual (1 instance)</span></div>
+
+        <div class="keeplose">
+          <div class="keeplose__col">
+            <p class="keeplose__title">Essentials includes</p>
+            <div class="keeplose__row">
+              <span class="ico ico--tick" aria-hidden="true"><img src="assets/tick-1.svg" alt="" class="ico__f1" /><img src="assets/tick-3.svg" alt="" class="ico__f3" /><img src="assets/tick-5.svg" alt="" class="ico__f5" /></span>
+              <p>1 simple flat fee covering 4 users</p>
+            </div>
+            <div class="keeplose__row">
+              <span class="ico ico--tick" aria-hidden="true"><img src="assets/tick-1.svg" alt="" class="ico__f1" /><img src="assets/tick-3.svg" alt="" class="ico__f3" /><img src="assets/tick-5.svg" alt="" class="ico__f5" /></span>
+              <p>Time tracking</p>
+            </div>
+            <div class="keeplose__row">
+              <span class="ico ico--tick" aria-hidden="true"><img src="assets/tick-1.svg" alt="" class="ico__f1" /><img src="assets/tick-3.svg" alt="" class="ico__f3" /><img src="assets/tick-5.svg" alt="" class="ico__f5" /></span>
+              <p>Unlimited screenshots</p>
+            </div>
+            <div class="keeplose__row">
+              <span class="ico ico--tick" aria-hidden="true"><img src="assets/tick-1.svg" alt="" class="ico__f1" /><img src="assets/tick-3.svg" alt="" class="ico__f3" /><img src="assets/tick-5.svg" alt="" class="ico__f5" /></span>
+              <p>All your data so far</p>
+            </div>
+          </div>
+          <div class="keeplose__col">
+            <p class="keeplose__title">Essentials doesn&rsquo;t include</p>
+            <div class="keeplose__row">
+              <span class="ico ico--cross" aria-hidden="true"><img src="assets/cross-1.svg" alt="" class="ico__f1" /><img src="assets/cross-3.svg" alt="" class="ico__f3" /><img src="assets/cross-5.svg" alt="" class="ico__f5" /></span>
+              <p>Timesheet approvals</p>
+            </div>
+            <div class="keeplose__row">
+              <span class="ico ico--cross" aria-hidden="true"><img src="assets/cross-1.svg" alt="" class="ico__f1" /><img src="assets/cross-3.svg" alt="" class="ico__f3" /><img src="assets/cross-5.svg" alt="" class="ico__f5" /></span>
+              <p>Payroll</p>
+            </div>
+            <div class="keeplose__row">
+              <span class="ico ico--cross" aria-hidden="true"><img src="assets/cross-1.svg" alt="" class="ico__f1" /><img src="assets/cross-3.svg" alt="" class="ico__f3" /><img src="assets/cross-5.svg" alt="" class="ico__f5" /></span>
+              <p>Integrations</p>
+            </div>
+            <div class="keeplose__row">
+              <span class="ico ico--cross" aria-hidden="true"><img src="assets/cross-1.svg" alt="" class="ico__f1" /><img src="assets/cross-3.svg" alt="" class="ico__f3" /><img src="assets/cross-5.svg" alt="" class="ico__f5" /></span>
+              <p>Add-ons such as Insights</p>
+            </div>
+          </div>
+        </div>
+
+        <p class="offer__cap">Essentials is capped at 4 members. You won't be able to add more without upgrading again.</p>
+      </div>
+    </div>
+
+    <div class="mdl__footer mdl__footer--end">
+      <button type="button" class="btn btn--subtle" data-action="offer-archive">Archive organization</button>
+      <button type="button" class="btn btn--primary" data-action="switch-to-essentials">Switch to Essentials</button>
+    </div>
+  </div>
+
+  <!-- 02 · Archive organization  (Figma 141:6710 — 600 × 497) -->
+  <div class="dialog dialog--archive" id="dlg-archive" role="dialog" aria-modal="true" aria-labelledby="ar-title" hidden>
+    <div class="mdl__header">
+      <p class="mdl__title" id="ar-title">Archive organization</p>
+      <button class="mdl__close" type="button" data-close aria-label="Close">
+        <span class="material-symbols-rounded">close</span>
+      </button>
+    </div>
+
+    <div class="mdl__body">
+      <div class="mdl__content archive__content">
+        <p class="archive__lede">Are you sure you want to archive your organization and cancel your subscription?</p>
+
+        <div class="warnblock">
+          <p class="warnblock__label warnblock__label--danger">
+            <span class="material-symbols-rounded">warning</span>Permanent Data Loss (Irreversible)
+          </p>
+          <div class="warnblock__panel warnblock__panel--danger">
+            <div class="warnblock__row">
+              <span class="errico" aria-hidden="true"><img src="assets/error-circle-red-group.svg" alt="" /><img src="assets/error-circle-red-stroke.svg" alt="" /></span>
+              <p>All projects and To-dos will be cleared</p>
+            </div>
+            <div class="warnblock__row">
+              <span class="errico" aria-hidden="true"><img src="assets/error-circle-red-group.svg" alt="" /><img src="assets/error-circle-red-stroke.svg" alt="" /></span>
+              <p>Screenshots recorded for all members</p>
+            </div>
+            <div class="warnblock__row">
+              <span class="errico" aria-hidden="true"><img src="assets/error-circle-red-group.svg" alt="" /><img src="assets/error-circle-red-stroke.svg" alt="" /></span>
+              <p>All previous payment records</p>
+            </div>
+            <div class="warnblock__row">
+              <span class="errico" aria-hidden="true"><img src="assets/error-circle-red-group.svg" alt="" /><img src="assets/error-circle-red-stroke.svg" alt="" /></span>
+              <p>Past time and project reports + metrics</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="warnblock">
+          <p class="warnblock__label">
+            <span class="material-symbols-rounded">lock</span>Access &amp; Tool Lockout
+          </p>
+          <div class="warnblock__panel">
+            <div class="warnblock__row">
+              <span class="errico" aria-hidden="true"><img src="assets/error-circle-gray-group.svg" alt="" /><img src="assets/error-circle-gray-stroke.svg" alt="" /></span>
+              <p>Timesheet approvals, payroll operations, integrations</p>
+            </div>
+            <div class="warnblock__row">
+              <span class="errico" aria-hidden="true"><img src="assets/error-circle-gray-group.svg" alt="" /><img src="assets/error-circle-gray-stroke.svg" alt="" /></span>
+              <p>Premium add-ons (including Insights &amp; performance metrics)</p>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="modal-footer between">
-      <a href="#" class="btn-text" data-action="dismiss-detect-permanent">Don't show again</a>
-      <a href="#" class="btn btn-primary" data-action="handle-connect-cta">
-        <span data-if="org-not-connected">Connect Slack</span>
-        <span data-if="connected-unused">Turn on Slack notifications</span>
-      </a>
+
+    <div class="mdl__footer mdl__footer--archive">
+      <button type="button" class="btn btn--danger" data-action="archive-confirm">Archive organization</button>
+      <button type="button" class="btn btn--outline" data-action="archive-back">Go back</button>
     </div>
   </div>
-</div>
 
-<!-- ============ GROWTH SURFACE: type-choice dialog + Slack promo card
-     (Figma node 20688:20571 / 20700:2701, "04 · Pop-up fork") ============
-     Updated design merges the growth fork directly into the real "Add a smart
-     notification" type-choice dialog (Create custom / Choose from templates)
-     instead of a separate screen — a promo card on top explains what Slack
-     delivery means, but the two real options underneath are the actual choice.
-     Both cards honor current Slack status automatically: connect-then-create
-     if not connected yet, straight to the prefilled form if already connected. -->
-<div id="popup-backdrop" class="modal-backdrop d-none" data-action="close-modal" data-arg="popup"></div>
-<div id="popup" class="modal-wrap d-none">
-  <div class="modal-box w-lg">
-    <div class="modal-header">
-      <h4>Add a smart notification</h4>
-      <button class="modal-close" data-action="close-modal" data-arg="popup">&times;</button>
-    </div>
-    <div class="modal-body">
-      <div class="promo-card" data-action="start-notification-creation" data-arg="promo">
-        <div class="promo-head">
-          <div class="promo-title">
-            <svg width="24" height="24" viewBox="0 0 122.8 122.8" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
-              <path d="M25.8 77.6c0 7.1-5.8 12.9-12.9 12.9S0 84.7 0 77.6s5.8-12.9 12.9-12.9h12.9v12.9z" fill="#e01e5a"/>
-              <path d="M32.3 77.6c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9v32.3c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V77.6z" fill="#e01e5a"/>
-              <path d="M45.2 25.8c-7.1 0-12.9-5.8-12.9-12.9S38.1 0 45.2 0s12.9 5.8 12.9 12.9v12.9H45.2z" fill="#36c5f0"/>
-              <path d="M45.2 32.3c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H12.9C5.8 58.1 0 52.3 0 45.2s5.8-12.9 12.9-12.9h32.3z" fill="#36c5f0"/>
-              <path d="M97 45.2c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9-5.8 12.9-12.9 12.9H97V45.2z" fill="#2eb67d"/>
-              <path d="M90.5 45.2c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V12.9C64.7 5.8 70.5 0 77.6 0s12.9 5.8 12.9 12.9v32.3z" fill="#2eb67d"/>
-              <path d="M77.6 97c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9-12.9-5.8-12.9-12.9V97h12.9z" fill="#ecb22e"/>
-              <path d="M77.6 90.5c-7.1 0-12.9-5.8-12.9-12.9s5.8-12.9 12.9-12.9h32.3c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H77.6z" fill="#ecb22e"/>
-            </svg>
-            <strong>Create a notification for Slack</strong>
-          </div>
-          <span class="status-pill not-connected" data-if="org-not-connected">Not connected</span>
-          <span class="status-pill connected" data-if="connected-unused">Connected</span>
-          <span class="status-pill connected" data-if="used-here">Connected</span>
+  <!-- 03 · Confirmation  (Figma 141:6390 / 93:21731 — 410 × 420) -->
+  <div class="dialog dialog--done" id="dlg-done" role="dialog" aria-modal="true" aria-labelledby="dn-title" hidden>
+    <div class="done__body">
+      <div class="done__content">
+        <!-- illustration: 72 layers generated from the Figma vector exports.
+             Boxes resolved to px against the 370x220 frame. -->
+        <div class="done__illustration" aria-hidden="true">
+          <img src="assets/success/bg-glow.svg" alt="" style="left:-40px;top:-40px;width:220px;height:220px" />
+          <img src="assets/success/star-1.svg" alt="" style="left:18px;top:18px;width:6px;height:6px" />
+          <img src="assets/success/star-2.svg" alt="" style="left:52px;top:26px;width:4px;height:4px" />
+          <img src="assets/success/star-3.svg" alt="" style="left:86px;top:14px;width:5px;height:5px" />
+          <img src="assets/success/star-4.svg" alt="" style="left:120px;top:34px;width:3px;height:3px" />
+          <img src="assets/success/star-5.svg" alt="" style="left:154px;top:22px;width:4px;height:4px" />
+          <img src="assets/success/star-6.svg" alt="" style="left:188px;top:40px;width:5px;height:5px" />
+          <img src="assets/success/star-7.svg" alt="" style="left:222px;top:28px;width:3px;height:3px" />
+          <img src="assets/success/star-8.svg" alt="" style="left:256px;top:16px;width:4px;height:4px" />
+          <img src="assets/success/star-9.svg" alt="" style="left:290px;top:32px;width:5px;height:5px" />
+          <img src="assets/success/star-10.svg" alt="" style="left:324px;top:20px;width:3px;height:3px" />
+          <img src="assets/success/star-11.svg" alt="" style="left:358px;top:38px;width:4px;height:4px" />
+          <img src="assets/success/disc.svg" alt="" style="left:93px;top:38.4px;width:183.605px;height:183.605px" />
+          <img src="assets/success/rectangle.svg" alt="" style="left:124.10px;top:71.90px;width:9.21px;height:9.24px" />
+          <img src="assets/success/fill-1.svg" alt="" style="left:152.85px;top:59.36px;width:68.41px;height:98.52px" />
+          <img src="assets/success/fill-3.svg" alt="" style="left:196.06px;top:84.94px;width:5.62px;height:8.87px" />
+          <img src="assets/success/fill-5.svg" alt="" style="left:166.80px;top:84.94px;width:5.62px;height:8.87px" />
+          <img src="assets/success/fill-7.svg" alt="" style="left:176.05px;top:97.35px;width:15.24px;height:24.60px" />
+          <img src="assets/success/stroke-9.svg" alt="" style="left:183.15px;top:98.34px;width:2.03px;height:0.84px" />
+          <img src="assets/success/fill-11.svg" alt="" style="left:170.53px;top:68.11px;width:27.23px;height:37.16px" />
+          <img src="assets/success/fill-13.svg" alt="" style="left:163.84px;top:63.91px;width:35.89px;height:28.47px" />
+          <img src="assets/success/stroke-15.svg" alt="" style="left:173.12px;top:79.29px;width:7.55px;height:2.11px" />
+          <img src="assets/success/stroke-17.svg" alt="" style="left:185.81px;top:79.64px;width:8.88px;height:1.78px" />
+          <img src="assets/success/stroke-19.svg" alt="" style="left:180.71px;top:81.40px;width:3.51px;height:11.95px" />
+          <img src="assets/success/stroke-21.svg" alt="" style="left:174.49px;top:83.86px;width:4.81px;height:3.30px" />
+          <img src="assets/success/stroke-23.svg" alt="" style="left:187.63px;top:83.86px;width:4.77px;height:3.30px" />
+          <img src="assets/success/fill-25.svg" alt="" style="left:180.34px;top:94.89px;width:6.77px;height:2.62px" />
+          <img src="assets/success/stroke-27.svg" alt="" style="left:179.86px;top:94.40px;width:7.73px;height:3.59px" />
+          <img src="assets/success/stroke-29.svg" alt="" style="left:182.52px;top:99.59px;width:2.66px;height:0.75px" />
+          <img src="assets/success/fill-31.svg" alt="" style="left:196.88px;top:92.27px;width:2.89px;height:9.22px" />
+          <img src="assets/success/fill-33.svg" alt="" style="left:168.50px;top:92.27px;width:2.92px;height:9.22px" />
+          <img src="assets/success/fill-35.svg" alt="" style="left:248.20px;top:23.19px;width:16.98px;height:32.89px" />
+          <img src="assets/success/stroke-37.svg" alt="" style="left:258.48px;top:24.02px;width:1.59px;height:11.09px" />
+          <img src="assets/success/stroke-39.svg" alt="" style="left:261.22px;top:25.39px;width:1.26px;height:11.15px" />
+          <img src="assets/success/stroke-41.svg" alt="" style="left:263.25px;top:30.10px;width:1.18px;height:8.49px" />
+          <img src="assets/success/fill-43.svg" alt="" style="left:226.85px;top:45.01px;width:36.52px;height:65.30px" />
+          <img src="assets/success/fill-45.svg" alt="" style="left:193.25px;top:92.93px;width:49.95px;height:53.31px" />
+          <img src="assets/success/fill-47.svg" alt="" style="left:192.88px;top:113.78px;width:32.56px;height:33.42px" />
+          <img src="assets/success/intersect.svg" alt="" style="left:154.47px;top:188.84px;width:62.781px;height:33.104px" />
+          <img src="assets/success/fill-67.svg" alt="" style="left:163.98px;top:183.13px;width:40.63px;height:6.51px" />
+          <img src="assets/success/fill-69.svg" alt="" style="left:165.65px;top:183.13px;width:37.63px;height:0.00px" />
+          <img src="assets/success/stroke-71.svg" alt="" style="left:165.02px;top:188.58px;width:38.63px;height:0.73px" />
+          <img src="assets/success/fill-73.svg" alt="" style="left:115.66px;top:22.22px;width:17.72px;height:32.85px" />
+          <img src="assets/success/stroke-75.svg" alt="" style="left:121.73px;top:23.01px;width:1.63px;height:11.07px" />
+          <img src="assets/success/stroke-77.svg" alt="" style="left:119.07px;top:24.13px;width:1.81px;height:11.11px" />
+          <img src="assets/success/stroke-79.svg" alt="" style="left:116.88px;top:28.60px;width:1.26px;height:8.49px" />
+          <img src="assets/success/fill-81.svg" alt="" style="left:116.59px;top:44.35px;width:32.12px;height:67.39px" />
+          <img src="assets/success/fill-83.svg" alt="" style="left:131.46px;top:93.90px;width:46.40px;height:56.25px" />
+          <img src="assets/success/fill-85.svg" alt="" style="left:146.37px;top:117.06px;width:31.86px;height:34.10px" />
+          <img src="assets/success/stroke-87.svg" alt="" style="left:181.63px;top:182.38px;width:1.70px;height:39.64px" />
+          <img src="assets/success/fill-89.svg" alt="" style="left:154.18px;top:112.57px;width:59.98px;height:70.07px" />
+          <img src="assets/success/stroke-91.svg" alt="" style="left:177.75px;top:120.08px;width:13.14px;height:1.30px" />
+          <img src="assets/success/stroke-93.svg" alt="" style="left:161.43px;top:148.19px;width:44.14px;height:0.97px" />
+          <img src="assets/success/stroke-95.svg" alt="" style="left:157.77px;top:134.24px;width:53.02px;height:48.88px" />
+          <img src="assets/success/penta-1.svg" alt="" style="left:147.90px;top:11.84px;width:26.01px;height:24.85px" />
+          <img src="assets/success/penta-2.svg" alt="" style="left:182.42px;top:33.72px;width:13.57px;height:12.96px" />
+          <img src="assets/success/penta-2.svg" alt="" style="left:323.92px;top:119.60px;width:13.57px;height:12.96px" />
+          <img src="assets/success/penta-4.svg" alt="" style="left:203.82px;top:5.58px;width:18.66px;height:17.83px" />
+          <img src="assets/success/penta-4.svg" alt="" style="left:22.02px;top:85.58px;width:18.66px;height:17.83px" />
+          <img src="assets/success/confetti-1.svg" alt="" style="left:24px;top:13px;width:10px;height:10px" />
+          <img src="assets/success/confetti-2.svg" alt="" style="left:61px;top:29px;width:8px;height:8px" />
+          <img src="assets/success/confetti-3.svg" alt="" style="left:328px;top:39px;width:10px;height:10px" />
+          <img src="assets/success/confetti-3.svg" alt="" style="left:61px;top:120px;width:10px;height:10px" />
+          <img src="assets/success/confetti-5.svg" alt="" style="left:35px;top:174px;width:10px;height:10px" />
+          <img src="assets/success/confetti-2.svg" alt="" style="left:75px;top:186px;width:8px;height:8px" />
+          <img src="assets/success/confetti-2.svg" alt="" style="left:304px;top:80px;width:8px;height:8px" />
+          <img src="assets/success/confetti-1.svg" alt="" style="left:307px;top:168px;width:10px;height:10px" />
+          <img src="assets/success/confetti-9.svg" alt="" style="left:327px;top:186px;width:8px;height:8px" />
+          <img src="assets/success/sparkle-1.svg" alt="" style="left:12px;top:12px;width:4px;height:4px" />
+          <img src="assets/success/sparkle-2.svg" alt="" style="left:380px;top:18px;width:3px;height:3px" />
+          <img src="assets/success/sparkle-3.svg" alt="" style="left:18px;top:190px;width:3px;height:3px" />
+          <img src="assets/success/sparkle-4.svg" alt="" style="left:370px;top:180px;width:4px;height:4px" />
+          <div class="done__depth"></div>
         </div>
-        <p class="promo-desc" data-if="org-not-connected">We'll connect your workspace first, then open a new smart notification with Slack delivery already switched on.</p>
-        <p class="promo-desc" data-if="org-connected">Start a new smart notification with Slack delivery already switched on — just choose what it should watch.</p>
-      </div>
-      <div class="choice-cards">
-        <div class="choice-card" data-action="start-notification-creation" data-arg="custom">
-          <span class="material-symbols-rounded">notifications</span>
-          <strong>Create a custom notification</strong>
-          <p>Build it from scratch — choose the trigger, who it watches and where it lands.</p>
-        </div>
-        <div class="choice-card" data-action="start-notification-creation" data-arg="template">
-          <span class="material-symbols-rounded">grid_view</span>
-          <strong>Choose from our templates</strong>
-          <p>Start from a ready-made notification and adjust it to fit your team.</p>
-        </div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <a href="#" class="btn btn-outline" data-action="close-modal" data-arg="popup">Cancel</a>
-    </div>
-  </div>
-</div>
-
-<!-- ============ Embedded Slack connect flow (kept in-page) — Figma "05 · Shared
-     — Connect Slack flow". Step 1 recreates the real Slack OAuth consent screen
-     (node 20666:13647, a captured screenshot in the source file) rather than a
-     generic Hubstaff-branded dialog; step 2 adds the real warning-toned Alert
-     component (node 20666:13546) instead of a hand-rolled note box. ============ -->
-<div id="connect-backdrop" class="modal-backdrop d-none" data-action="close-modal" data-arg="connect"></div>
-<div id="connect" class="modal-wrap d-none">
-  <div class="modal-box w-sm">
-    <div class="modal-header"><span></span><button class="modal-close" data-action="close-modal" data-arg="connect">&times;</button></div>
-    <div id="connect-step-1" class="modal-body oauth-mock" style="padding-top:0;">
-      <div class="oauth-icons">
-        <svg width="32" height="32" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#2AA7FF"/></svg>
-        <span class="material-symbols-rounded swap">swap_horiz</span>
-        <svg width="32" height="32" viewBox="0 0 122.8 122.8" xmlns="http://www.w3.org/2000/svg">
-          <path d="M25.8 77.6c0 7.1-5.8 12.9-12.9 12.9S0 84.7 0 77.6s5.8-12.9 12.9-12.9h12.9v12.9z" fill="#e01e5a"/>
-          <path d="M32.3 77.6c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9v32.3c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V77.6z" fill="#e01e5a"/>
-          <path d="M45.2 25.8c-7.1 0-12.9-5.8-12.9-12.9S38.1 0 45.2 0s12.9 5.8 12.9 12.9v12.9H45.2z" fill="#36c5f0"/>
-          <path d="M45.2 32.3c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H12.9C5.8 58.1 0 52.3 0 45.2s5.8-12.9 12.9-12.9h32.3z" fill="#36c5f0"/>
-          <path d="M97 45.2c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9-5.8 12.9-12.9 12.9H97V45.2z" fill="#2eb67d"/>
-          <path d="M90.5 45.2c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V12.9C64.7 5.8 70.5 0 77.6 0s12.9 5.8 12.9 12.9v32.3z" fill="#2eb67d"/>
-          <path d="M77.6 97c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9-12.9-5.8-12.9-12.9V97h12.9z" fill="#ecb22e"/>
-          <path d="M77.6 90.5c-7.1 0-12.9-5.8-12.9-12.9s5.8-12.9 12.9-12.9h32.3c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H77.6z" fill="#ecb22e"/>
-        </svg>
-      </div>
-      <h4>Hubstaff is requesting permission to access your Slack workspace</h4>
-      <div class="oauth-group">
-        <p class="oauth-section-label">WHAT WILL HUBSTAFF BE ABLE TO VIEW?</p>
-        <div class="oauth-row"><span class="material-symbols-rounded leading">tag</span><span class="label">Content and info about channels &amp; conversations</span><span class="material-symbols-rounded chevron">chevron_right</span></div>
-        <div class="oauth-row"><span class="material-symbols-rounded leading">grid_view</span><span class="label">Content and info about your workspace</span><span class="material-symbols-rounded chevron">chevron_right</span></div>
-      </div>
-      <div class="oauth-group">
-        <p class="oauth-section-label">WHAT WILL HUBSTAFF BE ABLE TO DO?</p>
-        <div class="oauth-row"><span class="material-symbols-rounded leading">bolt</span><span class="label">Perform actions in channels &amp; conversations</span><span class="material-symbols-rounded chevron">chevron_right</span></div>
-      </div>
-      <div class="oauth-footer">
-        <a href="#" class="btn btn-outline" data-action="close-modal" data-arg="connect">Cancel</a>
-        <button class="btn btn-slack-allow" id="connect-authorize-btn" data-action="connect-step1-continue">Allow</button>
-      </div>
-    </div>
-    <div id="connect-step-2" class="modal-body modal-centered d-none" style="padding-top:0;">
-      <h4>Where should alerts appear?</h4>
-      <p style="text-align:left; margin:0 0 1.6rem; color:var(--gray-700); font-size:1.4rem;">Choose one or more Slack channels to receive unusual activity and Slack-enabled smart notifications.</p>
-      <div class="channel-field">
-        <label>Slack channels</label>
-        <div class="channel-multiselect" id="channel-select">
-          <div class="channel-chips" id="channel-chips"></div>
-          <input type="text" class="channel-input" id="channel-input" placeholder="Add a channel…" autocomplete="off" data-action="toggle-channel-dropdown" readonly>
-          <div class="channel-dropdown d-none" id="channel-dropdown"></div>
+        <div class="done__text">
+          <p class="done__title" id="dn-title">Essentials starts when your plan ends</p>
+          <p class="done__copy">You're all set. Nothing changes until your current annual plan ends.</p>
         </div>
       </div>
-      <div class="alert-warning">
-        <span class="material-symbols-rounded" style="font-size:1.7rem; flex-shrink:0;">warning</span>
-        <span>We recommend a private, admin-only channel — unusual activity data is sensitive and everyone in the channel will see it.</span>
-      </div>
-      <button class="btn btn-primary" style="width:100%; margin-top:2rem;" data-action="connect-step2-finish">Connect channels</button>
+    </div>
+    <div class="done__footer">
+      <button type="button" class="btn btn--primary" data-action="done-close">Close</button>
     </div>
   </div>
-</div>
 
-<!-- ============ Real "Add a smart notification" form, prefilled for the Unusual
-     activity metric and (when arriving from the Slack flow) with Send to Slack
-     pre-checked. Fields mirror SmartNotificationsDialog.vue's real structure:
-     name/frequency, metric+condition, monitored audience, delivery channel. ============ -->
-<div id="create-form-backdrop" class="modal-backdrop d-none" data-action="close-modal" data-arg="create-form"></div>
-<div id="create-form" class="modal-wrap d-none">
-  <div class="modal-box w-lg">
-    <div class="modal-header">
-      <h4>Add a smart notification</h4>
-      <button class="modal-close" data-action="close-modal" data-arg="create-form">&times;</button>
+  <!-- 04 · Toast  (Figma 141:6635 — Zone DS Toast component) -->
+  <div class="toast" id="toast" role="status" hidden>
+    <div class="toast__header">
+      <p class="toast__title">
+        <span class="material-symbols-rounded">check_circle</span>Organization archived
+      </p>
+      <button class="toast__close" type="button" data-toast-close aria-label="Dismiss">
+        <span class="material-symbols-rounded">close</span>
+      </button>
     </div>
-    <div class="modal-body">
-      <div class="form-row">
-        <div class="form-field" style="flex:2;">
-          <label>Name</label>
-          <input type="text" id="cf-name" placeholder="Name your smart notification" />
-        </div>
-        <div class="form-field">
-          <label>Frequency</label>
-          <select><option>Every hour</option><option>Every day</option><option selected>Every day</option><option>Every week</option></select>
-        </div>
-      </div>
-
-      <hr class="form-divider" />
-      <p class="form-section-title">When</p>
-      <p class="sub" style="margin:0 0 1.2rem;">Specify the metric to monitor from members or teams within your workforce.</p>
-      <div class="form-row">
-        <div class="form-field">
-          <label>Metric</label>
-          <select id="cf-metric">
-            <option>Daily work time</option>
-            <option>Core work</option>
-            <option>Suspicious applications</option>
-            <option selected>Unusual activity</option>
-            <option>Idle time (%)</option>
-          </select>
-        </div>
-        <div class="form-row form-field" id="cf-threshold-row" style="margin:0;">
-          <div class="form-field"><label>Has a set value of</label><select><option>Above</option><option>Below</option></select></div>
-          <div class="form-field"><label>&nbsp;</label><input type="text" value="00:30" /></div>
-        </div>
-      </div>
-      <div class="metric-info-box d-none" id="cf-ua-hint">
-        <span class="material-symbols-rounded">info</span>
-        <span>This notification will inform you of the total duration of unusual activity for each monitored member, based on the chosen frequency.</span>
-      </div>
-
-      <div class="audience-toggle-row">
-        <div class="toggle on"><div class="knob"></div></div>
-        <span>All current and future members</span>
-      </div>
-
-      <hr class="form-divider" />
-      <p class="form-section-title">Then</p>
-      <p class="sub" style="margin:0 0 1.2rem;">Select who receives the notification and where.</p>
-
-      <!-- Not-connected nudge reuses the same real "Alert" component as the
-           compact Alert on Smart Notifications (Figma node 20652:9915) — sits
-           above the checkboxes, not a stray link below them. -->
-      <div class="growth-alert" data-if="org-not-connected" style="margin-bottom:1.2rem;">
-        <span class="material-symbols-rounded">notifications_active</span>
-        <div class="content">Get notified in Slack the moment it happens.</div>
-        <a href="#" class="btn btn-outline-dark btn-sm" data-action="handle-connect-cta">Connect Slack</a>
-      </div>
-      <label class="check-row"><input type="checkbox" checked disabled /><span>Show on Highlights page</span><span class="material-symbols-rounded info">info</span></label>
-      <label class="check-row"><input type="checkbox" /><span>Send via email</span></label>
-      <label class="check-row" id="cf-slack-row">
-        <input type="checkbox" id="cf-slack-checkbox" />
-        <span>Send to Slack</span>
-        <span class="material-symbols-rounded info">info</span>
-        <span data-if="org-connected" style="margin-left:auto; color:var(--primary-700); font-size:1.2rem; font-weight:500;">Will post to #hubstaff-alerts</span>
-      </label>
-      <p class="form-hint" data-if="org-connected" style="margin-top:-.2rem;">The Slack channel can be modified at <a href="https://app.hubstaff.com/organizations/13/slack" target="_blank" rel="noopener" class="btn-text" style="padding:0; font-size:inherit;">Settings &gt; Integrations &gt; Slack</a>.</p>
-    </div>
-    <div class="modal-footer">
-      <a href="#" class="btn btn-outline" data-action="close-modal" data-arg="create-form">Cancel</a>
-      <a href="#" class="btn btn-primary" data-action="save-notification">Save</a>
-    </div>
+    <p class="toast__copy">Acme Corp Ltd is archived and your subscription is cancelled.</p>
   </div>
-</div>
 
-<div id="toast" class="toast d-none"><span class="material-symbols-rounded">check_circle</span><span id="toast-msg"></span></div>
-
-<div class="proto-controls">
-  <div class="label">Prototype controls — Slack state</div>
-  <div class="proto-option-row">
-    <a href="#" class="proto-option" data-action="proto-set-state" data-arg="none">Not connected</a>
-    <a href="#" class="proto-option" data-action="proto-set-state" data-arg="unused">Connected, unused here</a>
-    <a href="#" class="proto-option" data-action="proto-set-state" data-arg="used">Fully set up</a>
+  <!-- ── Demo mode (not part of the design) ──────────────────────────── -->
+  <div class="demo">
+    <button type="button" class="demo__play" id="demo-play">Play demo</button>
+    <button type="button" class="demo__reset" data-goto="reset" aria-label="Reset">Reset</button>
   </div>
-  <div class="row" style="margin-bottom:0; margin-top:1rem;">
-    <span id="proto-state-label" style="color:var(--gray-500);">Not connected</span>
-    <a href="#" class="reset" data-action="proto-reset">Reset demo</a>
-  </div>
-</div>
+  <p class="demo__caption" id="demo-caption" hidden></p>
 
-<script src="app.js"></script>
+  <script src="hubstaff-shell.js"></script>
+  <script src="layout.js"></script>
+  <script src="flow.js"></script>
+  <script src="demo.js"></script>
 </body>
 </html>
