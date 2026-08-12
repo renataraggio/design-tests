@@ -44,7 +44,45 @@
   <!-- ── Dialog layer ───────────────────────────────────────────────── -->
   <div class="scrim" id="scrim" hidden></div>
 
-  <!-- 01 · Switch to Essentials instead  (Figma 141:6262 — 600 × 566) -->
+  <!-- 01 · Archive organization  (Figma 156:16588 — 600 × 566) -->
+  <div class="dialog dialog--archive" id="dlg-archive" role="dialog" aria-modal="true" aria-labelledby="ar-title" hidden>
+    <div class="mdl__header">
+      <p class="mdl__title" id="ar-title">Archive organization</p>
+      <button class="mdl__close" type="button" data-close aria-label="Close">
+        <span class="material-symbols-rounded">close</span>
+      </button>
+    </div>
+
+    <div class="mdl__body">
+      <div class="mdl__content archive__content">
+        <p class="archive__lede">Are you sure you want to archive your organization and cancel your subscription?</p>
+        <p class="archive__lede archive__lede--strong">The following data will be immediately removed immediately after the end of you current billing cycle:</p>
+
+        <div class="cq__banner">
+          <div class="cq__banner-deco" aria-hidden="true">
+            <div class="cq__deco-layer cq__deco-layer--a"><img src="assets/banner-deco-a.svg" alt="" /></div>
+            <div class="cq__deco-layer cq__deco-layer--b"><img src="assets/banner-deco-b.svg" alt="" /></div>
+          </div>
+          <ul class="cq__items" id="cq-items"><!-- rendered by flow.js --></ul>
+          <img class="cq__figure" src="assets/bd-standing-discussing.svg" alt="" />
+        </div>
+
+        <p class="archive__lede archive__lede--strong">You will also lose access to:</p>
+        <ul class="archive__list">
+          <li>Time tracking</li>
+          <li>Clients</li>
+          <li>Invoices</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mdl__footer mdl__footer--end">
+      <button type="button" class="btn btn--subtle" data-action="archive-continue">Archive organization</button>
+      <button type="button" class="btn btn--primary" data-action="keep-organization">Keep organization</button>
+    </div>
+  </div>
+
+  <!-- 02 · Switch to Essentials instead  (Figma 153:11279 — 600 × 566) -->
   <div class="dialog dialog--offer" id="dlg-offer" role="dialog" aria-modal="true" aria-labelledby="of-title" hidden>
     <div class="mdl__header">
       <p class="mdl__title" id="of-title">Switch to Essentials instead</p>
@@ -115,73 +153,12 @@
     </div>
 
     <div class="mdl__footer mdl__footer--end">
-      <button type="button" class="btn btn--subtle" data-action="offer-archive">Archive organization</button>
+      <button type="button" class="btn btn--subtle" data-action="continue-to-cancel">Continue to cancel</button>
       <button type="button" class="btn btn--primary" data-action="switch-to-essentials">Switch to Essentials</button>
     </div>
   </div>
 
-  <!-- 02 · Archive organization  (Figma 141:6710 — 600 × 497) -->
-  <div class="dialog dialog--archive" id="dlg-archive" role="dialog" aria-modal="true" aria-labelledby="ar-title" hidden>
-    <div class="mdl__header">
-      <p class="mdl__title" id="ar-title">Archive organization</p>
-      <button class="mdl__close" type="button" data-close aria-label="Close">
-        <span class="material-symbols-rounded">close</span>
-      </button>
-    </div>
-
-    <div class="mdl__body">
-      <div class="mdl__content archive__content">
-        <p class="archive__lede">Are you sure you want to archive your organization and cancel your subscription?</p>
-
-        <div class="warnblock">
-          <p class="warnblock__label warnblock__label--danger">
-            <span class="material-symbols-rounded">warning</span>Permanent Data Loss (Irreversible)
-          </p>
-          <div class="warnblock__panel warnblock__panel--danger">
-            <div class="warnblock__row">
-              <span class="errico" aria-hidden="true"><img src="assets/error-circle-red-group.svg" alt="" /><img src="assets/error-circle-red-stroke.svg" alt="" /></span>
-              <p>All projects and To-dos will be cleared</p>
-            </div>
-            <div class="warnblock__row">
-              <span class="errico" aria-hidden="true"><img src="assets/error-circle-red-group.svg" alt="" /><img src="assets/error-circle-red-stroke.svg" alt="" /></span>
-              <p>Screenshots recorded for all members</p>
-            </div>
-            <div class="warnblock__row">
-              <span class="errico" aria-hidden="true"><img src="assets/error-circle-red-group.svg" alt="" /><img src="assets/error-circle-red-stroke.svg" alt="" /></span>
-              <p>All previous payment records</p>
-            </div>
-            <div class="warnblock__row">
-              <span class="errico" aria-hidden="true"><img src="assets/error-circle-red-group.svg" alt="" /><img src="assets/error-circle-red-stroke.svg" alt="" /></span>
-              <p>Past time and project reports + metrics</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="warnblock">
-          <p class="warnblock__label">
-            <span class="material-symbols-rounded">lock</span>Access &amp; Tool Lockout
-          </p>
-          <div class="warnblock__panel">
-            <div class="warnblock__row">
-              <span class="errico" aria-hidden="true"><img src="assets/error-circle-gray-group.svg" alt="" /><img src="assets/error-circle-gray-stroke.svg" alt="" /></span>
-              <p>Timesheet approvals, payroll operations, integrations</p>
-            </div>
-            <div class="warnblock__row">
-              <span class="errico" aria-hidden="true"><img src="assets/error-circle-gray-group.svg" alt="" /><img src="assets/error-circle-gray-stroke.svg" alt="" /></span>
-              <p>Premium add-ons (including Insights &amp; performance metrics)</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="mdl__footer mdl__footer--archive">
-      <button type="button" class="btn btn--danger" data-action="archive-confirm">Archive organization</button>
-      <button type="button" class="btn btn--outline" data-action="archive-back">Go back</button>
-    </div>
-  </div>
-
-  <!-- 03 · Confirmation  (Figma 141:6390 / 93:21731 — 410 × 420) -->
+  <!-- 03 · Confirmation  (Figma 153:11761 — 410 × 420) -->
   <div class="dialog dialog--done" id="dlg-done" role="dialog" aria-modal="true" aria-labelledby="dn-title" hidden>
     <div class="done__body">
       <div class="done__content">
@@ -273,19 +250,6 @@
     </div>
   </div>
 
-  <!-- 04 · Toast  (Figma 141:6635 — Zone DS Toast component) -->
-  <div class="toast" id="toast" role="status" hidden>
-    <div class="toast__header">
-      <p class="toast__title">
-        <span class="material-symbols-rounded">check_circle</span>Organization archived
-      </p>
-      <button class="toast__close" type="button" data-toast-close aria-label="Dismiss">
-        <span class="material-symbols-rounded">close</span>
-      </button>
-    </div>
-    <p class="toast__copy">Acme Corp Ltd is archived and your subscription is cancelled.</p>
-  </div>
-
   <!-- Review tooling. Design tasks + Dev Mode mount here so the two engines
        render as one grouped toolbar rather than separate floating pills. -->
   <div class="review-toolbar" id="review-toolbar"></div>
@@ -306,9 +270,9 @@
   <script src="design-annotations.js"></script>
   <script src="design-annotations.data.js"></script>
   <script>
-    // Single-page adapter: the three dialogs and the toast are registered as
-    // pages, so the drawer shows the current dialog's tasks and a task on
-    // another dialog opens it first.
+    // Single-page adapter: each of the three dialogs is registered as a page,
+    // so the drawer shows the current dialog's tasks and a task on another
+    // dialog opens it first.
     var da = DesignAnnotations.init({
       pages: window.DESIGN_ANNOTATIONS_DATA.pages,
       annotations: window.DESIGN_ANNOTATIONS_DATA.annotations,

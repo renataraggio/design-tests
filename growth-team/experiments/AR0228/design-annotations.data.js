@@ -2,8 +2,8 @@
  *
  * Authored against NetsoftHoldings/design-team → general/design-annotations/AUTHORING.md.
  *
- * The flow is a single page with three stacked dialogs plus a toast, so each
- * dialog is registered as its own "page" (APPLY-DESIGN-ANNOTATIONS.md → Step 4B,
+ * The flow is a single page with three stacked dialogs, so each dialog is
+ * registered as its own "page" (APPLY-DESIGN-ANNOTATIONS.md → Step 4B,
  * single-page app). The `navigate` adapter in index.html opens the right dialog
  * before the engine highlights, so cross-dialog links work.
  *
@@ -15,11 +15,10 @@
 
 window.DESIGN_ANNOTATIONS_DATA = {
   pages: [
-    { id: 'organizations', label: 'Organizations (list)',        route: 'index.html' },
-    { id: 'offer',         label: '1 · Switch to Essentials',    route: 'index.html' },
-    { id: 'archive',       label: '2 · Archive organization',    route: 'index.html' },
-    { id: 'done',          label: '3 · Confirmation',            route: 'index.html' },
-    { id: 'toast',         label: '4 · Archived toast',          route: 'index.html' },
+    { id: 'organizations', label: 'Organizations (list)',     route: 'index.html' },
+    { id: 'archive',       label: '1 · Archive organization', route: 'index.html' },
+    { id: 'offer',         label: '2 · Switch to Essentials', route: 'index.html' },
+    { id: 'done',          label: '3 · Confirmation',         route: 'index.html' },
   ],
 
   annotations: [
@@ -41,19 +40,28 @@ window.DESIGN_ANNOTATIONS_DATA = {
       ],
     },
     {
-      id: 'consequences-copy-static',
+      id: 'archive-copy-typos',
       page: 'archive',
       kind: 'required',
       group: 'Open questions',
-      title: 'Static consequences copy loses the real counts',
+      title: 'Two typos in the data-removal line',
       description:
-        'The redesign says "All projects and To-dos will be cleared". The shipped ArchiveConsequencesDialog.vue interpolates live figures instead — "12 Projects and 34 To-dos", "10000+ Screenshots for 6 members" — with real pluralisation and a 10,000 cap. Specificity is what makes this dialog do its job, so confirm the generic wording is intentional and not placeholder.',
-      target: '.warnblock__panel--danger',
+        'The bold line reads "The following data will be immediately removed immediately after the end of you current billing cycle:" — "immediately" appears twice, and "you current" should be "your current". Reproduced verbatim so the prototype matches the design; needs fixing at source.',
+      target: '.archive__lede--strong',
+      match: 'immediately removed immediately',
       priority: 'high',
-      sub: [
-        'Existing helpers: projectsAndTodosCaption, screenshotsCaption, paymentRecordsCaption',
-        'If counts return, the panel needs to handle a variable number of rows',
-      ],
+    },
+    {
+      id: 'continue-to-cancel-destination',
+      page: 'offer',
+      kind: 'required',
+      group: 'Open questions',
+      title: '"Continue to cancel" leaves the flow',
+      description:
+        'The Figma annotates this button as "Goes to plan page", a destination outside this section. Nothing in this flow archives an organization any more, so confirm where cancellation actually completes — and whether ArchiveFeedbackDialog still sits on that path.',
+      target: '[data-action="continue-to-cancel"]',
+      match: 'Continue to cancel',
+      priority: 'high',
     },
     {
       id: 'feedback-dialog-missing',
@@ -62,8 +70,8 @@ window.DESIGN_ANNOTATIONS_DATA = {
       group: 'Open questions',
       title: 'No feedback step after Archive organization',
       description:
-        'FLOWS.with_offer in ArchiveOrganizationFlow.vue ends with a "feedback" step (ArchiveFeedbackDialog.vue), which the Figma has never covered. This prototype archives and toasts directly. Decide whether the feedback step is dropped or simply not drawn yet.',
-      target: '.btn--danger',
+        'FLOWS.with_offer in ArchiveOrganizationFlow.vue ends with a "feedback" step (ArchiveFeedbackDialog.vue), which the Figma has never covered. This revision removed the toast and every path that completes an archive — "Continue to cancel" hands off to the plan page instead. Decide whether the feedback step is dropped or simply lives on that page.',
+      target: '.dialog--archive .btn--subtle',
       match: 'Archive organization',
       priority: 'medium',
     },
@@ -80,27 +88,14 @@ window.DESIGN_ANNOTATIONS_DATA = {
       priority: 'medium',
     },
     {
-      id: 'toast-dismiss-behaviour',
-      page: 'toast',
-      kind: 'suggestion',
-      group: 'Open questions',
-      title: 'Define the toast dismiss behaviour',
-      description:
-        'The Figma shows the archived toast but not how it leaves — auto-dismiss after N seconds, or manual close only. It currently persists until dismissed.',
-      target: '#toast',
-      priority: 'low',
-    },
-
-    /* ── Design-system gaps ─────────────────────────────────────────────── */
-    {
       id: 'ds-semantics-red-fork',
       page: 'archive',
       kind: 'required',
       group: 'Design-system gaps',
       title: 'Two red ramps are live in this one dialog',
       description:
-        'The warning panel binds semantics/red/* (#fff1f1 bg, #fcdada border, #970909 text), a different collection from Zone red/* (#fdf2f2, #fde8e8, #9b1c1c) — they disagree at every stop. Meanwhile the destructive button uses Zone red/700 and the warning icon uses Zone red/800, so both ramps render side by side. Pick one before this ships.',
-      target: '.warnblock__panel--danger',
+        'The callout banner binds semantics/red/* (#fff1f1 bg, #fcdada border, #970909 text), a different collection from Zone red/* (#fdf2f2, #fde8e8, #9b1c1c) — they disagree at every stop. Zone red/* is used elsewhere in the product for the same semantic role. Pick one before this ships.',
+      target: '.cq__banner',
       priority: 'high',
       sub: ['Verified against hubstaff-server config/zone/tailwind-tokens.json'],
     },
@@ -111,8 +106,8 @@ window.DESIGN_ANNOTATIONS_DATA = {
       group: 'Design-system gaps',
       title: 'Primary CTA fails WCAG AA at 2.2:1',
       description:
-        'Every primary CTA in this flow is primary/500 (#2aa7ff); white text on it is 2.2:1, under the 4.5:1 AA minimum. primary/700 (#0168dd) gives 5.22:1. Zone-wide rather than AR0228-specific, but this flow puts it on three dialogs. The destructive red/700 button passes at 5.9:1.',
-      target: '.dialog--offer .btn--primary, .dialog--done .btn--primary',
+        'Every primary CTA in this flow is primary/500 (#2aa7ff); white text on it is 2.2:1, under the 4.5:1 AA minimum. primary/700 (#0168dd) gives 5.22:1. Zone-wide rather than AR0228-specific, but this flow puts it on all three dialogs — Keep organization, Switch to Essentials and Close.',
+      target: '.dialog--offer .btn--primary, .dialog--done .btn--primary, .dialog--archive .btn--primary',
       priority: 'high',
     },
     {

@@ -26,15 +26,7 @@
   --z-gray-700:     #374151;
   --z-gray-800:     #1f2937;
   --z-gray-900:     #111827;
-
-  --z-red-700:      #c81e1e;
-  --z-red-800:      #9b1c1c;
-
-  --z-green-50:     #f3faf7;
-  --z-green-100:    #def7ec;
   --z-green-500:    #0e9f6e;
-  --z-green-600:    #057a55;
-  --z-green-800:    #03543f;
 
   --z-primary-500:  #2aa7ff;
   /* Unused by the design, kept as the documented accessible alternative:
@@ -70,12 +62,9 @@
      different collection from Zone's `red/*` and disagrees with it at every
      stop. Reproduced as designed, but this is a real fork worth resolving. */
   --x-sem-red-50:      #fff1f1;  /* vs Zone red/50  #fdf2f2 */
-  --x-sem-red-100:     #fcdada;  /* vs Zone red/100 #fde8e8 */
   --x-sem-red-800:     #970909;  /* vs Zone red/800 #9b1c1c */
 
   --z-shadow-dialog: 0 4px 12px 0 rgba(0, 0, 0, .25);
-  /* Zone `shadow-md` (from the Toast component spec) */
-  --z-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, .1), 0 2px 4px -2px rgba(0, 0, 0, .05);
 }
 
 /* Zone's Colors collection ships a Light mode only — there are no dark-mode
@@ -114,9 +103,6 @@ body { font-family: Roboto, sans-serif; color: var(--x-legacy-ink); }
    lighter-weight secondary than "Go back". Two distinct outline treatments. */
 .btn--subtle { box-shadow: inset 0 0 0 1px var(--z-gray-300); background: var(--z-white); }
 .btn--subtle:hover { background: var(--z-gray-50); }
-/* red/700 destructive — "Archive organization" (141:6752) */
-.btn--danger { background: var(--z-red-700); color: var(--z-white); }
-.btn--danger:hover { filter: brightness(.95); }
 .btn--block { width: 100%; }
 .btn[disabled] { opacity: .45; cursor: not-allowed; filter: none; }
 
@@ -340,9 +326,6 @@ body { font-family: Roboto, sans-serif; color: var(--x-legacy-ink); }
 
 .mdl__footer { display: flex; align-items: center; padding: var(--z-s-5); }
 .mdl__footer--end { justify-content: flex-end; gap: var(--z-s-5); }
-/* The archive footer nests an extra 8px top pad and a 16px inner gap
-   (Figma 141:6749 / 141:6751), so it is not the same as the offer footer. */
-.mdl__footer--archive { justify-content: flex-end; gap: var(--z-s-4); padding-top: 28px; align-items: flex-end; }
 
 /* 01 · Switch to Essentials instead — Figma 141:6262 (600 × 566) */
 .dialog--offer {
@@ -405,45 +388,67 @@ body { font-family: Roboto, sans-serif; color: var(--x-legacy-ink); }
 .ico--cross .ico__f3 { inset: 35.49%; width: 29.02%; height: 29.02%; }
 .ico--cross .ico__f5 { inset: 35.49%; width: 29.02%; height: 29.02%; }
 
-/* 02 · Archive organization — Figma 141:6710 (600 × 497) */
+/* 01 · Archive organization — Figma 156:16588 (600 × 566)
+ *
+ * Redesigned again: the two grouped warning panels are gone, replaced by the
+ * red callout banner with the illustration. Note the banner now binds
+ * semantics/red/* (#fff1f1 / #970909), not Zone red/* — see the token notes.
+ */
 .dialog--archive {
   display: flex;
   flex-direction: column;
   width: 600px;
-  box-shadow: inset 0 0 0 1px var(--z-gray-200);
   border-radius: var(--z-r-lg);
+  box-shadow: inset 0 0 0 1px var(--z-gray-200);
   overflow: hidden;
 }
-.archive__content { height: 332px; }
+.archive__content { height: 409px; }
 .archive__lede { margin: 0; font: 400 16px/24px Roboto, sans-serif; color: var(--z-gray-700); }
+.archive__lede--strong { font-weight: 700; color: var(--z-gray-800); }
+.archive__list { margin: 0; padding-left: 24px; }
+.archive__list li { font: 400 16px/24px Roboto, sans-serif; color: var(--z-gray-700); }
 
-.warnblock { display: flex; flex-direction: column; gap: var(--z-s-2); }
-.warnblock__label {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  margin: 0;
-  font: 700 12px/16px Roboto, sans-serif;
-  text-transform: uppercase;
-  color: var(--z-gray-600);
+.cq__banner {
+  position: relative;
+  flex: none;
+  width: 542px;
+  height: 153px;
+  border-radius: var(--z-r-xl);
+  background: var(--x-sem-red-50);
+  overflow: hidden;
 }
-.warnblock__label .material-symbols-rounded { font-size: 18px; }
-.warnblock__label--danger { color: var(--x-sem-red-800); }
-.warnblock__label--danger .material-symbols-rounded { color: var(--z-red-800); }
+/* Figma masks these two decorative layers with the banner's own rounded rect;
+   overflow:hidden on the banner does the same job without a CSS mask.
+   Offsets are transcribed from nodes 156:16600 / 156:16602. */
+.cq__banner-deco { position: absolute; inset: 0; }
+.cq__deco-layer { position: absolute; }
+.cq__deco-layer img { position: absolute; display: block; width: auto; height: auto; }
+.cq__deco-layer--a { left: -877.641px; top: -30.764px; width: 1285.19px; height: 639.056px; }
+.cq__deco-layer--a img { inset: -25.17% -21.73% -21.36% -20.54%; }
+.cq__deco-layer--b { left: -144.833px; top: -350.242px; width: 865.14px; height: 930.934px; }
+.cq__deco-layer--b img { inset: -40.24% -12.24% -37.83% -8.34%; }
 
-.warnblock__panel {
+.cq__items {
+  position: absolute;
+  left: 20px;
+  top: calc(50% + .5px);
+  transform: translateY(-50%);
+  width: 291px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
   display: flex;
   flex-direction: column;
-  gap: var(--z-s-2-5);
-  padding: var(--z-s-4);
-  box-shadow: inset 0 0 0 1px var(--z-gray-200);
-  border-radius: var(--z-r-lg);
-  background: var(--z-gray-50);
+  gap: var(--z-s-2);
 }
-.warnblock__panel--danger { box-shadow: inset 0 0 0 1px var(--x-sem-red-100); background: var(--x-sem-red-50); }
-.warnblock__row { display: flex; align-items: center; gap: var(--z-s-2); }
-.warnblock__row p { flex: 1 0 0; min-width: 0; margin: 0; font: 400 12px/16px Roboto, sans-serif; color: var(--z-gray-800); }
-.warnblock__panel--danger .warnblock__row p { color: var(--x-sem-red-800); }
+.cq__item { display: flex; align-items: center; gap: var(--z-s-2); }
+/* Targets the text span by class, not `.cq__item span` — that selector also
+   matched the icon wrapper and outranked `.errico`, stretching it flex:1. */
+/* 14px with normal leading, not the 12px the previous revision used */
+.cq__item-text { flex: 1 0 0; min-width: 0; font: 400 14px/normal Roboto, sans-serif; color: var(--x-sem-red-800); }
+
+/* horizontal flip: Figma applies scaleY(-1) then rotate(180deg) */
+.cq__figure { position: absolute; right: 40px; bottom: -9px; width: 196px; height: 154px; transform: scaleX(-1); }
 
 .errico { position: relative; flex: none; width: 14px; height: 14px; overflow: hidden; }
 .errico img { position: absolute; display: block; }
@@ -510,101 +515,6 @@ body { font-family: Roboto, sans-serif; color: var(--x-legacy-ink); }
 .done__copy { margin: 0; font: 400 16px/24px Roboto, sans-serif; color: var(--z-gray-700); }
 
 .done__footer { display: flex; align-items: center; justify-content: center; padding: var(--z-s-5); }
-
-/* ── Toast — Figma 141:6635 (Zone DS Toast, 350 × 96) ─────────────────
- * Placed at x 1066 / y 146 in the 1440-wide frame: 24px in from the right
- * edge and 25px below the 121px browser-bar + top-bar stack, so it is
- * anchored to the top-right of the app viewport rather than the page.
- */
-.toast {
-  position: fixed;
-  right: 24px;
-  top: 73px;
-  z-index: 960;
-  display: flex;
-  flex-direction: column;
-  /* 8px, not 12: Figma nests a zero-padding `Content` wrapper whose gap is 8.
-     The toast's own 12px gap never applies — it has a single child. */
-  gap: var(--z-s-2);
-  width: 350px;
-  padding: var(--z-s-3);
-  border-radius: var(--z-r-lg);
-  background: var(--z-green-50);
-  box-shadow: inset 0 0 0 1px var(--z-green-100), var(--z-shadow-md);
-  overflow: hidden;
-}
-.toast[hidden] { display: none; }
-.toast__header { display: flex; align-items: center; gap: var(--z-s-3); }
-.toast__title {
-  display: flex;
-  align-items: center;
-  gap: var(--z-s-2);
-  flex: 1 0 0;
-  min-width: 0;
-  margin: 0;
-  font: 600 16px/24px Roboto, sans-serif;
-  color: var(--z-green-800);
-}
-.toast__title .material-symbols-rounded { font-size: 18px; }
-.toast__close {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: none;
-  width: 20px;
-  height: 20px;
-  padding: 0;
-  border: 0;
-  border-radius: 9999px;
-  background: none;
-  cursor: pointer;
-}
-.toast__close .material-symbols-rounded { font-size: 18px; color: var(--z-green-600); }
-.toast__copy { margin: 0; font: 400 14px/20px Roboto, sans-serif; color: var(--z-green-800); }
-
-/* ── Review-tool chips (Annotations / Dev Mode / Design tasks) ────────
- * The three controls ship from two different engines and don't match: Design
- * tasks floats at 9px 14px with a shadow, Dev Mode sits inline at 5px 8px, and
- * their radii disagree. Normalise all three into one grouped control; colour
- * still carries the role. Both engines are fixed dependencies — override here,
- * don't edit them.
- */
-.review-toolbar {
-  position: fixed;
-  z-index: 1150;
-  top: 20px;
-  right: 20px;
-  display: flex;
-  align-items: stretch;
-  height: 34px;
-  border-radius: 9999px;
-  background: var(--z-white);
-  box-shadow: inset 0 0 0 1px var(--z-gray-200), 0 2px 8px rgba(17, 24, 39, .08);
-  overflow: hidden;
-}
-body .review-toolbar > .da-tc-btn,
-body .review-toolbar > .dm-tc-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  height: 100%;
-  margin: 0;
-  padding: 0 14px;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
-  font: 500 12px/1 Roboto, sans-serif;
-  color: var(--z-gray-700);
-  cursor: pointer;
-}
-body .review-toolbar > .dm-tc-btn { box-shadow: inset 1px 0 0 var(--z-gray-200); }
-body .review-toolbar > .da-tc-btn:hover,
-body .review-toolbar > .dm-tc-btn:hover { background: var(--z-gray-50); }
-
-/* The Annotations button is its own floating control, bottom-left is taken by
-   the demo pills, so keep it top-left clear of the shell's sidebar toggle. */
-body .da-fab { top: 20px; left: 84px; bottom: auto; }
 
 /* ── Demo mode (NOT part of the design) ───────────────────────────────
  * Deliberately small and bottom-left: the previous control panel was large

@@ -9,7 +9,7 @@
  * so it exercises the same code paths as manual use rather than a parallel
  * scripted path that could drift from it.
  *
- * Not part of the design. Reviewers can also press 1–4 to jump to a step.
+ * Not part of the design. Reviewers can also press 1–3 to jump to a step.
  */
 
 (function () {
@@ -20,18 +20,17 @@
   var SCRIPT = [
     ['Admin opens the Actions menu on Acme Corp Ltd',        900,  '[data-actions-toggle="acme"]'],
     ['…and chooses Archive organization',                    1400, '[data-archive-org="acme"]'],
-    ['The Essentials offer is shown first, before any archive confirmation', 3200, null],
+    ['The consequences come first — what is removed, and when', 3400, null],
+    ['They continue towards archiving',                      1400, '[data-action="archive-continue"]'],
+    ['Only now is the Essentials offer made',                3200, null],
     ['They take the offer',                                  1200, '[data-action="switch-to-essentials"]'],
     ['Switch confirmed — nothing changes until the plan ends', 3000, '[data-action="done-close"]'],
-    ['Now the other branch — same start',                    1200, '.demo__reset'],
-    ['Actions → Archive organization',                       900,  '[data-actions-toggle="acme"]'],
+    ['The other way out: decline and continue to cancel',    1400, '.demo__reset'],
+    ['',                                                     900,  '[data-actions-toggle="acme"]'],
     ['',                                                     900,  '[data-archive-org="acme"]'],
-    ['This time they decline the offer',                     2200, '[data-action="offer-archive"]'],
-    ['Only now do the archive consequences appear',          3400, null],
-    ['They confirm the archive',                             1400, '[data-action="archive-confirm"]'],
-    ['Organization archived',                                3000, null]
+    ['',                                                     1600, '[data-action="archive-continue"]'],
+    ['"Continue to cancel" hands off to the plan page',      3000, '[data-action="continue-to-cancel"]'],
   ];
-
   var timer = null;
   var index = 0;
   var running = false;
@@ -106,18 +105,12 @@
     if (running) { return; }
 
     /* Undocumented-on-screen step jumps, for reviewers who want one state. */
-    var jump = { '1': 'offer', '2': 'archive', '3': 'done' }[e.key];
+    var jump = { '1': 'archive', '2': 'offer', '3': 'done' }[e.key];
     if (jump) {
-      $('.demo__reset').click();
-      $('[data-archive-org="acme"]').click();
-      if (jump === 'archive') { $('[data-action="offer-archive"]').click(); }
-      if (jump === 'done')    { $('[data-action="switch-to-essentials"]').click(); }
-    }
-    if (e.key === '4') {
-      $('.demo__reset').click();
-      $('[data-archive-org="acme"]').click();
-      $('[data-action="offer-archive"]').click();
-      $('[data-action="archive-confirm"]').click();
+      clickTarget('.demo__reset');
+      clickTarget('[data-archive-org="acme"]');
+      if (jump === 'offer' || jump === 'done') { clickTarget('[data-action="archive-continue"]'); }
+      if (jump === 'done') { clickTarget('[data-action="switch-to-essentials"]'); }
     }
   });
 }());
