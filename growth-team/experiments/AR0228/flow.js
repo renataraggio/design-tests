@@ -112,6 +112,14 @@
 
     var first = $(STEPS[step]).querySelector('button:not([disabled])');
     if (first) { first.focus(); }
+
+    emitStepChange();
+  }
+
+  /* Design Annotations treats each dialog as a "page" (APPLY-DESIGN-ANNOTATIONS
+     Step 4B, single-page app), so it needs to know when the step changes. */
+  function emitStepChange() {
+    window.dispatchEvent(new CustomEvent('ar0228:stepchange'));
   }
 
   function closeFlow() { show(null); }
@@ -213,6 +221,29 @@
     renderOrgRows();
     closeFlow();
   });
+
+  /* Adapter for the Design Annotations engine, which treats each dialog as a
+     page and needs to open one before it can highlight inside it. */
+  window.AR0228Flow = {
+    goToPage: function (pageId) {
+      $('#toast').hidden = true;
+      if (pageId === 'organizations') { closeFlow(); return; }
+      if (!state.activeOrgId) { state.activeOrgId = ORGS[0].id; }
+      if (pageId === 'toast') {
+        closeFlow();
+        $('#toast .toast__copy').textContent =
+          activeOrg().name + ' is archived and your subscription is cancelled.';
+        showToast();
+        emitStepChange();
+        return;
+      }
+      show(pageId);
+    },
+    currentPageId: function () {
+      if (state.step) { return state.step; }
+      return $('#toast').hidden ? 'organizations' : 'toast';
+    }
+  };
 
   renderOrgRows();
 }());

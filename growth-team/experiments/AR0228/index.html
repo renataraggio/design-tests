@@ -286,6 +286,10 @@
     <p class="toast__copy">Acme Corp Ltd is archived and your subscription is cancelled.</p>
   </div>
 
+  <!-- Review tooling. Design tasks + Dev Mode mount here so the two engines
+       render as one grouped toolbar rather than separate floating pills. -->
+  <div class="review-toolbar" id="review-toolbar"></div>
+
   <!-- ── Demo mode (not part of the design) ──────────────────────────── -->
   <div class="demo">
     <button type="button" class="demo__play" id="demo-play">Play demo</button>
@@ -297,5 +301,45 @@
   <script src="layout.js"></script>
   <script src="flow.js"></script>
   <script src="demo.js"></script>
+
+  <!-- Review tooling: fixed dependencies, installed not edited. -->
+  <script src="design-annotations.js"></script>
+  <script src="design-annotations.data.js"></script>
+  <script>
+    // Single-page adapter: the three dialogs and the toast are registered as
+    // pages, so the drawer shows the current dialog's tasks and a task on
+    // another dialog opens it first.
+    var da = DesignAnnotations.init({
+      pages: window.DESIGN_ANNOTATIONS_DATA.pages,
+      annotations: window.DESIGN_ANNOTATIONS_DATA.annotations,
+      mount: '#shell-content',
+      topOffset: 0,
+      // Right-click is swallowed by the host in an embedded preview, so keep a
+      // visible button and the mod+shift+a hotkey working too.
+      trigger: ['contextmenu', 'button'],
+      taskCenter: { mount: '#review-toolbar' },
+      currentPageId: function () {
+        return window.AR0228Flow ? window.AR0228Flow.currentPageId() : 'organizations';
+      },
+      // goToPage renders synchronously, so re-enter goToAnnotation directly
+      // rather than deferring — a backgrounded tab would throttle a timeout.
+      navigate: function (pageId, page, intent) {
+        window.AR0228Flow.goToPage(pageId);
+        if (intent && intent.annotationId) { da.goToAnnotation(intent.annotationId); }
+      },
+    });
+
+    window.addEventListener('ar0228:stepchange', function () {
+      da.setContext(window.AR0228Flow.currentPageId());
+    });
+  </script>
+
+  <!-- Zone-token inspector. Its toggle auto-inserts immediately after
+       #da-tc-btn, so it must load and init AFTER DesignAnnotations — that
+       lands both buttons inside #review-toolbar with no positioning maths. -->
+  <script src="dev-mode.js"></script>
+  <script>
+    DevMode.init({ mount: '#shell-content', topOffset: 0 });
+  </script>
 </body>
 </html>

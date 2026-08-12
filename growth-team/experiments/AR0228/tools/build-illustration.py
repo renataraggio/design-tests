@@ -7,7 +7,7 @@ the blue disc in Figma's own render -- x 93..276, matching `left:93 size:183.6`.
 """
 import os, subprocess, time
 
-OUT = "/Users/renataraggio/Claude/hubstaff/teams/growth-team/experiments/AR0228-v.1/assets/success"
+OUT = "/Users/renataraggio/Claude/hubstaff/teams/growth-team/experiments/AR0228/assets/success"
 BASE = "https://www.figma.com/api/mcp/asset/"
 
 # (filename, uuid, css) -- emitted in this order, which is the Figma z-order.
