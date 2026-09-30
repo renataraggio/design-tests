@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AR0239 — Get Started checklist (V3)</title>
+
+<!-- Roboto is Hubstaff's product font. Zone publishes 144 text styles, all Roboto. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap">
+
+<!-- ============================================================================
+     REVIEW TOOLBAR + SHELL — copied from the Kit, never authored here.
+     One master: design/designops/prototype-kit/chrome/. Don't edit these
+     files; fix the Kit and re-copy so every prototype gets the fix.
+     ============================================================================ -->
+<link rel="stylesheet" href="review-toolbar.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Standalone port of product/squads/growth/experiments/AR0239/prototype/
+     (Kit/Vite + Alpine version), V3 ("New layout") ONLY — A1/A3 are not
+     included. Same steps, copy, gating and behavior; vanilla JS instead of
+     Alpine, hand-written Zone-token CSS instead of Tailwind. See app.js. -->
+<div id="shell-content"></div>
+
+<!-- Edit Payment Details modal overlay — sibling of #shell-content, not
+     nested inside it, so HubstaffShell's own layout/margin rules never
+     affect its fixed positioning. renderPaymentModal() (app.js) owns its
+     innerHTML and is-open class. -->
+<div id="payment-modal" class="modal-overlay"></div>
+
+<!-- ============================================================================
+     The engines, then the orchestrator. ReviewToolbar.init() owns init order
+     and the sweep that groups their buttons into one pill.
+     ============================================================================ -->
+<script src="version-switcher.js"></script>
+<script src="design-annotations.js"></script>
+<script src="design-annotations.data.js"></script>
+<script src="design-comments.js"></script>
+<script src="dev-mode.js"></script>
+<script src="prototype-conditions.js"></script>
+<script src="review-toolbar.core.js"></script>
+<script src="hubstaff-shell.js"></script>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
