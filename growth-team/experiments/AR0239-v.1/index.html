@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AR0239 — Member dashboard sneak-peek</title>
+
+<!-- Roboto is Hubstaff's product font. Zone publishes 144 text styles, all Roboto. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap">
+
+<!-- ============================================================================
+     REVIEW TOOLBAR — copied from the Kit, never authored here.
+     One master: design/designops/prototype-kit/chrome/. Don't edit these
+     files; fix the Kit and re-copy so every prototype gets the fix.
+     ============================================================================ -->
+<link rel="stylesheet" href="review-toolbar.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Standalone port of product/squads/growth/experiments/AR0239/
+     dashboard-sneak-peek/ (the Kit/Vite version) — same data, layout and
+     autoplay behavior, no Alpine/Vite dependency. See app.js. -->
+<div id="v-a" data-version>
+  <div class="page">
+    <h1>Team dashboard</h1>
+    <p class="subtitle">A live look at how your team's activity will appear in Hubstaff.</p>
+
+    <div class="member-row" id="pills"></div>
+
+    <div class="card" id="profile-card"></div>
+
+    <div class="card strip-card" id="strip-card"></div>
+  </div>
+</div>
+
+<!-- ============================================================================
+     The engines, then the orchestrator. ReviewToolbar.init() owns init order
+     and the sweep that groups their buttons into one pill.
+     ============================================================================ -->
+<script src="version-switcher.js"></script>
+<script src="design-annotations.js"></script>
+<script src="design-annotations.data.js"></script>
+<script src="design-comments.js"></script>
+<script src="dev-mode.js"></script>
+<script src="prototype-conditions.js"></script>
+<script src="review-toolbar.core.js"></script>
+
+<script>
+  ReviewToolbar.init({
+    topOffset: 0, // standalone page, no app-shell topbar of its own
+    conditions: { states: false, roles: false },
+    versions: {
+      project: 'AR0239 — Member dashboard sneak-peek',
+      notice: 'Prototype — not a live product',
+      note: 'Component preview · layout from AR0107, interaction from AR0219',
+      groups: [
+        { label: 'Preview', versions: [
+          { id: 'a', code: 'A', name: 'Sneak peek', el: '#v-a' },
+        ]},
+      ],
+    },
+    annotations: {
+      pages: window.DESIGN_ANNOTATIONS_DATA.pages,
+      annotations: window.DESIGN_ANNOTATIONS_DATA.annotations,
+    },
+  });
+</script>
+
+<script src="app.js"></script>
+
+</body>
+</html>
