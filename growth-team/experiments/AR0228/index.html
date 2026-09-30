@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AR0228 — Essentials VSMB churn discount offer</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@18,400,0,0;24,400,0,0&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <div id="shell-content">
+    <div class="page">
+
+      <!-- ── Settings › Organizations ─────────────────────────────────── -->
+      <div class="orgs">
+        <h1 class="orgs__title">Organizations</h1>
+
+        <div class="tabs" role="tablist">
+          <button class="tabs__tab is-active" role="tab" aria-selected="true">ACTIVE (3)</button>
+          <button class="tabs__tab" role="tab" aria-selected="false">ARCHIVED (1)</button>
+        </div>
+
+        <div class="orgs__toolbar">
+          <button type="button" class="btn btn--primary">Add organization</button>
+        </div>
+
+        <table class="orgs__table">
+          <thead>
+            <tr><th class="orgs__th">Name</th><th class="orgs__th orgs__th--actions"></th></tr>
+          </thead>
+          <tbody id="org-rows"><!-- rendered by flow.js --></tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── Dialog layer ───────────────────────────────────────────────── -->
+  <div class="scrim" id="scrim" hidden></div>
+
+  <!-- 01 · Archive organization  (Figma 156:16588 — 600 × 566) -->
+  <div class="dialog dialog--archive" id="dlg-archive" role="dialog" aria-modal="true" aria-labelledby="ar-title" hidden>
+    <div class="mdl__header">
+      <p class="mdl__title" id="ar-title">Archive organization</p>
+      <button class="mdl__close" type="button" data-close aria-label="Close">
+        <span class="material-symbols-rounded">close</span>
+      </button>
+    </div>
+
+    <div class="mdl__body">
+      <div class="mdl__content archive__content">
+        <p class="archive__lede">Are you sure you want to archive your organization and cancel your subscription?</p>
+        <p class="archive__lede archive__lede--strong">The following data will be immediately removed immediately after the end of you current billing cycle:</p>
+
+        <div class="cq__banner">
+          <div class="cq__banner-deco" aria-hidden="true">
+            <div class="cq__deco-layer cq__deco-layer--a"><img src="assets/banner-deco-a.svg" alt="" /></div>
+            <div class="cq__deco-layer cq__deco-layer--b"><img src="assets/banner-deco-b.svg" alt="" /></div>
+          </div>
+          <ul class="cq__items" id="cq-items"><!-- rendered by flow.js --></ul>
+          <img class="cq__figure" src="assets/bd-standing-discussing.svg" alt="" />
+        </div>
+
+        <p class="archive__lede archive__lede--strong">You will also lose access to:</p>
+        <ul class="archive__list">
+          <li>Time tracking</li>
+          <li>Clients</li>
+          <li>Invoices</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mdl__footer mdl__footer--end">
+      <button type="button" class="btn btn--subtle" data-action="archive-continue">Archive organization</button>
+      <button type="button" class="btn btn--primary" data-action="keep-organization">Keep organization</button>
+    </div>
+  </div>
+
+  <!-- 02 · Switch to Essentials instead  (Figma 153:11279 — 600 × 566) -->
+  <div class="dialog dialog--offer" id="dlg-offer" role="dialog" aria-modal="true" aria-labelledby="of-title" hidden>
+    <div class="mdl__header">
+      <p class="mdl__title" id="of-title">Switch to Essentials instead</p>
+      <button class="mdl__close" type="button" data-close aria-label="Close">
+        <span class="material-symbols-rounded">close</span>
+      </button>
+    </div>
+
+    <div class="mdl__body">
+      <div class="mdl__content offer__content">
+        <p class="offer__lede">Instead of archiving, switch to Essentials when your current annual plan ends on <strong>&lt;plan end date&gt;</strong>. Nothing changes before then.</p>
+
+        <div class="plans">
+          <div class="plans__col">
+            <p class="plans__name">Team Annual</p>
+            <p class="plans__price"><span class="plans__amount">$12.00</span> <span class="plans__per">/seat/mo</span></p>
+          </div>
+          <span class="plans__arrow material-symbols-rounded" aria-hidden="true">arrow_forward</span>
+          <div class="plans__col plans__col--to">
+            <p class="plans__name">Essentials</p>
+            <p class="plans__price"><span class="plans__amount plans__amount--new">$3.99</span> <span class="plans__per">/seat/mo</span></p>
+          </div>
+        </div>
+
+        <div class="keeplose">
+          <div class="keeplose__col">
+            <p class="keeplose__title">Essentials includes</p>
+            <div class="keeplose__row">
+              <span class="ico ico--tick" aria-hidden="true"><img src="assets/tick-1.svg" alt="" class="ico__f1" /><img src="assets/tick-3.svg" alt="" class="ico__f3" /><img src="assets/tick-5.svg" alt="" class="ico__f5" /></span>
+              <p>1 simple flat fee covering 4 users</p>
+            </div>
+            <div class="keeplose__row">
+              <span class="ico ico--tick" aria-hidden="true"><img src="assets/tick-1.svg" alt="" class="ico__f1" /><img src="assets/tick-3.svg" alt="" class="ico__f3" /><img src="assets/tick-5.svg" alt="" class="ico__f5" /></span>
+              <p>Time tracking</p>
+            </div>
+            <div class="keeplose__row">
+              <span class="ico ico--tick" aria-hidden="true"><img src="assets/tick-1.svg" alt="" class="ico__f1" /><img src="assets/tick-3.svg" alt="" class="ico__f3" /><img src="assets/tick-5.svg" alt="" class="ico__f5" /></span>
+              <p>Unlimited screenshots</p>
+            </div>
+            <div class="keeplose__row">
+              <span class="ico ico--tick" aria-hidden="true"><img src="assets/tick-1.svg" alt="" class="ico__f1" /><img src="assets/tick-3.svg" alt="" class="ico__f3" /><img src="assets/tick-5.svg" alt="" class="ico__f5" /></span>
+              <p>All your data so far</p>
+            </div>
+          </div>
+          <div class="keeplose__col">
+            <p class="keeplose__title">Essentials doesn&rsquo;t include</p>
+            <div class="keeplose__row">
+              <span class="ico ico--cross" aria-hidden="true"><img src="assets/cross-1.svg" alt="" class="ico__f1" /><img src="assets/cross-3.svg" alt="" class="ico__f3" /><img src="assets/cross-5.svg" alt="" class="ico__f5" /></span>
+              <p>Timesheet approvals</p>
+            </div>
+            <div class="keeplose__row">
+              <span class="ico ico--cross" aria-hidden="true"><img src="assets/cross-1.svg" alt="" class="ico__f1" /><img src="assets/cross-3.svg" alt="" class="ico__f3" /><img src="assets/cross-5.svg" alt="" class="ico__f5" /></span>
+              <p>Payroll</p>
+            </div>
+            <div class="keeplose__row">
+              <span class="ico ico--cross" aria-hidden="true"><img src="assets/cross-1.svg" alt="" class="ico__f1" /><img src="assets/cross-3.svg" alt="" class="ico__f3" /><img src="assets/cross-5.svg" alt="" class="ico__f5" /></span>
+              <p>Integrations</p>
+            </div>
+            <div class="keeplose__row">
+              <span class="ico ico--cross" aria-hidden="true"><img src="assets/cross-1.svg" alt="" class="ico__f1" /><img src="assets/cross-3.svg" alt="" class="ico__f3" /><img src="assets/cross-5.svg" alt="" class="ico__f5" /></span>
+              <p>Add-ons such as Insights</p>
+            </div>
+          </div>
+        </div>
+
+        <p class="offer__cap">Essentials is capped at 4 members. You won't be able to add more without upgrading again.</p>
+      </div>
+    </div>
+
+    <div class="mdl__footer mdl__footer--end">
+      <button type="button" class="btn btn--subtle" data-action="continue-to-cancel">Continue to cancel</button>
+      <button type="button" class="btn btn--primary" data-action="switch-to-essentials">Switch to Essentials</button>
+    </div>
+  </div>
+
+  <!-- 03 · Confirmation  (Figma 153:11761 — 410 × 420) -->
+  <div class="dialog dialog--done" id="dlg-done" role="dialog" aria-modal="true" aria-labelledby="dn-title" hidden>
+    <div class="done__body">
+      <div class="done__content">
+        <!-- illustration: 72 layers generated from the Figma vector exports.
+             Boxes resolved to px against the 370x220 frame. -->
+        <div class="done__illustration" aria-hidden="true">
+          <img src="assets/success/bg-glow.svg" alt="" style="left:-40px;top:-40px;width:220px;height:220px" />
+          <img src="assets/success/star-1.svg" alt="" style="left:18px;top:18px;width:6px;height:6px" />
+          <img src="assets/success/star-2.svg" alt="" style="left:52px;top:26px;width:4px;height:4px" />
+          <img src="assets/success/star-3.svg" alt="" style="left:86px;top:14px;width:5px;height:5px" />
+          <img src="assets/success/star-4.svg" alt="" style="left:120px;top:34px;width:3px;height:3px" />
+          <img src="assets/success/star-5.svg" alt="" style="left:154px;top:22px;width:4px;height:4px" />
+          <img src="assets/success/star-6.svg" alt="" style="left:188px;top:40px;width:5px;height:5px" />
+          <img src="assets/success/star-7.svg" alt="" style="left:222px;top:28px;width:3px;height:3px" />
+          <img src="assets/success/star-8.svg" alt="" style="left:256px;top:16px;width:4px;height:4px" />
+          <img src="assets/success/star-9.svg" alt="" style="left:290px;top:32px;width:5px;height:5px" />
+          <img src="assets/success/star-10.svg" alt="" style="left:324px;top:20px;width:3px;height:3px" />
+          <img src="assets/success/star-11.svg" alt="" style="left:358px;top:38px;width:4px;height:4px" />
+          <img src="assets/success/disc.svg" alt="" style="left:93px;top:38.4px;width:183.605px;height:183.605px" />
+          <img src="assets/success/rectangle.svg" alt="" style="left:124.10px;top:71.90px;width:9.21px;height:9.24px" />
+          <img src="assets/success/fill-1.svg" alt="" style="left:152.85px;top:59.36px;width:68.41px;height:98.52px" />
+          <img src="assets/success/fill-3.svg" alt="" style="left:196.06px;top:84.94px;width:5.62px;height:8.87px" />
+          <img src="assets/success/fill-5.svg" alt="" style="left:166.80px;top:84.94px;width:5.62px;height:8.87px" />
+          <img src="assets/success/fill-7.svg" alt="" style="left:176.05px;top:97.35px;width:15.24px;height:24.60px" />
+          <img src="assets/success/stroke-9.svg" alt="" style="left:183.15px;top:98.34px;width:2.03px;height:0.84px" />
+          <img src="assets/success/fill-11.svg" alt="" style="left:170.53px;top:68.11px;width:27.23px;height:37.16px" />
+          <img src="assets/success/fill-13.svg" alt="" style="left:163.84px;top:63.91px;width:35.89px;height:28.47px" />
+          <img src="assets/success/stroke-15.svg" alt="" style="left:173.12px;top:79.29px;width:7.55px;height:2.11px" />
+          <img src="assets/success/stroke-17.svg" alt="" style="left:185.81px;top:79.64px;width:8.88px;height:1.78px" />
+          <img src="assets/success/stroke-19.svg" alt="" style="left:180.71px;top:81.40px;width:3.51px;height:11.95px" />
+          <img src="assets/success/stroke-21.svg" alt="" style="left:174.49px;top:83.86px;width:4.81px;height:3.30px" />
+          <img src="assets/success/stroke-23.svg" alt="" style="left:187.63px;top:83.86px;width:4.77px;height:3.30px" />
+          <img src="assets/success/fill-25.svg" alt="" style="left:180.34px;top:94.89px;width:6.77px;height:2.62px" />
+          <img src="assets/success/stroke-27.svg" alt="" style="left:179.86px;top:94.40px;width:7.73px;height:3.59px" />
+          <img src="assets/success/stroke-29.svg" alt="" style="left:182.52px;top:99.59px;width:2.66px;height:0.75px" />
+          <img src="assets/success/fill-31.svg" alt="" style="left:196.88px;top:92.27px;width:2.89px;height:9.22px" />
+          <img src="assets/success/fill-33.svg" alt="" style="left:168.50px;top:92.27px;width:2.92px;height:9.22px" />
+          <img src="assets/success/fill-35.svg" alt="" style="left:248.20px;top:23.19px;width:16.98px;height:32.89px" />
+          <img src="assets/success/stroke-37.svg" alt="" style="left:258.48px;top:24.02px;width:1.59px;height:11.09px" />
+          <img src="assets/success/stroke-39.svg" alt="" style="left:261.22px;top:25.39px;width:1.26px;height:11.15px" />
+          <img src="assets/success/stroke-41.svg" alt="" style="left:263.25px;top:30.10px;width:1.18px;height:8.49px" />
+          <img src="assets/success/fill-43.svg" alt="" style="left:226.85px;top:45.01px;width:36.52px;height:65.30px" />
+          <img src="assets/success/fill-45.svg" alt="" style="left:193.25px;top:92.93px;width:49.95px;height:53.31px" />
+          <img src="assets/success/fill-47.svg" alt="" style="left:192.88px;top:113.78px;width:32.56px;height:33.42px" />
+          <img src="assets/success/intersect.svg" alt="" style="left:154.47px;top:188.84px;width:62.781px;height:33.104px" />
+          <img src="assets/success/fill-67.svg" alt="" style="left:163.98px;top:183.13px;width:40.63px;height:6.51px" />
+          <img src="assets/success/fill-69.svg" alt="" style="left:165.65px;top:183.13px;width:37.63px;height:0.00px" />
+          <img src="assets/success/stroke-71.svg" alt="" style="left:165.02px;top:188.58px;width:38.63px;height:0.73px" />
+          <img src="assets/success/fill-73.svg" alt="" style="left:115.66px;top:22.22px;width:17.72px;height:32.85px" />
+          <img src="assets/success/stroke-75.svg" alt="" style="left:121.73px;top:23.01px;width:1.63px;height:11.07px" />
+          <img src="assets/success/stroke-77.svg" alt="" style="left:119.07px;top:24.13px;width:1.81px;height:11.11px" />
+          <img src="assets/success/stroke-79.svg" alt="" style="left:116.88px;top:28.60px;width:1.26px;height:8.49px" />
+          <img src="assets/success/fill-81.svg" alt="" style="left:116.59px;top:44.35px;width:32.12px;height:67.39px" />
+          <img src="assets/success/fill-83.svg" alt="" style="left:131.46px;top:93.90px;width:46.40px;height:56.25px" />
+          <img src="assets/success/fill-85.svg" alt="" style="left:146.37px;top:117.06px;width:31.86px;height:34.10px" />
+          <img src="assets/success/stroke-87.svg" alt="" style="left:181.63px;top:182.38px;width:1.70px;height:39.64px" />
+          <img src="assets/success/fill-89.svg" alt="" style="left:154.18px;top:112.57px;width:59.98px;height:70.07px" />
+          <img src="assets/success/stroke-91.svg" alt="" style="left:177.75px;top:120.08px;width:13.14px;height:1.30px" />
+          <img src="assets/success/stroke-93.svg" alt="" style="left:161.43px;top:148.19px;width:44.14px;height:0.97px" />
+          <img src="assets/success/stroke-95.svg" alt="" style="left:157.77px;top:134.24px;width:53.02px;height:48.88px" />
+          <img src="assets/success/penta-1.svg" alt="" style="left:147.90px;top:11.84px;width:26.01px;height:24.85px" />
+          <img src="assets/success/penta-2.svg" alt="" style="left:182.42px;top:33.72px;width:13.57px;height:12.96px" />
+          <img src="assets/success/penta-2.svg" alt="" style="left:323.92px;top:119.60px;width:13.57px;height:12.96px" />
+          <img src="assets/success/penta-4.svg" alt="" style="left:203.82px;top:5.58px;width:18.66px;height:17.83px" />
+          <img src="assets/success/penta-4.svg" alt="" style="left:22.02px;top:85.58px;width:18.66px;height:17.83px" />
+          <img src="assets/success/confetti-1.svg" alt="" style="left:24px;top:13px;width:10px;height:10px" />
+          <img src="assets/success/confetti-2.svg" alt="" style="left:61px;top:29px;width:8px;height:8px" />
+          <img src="assets/success/confetti-3.svg" alt="" style="left:328px;top:39px;width:10px;height:10px" />
+          <img src="assets/success/confetti-3.svg" alt="" style="left:61px;top:120px;width:10px;height:10px" />
+          <img src="assets/success/confetti-5.svg" alt="" style="left:35px;top:174px;width:10px;height:10px" />
+          <img src="assets/success/confetti-2.svg" alt="" style="left:75px;top:186px;width:8px;height:8px" />
+          <img src="assets/success/confetti-2.svg" alt="" style="left:304px;top:80px;width:8px;height:8px" />
+          <img src="assets/success/confetti-1.svg" alt="" style="left:307px;top:168px;width:10px;height:10px" />
+          <img src="assets/success/confetti-9.svg" alt="" style="left:327px;top:186px;width:8px;height:8px" />
+          <img src="assets/success/sparkle-1.svg" alt="" style="left:12px;top:12px;width:4px;height:4px" />
+          <img src="assets/success/sparkle-2.svg" alt="" style="left:380px;top:18px;width:3px;height:3px" />
+          <img src="assets/success/sparkle-3.svg" alt="" style="left:18px;top:190px;width:3px;height:3px" />
+          <img src="assets/success/sparkle-4.svg" alt="" style="left:370px;top:180px;width:4px;height:4px" />
+          <div class="done__depth"></div>
+        </div>
+        <div class="done__text">
+          <p class="done__title" id="dn-title">Essentials starts when your plan ends</p>
+          <p class="done__copy">You're all set. Nothing changes until your current annual plan ends.</p>
+        </div>
+      </div>
+    </div>
+    <div class="done__footer">
+      <button type="button" class="btn btn--primary" data-action="done-close">Close</button>
+    </div>
+  </div>
+
+  <!-- Review tooling. Design tasks + Dev Mode mount here so the two engines
+       render as one grouped toolbar rather than separate floating pills. -->
+  <div class="review-toolbar" id="review-toolbar"></div>
+
+  <!-- ── Demo mode (not part of the design) ──────────────────────────── -->
+  <div class="demo">
+    <button type="button" class="demo__play" id="demo-play">Play demo</button>
+    <button type="button" class="demo__reset" data-goto="reset" aria-label="Reset">Reset</button>
+  </div>
+  <p class="demo__caption" id="demo-caption" hidden></p>
+
+  <script src="hubstaff-shell.js"></script>
+  <script src="layout.js"></script>
+  <script src="flow.js"></script>
+  <script src="demo.js"></script>
+
+  <!-- Review tooling: fixed dependencies, installed not edited. -->
+  <script src="design-annotations.js"></script>
+  <script src="design-annotations.data.js"></script>
+  <script>
+    // Single-page adapter: each of the three dialogs is registered as a page,
+    // so the drawer shows the current dialog's tasks and a task on another
+    // dialog opens it first.
+    var da = DesignAnnotations.init({
+      pages: window.DESIGN_ANNOTATIONS_DATA.pages,
+      annotations: window.DESIGN_ANNOTATIONS_DATA.annotations,
+      mount: '#shell-content',
+      topOffset: 0,
+      // Right-click is swallowed by the host in an embedded preview, so keep a
+      // visible button and the mod+shift+a hotkey working too.
+      trigger: ['contextmenu', 'button'],
+      taskCenter: { mount: '#review-toolbar' },
+      currentPageId: function () {
+        return window.AR0228Flow ? window.AR0228Flow.currentPageId() : 'organizations';
+      },
+      // goToPage renders synchronously, so re-enter goToAnnotation directly
+      // rather than deferring — a backgrounded tab would throttle a timeout.
+      navigate: function (pageId, page, intent) {
+        window.AR0228Flow.goToPage(pageId);
+        if (intent && intent.annotationId) { da.goToAnnotation(intent.annotationId); }
+      },
+    });
+
+    window.addEventListener('ar0228:stepchange', function () {
+      da.setContext(window.AR0228Flow.currentPageId());
+    });
+  </script>
+
+  <!-- Zone-token inspector. Its toggle auto-inserts immediately after
+       #da-tc-btn, so it must load and init AFTER DesignAnnotations — that
+       lands both buttons inside #review-toolbar with no positioning maths. -->
+  <script src="dev-mode.js"></script>
+  <script>
+    DevMode.init({ mount: '#shell-content', topOffset: 0 });
+  </script>
+</body>
+</html>

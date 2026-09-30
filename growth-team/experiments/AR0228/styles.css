@@ -1,0 +1,564 @@
+/* AR0228 — Essentials VSMB churn discount offer
+ *
+ * Page + dialog styles. Shell chrome lives in hubstaff-shell.js (prefix `hs-`)
+ * and is not touched here.
+ *
+ * Token values are the ones resolved from the Figma file's own variable
+ * collection (get_variable_defs on node 55:7529), cross-checked against
+ * hubstaff-server. Where the two disagree the conflict is noted inline.
+ */
+
+/* ── Zone tokens ───────────────────────────────────────────────────────
+ * Every value below is verified against the SHIPPED token source,
+ * hubstaff-server `config/zone/tailwind-tokens.json` — not against the Figma
+ * file, which disagrees with it in two places (see "Off-system" below).
+ * Zone's rem base is 10px, so spacing/4 = 1.6rem = 16px.
+ */
+:root {
+  --z-white:        #ffffff;
+  --z-black:        #000000;
+
+  --z-gray-50:      #f9fafb;
+  --z-gray-200:     #e5e7eb;
+  --z-gray-300:     #d1d5db;
+  --z-gray-500:     #6b7280;
+  --z-gray-600:     #4b5563;
+  --z-gray-700:     #374151;
+  --z-gray-800:     #1f2937;
+  --z-gray-900:     #111827;
+  --z-green-500:    #0e9f6e;
+
+  --z-primary-500:  #2aa7ff;
+  /* Unused by the design, kept as the documented accessible alternative:
+     primary/500 on white is 2.2:1, primary/700 is 5.22:1. See README. */
+  --z-primary-700:  #0168dd;
+
+  /* Border radius — Zone `borderRadius` */
+  --z-r-sm:  4px;   /* DEFAULT 0.4rem */
+  --z-r-md:  6px;   /* md      0.6rem */
+  --z-r-lg:  8px;   /* lg      0.8rem */
+  --z-r-xl:  12px;  /* xl      1.2rem */
+
+  /* Spacing — Zone `spacing`, the only steps this prototype needs */
+  --z-s-2:   8px;
+  --z-s-2-5: 10px;
+  --z-s-3:   12px;
+  --z-s-4:   16px;
+  --z-s-5:   20px;
+
+  /* ── Off-system: NOT Zone tokens ────────────────────────────────────
+   * These are values the AR0228 design uses that have no Zone equivalent.
+   * Quarantined here so the drift stays visible instead of masquerading as
+   * design-system usage. Nearest Zone value noted for each.
+   *
+   * The Organizations page itself predates Zone and uses the legacy
+   * "Product DSM" palette; the four new dialogs use Zone properly. The two
+   * systems meet on this screen.
+   */
+  --x-legacy-ink:      #2d3137;  /* Neutral/Primary          ~ gray/800 #1f2937 */
+  --x-legacy-muted:    #7a8798;  /* Neutral/Supporting light ~ gray/500 #6b7280 */
+
+  /* A SECOND red ramp. The archive modal binds `semantics/red/*`, which is a
+     different collection from Zone's `red/*` and disagrees with it at every
+     stop. Reproduced as designed, but this is a real fork worth resolving. */
+  --x-sem-red-50:      #fff1f1;  /* vs Zone red/50  #fdf2f2 */
+  --x-sem-red-800:     #970909;  /* vs Zone red/800 #9b1c1c */
+
+  --z-shadow-dialog: 0 4px 12px 0 rgba(0, 0, 0, .25);
+}
+
+/* Zone's Colors collection ships a Light mode only — there are no dark-mode
+   token values — so the prototype pins the light scheme rather than inheriting
+   the viewer's preference and rendering dark text on a dark surface. */
+:root { color-scheme: light; }
+/* Figma frame dimensions are border-box: node 141:6262 is 600px wide *including*
+   its 1px border, and the 57px Header includes its 20/10 padding. Without this
+   the offer modal measures 602 x 598 instead of 600 x 566. */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { background: var(--z-white); }
+body { font-family: Roboto, sans-serif; color: var(--x-legacy-ink); }
+
+/* ── Shared button ────────────────────────────────────────────────────── */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  max-height: 40px;
+  padding: 10px 20px;
+  border: 0;
+  border-radius: var(--z-r-md);
+  background: transparent;
+  font: 400 14px/20px Roboto, sans-serif;
+  color: var(--z-gray-600);
+  cursor: pointer;
+}
+.btn--primary { background: var(--z-primary-500); color: var(--z-white); }
+.btn--primary:hover { filter: brightness(.95); }
+/* gray/600 border — "Go back" (141:6753) */
+.btn--outline { box-shadow: inset 0 0 0 1px var(--z-gray-600); background: var(--z-white); }
+.btn--outline:hover { background: var(--z-gray-50); }
+/* gray/300 border — the offer's "Archive organization" (141:6314) is a
+   lighter-weight secondary than "Go back". Two distinct outline treatments. */
+.btn--subtle { box-shadow: inset 0 0 0 1px var(--z-gray-300); background: var(--z-white); }
+.btn--subtle:hover { background: var(--z-gray-50); }
+.btn--block { width: 100%; }
+.btn[disabled] { opacity: .45; cursor: not-allowed; filter: none; }
+
+/* Figma draws this as plain 12px text with no underline (node 63:16292).
+   Matched at rest; underlined on hover/focus so it is still discoverable as a
+   control. Flagged in the README — an undecorated text button is a real
+   affordance problem, not something to silently "fix" in a replication. */
+.linkish {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: 400 12px/16px Roboto, sans-serif;
+  color: var(--z-gray-600);
+  text-decoration: none;
+  cursor: pointer;
+}
+.linkish:hover, .linkish:focus-visible { text-decoration: underline; }
+
+/* ── Organizations page ───────────────────────────────────────────────── */
+
+/* Geometry below is measured off the flattened Organizations screenshot in the
+   Figma (node 55:7689, a 2374px capture of a 1200px layout — 1.978x). The page
+   is a bitmap, so its vector layers can't be read; these are pixel measurements
+   rather than transcribed values. Key results:
+     content box   x 30 → 1170  (1140 wide, 30px gutters both sides)
+     table rules   #e5e9ef ≈ gray/200, header 2px, rows 1px, full-bleed
+     cell content  inset 16px from the left rule edge, flush right
+     row pitch     ~64px, avatar 30px, vertically centred
+   The shell's `.page` wrapper is styled here because it lives in page CSS, not
+   in hubstaff-shell.js. */
+.page { padding: 30px; }
+
+.orgs { max-width: 1140px; }
+
+.orgs__title {
+  margin: 0 0 26px;
+  font: 400 30px/40px Roboto, sans-serif;
+  color: var(--x-legacy-ink);
+}
+
+/* fit-content matters: the tab strip's bottom border stops at the end of the
+   tabs (measured x 30 → 245.7), it does not run the full 1140px table width.
+   Tabs butt together with no gap — the 16px inset on each is the tab's own
+   padding, which is why the labels start at x 46 while the underline and every
+   table rule start at x 30. */
+.tabs {
+  display: flex;
+  gap: 0;
+  width: fit-content;
+  border-bottom: 1px solid var(--z-gray-200);
+}
+.tabs__tab {
+  padding: 0 var(--z-s-4) 6px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  background: none;
+  font: 500 12px/16px Roboto, sans-serif;
+  /* Solved for, not guessed: .8px reproduces the measured 98.6px active-tab
+     underline and 215.4px strip width. At .4px the strip runs 8px narrow. */
+  letter-spacing: .8px;
+  color: var(--x-legacy-muted);
+  cursor: pointer;
+}
+.tabs__tab.is-active { color: var(--z-primary-500); border-bottom-color: var(--z-primary-500); }
+
+.orgs__toolbar { display: flex; justify-content: flex-end; padding-top: 31px; }
+
+.orgs__table { width: 100%; margin-top: 37px; border-collapse: collapse; }
+.orgs__th {
+  padding: 0 0 14px var(--z-s-4);
+  border-bottom: 2px solid var(--z-gray-200);
+  font: 500 14px/20px Roboto, sans-serif;
+  text-align: left;
+  color: var(--x-legacy-ink);
+}
+.orgs__td {
+  padding: var(--z-s-4) 0 17px var(--z-s-4);
+  border-bottom: 1px solid var(--z-gray-200);
+  vertical-align: middle;
+}
+/* Cell padding is symmetric: the Actions button's right edge measures x 1155,
+   16px inside the rule edge at 1170. */
+.orgs__th--actions,
+.orgs__td--actions { padding-right: var(--z-s-4); padding-left: 0; text-align: right; }
+
+.orgs__name { display: flex; align-items: center; gap: 12px; }
+.orgs__name-link { font: 400 14px/20px Roboto, sans-serif; color: var(--z-primary-500); text-decoration: none; }
+.orgs__name-link:hover { text-decoration: underline; }
+/* Not in the Figma — added so the switch has a visible outcome on the list.
+   Kept on Zone's scale (xs 12/16, spacing 2/6, radius DEFAULT) since there is
+   no design to be faithful to here. */
+.orgs__plan {
+  margin-left: var(--z-s-2);
+  padding: 0 6px;
+  border-radius: var(--z-r-sm);
+  background: var(--z-gray-200);
+  font: 400 12px/16px Roboto, sans-serif;
+  color: var(--z-gray-700);
+}
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  font: 500 12px/12px Roboto, sans-serif;
+  color: var(--z-white);
+}
+.avatar--lg { width: 30px; height: 30px; }  /* measured off the page bitmap */
+
+/* Actions split button + menu */
+.actions { position: relative; display: inline-block; }
+/* 30px tall, matching the avatar, so the row lands on its measured 64px pitch. */
+.actions__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--z-s-2);
+  padding: 4px var(--z-s-3);
+  border: 1px solid var(--z-gray-300);
+  border-radius: var(--z-r-md);
+  background: var(--z-white);
+  font: 400 14px/20px Roboto, sans-serif;
+  color: var(--x-legacy-ink);
+  cursor: pointer;
+}
+.actions__btn:hover { background: var(--z-gray-50); }
+.actions__btn .material-symbols-rounded { font-size: 18px; color: var(--z-gray-500); }
+.actions__menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 4px);
+  z-index: 40;
+  min-width: 200px;
+  padding: 4px;
+  border: 1px solid var(--z-gray-200);
+  border-radius: var(--z-r-md);
+  background: var(--z-white);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .12);
+  text-align: left;
+}
+.actions__menu[hidden] { display: none; }
+.actions__item {
+  display: block;
+  width: 100%;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: var(--z-r-sm);
+  background: none;
+  font: 400 14px/20px Roboto, sans-serif;
+  color: var(--z-gray-800);
+  text-align: left;
+  cursor: pointer;
+}
+.actions__item:hover { background: var(--z-gray-50); }
+
+/* ── Dialog layer ─────────────────────────────────────────────────────── */
+
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  background: rgba(17, 24, 39, .45);
+}
+.scrim[hidden] { display: none; }
+
+.dialog {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 950;
+  background: var(--z-white);
+  box-shadow: var(--z-shadow-dialog);
+}
+.dialog[hidden] { display: none; }
+
+/* ── Shared modal shell ───────────────────────────────────────────────
+ * Figma 141:6262 and 141:6710 are the same Zone modal: white, gray/200
+ * border, radius 8, Header(57) / Body / Footer. Only width and body content
+ * differ, so the chrome is defined once.
+ */
+.mdl__header {
+  display: flex;
+  align-items: center;
+  gap: var(--z-s-4);
+  height: 57px;
+  padding: var(--z-s-5) var(--z-s-5) var(--z-s-2-5);
+  background: var(--z-white);
+}
+.mdl__title {
+  flex: 1 0 0;
+  min-width: 0;
+  margin: 0;
+  font: 600 18px/26px Roboto, sans-serif;
+  color: var(--z-gray-900);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.mdl__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 0;
+  border-radius: 9999px;
+  background: none;
+  cursor: pointer;
+}
+.mdl__close .material-symbols-rounded { font-size: 18px; color: var(--z-gray-500); }
+
+.mdl__body { padding: var(--z-s-2-5) var(--z-s-5); overflow: hidden; }
+.mdl__content { display: flex; flex-direction: column; gap: var(--z-s-4); overflow: hidden; }
+
+.mdl__footer { display: flex; align-items: center; padding: var(--z-s-5); }
+.mdl__footer--end { justify-content: flex-end; gap: var(--z-s-5); }
+
+/* 01 · Switch to Essentials instead — Figma 141:6262 (600 × 566) */
+.dialog--offer {
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  box-shadow: inset 0 0 0 1px var(--z-gray-200);
+  border-radius: var(--z-r-lg);
+  overflow: hidden;
+}
+.offer__content { height: 409px; }
+.offer__lede { margin: 0; font: 400 16px/24px Roboto, sans-serif; color: var(--z-gray-700); }
+.offer__lede strong { font-weight: 700; }
+
+.plans {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+  padding: var(--z-s-5);
+  box-shadow: inset 0 0 0 1px var(--z-gray-300);
+  border-radius: var(--z-r-xl);
+}
+.plans__col { display: flex; flex-direction: column; gap: 4px; white-space: nowrap; }
+.plans__col--to { padding-right: var(--z-s-4); }
+.plans__name { margin: 0; font: 500 14px/20px Roboto, sans-serif; color: var(--z-gray-800); }
+.plans__price { margin: 0; }
+/* 30px Light — the price is font-weight 300, not the semibold the wrapper
+   node declares; the spans override it. */
+.plans__amount { font: 300 30px/40px Roboto, sans-serif; color: var(--z-black); }
+.plans__amount--new { color: var(--z-green-500); }
+.plans__per { font: 300 12px/16px Roboto, sans-serif; color: var(--z-gray-500); }
+.plans__arrow { flex: none; font-size: 24px; color: var(--z-gray-500); }
+
+.keeplose { display: flex; gap: var(--z-s-3); height: 193px; overflow: hidden; }
+.keeplose__col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--z-s-2);
+  flex: 1 0 0;
+  min-width: 0;
+  padding: 14px;
+  border-radius: var(--z-r-lg);
+  background: var(--z-gray-50);
+  overflow: hidden;
+}
+/* 14px medium — the earlier design used 12px bold here. */
+.keeplose__title { margin: 0; font: 500 14px/20px Roboto, sans-serif; color: var(--z-gray-800); }
+.keeplose__row { display: flex; align-items: center; gap: var(--z-s-2); overflow: hidden; }
+.keeplose__row p { flex: 1 0 0; min-width: 0; margin: 0; font: 400 14px/20px Roboto, sans-serif; color: var(--z-gray-800); }
+
+.offer__cap { margin: 0; font: 400 12px/16px Roboto, sans-serif; color: var(--z-gray-500); }
+
+/* Tick / cross are 3-layer exported vectors, composed exactly as in Figma. */
+.ico { position: relative; flex: none; width: 18px; height: 18px; overflow: hidden; }
+.ico img { position: absolute; display: block; }
+.ico--tick .ico__f1 { inset: 7.81%;  width: 84.38%; height: 84.38%; }
+.ico--tick .ico__f3 { top: 35.1%; right: 28.73%; bottom: 35.01%; left: 40.54%; width: 30.73%; height: 29.89%; }
+.ico--tick .ico__f5 { top: 48.8%; right: 50.94%; bottom: 35.01%; left: 31.93%; width: 17.13%; height: 16.19%; }
+.ico--cross .ico__f1 { inset: 7.81%;  width: 84.38%; height: 84.38%; }
+.ico--cross .ico__f3 { inset: 35.49%; width: 29.02%; height: 29.02%; }
+.ico--cross .ico__f5 { inset: 35.49%; width: 29.02%; height: 29.02%; }
+
+/* 01 · Archive organization — Figma 156:16588 (600 × 566)
+ *
+ * Redesigned again: the two grouped warning panels are gone, replaced by the
+ * red callout banner with the illustration. Note the banner now binds
+ * semantics/red/* (#fff1f1 / #970909), not Zone red/* — see the token notes.
+ */
+.dialog--archive {
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  border-radius: var(--z-r-lg);
+  box-shadow: inset 0 0 0 1px var(--z-gray-200);
+  overflow: hidden;
+}
+.archive__content { height: 409px; }
+.archive__lede { margin: 0; font: 400 16px/24px Roboto, sans-serif; color: var(--z-gray-700); }
+.archive__lede--strong { font-weight: 700; color: var(--z-gray-800); }
+.archive__list { margin: 0; padding-left: 24px; }
+.archive__list li { font: 400 16px/24px Roboto, sans-serif; color: var(--z-gray-700); }
+
+.cq__banner {
+  position: relative;
+  flex: none;
+  width: 542px;
+  height: 153px;
+  border-radius: var(--z-r-xl);
+  background: var(--x-sem-red-50);
+  overflow: hidden;
+}
+/* Figma masks these two decorative layers with the banner's own rounded rect;
+   overflow:hidden on the banner does the same job without a CSS mask.
+   Offsets are transcribed from nodes 156:16600 / 156:16602. */
+.cq__banner-deco { position: absolute; inset: 0; }
+.cq__deco-layer { position: absolute; }
+.cq__deco-layer img { position: absolute; display: block; width: auto; height: auto; }
+.cq__deco-layer--a { left: -877.641px; top: -30.764px; width: 1285.19px; height: 639.056px; }
+.cq__deco-layer--a img { inset: -25.17% -21.73% -21.36% -20.54%; }
+.cq__deco-layer--b { left: -144.833px; top: -350.242px; width: 865.14px; height: 930.934px; }
+.cq__deco-layer--b img { inset: -40.24% -12.24% -37.83% -8.34%; }
+
+.cq__items {
+  position: absolute;
+  left: 20px;
+  top: calc(50% + .5px);
+  transform: translateY(-50%);
+  width: 291px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--z-s-2);
+}
+.cq__item { display: flex; align-items: center; gap: var(--z-s-2); }
+/* Targets the text span by class, not `.cq__item span` — that selector also
+   matched the icon wrapper and outranked `.errico`, stretching it flex:1. */
+/* 14px with normal leading, not the 12px the previous revision used */
+.cq__item-text { flex: 1 0 0; min-width: 0; font: 400 14px/normal Roboto, sans-serif; color: var(--x-sem-red-800); }
+
+/* horizontal flip: Figma applies scaleY(-1) then rotate(180deg) */
+.cq__figure { position: absolute; right: 40px; bottom: -9px; width: 196px; height: 154px; transform: scaleX(-1); }
+
+.errico { position: relative; flex: none; width: 14px; height: 14px; overflow: hidden; }
+.errico img { position: absolute; display: block; }
+.errico img:nth-child(1) { inset: 4.17%;  width: 91.66%; height: 91.66%; }
+.errico img:nth-child(2) { inset: 29.17%; width: 41.66%; height: 41.66%; }
+
+/* 04 · Confirmation — Figma 93:21731 (410 × 420, radius 8, gray/200 border)
+ *
+ * Redesigned: this replaces the earlier 63:14978 layout (500 × 443, radius 12,
+ * title above the art). Now a Body/Footer modal with the illustration on top,
+ * a 20px semibold title and 16px body copy. Unlike its predecessor it sits on
+ * Zone's scale throughout — 28 / 20 / 16 padding and gaps.
+ */
+.dialog--done {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 410px;
+  box-shadow: inset 0 0 0 1px var(--z-gray-200);
+  border-radius: var(--z-r-lg);
+  overflow: hidden;
+}
+.done__body { padding: 28px var(--z-s-5) 0; overflow: hidden; }
+.done__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--z-s-4);
+  align-items: center;
+  justify-content: center;
+  height: 312px;
+  overflow: hidden;
+}
+
+.done__illustration {
+  position: relative;
+  flex: none;
+  width: 370px;
+  height: 220px;
+  border-radius: 20px;
+  background: linear-gradient(to right, #eaf2ff, #f5f3ff);
+  overflow: hidden;
+}
+/* Layer boxes are set inline (generated); this only establishes the mode.
+   Several layers overflow the 370px frame by design and are clipped. */
+.done__illustration > img { position: absolute; display: block; }
+.done__depth {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 410px;   /* wider than the frame in Figma too — clipped */
+  height: 220px;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, .04));
+}
+
+.done__text { width: 100%; text-align: center; }
+.done__title {
+  margin: 0;
+  font: 600 20px/28px Roboto, sans-serif;
+  color: var(--z-gray-900);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.done__copy { margin: 0; font: 400 16px/24px Roboto, sans-serif; color: var(--z-gray-700); }
+
+.done__footer { display: flex; align-items: center; justify-content: center; padding: var(--z-s-5); }
+
+/* ── Demo mode (NOT part of the design) ───────────────────────────────
+ * Deliberately small and bottom-left: the previous control panel was large
+ * enough to sit permanently on top of the third organization row.
+ */
+.demo {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 1000;
+  display: flex;
+  gap: var(--z-s-2);
+}
+.demo button {
+  padding: 6px var(--z-s-3);
+  border: 0;
+  border-radius: 9999px;
+  background: rgba(16, 19, 26, .9);
+  color: #e5e7eb;
+  font: 500 12px/16px Roboto, sans-serif;
+  cursor: pointer;
+}
+.demo button:hover { background: #10131a; }
+.demo__play { min-width: 84px; }
+
+.demo__caption {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  z-index: 1000;
+  max-width: 560px;
+  margin: 0;
+  padding: var(--z-s-2) var(--z-s-4);
+  border-radius: 9999px;
+  background: rgba(16, 19, 26, .92);
+  color: #f9fafb;
+  font: 400 13px/18px Roboto, sans-serif;
+  text-align: center;
+}
+.demo__caption[hidden] { display: none; }
+
+/* While the demo drives itself, the cursor shouldn't imply the viewer is
+   the one clicking. */
+body.is-demo .actions__btn,
+body.is-demo .actions__item,
+body.is-demo .dialog .btn { cursor: default; }

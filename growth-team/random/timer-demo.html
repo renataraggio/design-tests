@@ -200,6 +200,7 @@
     transition: transform 120ms ease;
   }
 </style>
+  <link rel="stylesheet" href="review-tools.css" />
 </head>
 <body>
 
@@ -400,5 +401,33 @@
   playCursorSequence();
 })();
 </script>
+<!-- Design tasks + Dev Mode mount here so the two engines render as one
+     grouped control rather than separate floating pills. -->
+<div class="review-toolbar" id="review-toolbar"></div>
+
+
+<!-- Review tooling: fixed dependencies, installed not edited. -->
+<script src="design-annotations.js"></script>
+<script src="design-annotations.data.js"></script>
+<script>
+  DesignAnnotations.init({
+    pages: window.DESIGN_ANNOTATIONS_DATA.pages,
+    annotations: window.DESIGN_ANNOTATIONS_DATA.annotations,
+    topOffset: 0,
+    // Right-click is swallowed by the host inside an embedded preview, so keep
+    // a visible button and the mod+shift+a hotkey working too.
+    trigger: ['contextmenu', 'button'],
+    taskCenter: { mount: '#review-toolbar' },
+  });
+</script>
+<!-- Dev Mode inserts its toggle immediately after #da-tc-btn, so it must load
+     and init AFTER DesignAnnotations — that lands both in #review-toolbar. -->
+<script src="dev-mode.js"></script>
+<script>
+  DevMode.init({
+    topOffset: 0,
+  });
+</script>
+
 </body>
 </html>

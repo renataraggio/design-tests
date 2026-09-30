@@ -26,6 +26,7 @@
   <link rel="stylesheet" href="assets/timesheet-page.css?v=6" />
   <link rel="stylesheet" href="assets/toast.css" />
   <link rel="stylesheet" href="assets/date-range-picker.css?v=2" />
+  <link rel="stylesheet" href="review-tools.css" />
 </head>
 <body>
 
@@ -6819,5 +6820,20 @@
 
   <!-- ── Usability tracking (moderator-only, prototype tool) ── -->
   <script src="assets/usability-tracking.js?v=3"></script>
+<!-- Design tasks + Dev Mode mount here so the two engines render as one
+     grouped control rather than separate floating pills. -->
+<div class="review-toolbar" id="review-toolbar"></div>
+
+
+<!-- Dev Mode inserts its toggle immediately after #da-tc-btn, so it must
+     load and init AFTER DesignAnnotations. -->
+<script src="dev-mode.js"></script>
+<script>
+  DevMode.init({
+    mount: '#shell-content',
+    topOffset: 0,
+  });
+</script>
+
 </body>
 </html>

@@ -10,6 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&family=Material+Symbols+Rounded" rel="stylesheet" />
 
 <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="review-tools.css" />
 </head>
 <body>
 
@@ -84,8 +85,23 @@
     mount: '#onboarding',
     topOffset: 0,
     trigger: ['contextmenu', 'button'],
-    taskCenter: true,
+    taskCenter: { mount: '#review-toolbar' },
   });
 </script>
+<!-- Design tasks + Dev Mode mount here so the two engines render as one
+     grouped control rather than separate floating pills. -->
+<div class="review-toolbar" id="review-toolbar"></div>
+
+
+<!-- Dev Mode inserts its toggle immediately after #da-tc-btn, so it must
+     load and init AFTER DesignAnnotations. -->
+<script src="dev-mode.js"></script>
+<script>
+  DevMode.init({
+    mount: '#onboarding',
+    topOffset: 0,
+  });
+</script>
+
 </body>
 </html>

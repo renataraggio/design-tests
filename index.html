@@ -98,7 +98,27 @@
     .status-template    { background: rgba(255, 255, 255, 0.08); color: #9ca3af; }
     .status-archived    { background: rgba(255, 255, 255, 0.06); color: #9ca3af; }
     .secondary-link { color: #6b7280; }
+  
+    .filter--all { background: rgba(255, 255, 255, 0.08); color: #9ca3af; }
+}
+
+
+  /* status filter — pills reuse the .status-* colours so they read as the
+     same chips shown on the cards */
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; margin: -24px 0 40px; }
+  .filter {
+    font: inherit; font-size: 11px; font-weight: 600; letter-spacing: 0.02em;
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 4px 10px; border-radius: 9999px; border: 0; cursor: pointer;
+    opacity: 0.5; transition: opacity 0.12s ease, box-shadow 0.12s ease;
   }
+  .filter::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  .filter:hover { opacity: 0.8; }
+  .filter.is-active { opacity: 1; box-shadow: 0 0 0 1.5px currentColor; }
+  .filter--all { background: #eef0f3; color: #4b5563; }
+  .filter--all::before { display: none; }
+  .filter__n { font-weight: 400; opacity: 0.65; }
+  .is-filtered { display: none !important; }
 </style>
 </head>
 <body>
@@ -106,42 +126,12 @@
 <h1>Design Tests</h1>
 <p class="subtitle">Prototypes and design handoffs for review.</p>
 
+<div class="filters" id="filters" role="group" aria-label="Filter by status"></div>
+
 <h2>Growth Team</h2>
 <div class="grid">
 
-  <a class="card" href="growth-team/experiments/AR0226-v.1/">
-    <div class="preview" style="--accent:#4b5563;">
-      <svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
-        <rect width="400" height="250" fill="#f3f4f6"/>
-        <rect width="400" height="18" fill="#ffffff"/>
-        <circle cx="12" cy="9" r="3" fill="#e5e7eb"/><circle cx="24" cy="9" r="3" fill="#e5e7eb"/><circle cx="36" cy="9" r="3" fill="#e5e7eb"/>
-        <rect x="70" y="40" width="260" height="26" rx="13" fill="#ffffff" stroke="#d1d5db"/>
-        <circle cx="86" cy="53" r="5" fill="#9ca3af"/>
-        <rect x="98" y="49" width="60" height="8" rx="4" fill="#d1d5db"/>
-        <rect x="70" y="78" width="260" height="36" rx="6" fill="#ffffff" stroke="#e5e7eb"/>
-        <circle cx="90" cy="96" r="10" fill="#4b5563" opacity="0.25"/>
-        <rect x="108" y="90" width="90" height="6" rx="3" fill="#111827" opacity="0.5"/>
-        <rect x="108" y="100" width="60" height="5" rx="2.5" fill="#d1d5db"/>
-        <rect x="70" y="122" width="260" height="36" rx="6" fill="#ffffff" stroke="#e5e7eb"/>
-        <circle cx="90" cy="140" r="10" fill="#4b5563" opacity="0.15"/>
-        <rect x="108" y="134" width="90" height="6" rx="3" fill="#111827" opacity="0.4"/>
-        <rect x="108" y="144" width="60" height="5" rx="2.5" fill="#d1d5db"/>
-        <rect x="70" y="166" width="260" height="36" rx="6" fill="#ffffff" stroke="#e5e7eb"/>
-        <circle cx="90" cy="184" r="10" fill="#4b5563" opacity="0.15"/>
-        <rect x="108" y="178" width="90" height="6" rx="3" fill="#111827" opacity="0.4"/>
-        <rect x="108" y="188" width="60" height="5" rx="2.5" fill="#d1d5db"/>
-      </svg>
-    </div>
-    <div class="card-body">
-      <div class="card-title">AR0226 — v.1</div>
-      <p class="card-desc">Original "Member Switcher" pattern exploration for GAP team managers.</p>
-      <div class="card-footer">
-        <span class="status status-archived">Archived</span>
-      </div>
-    </div>
-  </a>
-
-  <a class="card" href="growth-team/experiments/AR0226-v.2/Dashboard.html">
+  <a class="card" href="growth-team/experiments/AR0107/Dashboard.html">
     <div class="preview" style="--accent:#0168dd;">
       <svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
         <rect width="400" height="250" fill="#f3f4f6"/>
@@ -168,15 +158,15 @@
       </svg>
     </div>
     <div class="card-body">
-      <div class="card-title">AR0226 — v.2</div>
-      <p class="card-desc">New "Members" tab with pinnable teammates for at-a-glance individual stats.</p>
+      <div class="card-title">AR0107</div>
+      <p class="card-desc">"Members" tab with pinnable teammates for at-a-glance individual stats.</p>
       <div class="card-footer">
         <span class="status status-dev">In development</span>
       </div>
     </div>
   </a>
 
-  <a class="card" href="growth-team/experiments/AR0227-v.1/">
+  <a class="card" href="growth-team/experiments/AR0223/">
     <div class="preview" style="--accent:#059669;">
       <svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
         <rect width="400" height="250" fill="#f3f4f6"/>
@@ -190,15 +180,47 @@
       </svg>
     </div>
     <div class="card-body">
-      <div class="card-title">AR0227 — v.1</div>
-      <p class="card-desc">Onboarding flow, version 1 — aggressive step-through variant.</p>
+      <div class="card-title">AR0223</div>
+      <p class="card-desc">Onboarding flow — dedicated download screen with an org-requires notice and utilization preview, gating Continue on the download.</p>
       <div class="card-footer">
         <span class="status status-abtest">In A/B testing</span>
       </div>
     </div>
   </a>
 
-  <a class="card" href="growth-team/experiments/AR0227-v.2/">
+  <a class="card" href="growth-team/experiments/AR0226-draft/">
+    <div class="preview" style="--accent:#4b5563;">
+      <svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
+        <rect width="400" height="250" fill="#f3f4f6"/>
+        <rect width="400" height="18" fill="#ffffff"/>
+        <circle cx="12" cy="9" r="3" fill="#e5e7eb"/><circle cx="24" cy="9" r="3" fill="#e5e7eb"/><circle cx="36" cy="9" r="3" fill="#e5e7eb"/>
+        <rect x="70" y="40" width="260" height="26" rx="13" fill="#ffffff" stroke="#d1d5db"/>
+        <circle cx="86" cy="53" r="5" fill="#9ca3af"/>
+        <rect x="98" y="49" width="60" height="8" rx="4" fill="#d1d5db"/>
+        <rect x="70" y="78" width="260" height="36" rx="6" fill="#ffffff" stroke="#e5e7eb"/>
+        <circle cx="90" cy="96" r="10" fill="#4b5563" opacity="0.25"/>
+        <rect x="108" y="90" width="90" height="6" rx="3" fill="#111827" opacity="0.5"/>
+        <rect x="108" y="100" width="60" height="5" rx="2.5" fill="#d1d5db"/>
+        <rect x="70" y="122" width="260" height="36" rx="6" fill="#ffffff" stroke="#e5e7eb"/>
+        <circle cx="90" cy="140" r="10" fill="#4b5563" opacity="0.15"/>
+        <rect x="108" y="134" width="90" height="6" rx="3" fill="#111827" opacity="0.4"/>
+        <rect x="108" y="144" width="60" height="5" rx="2.5" fill="#d1d5db"/>
+        <rect x="70" y="166" width="260" height="36" rx="6" fill="#ffffff" stroke="#e5e7eb"/>
+        <circle cx="90" cy="184" r="10" fill="#4b5563" opacity="0.15"/>
+        <rect x="108" y="178" width="90" height="6" rx="3" fill="#111827" opacity="0.4"/>
+        <rect x="108" y="188" width="60" height="5" rx="2.5" fill="#d1d5db"/>
+      </svg>
+    </div>
+    <div class="card-body">
+      <div class="card-title">AR0226 (draft)</div>
+      <p class="card-desc">"Member Switcher" pattern exploration for GAP team managers.</p>
+      <div class="card-footer">
+        <span class="status status-archived">Archived</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="card" href="growth-team/experiments/AR0227/">
     <div class="preview" style="--accent:#059669;">
       <svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
         <rect width="400" height="250" fill="#f3f4f6"/>
@@ -213,15 +235,48 @@
       </svg>
     </div>
     <div class="card-body">
-      <div class="card-title">AR0227 — v.2</div>
-      <p class="card-desc">Onboarding flow, version 2 — lighter-touch alternative to v.1.</p>
+      <div class="card-title">AR0227</div>
+      <p class="card-desc">Onboarding flow, aggressive track — two-screen setup story that waits for the desktop app to confirm tracking.</p>
       <div class="card-footer">
         <span class="status status-abtest">In A/B testing</span>
       </div>
     </div>
   </a>
 
-  <a class="card" href="growth-team/experiments/AR0228-v.1/">
+  <a class="card" href="growth-team/experiments/AR0228/">
+    <div class="preview" style="--accent:#0e9f6e;">
+      <svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
+        <rect width="400" height="250" fill="#f3f4f6"/>
+        <rect width="400" height="18" fill="#ffffff"/>
+        <circle cx="12" cy="9" r="3" fill="#e5e7eb"/><circle cx="24" cy="9" r="3" fill="#e5e7eb"/><circle cx="36" cy="9" r="3" fill="#e5e7eb"/>
+        <rect x="58" y="34" width="284" height="184" rx="10" fill="#ffffff" stroke="#e5e7eb"/>
+        <rect x="74" y="50" width="126" height="8" rx="4" fill="#111827" opacity="0.55"/>
+        <rect x="74" y="70" width="252" height="5" rx="2.5" fill="#374151" opacity="0.25"/>
+        <rect x="74" y="80" width="196" height="5" rx="2.5" fill="#374151" opacity="0.25"/>
+        <rect x="74" y="96" width="252" height="44" rx="8" fill="#ffffff" stroke="#d1d5db"/>
+        <rect x="88" y="106" width="44" height="5" rx="2.5" fill="#1f2937" opacity="0.45"/>
+        <rect x="88" y="117" width="52" height="13" rx="3" fill="#111827" opacity="0.55"/>
+        <path d="M188 121 h16 m-5 -4 l5 4 l-5 4" stroke="#6b7280" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <rect x="224" y="106" width="40" height="5" rx="2.5" fill="#1f2937" opacity="0.45"/>
+        <rect x="224" y="117" width="46" height="13" rx="3" fill="#0e9f6e"/>
+        <rect x="74" y="150" width="122" height="52" rx="7" fill="#f9fafb" stroke="#e5e7eb"/>
+        <rect x="204" y="150" width="122" height="52" rx="7" fill="#f9fafb" stroke="#e5e7eb"/>
+        <circle cx="86" cy="170" r="4" fill="#2aa7ff"/><rect x="96" y="167" width="72" height="5" rx="2.5" fill="#1f2937" opacity="0.35"/>
+        <circle cx="86" cy="184" r="4" fill="#2aa7ff"/><rect x="96" y="181" width="58" height="5" rx="2.5" fill="#1f2937" opacity="0.35"/>
+        <circle cx="216" cy="170" r="4" fill="#9ca3af"/><rect x="226" y="167" width="72" height="5" rx="2.5" fill="#1f2937" opacity="0.25"/>
+        <circle cx="216" cy="184" r="4" fill="#9ca3af"/><rect x="226" y="181" width="54" height="5" rx="2.5" fill="#1f2937" opacity="0.25"/>
+      </svg>
+    </div>
+    <div class="card-body">
+      <div class="card-title">AR0228</div>
+      <p class="card-desc">Essentials save-offer shown before the archive confirmation, with the archive consequences, switch confirmation and archived toast. Includes a self-running demo.</p>
+      <div class="card-footer">
+        <span class="status status-design">In design</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="card" href="growth-team/experiments/AR0229/">
     <div class="preview" style="--accent:#2aa7ff;">
       <svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
         <rect width="400" height="250" fill="#f3f4f6"/>
@@ -243,7 +298,7 @@
       </svg>
     </div>
     <div class="card-body">
-      <div class="card-title">AR0229 — v.1</div>
+      <div class="card-title">AR0229</div>
       <p class="card-desc">Slack nudge for smart notifications alerts — banner, compact alert, detection modal, and full connect-to-Slack flow on Unusual Activity + Smart Notifications.</p>
       <div class="card-footer">
         <span class="status status-design">In design</span>
@@ -378,7 +433,6 @@
       </div>
     </div>
   </a>
-
 </div>
 
 <h2>Retention Team</h2>
@@ -449,6 +503,91 @@
   </div>
 
 </div>
+
+
+
+
+<script>
+(function () {
+  'use strict';
+
+  /* Pills are built from the cards' own status badges, so a new prototype
+     appears in the filter bar just by carrying a badge — nothing to keep in
+     sync by hand. */
+  var ORDER = ['In design', 'In development', 'In A/B testing',
+               'In user testing', 'In review', 'Template', 'Archived'];
+
+  var bar = document.getElementById('filters');
+  var cards = [].slice.call(document.querySelectorAll('.card'));
+  var sections = [].slice.call(document.querySelectorAll('.grid')).map(function (g) {
+    return { grid: g, heading: g.previousElementSibling };
+  });
+
+  var counts = {}, cls = {};
+  cards.forEach(function (c) {
+    var badge = c.querySelector('.status');
+    var label = badge ? badge.textContent.trim() : 'Unlabelled';
+    c.dataset.status = label;
+    counts[label] = (counts[label] || 0) + 1;
+    if (badge) {
+      cls[label] = [].filter.call(badge.classList, function (n) {
+        return n.indexOf('status-') === 0;
+      })[0] || '';
+    }
+  });
+
+  /* Known statuses in lifecycle order, then anything unrecognised, so a new
+     label surfaces rather than silently vanishing. */
+  var labels = ORDER.filter(function (s) { return counts[s]; })
+    .concat(Object.keys(counts).filter(function (s) { return ORDER.indexOf(s) === -1; }).sort());
+
+  function pill(label, count, extraClass, value) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'filter ' + extraClass;
+    b.dataset.value = value;
+    b.appendChild(document.createTextNode(label));
+    var n = document.createElement('span');
+    n.className = 'filter__n';
+    n.textContent = count;
+    b.appendChild(n);
+    return b;
+  }
+
+  bar.appendChild(pill('All', cards.length, 'filter--all', ''));
+  labels.forEach(function (l) { bar.appendChild(pill(l, counts[l], cls[l] || '', l)); });
+
+  function apply(value) {
+    cards.forEach(function (c) {
+      c.classList.toggle('is-filtered', !!value && c.dataset.status !== value);
+    });
+    /* Hide a team heading once its grid has nothing left to show. */
+    sections.forEach(function (s) {
+      var any = [].some.call(s.grid.querySelectorAll('.card'), function (c) {
+        return !c.classList.contains('is-filtered');
+      });
+      s.grid.classList.toggle('is-filtered', !any);
+      if (s.heading) { s.heading.classList.toggle('is-filtered', !any); }
+    });
+    [].forEach.call(bar.children, function (b) {
+      var on = b.dataset.value === value;
+      b.classList.toggle('is-active', on);
+      b.setAttribute('aria-pressed', String(on));
+    });
+    try { localStorage.setItem('design-tests:status', value); } catch (e) {}
+  }
+
+  bar.addEventListener('click', function (e) {
+    var b = e.target.closest('.filter');
+    /* Clicking the active pill clears it, so a filter is never a dead end. */
+    if (b) { apply(b.classList.contains('is-active') ? '' : b.dataset.value); }
+  });
+
+  var saved = '';
+  try { saved = localStorage.getItem('design-tests:status') || ''; } catch (e) {}
+  apply(counts[saved] ? saved : '');
+}());
+</script>
 
 </body>
 </html>
