@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AR0239 — Member dashboard sneak-peek</title>
+<title>Member dashboard animation</title>
 
 <!-- Roboto is Hubstaff's product font. Zone publishes 144 text styles, all Roboto. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,9 +26,6 @@
      autoplay behavior, no Alpine/Vite dependency. See app.js. -->
 <div id="v-a" data-version>
   <div class="page">
-    <h1>Team dashboard</h1>
-    <p class="subtitle">A live look at how your team's activity will appear in Hubstaff.</p>
-
     <div class="member-row" id="pills"></div>
 
     <div class="card" id="profile-card"></div>
@@ -54,7 +51,7 @@
     topOffset: 0, // standalone page, no app-shell topbar of its own
     conditions: { states: false, roles: false },
     versions: {
-      project: 'AR0239 — Member dashboard sneak-peek',
+      project: 'Member dashboard animation',
       notice: 'Prototype — not a live product',
       note: 'Component preview · layout from AR0107, interaction from AR0219',
       groups: [
