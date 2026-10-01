@@ -142,7 +142,7 @@ window.STEPS = [
     pane: {
       kind: 'payment-table', heading: 'Set member payment details',
       body: 'Set pay rates and pay periods for your team. You can also set timesheets to require approval before payments are sent.',
-      cta: 'Continue',
+      cta: 'Save payment details',
     },
   },
   {
@@ -150,12 +150,12 @@ window.STEPS = [
     pane: {
       kind: 'provider-list', heading: 'Connect to payroll', body: 'Pay your team based on tracked hours.',
       providers: [
-        { id: 'wise', label: 'Wise', hint: 'Bank transfer in 40+ currencies', logo: 'wise' },
-        { id: 'paypal', label: 'PayPal', hint: 'Fastest to set up', logo: 'paypal' },
-        { id: 'payoneer', label: 'Payoneer', hint: 'Good for contractors', logo: 'payoneer' },
-        { id: 'bitwage', label: 'Bitwage', hint: 'Crypto and multi-currency', logo: 'bitwage' },
+        { id: 'wise', label: 'Wise', hint: 'Pay team members automatically or manually through Wise.', logo: 'wise' },
+        { id: 'payoneer', label: 'Payoneer', hint: 'Send automatic or manual payments to team members via Payoneer.', logo: 'payoneer' },
+        { id: 'bitwage', label: 'Bitwage', hint: 'Pay team members via automatic credit card payments through Bitwage.', logo: 'bitwage' },
+        { id: 'paypal', label: 'PayPal', hint: 'Pay your team automatically or manually through PayPal.', logo: 'paypal' },
       ],
-      cta: 'Connect', secondary: 'I pay outside Hubstaff',
+      secondary: 'I pay outside Hubstaff',
     },
   },
   {
@@ -163,7 +163,7 @@ window.STEPS = [
     pane: {
       kind: 'templates', heading: 'Create a smart notification',
       body: 'Get notified automatically when specific events happen in your organization.',
-      templateCta: 'Create',
+      templateCta: 'Create', templateDoneCta: 'Created',
       templates: [
         { id: 'suspicious', icon: 'warning', title: 'Suspicious activity level', desc: 'Flags activity patterns that look automated rather than human.', meta: ['Daily', 'Email'] },
         { id: 'overworking', icon: 'speed', title: 'Members overworking', desc: 'Someone is tracking well beyond their agreed limit.', meta: ['Weekly', 'Email'] },
@@ -176,14 +176,9 @@ window.STEPS = [
   {
     id: 'download-app', icon: 'install_desktop', label: 'Download app', minutes: 2, skippable: true, done: false,
     pane: {
-      kind: 'download', heading: 'Download the Hubstaff app',
-      body: "Install Hubstaff's app on your computer to start tracking time.",
-      platforms: [
-        { id: 'mac', label: 'macOS', icon: 'laptop_mac', meta: '11.0 or later' },
-        { id: 'win', label: 'Windows', icon: 'desktop_windows', meta: '10 or later' },
-        { id: 'linux', label: 'Linux', icon: 'monitor', meta: 'deb · rpm' },
-      ],
-      cta: 'Download for macOS',
+      kind: 'download', heading: 'Start tracking time',
+      body: "Understand when you're working, what you're working on, and how time is adding up, all in one place.",
+      cta: 'Download desktop app', secondary: "I'll install it later",
     },
   },
   {

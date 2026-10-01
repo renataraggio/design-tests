@@ -53,11 +53,6 @@ a { color: inherit; }
 .step-row .label { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 1.4rem; font-weight: 400; color: var(--gray-500); }
 .step-row.done .label, .step-row.active .label { font-weight: 500; color: var(--gray-900); }
 .step-row.active .label { color: var(--primary-700); }
-.org-setup { border-top: 1px solid var(--gray-100); padding: 1.2rem; }
-.org-setup h3 { font-size: 1.4rem; font-weight: 600; margin: 0 0 1rem; }
-.org-row { display: flex; flex-wrap: wrap; align-items: center; gap: .8rem; margin-bottom: 1.2rem; }
-.org-row:last-child { margin-bottom: 0; }
-.org-row .lbl { font-size: 1.2rem; font-weight: 500; text-transform: uppercase; color: var(--gray-600); }
 .pill-count { display: inline-flex; align-items: center; border-radius: 999px; background: var(--gray-100); color: var(--gray-600); font-size: 1.3rem; padding: .3rem 1rem; }
 
 /* ---------- pane ---------- */
@@ -106,15 +101,8 @@ a { color: inherit; }
 .template-card.chosen { border-color: var(--green-400); }
 
 /* provider-list */
-.provider-row { display: flex; align-items: center; gap: 1.2rem; width: 100%; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 1.2rem 1.6rem; margin-bottom: .8rem; text-align: left; background: #fff; }
-.provider-row.on { border-color: var(--primary-700); background: var(--primary-50); }
-.provider-row .logo { width: 2.4rem; height: 2.4rem; border-radius: 4px; background: var(--gray-200); flex-shrink: 0; }
-.provider-row .name { font-weight: 500; }
-.provider-row .hint { font-size: 1.2rem; color: var(--gray-400); }
 
 /* download */
-.platform-row { display: flex; align-items: center; gap: 1.2rem; width: 100%; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 1.2rem 1.6rem; margin-bottom: .8rem; }
-.platform-row.primary { border-color: var(--primary-700); }
 
 /* invite */
 .invite-row { display: flex; gap: 1.2rem; margin-bottom: 1.6rem; }
@@ -363,3 +351,51 @@ table.pay-table td { padding: 1.2rem; border-top: 1px solid var(--gray-100); fon
 .mini-lit .material-symbols-rounded { font-size: 1.6rem; }
 @keyframes mini-lit { from { background: var(--gray-100); color: var(--gray-300); } to { background: #d4edff; color: var(--primary-700); } }
 @media (prefers-reduced-motion: reduce) { .welcome-glow { animation: none; } .mini-lit { animation: none; background: #d4edff; color: var(--primary-700); } }
+
+/* ---- 2026-10-01 sync with the Kit source ---- */
+/* Outline CTA shared by payroll providers and template cards: outlined
+   primary → muted gray once chosen. */
+.cta-outline { flex-shrink: 0; border: 1px solid var(--primary-700); background: none; color: var(--primary-700); border-radius: var(--radius); padding: .6rem 1.2rem; font-size: 1.3rem; font-weight: 500; }
+.cta-outline:hover { background: var(--primary-50); }
+.cta-outline.done { border-color: var(--gray-200); background: var(--gray-50); color: var(--gray-400); }
+
+/* Connect to payroll: one full-width card per provider, stacked. */
+.provider-list { display: flex; flex-direction: column; gap: 1.2rem; }
+.provider-card { display: flex; align-items: center; gap: 1.2rem; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); background: #fff; padding: 1.6rem; }
+.provider-card .logo { width: 2.4rem; height: 2.4rem; border-radius: 4px; flex-shrink: 0; }
+.provider-card .txt { flex: 1; min-width: 0; }
+.provider-card .name { margin: 0; font-size: 1.4rem; font-weight: 500; color: var(--gray-900); }
+.provider-card .hint { margin: 0; font-size: 1.2rem; color: var(--gray-500); }
+@container (max-width: 520px) { .provider-card { flex-wrap: wrap; } .provider-card .cta-outline { margin-left: 3.6rem; } }
+
+/* Declined via "I pay outside Hubstaff": struck through, same gray as pending. */
+.step-row.declined .label { text-decoration: line-through; }
+
+/* Zone Toggle, Small — 32x16 track, 3px inset, 10px thumb, 16px travel
+   (Growth Central node 21077:50973). */
+.toggle-track--sm { width: 3.2rem; height: 1.6rem; flex-shrink: 0; }
+.toggle-track--sm::after { top: .3rem; left: .3rem; width: 1rem; height: 1rem; }
+.toggle-track--sm.on::after { transform: translateX(1.6rem); }
+
+/* V4 "Customize your first project": two-up on the pane's own width. */
+.pane-container { container-type: inline-size; }
+.project-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+.project-grid .field, .project-grid .toggle-card { margin-bottom: 0; }
+@container (min-width: 480px) { .project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* Download app timer scene (pill mirrors the shell's .hs-timer when idle). */
+.dl-scene { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.6rem; padding: 4rem 1.6rem; border: 1px solid var(--gray-100); border-radius: var(--radius-lg); background: var(--gray-50); }
+.dl-pill { display: inline-flex; align-items: center; gap: .8rem; padding: .6rem 1.2rem .6rem 1rem; border-radius: 999px; background: #fff; border: 1px solid var(--gray-300); transition: background .3s, border-color .3s; }
+.dl-pill-icon { font-size: 1.8rem; color: var(--gray-700); }
+.dl-pill-time { font-size: 1.4rem; color: #2aa7ff; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.dl-pill-arrow { font-size: 1.4rem; color: #2aa7ff; }
+.dl-pill.running { background: var(--primary-700); border-color: var(--primary-700); }
+.dl-pill.running .dl-pill-time { color: #fff; font-weight: 600; }
+.dl-pill.running .dl-pill-icon { color: #fff; font-size: 1.4rem; background: rgba(0,0,0,.1); border-radius: 999px; padding: .5rem; order: 3; }
+.dl-pill.running .dl-pill-arrow { display: none; }
+.dl-row { display: flex; align-items: center; gap: .8rem; width: 26rem; max-width: 100%; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); background: #fff; padding: 1rem 1.2rem; box-shadow: 0 1px 2px rgba(0,0,0,.05); }
+.dl-row-folder { font-size: 1.6rem; color: var(--gray-400); }
+.dl-row-name { flex: 1; min-width: 0; font-size: 1.4rem; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dl-row-play { display: inline-flex; align-items: center; justify-content: center; width: 2rem; height: 2rem; border-radius: 999px; background: var(--primary-700); color: #fff; flex-shrink: 0; }
+.dl-row-play .material-symbols-rounded { font-size: 1.1rem; font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 20; }
+.dl-row-time { width: 3.6rem; text-align: right; font-size: 1.2rem; color: var(--gray-500); font-variant-numeric: tabular-nums; }

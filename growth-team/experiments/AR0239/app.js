@@ -19,7 +19,7 @@
 // changes what's INSIDE select-projects' pane, not which steps exist).
 const V3_V4_IDS = ['create-org', 'create-teams', 'select-projects', 'member-limits', 'member-payment-details', 'connect-payroll', 'smart-notifications', 'download-app', 'invite-members'];
 const DIRECTION_STEPS = {
-  a3: ['create-org', 'create-teams', 'select-projects', 'member-limits', 'download-app', 'invite-members'],
+  a3: ['create-org', 'create-teams', 'select-projects', 'member-limits', 'smart-notifications', 'download-app', 'invite-members'],
   a: ['create-org', 'create-teams', 'select-projects', 'subscribe-reports', 'member-limits', 'connect-payroll', 'smart-notifications', 'invite-members'],
   v3: V3_V4_IDS,
   v4: V3_V4_IDS,
@@ -32,10 +32,13 @@ function freshStep(s, direction) {
   // V4 swaps Select your project's picker for the real "Customize your
   // first project" form — everywhere else keeps its own `pane` untouched,
   // same as quickstart.js's `allSteps` override (direction === 'v4' only).
-  const pane = (direction === 'v4' && s.id === 'select-projects') ? window.V4_PROJECT_PANE : s.pane;
+  const isV4Project = direction === 'v4' && s.id === 'select-projects';
+  const pane = isV4Project ? window.V4_PROJECT_PANE : s.pane;
   return {
     ...s,
     pane,
+    // Rail label follows the pane swap (Renata, 2026-10-01) — V4 only.
+    label: isV4Project ? 'Customize your first project' : s.label,
     skipped: false,
     chips: (pane.options || []).filter((o) => o.checked).map((o) => o.label),
     added: [],
@@ -65,7 +68,7 @@ function buildAllSteps(direction) {
 function setDirection(id) {
   state.direction = id;
   state.allSteps = buildAllSteps(id);
-  state.activeId = state.allSteps[0].id;
+  state.activeId = 'create-teams'; // Renata, 2026-10-01: land users on Create teams
   state.justDone = null;
   state.successSeen = false;
   render();
@@ -74,7 +77,7 @@ function setDirection(id) {
 const state = {
   stage: 'welcome', // 'welcome' | 'app' | 'dashboard'
   direction: 'v3', // a3 (V1) | a (V2) | v3 (V3) | v4 (V4) — matches this port's pre-existing default
-  activeId: 'create-org',
+  activeId: 'create-teams',
   plan: 'enterprise',
   payroll: false,
   allSteps: buildAllSteps('v3'),
@@ -335,46 +338,55 @@ function renderForm(s) {
 function renderProjectSetup(s) {
   const clientField = s.pane.fields.find((f) => f.id === 'client');
   const disabled = (f) => f.disabledUntil && !s.values[f.disabledUntil];
+  // Layout from Growth Central node 21077:50973: Project name + Client on one
+  // row, Weekly Budget + Client viewer on the next; one column below 480px of
+  // the PANE (container query), not the viewport.
   return renderHeader(s, `<button type="button" class="btn btn-primary" ${s.values.projectName ? '' : 'disabled'} data-complete="${esc(s.id)}">${esc(s.pane.cta)}</button>`) + `
-    <div class="field">
-      <label>Project name <span style="color:var(--red-700)">*</span></label>
-      <input type="text" id="project-name" value="${esc(s.values.projectName || '')}" placeholder="e.g. Acme — website refresh" />
-    </div>
-    <div class="field">
-      <label>Client</label>
-      <select id="project-client">
-        <option value="" ${!s.values.client ? 'selected' : ''}>No client</option>
-        ${clientField.options.map((o) => `<option value="${esc(o.value)}" ${s.values.client === o.value ? 'selected' : ''}>${esc(o.label)}</option>`).join('')}
-      </select>
-      <p class="hint">${esc(clientField.helper)}</p>
-    </div>
-    ${s.pane.fields.filter((f) => f.type === 'toggle').map((f) => `
-      <div class="toggle-card ${disabled(f) ? 'disabled' : ''}">
-        <div class="head">
-          <div class="left">
-            <span class="material-symbols-rounded" style="font-size:1.8rem;color:var(--gray-500)">${f.icon}</span>
-            <span class="name">${esc(f.label)}</span>
-            <span class="badge">${esc(f.badge)}</span>
-          </div>
-          <button type="button" class="toggle-track ${s.values[f.id] ? 'on' : ''}" data-toggle-project-field="${esc(f.id)}" ${disabled(f) ? 'disabled' : ''} aria-pressed="${!!s.values[f.id]}"></button>
-        </div>
-        <p>${esc(f.description)}</p>
+    <div class="pane-container">
+    <div class="project-grid">
+      <div class="field">
+        <label>Project name <span style="color:var(--gray-600)">*</span></label>
+        <input type="text" id="project-name" value="${esc(s.values.projectName || '')}" placeholder="e.g. Acme — website refresh" />
       </div>
-    `).join('')}
+      <div class="field">
+        <label>Client</label>
+        <select id="project-client">
+          <option value="" ${!s.values.client ? 'selected' : ''}>No client</option>
+          ${clientField.options.map((o) => `<option value="${esc(o.value)}" ${s.values.client === o.value ? 'selected' : ''}>${esc(o.label)}</option>`).join('')}
+        </select>
+        <p class="hint">${esc(clientField.helper)}</p>
+      </div>
+      ${s.pane.fields.filter((f) => f.type === 'toggle').map((f) => `
+        <div class="toggle-card ${disabled(f) ? 'disabled' : ''}">
+          <div class="head">
+            <div class="left">
+              <span class="material-symbols-rounded" style="font-size:1.8rem;color:var(--gray-500)">${f.icon}</span>
+              <span class="name">${esc(f.label)}</span>
+              <span class="badge">${esc(f.badge)}</span>
+            </div>
+            <button type="button" role="switch" class="toggle-track toggle-track--sm ${s.values[f.id] ? 'on' : ''}" data-toggle-project-field="${esc(f.id)}" ${disabled(f) ? 'disabled' : ''} aria-checked="${!!s.values[f.id]}" aria-label="${esc(f.label)}"></button>
+          </div>
+          <p>${esc(f.description)}</p>
+        </div>
+      `).join('')}
+    </div>
+    </div>
   `;
 }
 
 function renderPaymentTable(s) {
   return renderHeader(s, `<button type="button" class="btn btn-primary" data-complete="${esc(s.id)}">${esc(s.pane.cta)}</button>`) + `
     <table class="pay-table">
-      <thead><tr><th>Email</th><th>Payment details</th><th></th></tr></thead>
+      <thead><tr><th>Email</th><th>Payment details</th><th>Timesheet approvals</th><th></th></tr></thead>
       <tbody>
         ${TEAM.map((m) => {
           const pd = state.paymentData[m.name];
+          const period = pd.payPeriod && pd.payPeriod !== 'None' ? pd.payPeriod : 'Weekly';
           return `
             <tr>
               <td><div class="who-cell"><span class="avatar" style="background:${m.color}">${esc(m.initials)}</span><div><div>${esc(m.name)}</div><div class="email">${esc(m.email)}</div></div></div></td>
-              <td>${pd.saved ? `${esc(pd.payRate || '0.00')} USD/hr` : 'Details not set'}</td>
+              <td>${pd.saved ? `${esc(pd.payRate || '0.00')} USD/hr / ${esc(period)}` : 'Details not set'}</td>
+              <td><button type="button" role="switch" class="toggle-track toggle-track--sm ${pd.approval ? 'on' : ''}" data-row-approval="${esc(m.name)}" aria-checked="${pd.approval}" aria-label="Timesheet approvals for ${esc(m.name)}"></button></td>
               <td style="text-align:right;"><button type="button" class="btn btn-secondary" style="font-size:1.2rem;padding:.5rem 1rem;" data-open-payment="${esc(m.name)}">See details</button></td>
             </tr>
           `;
@@ -389,7 +401,7 @@ function renderTemplates(s) {
     <div class="template-grid">
       ${s.pane.templates.map((t) => `
         <div class="template-card ${s.chosen.includes(t.id) ? 'chosen' : ''}">
-          <div class="head"><span class="title">${esc(t.title)}</span><button type="button" class="btn ${s.chosen.includes(t.id) ? 'btn-secondary' : 'btn-primary'}" style="padding:.5rem 1.2rem;font-size:1.2rem;" data-toggle-template="${esc(s.id)}" data-template-id="${esc(t.id)}">${s.chosen.includes(t.id) ? esc(s.pane.templateDoneCta || 'Done') : esc(s.pane.templateCta)}</button></div>
+          <div class="head"><span class="title">${esc(t.title)}</span><button type="button" class="cta-outline ${s.chosen.includes(t.id) ? 'done' : ''}" data-toggle-template="${esc(s.id)}" data-template-id="${esc(t.id)}">${s.chosen.includes(t.id) ? esc(s.pane.templateDoneCta || 'Done') : esc(s.pane.templateCta)}</button></div>
           <div class="meta">${t.meta.map((mm) => `<span>${esc(mm)}</span>`).join('')}</div>
           <p class="desc">${esc(t.desc)}</p>
         </div>
@@ -399,27 +411,76 @@ function renderTemplates(s) {
 }
 
 function renderProviderList(s) {
-  return renderHeader(s, `<button type="button" class="btn btn-primary" ${!s.provider ? 'disabled' : ''} data-complete="${esc(s.id)}">${esc(s.pane.cta)}</button>`) + `
+  // Vertical cards, one per provider. A card's own Connect button IS the
+  // action (opens the connect flow + completes the step); the old header CTA
+  // is gone. "I pay outside Hubstaff" (header secondary) marks the step
+  // declined — see `.step-row.declined`.
+  return renderHeader(s, '') + `
+    <div class="provider-list">
     ${s.pane.providers.map((p) => `
-      <button type="button" class="provider-row ${s.provider === p.id ? 'on' : ''}" data-choose-provider="${esc(s.id)}" data-provider-id="${esc(p.id)}">
-        <span class="logo"></span>
-        <span style="flex:1;min-width:0;"><span class="name">${esc(p.label)}</span><br><span class="hint">${esc(p.hint)}</span></span>
-        ${s.provider === p.id ? '<span class="material-symbols-rounded" style="color:var(--primary-700)">check_circle</span>' : ''}
-      </button>
+      <div class="provider-card">
+        <img class="logo" src="./assets/logo-${esc(p.logo)}.svg" alt="" />
+        <div class="txt"><p class="name">${esc(p.label)}</p><p class="hint">${esc(p.hint)}</p></div>
+        <button type="button" class="cta-outline ${s.provider === p.id ? 'done' : ''}" data-connect-provider="${esc(p.id)}">${s.provider === p.id ? 'Connected' : 'Connect'}</button>
+      </div>
     `).join('')}
+    </div>
   `;
 }
 
+/* Looping timer scene (state lives outside render(), which rebuilds the DOM):
+   idle → run 10s → reset → repeat, painted into the live nodes each tick.
+   The pill mirrors the shell's own .hs-timer when idle; the running look
+   (blue fill + pause) is this scene's extension — the shell has no running
+   state to copy. */
+const dl = { sec: 0, running: false, timer: null, started: false };
+function dlHMS() {
+  const p = (n) => String(n).padStart(2, '0');
+  return `${p(Math.floor(dl.sec / 3600))}:${p(Math.floor((dl.sec % 3600) / 60))}:${p(dl.sec % 60)}`;
+}
+function dlShort() { return `${Math.floor(dl.sec / 60)}:${String(dl.sec % 60).padStart(2, '0')}`; }
+function dlPaint() {
+  const pill = document.querySelector('[data-dl-pill]');
+  if (!pill) return false;
+  pill.classList.toggle('running', dl.running);
+  pill.querySelector('[data-dl-time]').textContent = dlHMS();
+  pill.querySelector('[data-dl-icon]').textContent = dl.running ? 'pause' : 'timer';
+  const row = document.querySelector('[data-dl-row]');
+  row.querySelector('[data-dl-row-icon]').textContent = dl.running ? 'pause' : 'play_arrow';
+  row.querySelector('[data-dl-row-time]').textContent = dlShort();
+  return true;
+}
+function dlStep() {
+  clearTimeout(dl.timer);
+  if (!document.querySelector('[data-dl-pill]')) { dl.started = false; return; }
+  if (!dl.running) { dl.running = true; dl.sec = 0; dl.timer = setTimeout(dlStep, 1000); }
+  else if (dl.sec >= 10) { dl.running = false; dl.sec = 0; dl.timer = setTimeout(dlStep, 1200); }
+  else { dl.sec += 1; dl.timer = setTimeout(dlStep, 1000); }
+  dlPaint();
+}
+function syncDownloadPreview() {
+  if (!dlPaint()) { clearTimeout(dl.timer); dl.started = false; return; }
+  if (!dl.started) { dl.started = true; dl.running = false; dl.sec = 0; dlPaint(); dl.timer = setTimeout(dlStep, 900); }
+}
+
 function renderDownload(s) {
-  const platform = (s.pane.platforms.find((p) => p.id === s.platform) || s.pane.platforms[0]);
-  return renderHeader(s, `<button type="button" class="btn btn-primary" data-download="${esc(s.id)}"><span class="material-symbols-rounded">download</span>${esc(s.pane.cta)} ${esc(platform.label)}</button>`) + `
-    ${s.pane.platforms.map((p) => `
-      <button type="button" class="platform-row ${p.id === s.platform ? 'primary' : ''}" data-choose-platform="${esc(s.id)}" data-platform-id="${esc(p.id)}">
-        <span class="material-symbols-rounded" style="font-size:2.4rem;color:var(--gray-500)">${p.icon}</span>
-        <span style="flex:1;"><span class="name">${esc(p.label)}</span><br><span class="hint">${esc(p.meta)}</span></span>
-        ${p.id === s.platform ? '<span class="material-symbols-rounded" style="color:var(--primary-700)">check_circle</span>' : ''}
-      </button>
-    `).join('')}
+  // Matched to AR0238's empty state: one CTA, no platform picker (the real
+  // download link detects the OS itself), timer scene in place of the
+  // blurred dashboard behind AR0238's card.
+  return renderHeader(s, `<button type="button" class="btn btn-primary" data-download="${esc(s.id)}">${esc(s.pane.cta)}</button>`) + `
+    <div class="dl-scene" aria-hidden="true">
+      <div class="dl-pill" data-dl-pill>
+        <span class="material-symbols-rounded dl-pill-icon" data-dl-icon>timer</span>
+        <span class="dl-pill-time" data-dl-time>00:00:00</span>
+        <span class="material-symbols-rounded dl-pill-arrow">arrow_outward</span>
+      </div>
+      <div class="dl-row" data-dl-row>
+        <span class="material-symbols-rounded dl-row-folder">folder</span>
+        <span class="dl-row-name">Onboarding</span>
+        <span class="dl-row-play"><span class="material-symbols-rounded" data-dl-row-icon>play_arrow</span></span>
+        <span class="dl-row-time" data-dl-row-time>0:00</span>
+      </div>
+    </div>
   `;
 }
 
@@ -562,21 +623,12 @@ function renderRail() {
       `}
       <ul class="rail-steps">
         ${steps.map((s) => `
-          <li><button type="button" class="step-row ${s.id === state.activeId ? 'active' : ''} ${s.done ? 'done' : ''}" data-select-step="${esc(s.id)}">
+          <li><button type="button" class="step-row ${s.id === state.activeId ? 'active' : ''} ${s.done ? 'done' : ''} ${s.id === 'connect-payroll' && s.skipped ? 'declined' : ''}" data-select-step="${esc(s.id)}">
             <span class="material-symbols-rounded ic">${s.done ? 'check_circle' : 'radio_button_unchecked'}</span>
             <span class="label">${esc(s.label)}</span>
           </button></li>
         `).join('')}
       </ul>
-      ${richHeader ? `
-      <div class="org-setup">
-        <h3>Organization set-up</h3>
-        <div class="org-row"><span class="lbl">Org name</span><span class="pill-count">${esc(WIZARD.org)}</span></div>
-        <div class="org-row"><span class="lbl">Team size</span><span class="pill-count">${esc(WIZARD.sizeLabel)}</span></div>
-        <div class="org-row"><span class="lbl">Tracking preferences</span><span class="pill-count">${esc(WIZARD.tracking)}</span></div>
-        <div class="org-row"><span class="lbl">Goals</span><span class="pill-count">${esc(wizardGoals()[0])}</span>${wizardGoals().length > 1 ? `<span class="pill-count">+${wizardGoals().length - 1}</span>` : ''}</div>
-      </div>
-      ` : ''}
     </div>
   `;
 }
@@ -585,6 +637,7 @@ function renderPane() {
   const el = document.getElementById('pane');
   if (!el) return;
   el.innerHTML = renderPaneBody(activeStep());
+  syncDownloadPreview();
 }
 
 // V2 only — Integrations card + "Get 1:1 setup walkthroughs" banner, below
@@ -805,7 +858,7 @@ function renderPaymentModal() {
         </select>
       </div>
       <div class="toggle-row">
-        <button type="button" class="toggle-track ${pd.approval ? 'on' : ''}" id="pay-approval" aria-pressed="${pd.approval}"></button>
+        <button type="button" role="switch" class="toggle-track toggle-track--sm ${pd.approval ? 'on' : ''}" id="pay-approval" aria-checked="${pd.approval}" aria-label="Require timesheet approval"></button>
         <span style="font-size:1.3rem;color:var(--gray-600);">Require timesheet approval</span>
         <span class="material-symbols-rounded" style="font-size:1.4rem;color:var(--gray-400)" title="Managers must approve a timesheet before it's paid.">info</span>
       </div>
@@ -824,6 +877,7 @@ function render() {
   else if (state.stage === 'dashboard') root.innerHTML = renderDashboard();
   else root.innerHTML = allDone() && !state.successSeen ? renderSuccess() : renderApp();
   renderPaymentModal();
+  syncDownloadPreview();
 }
 
 /* ── events (delegated on document) ──────────────────────────────────── */
@@ -859,7 +913,7 @@ document.addEventListener('click', (e) => {
     renderPaymentModal();
     return renderPane();
   }
-  if (t('#pay-approval')) { const name = state.paymentModalFor; state.paymentData[name].approval = !state.paymentData[name].approval; return renderPaymentModal(); }
+  if (t('#pay-approval')) { const name = state.paymentModalFor; state.paymentData[name].approval = !state.paymentData[name].approval; renderPaymentModal(); return renderPane(); }
 
   if (t('[data-toggle-template]')) {
     const btn = t('[data-toggle-template]'); const s = state.allSteps.find((x) => x.id === btn.dataset.toggleTemplate);
@@ -874,14 +928,15 @@ document.addEventListener('click', (e) => {
     activeStep().values[id] = !activeStep().values[id];
     return renderPane();
   }
-  if (t('[data-choose-provider]')) {
-    const btn = t('[data-choose-provider]'); const s = state.allSteps.find((x) => x.id === btn.dataset.chooseProvider);
-    s.provider = s.provider === btn.dataset.providerId ? null : btn.dataset.providerId;
-    return renderPane();
+  if (t('[data-connect-provider]')) {
+    const s = state.allSteps.find((x) => x.id === 'connect-payroll');
+    s.provider = t('[data-connect-provider]').dataset.connectProvider;
+    window.open('https://app.staging.hbstf.co/organizations/61/integrations/new', '_blank', 'noopener');
+    return complete('connect-payroll');
   }
-  if (t('[data-choose-platform]')) {
-    const btn = t('[data-choose-platform]'); const s = state.allSteps.find((x) => x.id === btn.dataset.choosePlatform);
-    s.platform = btn.dataset.platformId;
+  if (t('[data-row-approval]')) {
+    const pd = state.paymentData[t('[data-row-approval]').dataset.rowApproval];
+    pd.approval = !pd.approval;
     return renderPane();
   }
   if (t('[data-download]')) {
