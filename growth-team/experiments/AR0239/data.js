@@ -1,11 +1,14 @@
-/* AR0239 V3 ("New layout") — standalone data.
+/* AR0239 — standalone data, four directions (Renata, 2026-10-01: "build out
+   V4 + V2 and rename it to just AR0239" — was V3-only before this).
    Content copied verbatim from product-team's product/squads/growth/
-   experiments/AR0239/prototype/steps.data.js, trimmed to ONLY what V3 uses
-   (no A1/A2/A3/B1 fields — labelB, omitIn/onlyIn are resolved here once,
-   not re-evaluated per direction, since this file has exactly one
-   direction). Step order is V3's real rail order: connect-payroll sits
-   ahead of smart-notifications (Renata, 2026-09-30: "move create smart
-   notification below connect payroll"). */
+   experiments/AR0239/prototype/steps.data.js. STEPS below is the UNION of
+   every direction's steps; app.js's DIRECTION_STEPS picks which ids each
+   direction actually shows (same onlyIn/omitIn facts as the Kit source,
+   just resolved as plain id lists instead of re-evaluated per render).
+   Step order is V3/V4's real rail order: connect-payroll sits ahead of
+   smart-notifications (Renata, 2026-09-30: "move create smart notification
+   below connect payroll"); V1/V2 share that same array order, minus
+   whichever ids they omit. */
 
 window.WIZARD = {
   name: 'Henrique',
@@ -111,6 +114,23 @@ window.STEPS = [
     },
   },
   {
+    // V2 only (omitted from V1/V3/V4, which "keep only the steps that
+    // produce data" — same Kit source comment).
+    id: 'subscribe-reports', icon: 'summarize', label: 'Subscribe to reports', minutes: 1, skippable: true, done: false,
+    pane: {
+      kind: 'templates', heading: 'Subscribe to a report',
+      body: 'Pick a report to have delivered. You can change the schedule later.',
+      templateCta: 'Subscribe', templateDoneCta: 'Subscribed',
+      templates: [
+        { id: 'time-activity', icon: 'query_stats', title: 'Time & Activity', desc: "See team members' time worked, activity levels, and amounts earned per project or work order.", meta: ['Weekly', 'Email'] },
+        { id: 'amounts-owed', icon: 'attach_money', title: 'Amounts owed', desc: 'See how much the hourly paid team members are currently owed.', meta: ['Weekly', 'Email'] },
+        { id: 'daily-totals', icon: 'bar_chart', title: 'Daily totals', desc: "See team members' time worked, activity levels, and amount earned per day.", meta: ['Daily', 'Email'] },
+        { id: 'apps-urls', icon: 'devices', title: 'Apps & URLs', desc: 'See which apps and sites work time actually went to.', meta: ['Weekly', 'Email'] },
+      ],
+      cta: 'Subscribe',
+    },
+  },
+  {
     id: 'member-limits', icon: 'tune', label: 'Set member limits', minutes: 2, skippable: true, done: false,
     pane: {
       kind: 'form', heading: 'Set member limits', body: 'Cap how many hours members can track.',
@@ -180,3 +200,54 @@ window.STEPS = [
     },
   },
 ];
+
+/* V2 only — Integrations card + "Get 1:1 setup walkthroughs" banner, below
+   the checklist. Shipped on every direction originally, dropped everywhere
+   on 2026-09-30, restored for V2 alone on 2026-10-01 (same history as the
+   Kit source's window.QUICKSTART_ASIDE — see that file's own note). */
+window.ASIDE = {
+  integrations: {
+    heading: 'Integrate with your favorite tools',
+    body: 'We support over 30 popular integrations so you can continue using your favorite tools inside Hubstaff.',
+    link: 'View all integrations',
+    tools: [
+      { name: 'ClickUp', logo: 'clickup' },
+      { name: 'Asana', logo: 'asana' },
+      { name: 'Slack', logo: 'slack' },
+      { name: 'Wise', logo: 'wise' },
+      { name: 'Trello', logo: 'trello' },
+    ],
+  },
+};
+
+/* V4 only — replaces Select your project's picker with the real "Customize
+   your first project" form (reference screenshot, Renata 2026-10-01). See
+   the Kit source's window.QUICKSTART_V4_PROJECT_PANE for the full file-level
+   note, incl. the flagged assumption that `client` options are placeholder
+   prototype content (the reference never opens that dropdown). */
+window.V4_PROJECT_PANE = {
+  kind: 'project-setup',
+  heading: 'Customize your first project',
+  body: 'Set up the first project your team will track time against — you can add more any time.',
+  fields: [
+    { id: 'projectName', type: 'text', label: 'Project name', required: true, placeholder: 'e.g. Acme — website refresh' },
+    {
+      id: 'client', type: 'select', label: 'Client', placeholder: 'No client',
+      helper: 'Optional — used for reporting and invoicing.',
+      options: [
+        { value: 'acme', label: 'Acme Corp' },
+        { value: 'globex', label: 'Globex Inc' },
+      ],
+    },
+    {
+      id: 'weeklyBudget', type: 'toggle', icon: 'bolt', label: 'Weekly Budget', badge: 'Recommended',
+      description: 'We suggest 40 total hours per week. You can increase this if your team is larger.',
+    },
+    {
+      id: 'clientViewer', type: 'toggle', icon: 'folder_shared', label: 'Client viewer', badge: 'Free',
+      description: 'You can later add your client as a viewer to see live hours on this project for free — no seat cost.',
+      disabledUntil: 'client',
+    },
+  ],
+  cta: 'Save projects',
+};
