@@ -200,7 +200,7 @@ function renderCoPreview() {
       <div class="callout above ${state.coPreviewPhase === 'membersHint' ? 'is-visible' : ''}">View other members</div>
       ${TEAM.map((row) => `
         <button type="button" class="member-pill ${row.name === state.coPreviewId ? 'is-active' : ''}" data-co-select="${esc(row.name)}">
-          <span class="avatar" style="width:2.4rem;height:2.4rem;font-size:1.1rem;background:${row.color}">${esc(row.initials)}</span>
+          <span class="avatar bg-${row.color}" style="width:2.4rem;height:2.4rem;font-size:1.1rem">${esc(row.initials)}</span>
           <span>${esc(row.name)}</span>
         </button>
       `).join('')}
@@ -208,7 +208,7 @@ function renderCoPreview() {
     <div class="card" style="border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:2rem;">
       <div class="co-profile-row">
         <div class="co-profile-id">
-          <span class="avatar" style="width:4.8rem;height:4.8rem;font-size:1.6rem;background:${m.color}">${esc(m.initials)}</span>
+          <span class="avatar bg-${m.color}" style="width:4.8rem;height:4.8rem;font-size:1.6rem">${esc(m.initials)}</span>
           <div>
             <p class="name">${esc(m.name)}</p>
             <span class="working-on">Working on <b>${esc(m.workingOn)}</b></span>
@@ -304,7 +304,7 @@ function renderForm(s) {
     <div class="limits-section">
       <h4>Global limits</h4>
       <div class="limits-row">
-        <div class="who"><span class="avatar" style="background:var(--primary-500)"><span class="material-symbols-rounded" style="font-size:1.6rem">groups</span></span>All members</div>
+        <div class="who"><span class="avatar bg-primary-500"><span class="material-symbols-rounded" style="font-size:1.6rem">groups</span></span>All members</div>
         <div class="limits-fields">
           <div><input type="text" id="global-weekly" value="${esc(s.values.weekly)}" /><span class="suffix">hours / week</span></div>
           <div><input type="text" id="global-daily" value="${esc(s.values.daily)}" /><span class="suffix">hours / day</span></div>
@@ -314,7 +314,7 @@ function renderForm(s) {
       <h4>Individual limits</h4>
       ${TEAM.map((m) => `
         <div class="limits-row">
-          <div class="who"><span class="avatar" style="background:${m.color}">${esc(m.initials)}</span>${esc(m.name)}</div>
+          <div class="who"><span class="avatar bg-${m.color}">${esc(m.initials)}</span>${esc(m.name)}</div>
           <div class="limits-fields">
             <div><input type="text" data-ind-weekly="${esc(m.name)}" value="${esc(s.individualLimits[m.name].weekly)}" placeholder="${esc(s.values.weekly)}" /><span class="suffix">hours / week</span></div>
             <div><input type="text" data-ind-daily="${esc(m.name)}" value="${esc(s.individualLimits[m.name].daily)}" placeholder="${esc(s.values.daily)}" /><span class="suffix">hours / day</span></div>
@@ -383,7 +383,7 @@ function renderPaymentTable(s) {
           const period = pd.payPeriod && pd.payPeriod !== 'None' ? pd.payPeriod : 'Weekly';
           return `
             <tr>
-              <td><div class="who-cell"><span class="avatar" style="background:${m.color}">${esc(m.initials)}</span><div><div>${esc(m.name)}</div><div class="email">${esc(m.email)}</div></div></div></td>
+              <td><div class="who-cell"><span class="avatar bg-${m.color}">${esc(m.initials)}</span><div><div>${esc(m.name)}</div><div class="email">${esc(m.email)}</div></div></div></td>
               <td>${pd.saved ? `${esc(pd.payRate || '0.00')} USD/hr / ${esc(period)}` : 'Details not set'}</td>
               <td><button type="button" role="switch" class="toggle-track toggle-track--sm ${pd.approval ? 'on' : ''}" data-row-approval="${esc(m.name)}" aria-checked="${pd.approval}" aria-label="Timesheet approvals for ${esc(m.name)}"></button></td>
               <td style="text-align:right;"><button type="button" class="btn btn-secondary" style="font-size:1.2rem;padding:.5rem 1rem;" data-open-payment="${esc(m.name)}">See details</button></td>
@@ -420,7 +420,7 @@ function renderProviderList(s) {
       <div class="provider-card">
         <img class="logo" src="./assets/logo-${esc(p.logo)}.svg" alt="" />
         <div class="txt"><p class="name">${esc(p.label)}</p><p class="hint">${esc(p.hint)}</p></div>
-        <button type="button" class="cta-outline ${s.provider === p.id ? 'done' : ''}" data-connect-provider="${esc(p.id)}">${s.provider === p.id ? 'Connected' : 'Connect'}</button>
+        <button type="button" class="cta-outline" ${s.provider === p.id ? 'aria-disabled="true"' : ''} data-connect-provider="${esc(p.id)}">${s.provider === p.id ? 'Connected' : 'Connect'}</button>
       </div>
     `).join('')}
     </div>
@@ -512,53 +512,53 @@ function renderDoneIllustration() {
   return `
     <div class="done-illustration" aria-hidden="true">
       <svg viewBox="0 0 264 180">
-        <ellipse class="qs-node" style="--d:.1s" cx="130" cy="164" rx="76" ry="7" fill="#f3f4f6"/>
-        <ellipse class="qs-node" style="--d:.2s" cx="232" cy="162" rx="20" ry="5" fill="#f3f4f6"/>
+        <ellipse class="qs-node fill-gray-100" style="--d:.1s" cx="130" cy="164" rx="76" ry="7"/>
+        <ellipse class="qs-node fill-gray-100" style="--d:.2s" cx="232" cy="162" rx="20" ry="5"/>
         <g class="qs-node" style="--d:.18s">
-          <rect x="40" y="24" width="184" height="128" rx="9" fill="#1f2e54"/>
-          <rect x="40" y="40" width="184" height="112" rx="9" fill="#fff"/>
-          <rect x="40" y="40" width="184" height="10" fill="#fff"/>
+          <rect class="fill-primary-900" x="40" y="24" width="184" height="128" rx="9"/>
+          <rect class="fill-white" x="40" y="40" width="184" height="112" rx="9"/>
+          <rect class="fill-white" x="40" y="40" width="184" height="10"/>
         </g>
-        <circle class="qs-node" style="--d:.34s" cx="51" cy="32" r="2.6" fill="#f05252"/>
-        <circle class="qs-node" style="--d:.39s" cx="59" cy="32" r="2.6" fill="#ffac51"/>
-        <circle class="qs-node" style="--d:.44s" cx="67" cy="32" r="2.6" fill="#31c48d"/>
+        <circle class="qs-node fill-red-500" style="--d:.34s" cx="51" cy="32" r="2.6"/>
+        <circle class="qs-node fill-orange-400" style="--d:.39s" cx="59" cy="32" r="2.6"/>
+        <circle class="qs-node fill-green-400" style="--d:.44s" cx="67" cy="32" r="2.6"/>
         <g class="qs-node" style="--d:.52s">
-          <circle cx="59" cy="66" r="10" fill="#d4edff"/>
-          <circle cx="59" cy="63" r="3.4" fill="#0168dd"/>
-          <path d="M53.4 72.6a5.9 5.9 0 0 1 11.2 0Z" fill="#0168dd"/>
+          <circle class="fill-primary-100" cx="59" cy="66" r="10"/>
+          <circle class="fill-primary-700" cx="59" cy="63" r="3.4"/>
+          <path class="fill-primary-700" d="M53.4 72.6a5.9 5.9 0 0 1 11.2 0Z"/>
         </g>
-        <rect class="qs-node" style="--d:.62s" x="49" y="84" width="20" height="5" rx="2.5" fill="#2aa7ff"/>
-        <rect class="qs-node" style="--d:.68s" x="49" y="93" width="20" height="5" rx="2.5" fill="#a7d9fc"/>
-        <rect class="qs-node" style="--d:.74s" x="49" y="102" width="20" height="5" rx="2.5" fill="#a7d9fc"/>
-        <path class="qs-draw" style="--len:72;--d:.6s" d="M84 60 V132" stroke="#e5e7eb" stroke-width="1.5" stroke-linecap="round"/>
-        <path class="qs-draw" style="--len:124;--d:.7s" d="M84 132 H208" stroke="#e5e7eb" stroke-width="1.5" stroke-linecap="round"/>
-        <rect class="qs-grow" style="--d:.9s" x="92" y="106" width="9" height="26" rx="2" fill="#eaf6ff"/>
-        <rect class="qs-grow" style="--d:.98s" x="112" y="92" width="9" height="40" rx="2" fill="#eaf6ff"/>
-        <rect class="qs-grow" style="--d:1.06s" x="132" y="98" width="9" height="34" rx="2" fill="#eaf6ff"/>
-        <rect class="qs-grow" style="--d:1.14s" x="152" y="78" width="9" height="54" rx="2" fill="#eaf6ff"/>
-        <rect class="qs-grow" style="--d:1.22s" x="172" y="86" width="9" height="46" rx="2" fill="#eaf6ff"/>
-        <rect class="qs-grow" style="--d:1.3s" x="192" y="66" width="9" height="66" rx="2" fill="#d4edff"/>
-        <path class="qs-draw" style="--len:132;--d:1.15s" d="M96 112 L116 98 L136 104 L156 84 L176 92 L196 72" stroke="#0168dd" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-        <path class="qs-draw" style="--len:132;--d:1.35s" d="M96 122 L116 116 L136 120 L156 108 L176 112 L196 100" stroke="#2aa7ff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-        <path class="qs-draw" style="--len:132;--d:1.55s" d="M96 126 L116 124 L136 128 L156 122 L176 120 L196 116" stroke="#31c48d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <circle class="qs-node" style="--d:1.75s" cx="196" cy="72" r="4" fill="#fff" stroke="#0168dd" stroke-width="2.4"/>
+        <rect class="qs-node fill-primary-500" style="--d:.62s" x="49" y="84" width="20" height="5" rx="2.5"/>
+        <rect class="qs-node fill-primary-200" style="--d:.68s" x="49" y="93" width="20" height="5" rx="2.5"/>
+        <rect class="qs-node fill-primary-200" style="--d:.74s" x="49" y="102" width="20" height="5" rx="2.5"/>
+        <path class="qs-draw stroke-gray-200" style="--len:72;--d:.6s" d="M84 60 V132" stroke-width="1.5" stroke-linecap="round"/>
+        <path class="qs-draw stroke-gray-200" style="--len:124;--d:.7s" d="M84 132 H208" stroke-width="1.5" stroke-linecap="round"/>
+        <rect class="qs-grow fill-primary-50" style="--d:.9s" x="92" y="106" width="9" height="26" rx="2"/>
+        <rect class="qs-grow fill-primary-50" style="--d:.98s" x="112" y="92" width="9" height="40" rx="2"/>
+        <rect class="qs-grow fill-primary-50" style="--d:1.06s" x="132" y="98" width="9" height="34" rx="2"/>
+        <rect class="qs-grow fill-primary-50" style="--d:1.14s" x="152" y="78" width="9" height="54" rx="2"/>
+        <rect class="qs-grow fill-primary-50" style="--d:1.22s" x="172" y="86" width="9" height="46" rx="2"/>
+        <rect class="qs-grow fill-primary-100" style="--d:1.3s" x="192" y="66" width="9" height="66" rx="2"/>
+        <path class="qs-draw stroke-primary-700" style="--len:132;--d:1.15s" d="M96 112 L116 98 L136 104 L156 84 L176 92 L196 72" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+        <path class="qs-draw stroke-primary-500" style="--len:132;--d:1.35s" d="M96 122 L116 116 L136 120 L156 108 L176 112 L196 100" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+        <path class="qs-draw stroke-green-400" style="--len:132;--d:1.55s" d="M96 126 L116 124 L136 128 L156 122 L176 120 L196 116" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle class="qs-node fill-white stroke-primary-700" style="--d:1.75s" cx="196" cy="72" r="4" stroke-width="2.4"/>
         <g class="qs-float" style="--d:.2s"><g class="qs-node" style="--d:1.5s">
-          <rect x="212" y="18" width="46" height="34" rx="6" fill="#d4edff"/>
-          <rect x="218" y="25" width="26" height="4" rx="2" fill="#0168dd"/>
-          <rect x="218" y="33" width="34" height="3" rx="1.5" fill="#a7d9fc"/>
-          <rect x="218" y="40" width="30" height="3" rx="1.5" fill="#a7d9fc"/>
+          <rect class="fill-primary-100" x="212" y="18" width="46" height="34" rx="6"/>
+          <rect class="fill-primary-700" x="218" y="25" width="26" height="4" rx="2"/>
+          <rect class="fill-primary-200" x="218" y="33" width="34" height="3" rx="1.5"/>
+          <rect class="fill-primary-200" x="218" y="40" width="30" height="3" rx="1.5"/>
         </g></g>
         <g class="qs-float" style="--d:1.4s"><g class="qs-node" style="--d:1.62s">
-          <path d="M6 46h30a6 6 0 0 1 6 6v14a6 6 0 0 1-6 6H18l-7 7v-7H6a6 6 0 0 1-6-6V52a6 6 0 0 1 6-6Z" fill="#1f2e54"/>
-          <circle class="qs-blink" style="--d:0s" cx="14" cy="59" r="2.4" fill="#fff"/>
-          <circle class="qs-blink" style="--d:.2s" cx="21" cy="59" r="2.4" fill="#fff"/>
-          <circle class="qs-blink" style="--d:.4s" cx="28" cy="59" r="2.4" fill="#fff"/>
+          <path class="fill-primary-900" d="M6 46h30a6 6 0 0 1 6 6v14a6 6 0 0 1-6 6H18l-7 7v-7H6a6 6 0 0 1-6-6V52a6 6 0 0 1 6-6Z"/>
+          <circle class="qs-blink fill-white" style="--d:0s" cx="14" cy="59" r="2.4"/>
+          <circle class="qs-blink fill-white" style="--d:.2s" cx="21" cy="59" r="2.4"/>
+          <circle class="qs-blink fill-white" style="--d:.4s" cx="28" cy="59" r="2.4"/>
         </g></g>
         <g class="qs-node" style="--d:1.8s">
-          <path d="M232 136c-9-3-13-11-12-20 8 1 13 8 12 20Z" fill="#31c48d"/>
-          <path d="M234 136c8-4 11-12 9-21-8 2-12 10-9 21Z" fill="#0e9f6e"/>
-          <path d="M233 122v18" stroke="#046c4e" stroke-width="1.6" stroke-linecap="round"/>
-          <path d="M223 138h20l-2.4 16a2 2 0 0 1-2 1.8h-11.2a2 2 0 0 1-2-1.8L223 138Z" fill="#1f2e54"/>
+          <path class="fill-green-400" d="M232 136c-9-3-13-11-12-20 8 1 13 8 12 20Z"/>
+          <path class="fill-green-500" d="M234 136c8-4 11-12 9-21-8 2-12 10-9 21Z"/>
+          <path class="stroke-green-700" d="M233 122v18" stroke-width="1.6" stroke-linecap="round"/>
+          <path class="fill-primary-900" d="M223 138h20l-2.4 16a2 2 0 0 1-2 1.8h-11.2a2 2 0 0 1-2-1.8L223 138Z"/>
         </g>
       </svg>
     </div>

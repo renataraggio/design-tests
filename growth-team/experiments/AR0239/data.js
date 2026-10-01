@@ -22,7 +22,7 @@ window.WIZARD = {
 // Reused across the checklist (member-limits, member-payment-details) and
 // the create-org done-scene preview — one roster, not three invented ones.
 window.TEAM = [
-  { name: 'Dana Whitfield', initials: 'DW', color: '#0168dd', email: 'dana.whitfield@acmecorps.com',
+  { name: 'Dana Whitfield', initials: 'DW', color: 'primary-700', email: 'dana.whitfield@acmecorps.com',
     workingOn: 'Website redesign', totalWorkTime: '7:40:12', avgActivity: 82, idleTime: '0:22:05', manualTime: '0:00:00',
     weekly: [
       { day: 'Mon', date: 'Sep 22', hours: '1:18:40', pct: 84, screenshots: 9 },
@@ -33,7 +33,7 @@ window.TEAM = [
       { day: 'Sat', date: 'Sep 27', hours: '0:00:00', pct: null, screenshots: 0 },
       { day: 'Sun', date: 'Sep 28', hours: '0:00:00', pct: null, screenshots: 0 },
     ] },
-  { name: 'Marcus Reyes', initials: 'MR', color: '#31c48d', email: 'marcus.reyes@acmecorps.com',
+  { name: 'Marcus Reyes', initials: 'MR', color: 'green-400', email: 'marcus.reyes@acmecorps.com',
     workingOn: 'Mobile app', totalWorkTime: '6:05:30', avgActivity: 64, idleTime: '0:41:18', manualTime: '0:15:00',
     weekly: [
       { day: 'Mon', date: 'Sep 22', hours: '1:05:10', pct: 68, screenshots: 7 },
@@ -44,7 +44,7 @@ window.TEAM = [
       { day: 'Sat', date: 'Sep 27', hours: '1:28:20', pct: 73, screenshots: 9 },
       { day: 'Sun', date: 'Sep 28', hours: '0:00:00', pct: null, screenshots: 0 },
     ] },
-  { name: 'Priya Anand', initials: 'PA', color: '#9061f9', email: 'priya.anand@acmecorps.com',
+  { name: 'Priya Anand', initials: 'PA', color: 'purple-400', email: 'priya.anand@acmecorps.com',
     workingOn: 'Client onboarding', totalWorkTime: '6:52:45', avgActivity: 71, idleTime: '0:33:52', manualTime: '0:00:00',
     weekly: [
       { day: 'Mon', date: 'Sep 22', hours: '1:11:30', pct: 74, screenshots: 8 },
@@ -55,7 +55,7 @@ window.TEAM = [
       { day: 'Sat', date: 'Sep 27', hours: '1:06:25', pct: 68, screenshots: 7 },
       { day: 'Sun', date: 'Sep 28', hours: '0:00:00', pct: null, screenshots: 0 },
     ] },
-  { name: 'Tom Okafor', initials: 'TO', color: '#e3a008', email: 'tom.okafor@acmecorps.com',
+  { name: 'Tom Okafor', initials: 'TO', color: 'yellow-400', email: 'tom.okafor@acmecorps.com',
     workingOn: 'Support tickets', totalWorkTime: '5:20:10', avgActivity: 58, idleTime: '0:48:30', manualTime: '0:30:00',
     weekly: [
       { day: 'Mon', date: 'Sep 22', hours: '0:51:20', pct: 55, screenshots: 5 },
@@ -66,7 +66,7 @@ window.TEAM = [
       { day: 'Sat', date: 'Sep 27', hours: '0:38:40', pct: 51, screenshots: 4 },
       { day: 'Sun', date: 'Sep 28', hours: '0:00:00', pct: null, screenshots: 0 },
     ] },
-  { name: 'Lena Fischer', initials: 'LF', color: '#c81e1e', email: 'lena.fischer@acmecorps.com',
+  { name: 'Lena Fischer', initials: 'LF', color: 'red-700', email: 'lena.fischer@acmecorps.com',
     workingOn: 'Content production', totalWorkTime: '7:05:20', avgActivity: 77, idleTime: '0:27:10', manualTime: '0:00:00',
     weekly: [
       { day: 'Mon', date: 'Sep 22', hours: '1:15:40', pct: 81, screenshots: 9 },
