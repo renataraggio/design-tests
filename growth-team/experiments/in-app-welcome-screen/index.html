@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Welcome screen — concept (Zone)</title>
+
+<!-- Roboto is Hubstaff's product font; Material Symbols Rounded is the icon font. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap">
+
+<!-- ============================================================================
+     REVIEW TOOLBAR — copied from the Kit, never authored here.
+     One master: design/designops/prototype-kit/chrome/. Don't edit these
+     files; fix the Kit and re-copy so every prototype gets the fix.
+     ============================================================================ -->
+<link rel="stylesheet" href="review-toolbar.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Standalone port of
+     product/squads/growth/in-app-welcome-screen/prototype/ (the Kit/Vite
+     version) — same data, layout, beat engine and popover engine, with
+     hand-written CSS in place of Tailwind (no build step here). See
+     styles.css + app.js. This screen is its own chrome (a minimal
+     collapsed rail, markup inline below) — no HubstaffShell, same as the
+     Kit version and AR0239/welcome-hero. -->
+<div id="v-a" data-version>
+  <div class="page">
+
+    <!-- Decoration layer 1 — real hubstaff.com marketing-site shapes.
+         "Ellipse 2": the exact organic blob path hubstaff.com's own CSS
+         ships, recolored to a Zone primary tint. -->
+    <svg class="bg-blob bg-blob--tr" viewBox="0 0 782 1222" aria-hidden="true">
+      <path fill="#7FCAFF" fill-opacity=".35" fill-rule="evenodd" d="M520.531 235.006c20.884 12.726 29.887 39.634 21.468 63.64-25.855 73.677-21.757 158.574 18.26 231.867 39.969 73.258 107.532 119.053 180.462 131.652 23.773 4.102 41.279 25.7 41.279 51.345 0 103.421-.014 347.5-.014 456.223 0 29.92-23.596 54.095-51.635 52.158-112.883-7.711-219.206-41.088-314.024-94.465l-45.544-27.76a754 754 0 0 1-36.477-25.51c-13.996-10.393-20.18-29.102-15.205-46.472 30.181-105.397 20.838-223.275-35.258-326.054-56.348-103.278-148.535-170.444-250.045-194.387-16.288-3.82-28.8-18.155-30.377-35.828A884 884 0 0 1 .029 408.04L0 375.822c2.128-124.25 29.822-241.796 77.723-347.003C89.983 1.873 121.508-7.918 145.93 6.933z"/>
+    </svg>
+    <svg class="bg-blob bg-blob--bl" viewBox="0 0 782 1222" aria-hidden="true">
+      <path fill="#A7D9FC" fill-opacity=".4" fill-rule="evenodd" d="M520.531 235.006c20.884 12.726 29.887 39.634 21.468 63.64-25.855 73.677-21.757 158.574 18.26 231.867 39.969 73.258 107.532 119.053 180.462 131.652 23.773 4.102 41.279 25.7 41.279 51.345 0 103.421-.014 347.5-.014 456.223 0 29.92-23.596 54.095-51.635 52.158-112.883-7.711-219.206-41.088-314.024-94.465l-45.544-27.76a754 754 0 0 1-36.477-25.51c-13.996-10.393-20.18-29.102-15.205-46.472 30.181-105.397 20.838-223.275-35.258-326.054-56.348-103.278-148.535-170.444-250.045-194.387-16.288-3.82-28.8-18.155-30.377-35.828A884 884 0 0 1 .029 408.04L0 375.822c2.128-124.25 29.822-241.796 77.723-347.003C89.983 1.873 121.508-7.918 145.93 6.933z"/>
+    </svg>
+
+    <!-- Decoration layer 2 — verbatim contour-line shapes from the
+         whats-new-image skill's own template.svg. -->
+    <svg class="bg-contour" viewBox="0 0 967 643" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <path d="M784.635 935.62L973.193 775.667C1011.22 743.398 1020.05 688.143 994.807 644.312C916.824 508.939 901.385 345.034 956.265 194.135C997.487 80.7912 1050.8 71.7824 1148.38 9.59089L1148.4 9.5793C1148.63 9.73884 1148.85 9.89851 1149.08 10.0583L1149.06 10.0672C1051.49 72.1689 998.187 81.111 956.986 194.398C902.184 345.082 917.601 508.75 995.471 643.929C1020.64 687.636 1012.17 742.629 974.829 775.27L973.689 776.252L786.147 935.348C786.147 935.348 785.139 935.53 784.635 935.62Z" fill="#D3DEFF"/>
+      <path d="M1668.11 412.708C1652.45 444.094 1618.36 462.316 1583.49 457.719L1581.36 457.436L1577.03 456.848L1570.93 456.006L1563.44 454.951L1556.27 453.629L1439.92 427.332C1259.98 386.727 1094.28 321.694 948.472 232.278C891.467 197.294 836.741 158.869 784.625 117.216C749.184 88.8887 737.883 -16.4707 752.698 -56C752.964 -55.9723 753.227 -55.9445 753.49 -55.9166C738.679 -16.6478 749.875 88.458 785.104 116.617C837.195 158.25 891.895 196.657 948.873 231.624C1094.6 320.994 1260.23 385.996 1440.09 426.584L1556.43 452.877L1563.57 454.194L1567.82 454.794L1574.9 455.781L1578.59 456.287L1583.59 456.958C1618.49 461.558 1652.59 443.092 1667.89 411.419L1670.82 405.422C1680.31 386.208 1690.52 367.437 1701.44 349.145L1701.47 349.141C1701.62 349.383 1701.78 349.625 1701.93 349.868L1701.9 349.872C1689.94 369.939 1678.82 390.581 1668.58 411.753L1668.11 412.708Z" fill="#D3DEFF"/>
+      <path d="M-68.8945 1176.87L-69.0492 1176.62C-111.742 1108.9 -150.236 1037.17 -184.312 961.976L-187.17 955.638L-244.282 828.323L-244.5 827.717C-256.144 794.328 -245.018 757.141 -217.035 735.715C-41.083 600.839 72.9107 398.362 94.7202 171.508C101.82 97.6578 98.8385 24.4811 86.5171 -46.3584L86.5099 -46.3566C86.7627 -46.3966 87.0155 -46.4365 87.2683 -46.4763C99.6062 24.4249 102.59 97.6664 95.4836 171.582C73.6536 398.649 -40.4493 601.32 -216.57 736.325C-244.012 757.337 -255.088 793.653 -244.117 826.467L-243.777 827.46L-243.571 828.035L-186.471 955.323C-151.589 1033.06 -112.002 1107.13 -67.95 1176.92C-68.2644 1176.91 -68.5795 1176.89 -68.8945 1176.87Z" fill="#D3DEFF"/>
+    </svg>
+
+    <!-- collapsed rail — approved first-view chrome pattern; this screen's own chrome, not the live app shell. -->
+    <div class="rail iw-up" style="--d:0ms" aria-hidden="true">
+      <span class="rail__logo">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 114 114.116">
+          <path fill="#294DFF" d="M13.732 98.915l25.416 14.743c1.44.836 3.248.461 4.31-.823 3.199-3.87 8.029-6.342 13.444-6.342 5.419 0 10.252 2.476 13.453 6.352 1.061 1.285 2.865 1.661 4.308.826l25.546-14.795c1.693-.981 2.172-3.186 1.08-4.809a53.652 53.652 0 0 0-4.043-5.269c-3.847-4.421-8.493-8.078-13.563-11.019l-3.403-1.975-.213-.112c-.2-.096-.4-.19-.603-.284a2.678 2.678 0 0 0-3.101.633c-4.817 5.283-11.749 8.604-19.462 8.604-7.694 0-14.609-3.303-19.426-8.563a2.648 2.648 0 0 0-3.078-.616l-.02.009-3.977 2.306c-6.392 3.701-12.095 8.55-16.466 14.501-.457.622-.9 1.254-1.33 1.896-1.07 1.596-.534 3.772 1.128 4.737"/>
+          <path fill="#1F95FF" d="M17.867 15.078a3.346 3.346 0 0 0-1.467 4.083c1.766 4.727 1.485 10.173-1.248 14.877-2.732 4.7-7.348 7.638-12.331 8.446A3.34 3.34 0 0 0 0 45.778L.002 75.05c0 1.919 1.612 3.47 3.528 3.347a53.107 53.107 0 0 0 21.457-6.063l3.111-1.78a50.666 50.666 0 0 0 2.492-1.637 2.68 2.68 0 0 0 1.038-2.982c-2.061-6.762-1.423-14.326 2.41-20.919 3.851-6.626 10.149-10.935 17.086-12.471 1.113-.246 1.968-1.165 2.075-2.299.128-1.342.207-2.698.232-4.067l.002-2.066a53.129 53.129 0 0 0-5.311-22.264C47.283.12 45.129-.508 43.461.445L17.867 15.078z"/>
+          <path fill="#5FBBFF" d="M98.652 34.039c-2.734-4.704-3.015-10.15-1.248-14.877a3.346 3.346 0 0 0-1.467-4.083L70.341.446C68.673-.508 66.518.12 65.68 1.85a53.154 53.154 0 0 0-5.312 22.266l.002 2.062a53.61 53.61 0 0 0 .233 4.069c.108 1.134.963 2.052 2.075 2.299 6.937 1.535 13.234 5.845 17.086 12.471 3.832 6.594 4.472 14.157 2.41 20.919a2.68 2.68 0 0 0 1.038 2.983 55.932 55.932 0 0 0 2.491 1.637l3.113 1.779a53.107 53.107 0 0 0 21.458 6.063c1.915.123 3.526-1.427 3.526-3.347l.001-29.273a3.336 3.336 0 0 0-2.819-3.293c-4.984-.809-9.598-3.747-12.33-8.446"/>
+        </svg>
+      </span>
+    </div>
+
+    <main class="main">
+      <div class="hero" style="margin-top:-28px">
+        <h1 class="hero__title iw-up" style="--d:80ms">Manage your team without <span class="hero__accent">micromanaging</span></h1>
+
+        <p class="hero__subtitle iw-up" style="--d:160ms">
+          In just a few minutes, you&rsquo;ll have clear visibility into your team&rsquo;s work&mdash;without constant check-ins. Built for teams with <strong>virtual assistants</strong>, <strong>contractors</strong>, and <strong>remote employees</strong>.
+        </p>
+
+        <!-- ══ THE ANIMATED PRODUCT STORY — five beats, cross-fading in one stage. ══ -->
+        <div id="iw-stage-wrap" class="stage-wrap iw-up" style="--d:260ms">
+          <div class="stage-glow" aria-hidden="true"></div>
+
+          <div class="stage-glass">
+            <div class="stage-card" aria-hidden="true">
+
+              <div class="stage-header">
+                <svg width="16" height="16" viewBox="0 0 114 114.116">
+                  <path fill="#294DFF" d="M13.732 98.915l25.416 14.743c1.44.836 3.248.461 4.31-.823 3.199-3.87 8.029-6.342 13.444-6.342 5.419 0 10.252 2.476 13.453 6.352 1.061 1.285 2.865 1.661 4.308.826l25.546-14.795c1.693-.981 2.172-3.186 1.08-4.809a53.652 53.652 0 0 0-4.043-5.269c-3.847-4.421-8.493-8.078-13.563-11.019l-3.403-1.975-.213-.112c-.2-.096-.4-.19-.603-.284a2.678 2.678 0 0 0-3.101.633c-4.817 5.283-11.749 8.604-19.462 8.604-7.694 0-14.609-3.303-19.426-8.563a2.648 2.648 0 0 0-3.078-.616l-.02.009-3.977 2.306c-6.392 3.701-12.095 8.55-16.466 14.501-.457.622-.9 1.254-1.33 1.896-1.07 1.596-.534 3.772 1.128 4.737"/>
+                  <path fill="#1F95FF" d="M17.867 15.078a3.346 3.346 0 0 0-1.467 4.083c1.766 4.727 1.485 10.173-1.248 14.877-2.732 4.7-7.348 7.638-12.331 8.446A3.34 3.34 0 0 0 0 45.778L.002 75.05c0 1.919 1.612 3.47 3.528 3.347a53.107 53.107 0 0 0 21.457-6.063l3.111-1.78a50.666 50.666 0 0 0 2.492-1.637 2.68 2.68 0 0 0 1.038-2.982c-2.061-6.762-1.423-14.326 2.41-20.919 3.851-6.626 10.149-10.935 17.086-12.471 1.113-.246 1.968-1.165 2.075-2.299.128-1.342.207-2.698.232-4.067l.002-2.066a53.129 53.129 0 0 0-5.311-22.264C47.283.12 45.129-.508 43.461.445L17.867 15.078z"/>
+                  <path fill="#5FBBFF" d="M98.652 34.039c-2.734-4.704-3.015-10.15-1.248-14.877a3.346 3.346 0 0 0-1.467-4.083L70.341.446C68.673-.508 66.518.12 65.68 1.85a53.154 53.154 0 0 0-5.312 22.266l.002 2.062a53.61 53.61 0 0 0 .233 4.069c.108 1.134.963 2.052 2.075 2.299 6.937 1.535 13.234 5.845 17.086 12.471 3.832 6.594 4.472 14.157 2.41 20.919a2.68 2.68 0 0 0 1.038 2.983 55.932 55.932 0 0 0 2.491 1.637l3.113 1.779a53.107 53.107 0 0 0 21.458 6.063c1.915.123 3.526-1.427 3.526-3.347l.001-29.273a3.336 3.336 0 0 0-2.819-3.293c-4.984-.809-9.598-3.747-12.33-8.446"/>
+                </svg>
+                <span id="iw-beat-label" class="stage-header__label">My team</span>
+              </div>
+
+              <div id="iw-stage-body" class="stage-body">
+                <div id="iw-stage-inner" class="stage-inner">
+                  <div id="iw-roster" class="roster">
+                    <!-- Row: Maya Chen -->
+                    <div data-row="0" class="roster-row">
+                      <span class="roster-row__avatar roster-row__avatar--purple">
+                        MC
+                        <span data-row-dot="0" class="roster-row__dot">
+                          <span class="status-pulse">
+                            <span class="status-pulse__ping"></span>
+                            <span class="status-pulse__dot"></span>
+                          </span>
+                        </span>
+                      </span>
+                      <div class="roster-row__info">
+                        <p class="roster-row__name">Maya Chen</p>
+                        <p class="roster-row__role">Marketing site</p>
+                      </div>
+                      <div data-row-trailing="0" class="roster-row__trailing"></div>
+                    </div>
+                    <!-- Row: Tom Alvarez -->
+                    <div data-row="1" class="roster-row">
+                      <span class="roster-row__avatar roster-row__avatar--teal">
+                        TA
+                        <span data-row-dot="1" class="roster-row__dot">
+                          <span class="status-pulse">
+                            <span class="status-pulse__ping"></span>
+                            <span class="status-pulse__dot"></span>
+                          </span>
+                        </span>
+                      </span>
+                      <div class="roster-row__info">
+                        <p class="roster-row__name">Tom Alvarez</p>
+                        <p class="roster-row__role">Client onboarding</p>
+                      </div>
+                      <div data-row-trailing="1" class="roster-row__trailing"></div>
+                    </div>
+                    <!-- Row: Priya Raman -->
+                    <div data-row="2" class="roster-row">
+                      <span class="roster-row__avatar roster-row__avatar--orange">
+                        PR
+                        <span data-row-dot="2" class="roster-row__dot">
+                          <span class="status-pulse">
+                            <span class="status-pulse__ping"></span>
+                            <span class="status-pulse__dot"></span>
+                          </span>
+                        </span>
+                      </span>
+                      <div class="roster-row__info">
+                        <p class="roster-row__name">Priya Raman</p>
+                        <p class="roster-row__role">Website redesign</p>
+                      </div>
+                      <div data-row-trailing="2" class="roster-row__trailing"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Traveling cursor — the one brief individual-highlight
+                     exception (beat 2, the flagged row); hidden every other beat. -->
+                <span id="iw-cursor" class="cursor" aria-hidden="true">
+                  <span class="material-symbols-rounded cursor__icon">arrow_selector_tool</span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ THE ONE CTA ══ -->
+        <button id="iw-cta" type="button" class="cta iw-up" style="--d:360ms; --iw-from: translateY(14px)">
+          <span class="cta__ring" style="--d:520ms" aria-hidden="true"></span>
+          <span class="cta__label">Get started</span>
+        </button>
+      </div>
+    </main>
+
+    <!-- ══ MEMBER POPOVERS — always visible, framing the stage, purely
+         informational ("Get started" stays the only actionable control).
+         Fixed position, JS-measured. Each is an empty shell — app.js
+         injects one of the three widget kinds and rotates which kind
+         each side shows as the beat advances. ══ -->
+    <div id="iw-popover-right" class="popover" style="left:0; top:0;" role="status" aria-live="polite">
+      <div id="iw-popover-right-inner" class="popover__inner"></div>
+    </div>
+    <div id="iw-popover-left" class="popover" style="right:0; top:0;" role="status" aria-live="polite">
+      <div id="iw-popover-left-inner" class="popover__inner"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================================
+     The engines, then the orchestrator. ReviewToolbar.init() owns init order
+     and the sweep that groups their buttons into one pill.
+     ============================================================================ -->
+<script src="version-switcher.js"></script>
+<script src="design-annotations.js"></script>
+<script src="design-annotations.data.js"></script>
+<script src="design-comments.js"></script>
+<script src="dev-mode.js"></script>
+<script src="prototype-conditions.js"></script>
+<script src="review-toolbar.core.js"></script>
+
+<script>
+  ReviewToolbar.init({
+    topOffset: 0, // this screen has no topbar of its own
+    conditions: { states: false, roles: false, plans: false },
+    versions: {
+      project: 'In-app welcome screen (concept)',
+      notice: 'Prototype — not a live product',
+      note: 'Standalone port of product/squads/growth/in-app-welcome-screen/prototype/ · single screen, single CTA ("Get started") · persistent 3-person team roster narrates 5 beats (online → insights → unusual activity → timesheet → payments), round-robin per full pass · two live product-widget popovers (current activity · project progress · unusual activity, modeled on Figma node 4905:1785) are always visible, tightly docked and vertically centered beside the stage card, rotating which pair is shown as the beat advances · Zone tokens throughout',
+      groups: [
+        { label: 'Preview', versions: [
+          { id: 'a', code: 'A', name: 'Welcome sequence', el: '#v-a' },
+        ] },
+      ],
+    },
+    annotations: {
+      pages: window.DESIGN_ANNOTATIONS_DATA.pages,
+      annotations: window.DESIGN_ANNOTATIONS_DATA.annotations,
+    },
+  });
+</script>
+
+<script src="app.js"></script>
+
+</body>
+</html>
