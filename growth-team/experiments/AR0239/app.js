@@ -111,10 +111,10 @@ function visibleSteps() {
 function minsLeft() {
   return visibleSteps().filter((s) => !s.done && !s.skipped).reduce((sum, s) => sum + (s.minutes || 0), 0);
 }
-// trimmed = no-CTA, auto-entering welcome card + compact rail header. V1/V3/
-// V4 are trimmed in the Kit source; V2 (direction 'a') is the one direction
-// that still asks ("Set up my workspace" / "Skip — I'll explore first").
-function trimmed() { return state.direction !== 'a'; }
+// trimmed = no-CTA, auto-entering welcome card. Every direction now (V2 too,
+// Renata 2026-10-01: "all versions should have the loading state") — kept as
+// a function so the non-trimmed branch in renderWelcome() stays reachable.
+function trimmed() { return true; }
 function activeStep() { return visibleSteps().find((s) => s.id === state.activeId) || visibleSteps()[0]; }
 function completedCount() { return visibleSteps().filter((s) => s.done).length; }
 function resolvedCount() { return visibleSteps().filter((s) => s.done || s.skipped).length; }
@@ -664,8 +664,14 @@ function renderToast() {
 // auto-entering — same copy/CTAs as the Kit source's non-trimmed branch.
 function renderWelcome() {
   const left = totalCount() - completedCount();
+  // Rows come from THIS version's live steps (create-org is the card's own
+  // pre-done first row), so the preview always matches the real checklist.
+  const rows = visibleSteps().filter((st) => st.id !== 'create-org');
   return `
     <div class="welcome-backdrop">
+      <div class="welcome-wrap">
+        <div class="welcome-glow" aria-hidden="true"></div>
+        <div class="welcome-glass">
       <div class="welcome-card">
         <div class="welcome-scene" aria-hidden="true">
           <div class="mini-card">
@@ -676,11 +682,7 @@ function renderWelcome() {
             <div class="mini-progress"><span style="width:${percent()}%"></span></div>
             <ul class="mini-rows">
               <li><span class="material-symbols-rounded" style="color:var(--green-400)">check_circle</span> Create your org</li>
-              <li><span class="material-symbols-rounded" style="color:var(--gray-300)">groups</span> Create teams</li>
-              <li><span class="material-symbols-rounded" style="color:var(--gray-300)">folder</span> Select projects</li>
-              <li><span class="material-symbols-rounded" style="color:var(--gray-300)">tune</span> Set member limits</li>
-              <li><span class="material-symbols-rounded" style="color:var(--gray-300)">install_desktop</span> Download app</li>
-              <li><span class="material-symbols-rounded" style="color:var(--gray-300)">group_add</span> Invite members</li>
+              ${rows.map((st, i) => `<li><span class="mini-lit" style="animation-delay:${1380 + i * 180}ms"><span class="material-symbols-rounded">${esc(st.icon)}</span></span> ${esc(st.label)}</li>`).join('')}
             </ul>
           </div>
         </div>
@@ -699,6 +701,8 @@ function renderWelcome() {
             <button type="button" class="btn btn-primary" data-enter-app><span class="material-symbols-rounded">rocket_launch</span>Set up my workspace</button>
           </div>
           `}
+        </div>
+      </div>
         </div>
       </div>
     </div>
@@ -971,10 +975,10 @@ window.addEventListener('DOMContentLoaded', () => {
       // VersionSwitcher.show() fight itself over that one node's `hidden`
       // state. setDirection() (app.js) owns the swap instead, via onChange.
       groups: [{ label: 'Directions', versions: [
-        { id: 'a3', code: 'V1', name: 'Trimmed' },
-        { id: 'a', code: 'V2', name: 'All steps' },
-        { id: 'v3', code: 'V3', name: 'New layout', current: true },
-        { id: 'v4', code: 'V4', name: 'Project redesign' },
+        { id: 'a3', code: 'V1' },
+        { id: 'a', code: 'V2' },
+        { id: 'v3', code: 'V3', current: true },
+        { id: 'v4', code: 'V4' },
       ] }],
       onChange(v) { setDirection(v.id); },
     },

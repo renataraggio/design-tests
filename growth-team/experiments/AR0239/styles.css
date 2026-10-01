@@ -203,9 +203,9 @@ table.pay-table td { padding: 1.2rem; border-top: 1px solid var(--gray-100); fon
    this file never had `overflow:hidden` here so it wasn't clipping, but a
    flat height still would have left the extra rows cramped under the
    shorter old list's spacing. */
-.welcome-backdrop { min-height: calc(100vh - 48px); background: var(--gray-50); display: flex; align-items: center; justify-content: center; padding: 3.2rem 1.5rem; }
+.welcome-backdrop { min-height: calc(100vh - 48px); isolation: isolate; background: radial-gradient(ellipse at 50% 0%, #a7d9fc 0%, #d4edff 30%, #eaf6ff 62%, #f2f8ff 100%); display: flex; align-items: center; justify-content: center; padding: 3.2rem 1.5rem; }
 .welcome-card { width: 100%; max-width: 64rem; background: #fff; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,.05); }
-.welcome-scene { min-height: 25.4rem; background: var(--gray-50); border-bottom: 1px solid var(--gray-200); display: flex; align-items: center; justify-content: center; padding: 1.6rem; }
+.welcome-scene { min-height: 25.4rem; background: linear-gradient(180deg, #fff, var(--primary-50)); border-bottom: 1px solid var(--gray-200); display: flex; align-items: center; justify-content: center; padding: 1.6rem; }
 .welcome-scene .mini-card { width: 30rem; border-radius: var(--radius-lg); border: 1px solid var(--gray-200); background: #fff; box-shadow: 0 4px 10px rgba(17,24,39,.1); }
 .welcome-scene .mini-head { display: flex; align-items: center; justify-content: space-between; gap: .8rem; border-bottom: 1px solid var(--gray-200); padding: .8rem 1rem; font-size: 1.3rem; font-weight: 600; }
 .welcome-scene .mini-progress { height: .4rem; background: var(--gray-200); margin: 0 1rem; border-radius: 999px; overflow: hidden; }
@@ -352,3 +352,14 @@ table.pay-table td { padding: 1.2rem; border-top: 1px solid var(--gray-100); fon
   .aside-card-head { flex-direction: column; }
   .topic-grid { flex-direction: column; }
 }
+
+/* Welcome glow + glass chrome (ported from the Kit prototype / in-app-welcome-screen) */
+.welcome-wrap { position: relative; width: 100%; max-width: 64rem; }
+.welcome-wrap .welcome-card { max-width: none; }
+.welcome-glow { position: absolute; inset: -2.4rem; z-index: -1; border-radius: 3.2rem; background: #7fcaff; filter: blur(6.4rem); opacity: .3; pointer-events: none; animation: welcome-glow-pulse 5s ease-in-out infinite; }
+@keyframes welcome-glow-pulse { 0%, 100% { opacity: .3; transform: scale(1); } 50% { opacity: .45; transform: scale(1.06); } }
+.welcome-glass { border-radius: 2.8rem; padding: 1.2rem; background: linear-gradient(180deg, rgba(255,255,255,.75), rgba(255,255,255,.5)); backdrop-filter: blur(2.4rem); -webkit-backdrop-filter: blur(2.4rem); border: 1px solid rgba(255,255,255,.8); }
+.mini-lit { display: inline-flex; align-items: center; justify-content: center; width: 2.4rem; height: 2.4rem; border-radius: 999px; background: var(--gray-100); color: var(--gray-300); animation: mini-lit 320ms cubic-bezier(.16,1,.3,1) both; }
+.mini-lit .material-symbols-rounded { font-size: 1.6rem; }
+@keyframes mini-lit { from { background: var(--gray-100); color: var(--gray-300); } to { background: #d4edff; color: var(--primary-700); } }
+@media (prefers-reduced-motion: reduce) { .welcome-glow { animation: none; } .mini-lit { animation: none; background: #d4edff; color: var(--primary-700); } }

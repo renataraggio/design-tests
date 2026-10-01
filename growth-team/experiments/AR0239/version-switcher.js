@@ -200,8 +200,11 @@
           node.setAttribute('role', 'menuitem');
           node.dataset.vsId = v.id || v.name;
           node.appendChild(el('span', 'vs-dot'));
+          // A version with no `name` shows its bare `code` (or `name` alone
+          // if there's no code either) — no dangling " · " separator with
+          // nothing after it.
           node.appendChild(el('span', 'vs-name',
-            (v.code ? v.code + ' · ' : '') + v.name));
+            v.name ? (v.code ? v.code + ' · ' : '') + v.name : (v.code || v.name)));
           if (v.tag) node.appendChild(el('span', 'vs-tag', v.tag));
           if (!isLink) {
             node.addEventListener('click', function () {
@@ -284,8 +287,9 @@
         }
       });
       if (cur) {
-        this._pill.querySelector('.vs-pill-label').textContent =
-          (cur.code ? cur.code + ' · ' : '') + cur.name;
+        this._pill.querySelector('.vs-pill-label').textContent = cur.name
+          ? (cur.code ? cur.code + ' · ' : '') + cur.name
+          : (cur.code || cur.name);
       }
     }
   };
