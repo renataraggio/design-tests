@@ -23,14 +23,19 @@ a { color: inherit; }
 .qs-topbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.6rem; padding: 3rem 3rem 0; }
 .qs-topbar h1 { font-size: 2.2rem; font-weight: 300; margin: 0; }
 .qs-topbar .plan-pill { background: var(--gray-100); color: var(--gray-700); border-radius: 999px; padding: .4rem .8rem; font-size: 1.2rem; }
-.qs-wrap { max-width: 128rem; margin: 0 auto; padding: 2rem 3rem 6rem; display: flex; gap: 2.4rem; align-items: flex-start; flex-wrap: wrap; }
+.qs-wrap { container-type: inline-size; max-width: 128rem; margin: 0 auto; padding: 2rem 3rem 6rem; display: flex; gap: 2.4rem; align-items: flex-start; flex-wrap: wrap; }
 
 /* ---------- rail ---------- */
 .rail { width: 100%; max-width: 32rem; flex-shrink: 0; background: #fff; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); }
 .rail-header { padding: 1.6rem; border-bottom: 1px solid var(--gray-100); }
-.rail-header h2 { font-size: 2.2rem; font-weight: 700; margin: 0; }
-.rail-header .sub { font-size: 1.4rem; color: var(--gray-500); margin: .4rem 0 0; }
-.rail-header .count { font-size: 1.4rem; color: var(--gray-600); margin: 1.2rem 0 0; }
+/* Growth Central node 21036:21763 ("Rail card"), verified via Figma MCP
+   (Renata, 2026-09-30): title is body-xl/font-semibold (was 2.2rem/700 —
+   one size and one weight step too heavy), subtitle is body-sm(base)/
+   font-normal/gray-600 (was gray-500), count line is body-xs/font-light/
+   gray-900 (was 1.4rem/gray-600 — three mismatches on one line). */
+.rail-header h2 { font-size: 2rem; font-weight: 600; margin: 0; }
+.rail-header .sub { font-size: 1.4rem; font-weight: 400; color: var(--gray-600); margin: .4rem 0 0; }
+.rail-header .count { font-size: 1.2rem; font-weight: 300; color: var(--gray-900); margin: 1.2rem 0 0; }
 .rail-progress { margin-top: .8rem; height: .6rem; border-radius: 999px; background: var(--gray-200); overflow: hidden; }
 .rail-progress > span { display: block; height: 100%; border-radius: 999px; background: var(--primary-500); transition: width .3s ease; }
 .rail-steps { list-style: none; margin: 0; padding: .8rem; }
@@ -40,8 +45,12 @@ a { color: inherit; }
 .step-row.active::before { content: ""; position: absolute; left: 0; top: .6rem; bottom: .6rem; width: 3px; border-radius: 999px; background: var(--primary-500); }
 .step-row .ic { font-size: 2rem; color: var(--primary-500); }
 .step-row.done .ic { color: var(--green-400); }
-.step-row .label { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 1.4rem; font-weight: 500; color: var(--gray-500); }
-.step-row.done .label, .step-row.active .label { color: var(--gray-900); }
+/* Same Figma node as the header above: completed/current rows are
+   body-sm(base)/font-medium, pending is body-sm(base)/font-normal — weight
+   carries the state too, not just colour (was font-weight:500 for every
+   row). */
+.step-row .label { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 1.4rem; font-weight: 400; color: var(--gray-500); }
+.step-row.done .label, .step-row.active .label { font-weight: 500; color: var(--gray-900); }
 .step-row.active .label { color: var(--primary-700); }
 .org-setup { border-top: 1px solid var(--gray-100); padding: 1.2rem; }
 .org-setup h3 { font-size: 1.4rem; font-weight: 600; margin: 0 0 1rem; }
@@ -123,43 +132,59 @@ table.pay-table td { padding: 1.2rem; border-top: 1px solid var(--gray-100); fon
 .who-cell { display: flex; align-items: center; gap: 1rem; }
 .who-cell .email { font-size: 1.2rem; color: var(--gray-500); }
 
-/* welcome + done-scene shared: member preview (reused from the sneak-peek) */
-.member-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .8rem; position: relative; margin-bottom: 1.2rem; }
+/* welcome + done-scene shared: member preview. Rebuilt against the isolated
+   reference (member-dashboard-animation/{app.js,styles.css}) pixel-for-pixel
+   (Renata, 2026-09-30: "match the provided reference exactly") — this file
+   had drifted on several values (metric icon 36px vs the reference's 48px,
+   several type sizes a step or two off, no shot-tile/shot-count on each
+   day, callouts inconsistently sized/positioned). Both files share the same
+   `html{font-size:62.5%}` 1rem=10px convention, so the reference's rem
+   values carry over directly without conversion. */
+.member-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .8rem; position: relative; margin-bottom: 1.6rem; }
 .member-pill { display: flex; align-items: center; gap: .6rem; height: 3.2rem; max-width: 18rem; padding: .4rem 1.2rem .4rem .4rem; border-radius: 999px; border: 1px solid var(--gray-200); background: #fff; color: var(--gray-500); font-size: 1.4rem; }
 .member-pill.is-active { border-color: var(--primary-700); background: var(--primary-50); color: var(--primary-700); }
-.metric-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; margin-top: 1.2rem; }
-.metric-card { display: flex; align-items: flex-start; gap: .8rem; border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 1rem; min-width: 0; }
-.metric-icon { display: flex; flex-shrink: 0; align-items: center; justify-content: center; width: 3.6rem; height: 3.6rem; border-radius: var(--radius); background: var(--primary-100); color: var(--primary-700); font-size: 1.8rem; }
-.metric-label { font-size: 1rem; font-weight: 500; text-transform: uppercase; color: var(--gray-600); margin: 0; }
-.metric-value { font-size: 1.4rem; font-weight: 600; color: var(--gray-900); margin: .1rem 0 0; }
-.strip-card { margin-top: 1.2rem; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 1.4rem; position: relative; }
-.strip-title { font-size: 1.1rem; font-weight: 500; text-transform: uppercase; color: var(--gray-600); margin: 0 0 1rem; }
-.day-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: .8rem; }
+.co-profile-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.6rem; }
+.co-profile-id { display: flex; align-items: center; gap: .8rem; }
+.co-profile-id .name { font-size: 2rem; font-weight: 600; margin: 0; color: var(--gray-900); }
+.working-on { display: inline-flex; align-items: center; margin-top: .4rem; padding: .2rem .8rem; border-radius: 999px; background: var(--green-100); color: var(--green-800); font-size: 1.2rem; }
+.working-on b { margin-left: .4rem; }
+.metric-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.6rem; margin-top: 1.6rem; }
+.metric-card { display: flex; align-items: flex-start; gap: 1rem; border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 1.2rem; min-width: 0; }
+.metric-icon { display: flex; flex-shrink: 0; align-items: center; justify-content: center; width: 4.8rem; height: 4.8rem; border-radius: var(--radius-lg); background: var(--primary-100); color: var(--primary-700); font-size: 2.4rem; }
+.metric-label { font-size: 1.2rem; font-weight: 500; text-transform: uppercase; color: var(--gray-600); margin: 0; }
+.metric-value { font-size: 1.6rem; font-weight: 600; color: var(--gray-900); margin: .2rem 0 0; }
+.strip-card { margin-top: 1.6rem; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 1.6rem; position: relative; }
+.strip-title { font-size: 1.2rem; font-weight: 500; text-transform: uppercase; color: var(--gray-600); margin: 0 0 1.2rem; }
+.day-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1.2rem; }
 .day-cell { position: relative; }
-.day-btn { display: flex; width: 100%; flex-direction: column; align-items: center; gap: .5rem; border: none; border-radius: var(--radius); background: var(--gray-50); padding: 1rem .4rem; text-align: center; }
+.day-btn { display: flex; width: 100%; flex-direction: column; align-items: center; gap: .6rem; border: none; border-radius: var(--radius); background: var(--gray-50); padding: 1.4rem .6rem; text-align: center; }
 .day-btn:hover { background: var(--gray-100); }
-.day-name { font-size: 1.1rem; font-weight: 500; color: var(--gray-700); }
-.bar-track { width: 100%; height: .5rem; border-radius: 2px; background: var(--gray-200); overflow: hidden; }
+.day-name { font-size: 1.3rem; font-weight: 500; color: var(--gray-700); }
+.bar-track { width: 100%; height: .6rem; border-radius: 2px; background: var(--gray-200); overflow: hidden; }
 .bar-fill { display: block; height: 100%; border-radius: 2px; }
 .bar-fill.green { background: var(--primary-500); }
 .bar-fill.yellow { background: #facc15; }
 .bar-fill.red { background: var(--red-500); }
-.pct-pill { border-radius: 999px; padding: .15rem .7rem; font-size: 1.05rem; }
+.pct-pill { border-radius: 999px; padding: .2rem .8rem; font-size: 1.2rem; }
 .pct-pill.empty { background: var(--gray-100); color: var(--gray-600); }
 .pct-pill.green { background: var(--green-100); color: var(--green-800); }
 .pct-pill.yellow { background: var(--yellow-100); color: var(--yellow-800); }
 .pct-pill.red { background: var(--red-100); color: var(--red-700); }
-.reveal { display: none; align-items: center; justify-content: space-between; gap: 1.2rem; margin-top: 1rem; border-radius: var(--radius); border: 1px solid var(--gray-200); background: var(--gray-50); padding: .8rem 1rem; }
+.shot-tile { display: flex; width: 100%; height: 6rem; align-items: center; justify-content: center; border-radius: 4px; background: var(--gray-200); }
+.shot-tile.empty { background: var(--gray-100); }
+.shot-tile .material-symbols-rounded { font-size: 2rem; color: var(--gray-400); }
+.shot-count { border-radius: 999px; background: var(--gray-100); color: var(--gray-600); font-size: 1.1rem; padding: .2rem .8rem; }
+.reveal { display: none; align-items: center; justify-content: space-between; gap: 1.2rem; margin-top: 1.2rem; border-radius: var(--radius); border: 1px solid var(--gray-200); background: var(--gray-50); padding: 1rem; }
 .reveal.is-open { display: flex; }
-.reveal p { margin: 0; font-size: 1.2rem; color: var(--gray-700); }
-.callout { position: absolute; z-index: 10; width: max-content; max-width: 20rem; border-radius: var(--radius); background: var(--primary-900); color: #fff; font-size: 1.1rem; font-weight: 500; padding: .5rem .9rem; box-shadow: 0 4px 10px rgba(17,24,39,.2); display: none; }
+.reveal p { margin: 0; font-size: 1.3rem; color: var(--gray-700); }
+.callout { position: absolute; z-index: 10; width: max-content; max-width: 20rem; border-radius: var(--radius); background: var(--primary-900); color: #fff; font-size: 1.2rem; font-weight: 500; padding: .6rem 1rem; box-shadow: 0 4px 10px rgba(17,24,39,.2); display: none; }
 .callout.is-visible { display: block; }
-.callout::after { content: ""; position: absolute; left: 50%; width: .7rem; height: .7rem; background: var(--primary-900); transform: translateX(-50%) rotate(45deg); }
-.callout.above { bottom: calc(100% + .7rem); }
-.callout.above::after { top: 100%; margin-top: -.35rem; }
-.callout.below { top: calc(100% + .7rem); }
-.callout.below::after { bottom: 100%; margin-bottom: -.35rem; }
-.member-row .callout { left: 0; }
+.callout::after { content: ""; position: absolute; left: 50%; width: .8rem; height: .8rem; background: var(--primary-900); transform: translateX(-50%) rotate(45deg); }
+.callout.above { bottom: calc(100% + .8rem); }
+.callout.above::after { top: 100%; margin-top: -.4rem; }
+.callout.below { top: calc(100% + .8rem); }
+.callout.below::after { bottom: 100%; margin-bottom: -.4rem; }
+.member-row .callout { left: 50%; transform: translateX(-50%); }
 .day-cell .callout { left: 50%; transform: translateX(-50%); }
 
 /* create-org done-scene */
@@ -168,19 +193,31 @@ table.pay-table td { padding: 1.2rem; border-top: 1px solid var(--gray-100); fon
 .done-scene .top-row p { font-size: 1.4rem; color: var(--gray-500); margin: .4rem 0 0; }
 
 /* welcome card */
+/* Renata, 2026-09-30: "remove the CTAs on the welcome screen" — V3 gets the
+   same no-decision, auto-advancing card the Kit source's `trimmed` state
+   already gives A2/A3 (see app.js renderWelcome() / the auto-advance timer
+   next to data-enter-app's removal). min-height, not a flat height: all 6
+   checklist rows now render in the mini-card (was 4, hardcoded) and a flat
+   29rem clipped them in the Kit version until that became min-height too —
+   this file never had `overflow:hidden` here so it wasn't clipping, but a
+   flat height still would have left the extra rows cramped under the
+   shorter old list's spacing. */
 .welcome-backdrop { min-height: calc(100vh - 48px); background: var(--gray-50); display: flex; align-items: center; justify-content: center; padding: 3.2rem 1.5rem; }
 .welcome-card { width: 100%; max-width: 64rem; background: #fff; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,.05); }
-.welcome-scene { height: 29rem; background: var(--gray-50); border-bottom: 1px solid var(--gray-200); display: flex; align-items: center; justify-content: center; }
+.welcome-scene { min-height: 25.4rem; background: var(--gray-50); border-bottom: 1px solid var(--gray-200); display: flex; align-items: center; justify-content: center; padding: 1.6rem; }
 .welcome-scene .mini-card { width: 30rem; border-radius: var(--radius-lg); border: 1px solid var(--gray-200); background: #fff; box-shadow: 0 4px 10px rgba(17,24,39,.1); }
 .welcome-scene .mini-head { display: flex; align-items: center; justify-content: space-between; gap: .8rem; border-bottom: 1px solid var(--gray-200); padding: .8rem 1rem; font-size: 1.3rem; font-weight: 600; }
 .welcome-scene .mini-progress { height: .4rem; background: var(--gray-200); margin: 0 1rem; border-radius: 999px; overflow: hidden; }
 .welcome-scene .mini-progress > span { display: block; height: 100%; background: var(--primary-500); }
 .welcome-scene .mini-rows { list-style: none; margin: 0; padding: .6rem; }
 .welcome-scene .mini-rows li { display: flex; align-items: center; gap: .8rem; padding: .6rem; font-size: 1.2rem; color: var(--gray-600); }
-.welcome-body { padding: 2.4rem; }
-.welcome-body h1 { font-size: 2.2rem; font-weight: 600; margin: 0; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.welcome-body { padding: 2rem 2.4rem 2.4rem; }
+.welcome-body h1 { font-size: 2rem; font-weight: 600; margin: 0; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
 .welcome-body p { color: var(--gray-500); margin: .8rem 0 0; max-width: 50ch; }
 .welcome-actions { display: flex; gap: .8rem; margin-top: 2rem; flex-wrap: wrap; }
+.welcome-loading { display: flex; align-items: center; gap: .8rem; margin-top: 1.6rem; font-size: 1.4rem; color: var(--gray-400); }
+.welcome-loading .material-symbols-rounded { animation: co-spin .9s linear infinite; }
+@keyframes co-spin { to { transform: rotate(360deg); } }
 
 /* dashboard */
 .dash-state { min-height: calc(100vh - 48px); padding: 6rem 1.5rem; text-align: center; }
@@ -224,7 +261,14 @@ table.pay-table td { padding: 1.2rem; border-top: 1px solid var(--gray-100); fon
 .toast p { margin: .4rem 0 0; font-size: 1.3rem; color: var(--green-800); }
 .toast .close-btn { margin-left: auto; border: none; background: none; color: var(--green-800); opacity: .6; }
 
-@media (max-width: 860px) {
+/* Container query on `.qs-wrap` itself, not a viewport media query: a plain
+   `@media(max-width:860px)` only reflows this when the whole BROWSER WINDOW
+   narrows, so a wide window with the sidebar eating into the pane's actual
+   rendered width (e.g. ~700-860px window, pane squeezed to ~350px) kept the
+   4-column metric grid regardless — 48px icons in an ~85px column is the
+   same kind of overflow the Kit version hit. Querying the row's own size
+   reacts to what actually changed. */
+@container (max-width: 860px) {
   .qs-wrap { flex-direction: column; }
   .rail { max-width: none; }
   .metric-grid { grid-template-columns: repeat(2, 1fr); }

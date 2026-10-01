@@ -133,7 +133,7 @@ function renderCoPreview() {
   ];
   return `
     <div class="member-row">
-      <div class="callout above ${state.coPreviewPhase === 'membersHint' ? 'is-visible' : ''}" style="left:0">View other members</div>
+      <div class="callout above ${state.coPreviewPhase === 'membersHint' ? 'is-visible' : ''}">View other members</div>
       ${TEAM.map((row) => `
         <button type="button" class="member-pill ${row.name === state.coPreviewId ? 'is-active' : ''}" data-co-select="${esc(row.name)}">
           <span class="avatar" style="width:2.4rem;height:2.4rem;font-size:1.1rem;background:${row.color}">${esc(row.initials)}</span>
@@ -141,16 +141,16 @@ function renderCoPreview() {
         </button>
       `).join('')}
     </div>
-    <div class="card" style="border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:1.6rem;">
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:1.2rem;flex-wrap:wrap;">
-        <div style="display:flex;align-items:center;gap:.8rem;">
-          <span class="avatar" style="width:4rem;height:4rem;font-size:1.4rem;background:${m.color}">${esc(m.initials)}</span>
+    <div class="card" style="border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:2rem;">
+      <div class="co-profile-row">
+        <div class="co-profile-id">
+          <span class="avatar" style="width:4.8rem;height:4.8rem;font-size:1.6rem;background:${m.color}">${esc(m.initials)}</span>
           <div>
-            <p style="margin:0;font-size:1.6rem;font-weight:600;">${esc(m.name)}</p>
-            <span style="display:inline-flex;margin-top:.3rem;padding:.2rem .8rem;border-radius:999px;background:var(--green-100);color:var(--green-800);font-size:1.1rem;">Working on <b style="margin-left:.4rem">${esc(m.workingOn)}</b></span>
+            <p class="name">${esc(m.name)}</p>
+            <span class="working-on">Working on <b>${esc(m.workingOn)}</b></span>
           </div>
         </div>
-        <button type="button" class="btn btn-outline" style="font-size:1.2rem;padding:.5rem 1rem;"><span class="material-symbols-rounded" style="font-size:1.6rem">image</span>View latest screenshot</button>
+        <button type="button" class="btn btn-outline" style="font-size:1.2rem;padding:.4rem .8rem;"><span class="material-symbols-rounded">image</span>View latest screenshot</button>
       </div>
       <div class="metric-grid">
         ${metrics.map((mt) => `
@@ -167,6 +167,7 @@ function renderCoPreview() {
         ${m.weekly.map((day) => {
           const isDemo = fdd && day.day === fdd.day;
           const b = band(day.pct);
+          const empty = day.pct === null;
           return `
             <div class="day-cell">
               <div class="callout above ${state.coPreviewPhase === 'hoverHint' && isDemo ? 'is-visible' : ''}">Hover to see what happened here</div>
@@ -174,7 +175,9 @@ function renderCoPreview() {
               <button type="button" class="day-btn" data-co-day="${esc(day.day)}">
                 <span class="day-name">${esc(day.day)}</span>
                 <span class="bar-track"><span class="bar-fill ${b}" style="width:${day.pct ?? 0}%"></span></span>
-                <span class="pct-pill ${b}">${day.pct === null ? '&#8211;' : day.pct + '%'}</span>
+                <span class="pct-pill ${b}">${empty ? '&#8211;' : day.pct + '%'}</span>
+                <span class="shot-tile ${empty ? 'empty' : ''}"><span class="material-symbols-rounded">image</span></span>
+                <span class="shot-count">${empty ? '&#8211;' : day.screenshots + ' screenshots'}</span>
               </button>
             </div>
           `;
@@ -427,33 +430,52 @@ function renderToast() {
   `;
 }
 
+/* Renata, 2026-09-30: "remove the CTAs on the welcome screen" — matches the
+   Kit source's `trimmed` card exactly: no decision, no CTA row, just the
+   copy below and an auto-advance into the checklist (see
+   startWelcomeAutoEnter()). All 6 rows now render (was 4, hardcoded) so
+   nothing in the mini-card preview is missing. */
 function renderWelcome() {
   return `
     <div class="welcome-backdrop">
       <div class="welcome-card">
         <div class="welcome-scene" aria-hidden="true">
           <div class="mini-card">
-            <div class="mini-head"><span><span class="material-symbols-rounded" style="color:var(--primary-500)">rocket_launch</span> Get Started</span><span style="font-size:1.1rem;color:var(--gray-500);">${completedCount()} of ${totalCount()}</span></div>
+            <div class="mini-head"><span><span class="material-symbols-rounded" style="color:var(--primary-500)">rocket_launch</span> Get Started</span></div>
             <div class="mini-progress"><span style="width:${percent()}%"></span></div>
             <ul class="mini-rows">
               <li><span class="material-symbols-rounded" style="color:var(--green-400)">check_circle</span> Create your org</li>
               <li><span class="material-symbols-rounded" style="color:var(--gray-300)">groups</span> Create teams</li>
               <li><span class="material-symbols-rounded" style="color:var(--gray-300)">folder</span> Select projects</li>
               <li><span class="material-symbols-rounded" style="color:var(--gray-300)">tune</span> Set member limits</li>
+              <li><span class="material-symbols-rounded" style="color:var(--gray-300)">install_desktop</span> Download app</li>
+              <li><span class="material-symbols-rounded" style="color:var(--gray-300)">group_add</span> Invite members</li>
             </ul>
           </div>
         </div>
         <div class="welcome-body">
-          <h1>${esc(WIZARD.org)} <span class="pill-count" style="background:var(--primary-100);color:var(--primary-800);">${totalCount() - completedCount()} steps left</span></h1>
-          <p>Everything you picked is in place. Just ${totalCount() - completedCount()} quick steps to go.</p>
-          <div class="welcome-actions">
-            <button type="button" class="btn btn-secondary" data-skip-welcome>Skip &mdash; I'll explore first</button>
-            <button type="button" class="btn btn-primary" data-enter-app><span class="material-symbols-rounded">rocket_launch</span>Set up my workspace</button>
+          <h1>${esc(WIZARD.org)}</h1>
+          <p>We're getting your <span style="color:var(--gray-700)">workforce analytics</span> ready &mdash; so you can see how the work really happens, and help your team work smarter.</p>
+          <div class="welcome-loading">
+            <span class="material-symbols-rounded">progress_activity</span>
+            Setting up your workspace
           </div>
         </div>
       </div>
     </div>
   `;
+}
+
+/* A2/A3/V3 in the Kit source have no CTA, so the welcome scene has to end by
+   itself — same timing as quickstart.js's autoEnter(): the meter/row
+   choreography finishes around 3040ms, plus a 400ms hold. Reduced motion
+   skips the choreography, so the hold drops to a flat 1200ms with it. */
+let welcomeTimer = null;
+function startWelcomeAutoEnter() {
+  clearTimeout(welcomeTimer);
+  welcomeTimer = setTimeout(() => {
+    if (state.stage === 'welcome') { state.stage = 'app'; render(); }
+  }, reducedMotion ? 1200 : 3440);
 }
 
 function renderDashboard() {
@@ -553,7 +575,7 @@ function renderPaymentModal() {
 /* ── master render ────────────────────────────────────────────────────── */
 function render() {
   const root = document.getElementById('shell-content');
-  if (state.stage === 'welcome') root.innerHTML = renderWelcome();
+  if (state.stage === 'welcome') { root.innerHTML = renderWelcome(); startWelcomeAutoEnter(); }
   else if (state.stage === 'dashboard') root.innerHTML = renderDashboard();
   else root.innerHTML = allDone() && !state.successSeen ? renderSuccess() : renderApp();
   renderPaymentModal();
