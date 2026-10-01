@@ -21,10 +21,10 @@ a { color: inherit; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 
 /* ---------- page shell ---------- */
-.qs-topbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.6rem; padding: 3rem 3rem 0; }
+.qs-topbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.6rem; padding: 3rem 6rem 0; }
 .qs-topbar h1 { font-size: 2.2rem; font-weight: 300; margin: 0; }
 .qs-topbar .plan-pill { background: var(--gray-100); color: var(--gray-700); border-radius: 999px; padding: .4rem .8rem; font-size: 1.2rem; }
-.qs-wrap { container-type: inline-size; max-width: 128rem; margin: 0 auto; padding: 2rem 3rem 6rem; display: flex; gap: 2.4rem; align-items: flex-start; flex-wrap: wrap; }
+.qs-wrap { container-type: inline-size; padding: 2rem 6rem 6rem; display: flex; gap: 2.4rem; align-items: flex-start; flex-wrap: wrap; }
 
 /* ---------- rail ---------- */
 .rail { width: 100%; max-width: 32rem; flex-shrink: 0; background: #fff; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); }
@@ -134,7 +134,7 @@ table.pay-table td { padding: 1.2rem; border-top: 1px solid var(--gray-100); fon
 .member-pill.is-active { border-color: var(--primary-700); background: var(--primary-50); color: var(--primary-700); }
 .co-profile-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.6rem; }
 .co-profile-id { display: flex; align-items: center; gap: .8rem; }
-.co-profile-id .name { font-size: 2rem; font-weight: 600; margin: 0; color: var(--gray-900); }
+.co-profile-id .name { font-size: 1.6rem; font-weight: 700; margin: 0; color: var(--gray-900); }
 .working-on { display: inline-flex; align-items: center; margin-top: .4rem; padding: .2rem .8rem; border-radius: 999px; background: var(--green-100); color: var(--green-800); font-size: 1.2rem; }
 .working-on b { margin-left: .4rem; }
 .metric-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.6rem; margin-top: 1.6rem; }
@@ -193,7 +193,7 @@ table.pay-table td { padding: 1.2rem; border-top: 1px solid var(--gray-100); fon
    shorter old list's spacing. */
 .welcome-backdrop { min-height: calc(100vh - 48px); isolation: isolate; background: radial-gradient(ellipse at 50% 0%, #a7d9fc 0%, #d4edff 30%, #eaf6ff 62%, #f2f8ff 100%); display: flex; align-items: center; justify-content: center; padding: 3.2rem 1.5rem; }
 .welcome-card { width: 100%; max-width: 64rem; background: #fff; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,.05); }
-.welcome-scene { min-height: 25.4rem; background: linear-gradient(180deg, #fff, var(--primary-50)); border-bottom: 1px solid var(--gray-200); display: flex; align-items: center; justify-content: center; padding: 1.6rem; }
+.welcome-scene { min-height: 25.4rem; padding-block: 4rem !important; background: linear-gradient(180deg, #fff, var(--primary-50)); border-bottom: 1px solid var(--gray-200); display: flex; align-items: center; justify-content: center; padding: 1.6rem; }
 .welcome-scene .mini-card { width: 30rem; border-radius: var(--radius-lg); border: 1px solid var(--gray-200); background: #fff; box-shadow: 0 4px 10px rgba(17,24,39,.1); }
 .welcome-scene .mini-head { display: flex; align-items: center; justify-content: space-between; gap: .8rem; border-bottom: 1px solid var(--gray-200); padding: .8rem 1rem; font-size: 1.3rem; font-weight: 600; }
 .welcome-scene .mini-progress { height: .4rem; background: var(--gray-200); margin: 0 1rem; border-radius: 999px; overflow: hidden; }
@@ -318,7 +318,7 @@ table.pay-table td { padding: 1.2rem; border-top: 1px solid var(--gray-100); fon
 
 /* V2 only — Integrations card + "Get 1:1 setup walkthroughs" banner, below
    the checklist (restored 2026-10-01; see data.js's window.ASIDE note). */
-.aside-stack { max-width: 128rem; margin: 2.4rem auto 0; padding: 0 3rem 6rem; display: flex; flex-direction: column; gap: 1.6rem; }
+.aside-stack { margin: 2.4rem 0 0; padding: 0 6rem 6rem; display: flex; flex-direction: column; gap: 1.6rem; }
 .aside-card { background: #fff; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 2rem; }
 .aside-card-head { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 1.6rem; }
 .aside-card-head h2 { font-size: 1.8rem; font-weight: 600; margin: 0; }

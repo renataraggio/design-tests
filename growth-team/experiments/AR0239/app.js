@@ -214,7 +214,6 @@ function renderCoPreview() {
             <span class="working-on">Working on <b>${esc(m.workingOn)}</b></span>
           </div>
         </div>
-        <button type="button" class="btn btn-outline" style="font-size:1.2rem;padding:.4rem .8rem;"><span class="material-symbols-rounded">image</span>View latest screenshot</button>
       </div>
       <div class="metric-grid">
         ${metrics.map((mt) => `
