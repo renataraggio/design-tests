@@ -1,0 +1,437 @@
+/* AR0239 — standalone, four directions. Zone tokens match AR0228-v.1's
+   verified values in this repo (config/zone/tailwind-tokens.json /
+   hubstaff-variables.scss). */
+:root {
+  /* Zone palette — values from the Zone docs' Colors guide (config/zone/
+     tailwind-tokens.json); only the steps this prototype uses. Names mirror
+     the Tailwind utilities (gray-300, primary-700, ...). */
+  --white: #ffffff; --black: #000000;
+  --gray-50: #f9fafb; --gray-100: #f3f4f6; --gray-200: #e5e7eb; --gray-300: #d1d5db;
+  --gray-400: #9ca3af; --gray-500: #6b7280; --gray-600: #4b5563; --gray-700: #374151; --gray-800: #1f2937; --gray-900: #111827;
+  --primary-50: #eaf6ff; --primary-100: #d4edff; --primary-200: #a7d9fc; --primary-300: #7fcaff; --primary-500: #2aa7ff;
+  --primary-600: #2f8af4; --primary-700: #0168dd; --primary-800: #0a4b96; --primary-900: #1f2e54;
+  --blue-600: #2f8af4; /* Zone Toggle's checked track */
+  --green-100: #def7ec; --green-400: #31c48d; --green-500: #0e9f6e; --green-700: #046c4e; --green-800: #03543f;
+  --yellow-100: #fdf6b2; --yellow-300: #faca15; --yellow-400: #e3a008; --yellow-800: #723b13;
+  --red-100: #fde8e8; --red-500: #f05252; --red-700: #c81e1e;
+  --orange-400: #ffac51; --teal-400: #16bdca; --indigo-400: #8da2fb; --purple-400: #a24aff;
+  /* Zone borderRadius scale */
+  --radius-sm: 2px; --radius-xs: 4px; --radius: 6px; --radius-lg: 8px; --radius-xl: 12px; --radius-2xl: 16px; --radius-3xl: 24px;
+  --sidebar-width: 64px; --topbar-height: 48px;
+}
+* { box-sizing: border-box; }
+html { font-size: 62.5%; }
+body { margin: 0; font-size: 1.4rem; font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; color: var(--gray-900); background: var(--gray-50); }
+button { font: inherit; cursor: pointer; }
+input, select { font: inherit; }
+a { color: inherit; }
+.material-symbols-rounded { font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 20; line-height: 1; vertical-align: middle; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+/* ---------- page shell ---------- */
+.qs-topbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.6rem; padding: 3rem 6rem 0; }
+.qs-topbar h1 { font-size: 2.4rem; font-weight: 300; margin: 0; }
+.qs-topbar .plan-pill { background: var(--gray-100); color: var(--gray-700); border-radius: 999px; padding: .4rem .8rem; font-size: 1.2rem; }
+.qs-wrap { container-type: inline-size; padding: 2rem 6rem 6rem; display: flex; gap: 2.4rem; align-items: flex-start; flex-wrap: wrap; }
+
+/* ---------- rail ---------- */
+.rail { width: 100%; max-width: 32rem; flex-shrink: 0; background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); }
+.rail-header { padding: 1.6rem; border-bottom: 1px solid var(--gray-100); }
+/* Growth Central node 21036:21763 ("Rail card"), verified via Figma MCP
+   (Renata, 2026-09-30): title is body-xl/font-semibold (was 2.2rem/700 —
+   one size and one weight step too heavy), subtitle is body-sm(base)/
+   font-normal/gray-600 (was gray-500), count line is body-xs/font-light/
+   gray-900 (was 1.4rem/gray-600 — three mismatches on one line). */
+.rail-header h2 { font-size: 2rem; font-weight: 600; margin: 0; }
+.rail-header .sub { font-size: 1.4rem; font-weight: 400; color: var(--gray-600); margin: .4rem 0 0; }
+.rail-header .count { font-size: 1.2rem; font-weight: 300; color: var(--gray-900); margin: 1.2rem 0 0; }
+.rail-progress { margin-top: .8rem; height: .6rem; border-radius: 999px; background: var(--gray-200); overflow: hidden; }
+.rail-progress > span { display: block; height: 100%; border-radius: 999px; background: var(--primary-500); transition: width .3s ease; }
+.rail-steps { list-style: none; margin: 0; padding: .8rem; }
+.step-row { display: flex; align-items: center; gap: .8rem; width: 100%; border: none; background: none; border-radius: var(--radius); padding: 1rem 1.2rem; text-align: left; position: relative; }
+.step-row:hover { background: var(--gray-50); }
+.step-row.active { background: var(--primary-50); }
+.step-row.active::before { content: ""; position: absolute; left: 0; top: .6rem; bottom: .6rem; width: 3px; border-radius: 999px; background: var(--primary-500); }
+.step-row .ic { font-size: 2rem; color: var(--primary-500); }
+.step-row.done .ic { color: var(--green-400); }
+/* Same Figma node as the header above: completed/current rows are
+   body-sm(base)/font-medium, pending is body-sm(base)/font-normal — weight
+   carries the state too, not just colour (was font-weight:500 for every
+   row). */
+.step-row .label { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 1.4rem; font-weight: 400; color: var(--gray-500); }
+.step-row.done .label, .step-row.active .label { font-weight: 500; color: var(--gray-900); }
+.step-row.active .label { color: var(--primary-700); }
+.pill-count { display: inline-flex; align-items: center; border-radius: 999px; background: var(--gray-100); color: var(--gray-600); font-size: 1.2rem; padding: .4rem .8rem; }
+
+/* ---------- pane ---------- */
+.pane { flex: 1; min-width: 32rem; background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 2rem; }
+.pane-header { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 1.6rem; margin-bottom: 1.6rem; }
+.pane-header .titles h2 { font-size: 2rem; font-weight: 600; margin: 0; }
+.pane-header .titles p { font-size: 1.4rem; color: var(--gray-500); margin: .4rem 0 0; }
+.pane-header .ctas { display: flex; align-items: center; gap: 1.2rem; flex-shrink: 0; }
+
+.btn { display: inline-flex; align-items: center; gap: .6rem; border-radius: var(--radius); padding: .8rem 1.6rem; font-size: 1.4rem; font-weight: 500; border: 1px solid transparent; }
+.btn-primary { background: var(--primary-700); color: var(--white); }
+.btn-primary:hover { background: var(--primary-800); }
+.btn-primary:disabled { opacity: .3; cursor: not-allowed; }
+.btn-secondary { background: var(--white); color: var(--gray-600); border-color: var(--gray-300); }
+.btn-secondary:hover { background: var(--gray-100); }
+.btn-ghost { background: none; color: var(--gray-500); border: none; padding: .8rem 1rem; }
+.btn-ghost:hover { color: var(--gray-700); }
+/* Zone focus: 3px primary-700 ring (Button recipe), drawn as a box-shadow so it never reflows. */
+.btn:focus-visible, .cta-outline:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--primary-700); }
+.btn-outline { background: none; border-color: var(--primary-500); color: var(--primary-500); }
+
+/* create-teams / select-projects chips */
+.chip-field label { display: block; font-size: 1.2rem; font-weight: 500; text-transform: uppercase; color: var(--gray-600); margin-bottom: .8rem; }
+.chip-input-row { display: flex; gap: .8rem; margin-bottom: 1.6rem; }
+.chip-input-row input { flex: 1; border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 1rem 1.4rem; }
+.chip-grid { display: flex; flex-wrap: wrap; gap: .8rem; margin-bottom: 2rem; }
+.chip { display: inline-flex; align-items: center; border-radius: 999px; border: 1px solid var(--gray-300); background: var(--gray-50); color: var(--gray-500); font-size: 1.4rem; padding: .8rem 1.4rem; }
+.chip.on { background: var(--primary-50); border-color: var(--primary-700); color: var(--primary-700); }
+
+/* member-limits */
+.limits-section h4 { font-size: 1.2rem; font-weight: 600; text-transform: uppercase; color: var(--gray-600); margin: 0 0 1rem; }
+.limits-row { display: flex; align-items: center; gap: 1.6rem; padding: .8rem 0; }
+.limits-row .who { width: 18rem; flex-shrink: 0; display: flex; align-items: center; gap: .8rem; font-size: 1.4rem; font-weight: 500; }
+.limits-row input { width: 100%; border: 1px solid var(--gray-200); border-radius: var(--radius); padding: .8rem 1.2rem; }
+.limits-fields { display: flex; flex: 1; gap: 1.6rem; }
+.limits-fields > div { flex: 1; position: relative; }
+.limits-fields .suffix { position: absolute; right: 1.2rem; top: 50%; transform: translateY(-50%); color: var(--gray-400); font-size: 1.2rem; pointer-events: none; }
+.limits-alert { background: var(--primary-50); border: 1px solid var(--primary-700); color: var(--primary-800); border-radius: var(--radius-lg); padding: 1.2rem; font-size: 1.3rem; margin: 1.6rem 0; }
+
+/* templates */
+.template-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
+.template-card { border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 1.6rem; }
+.template-card .head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.template-card .title { font-size: 1.4rem; font-weight: 600; }
+.template-card .meta { display: flex; gap: .6rem; margin: .6rem 0; }
+.template-card .meta span { background: var(--gray-100); border-radius: 999px; padding: .2rem .8rem; font-size: 1.2rem; color: var(--gray-600); }
+.template-card .desc { font-size: 1.4rem; color: var(--gray-500); margin: 0; }
+.template-card.chosen { border-color: var(--green-400); }
+
+/* provider-list */
+
+/* download */
+
+/* invite */
+.invite-row { display: flex; gap: 1.2rem; margin-bottom: 1.6rem; }
+.invite-row input { flex: 1; border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 1rem 1.4rem; }
+.invite-row select { border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 1rem 1.2rem; }
+.invite-link { display: flex; align-items: center; gap: 1rem; margin-top: 1rem; }
+.invite-link input { flex: 1; border: 1px solid var(--gray-200); border-radius: var(--radius); padding: .8rem 1.2rem; background: var(--gray-50); color: var(--gray-500); }
+.invite-list { list-style: none; margin: 1.6rem 0 0; padding: 0; }
+.invite-list li { display: flex; align-items: center; justify-content: space-between; padding: .8rem 0; border-bottom: 1px solid var(--gray-100); font-size: 1.4rem; }
+
+/* payment-table (reuse avatar) */
+.avatar { display: flex; flex-shrink: 0; align-items: center; justify-content: center; border-radius: 999px; color: var(--white); font-weight: 500; width: 3.2rem; height: 3.2rem; font-size: 1.2rem; }
+table.pay-table { width: 100%; border-collapse: collapse; }
+table.pay-table th { text-align: left; font-size: 1.2rem; text-transform: uppercase; color: var(--gray-500); background: var(--gray-50); padding: 1rem 1.2rem; }
+table.pay-table td { padding: 1.2rem; border-top: 1px solid var(--gray-100); font-size: 1.4rem; }
+.who-cell { display: flex; align-items: center; gap: 1rem; }
+.who-cell .email { font-size: 1.2rem; color: var(--gray-500); }
+
+/* welcome + done-scene shared: member preview. Rebuilt against the isolated
+   reference (member-dashboard-animation/{app.js,styles.css}) pixel-for-pixel
+   (Renata, 2026-09-30: "match the provided reference exactly") — this file
+   had drifted on several values (metric icon 36px vs the reference's 48px,
+   several type sizes a step or two off, no shot-tile/shot-count on each
+   day, callouts inconsistently sized/positioned). Both files share the same
+   `html{font-size:62.5%}` 1rem=10px convention, so the reference's rem
+   values carry over directly without conversion. */
+.member-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .8rem; position: relative; margin-bottom: 1.6rem; }
+.member-pill { display: flex; align-items: center; gap: .6rem; height: 3.2rem; max-width: 18rem; padding: .4rem 1.2rem .4rem .4rem; border-radius: 999px; border: 1px solid var(--gray-200); background: var(--white); color: var(--gray-500); font-size: 1.4rem; }
+.member-pill.is-active { border-color: var(--primary-700); background: var(--primary-50); color: var(--primary-700); }
+.co-profile-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.6rem; }
+.co-profile-id { display: flex; align-items: center; gap: .8rem; }
+.co-profile-id .name { font-size: 1.6rem; font-weight: 700; margin: 0; color: var(--gray-900); }
+.working-on { display: inline-flex; align-items: center; margin-top: .4rem; padding: .2rem .8rem; border-radius: 999px; background: var(--green-100); color: var(--green-800); font-size: 1.2rem; }
+.working-on b { margin-left: .4rem; }
+.metric-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.6rem; margin-top: 1.6rem; }
+.metric-card { display: flex; align-items: flex-start; gap: 1rem; border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 1.2rem; min-width: 0; }
+.metric-icon { display: flex; flex-shrink: 0; align-items: center; justify-content: center; width: 4.8rem; height: 4.8rem; border-radius: var(--radius-lg); background: var(--primary-100); color: var(--primary-700); font-size: 2.4rem; }
+.metric-label { font-size: 1.2rem; font-weight: 500; text-transform: uppercase; color: var(--gray-600); margin: 0; }
+.metric-value { font-size: 1.6rem; font-weight: 600; color: var(--gray-900); margin: .2rem 0 0; }
+.strip-card { margin-top: 1.6rem; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 1.6rem; position: relative; }
+.strip-title { font-size: 1.2rem; font-weight: 500; text-transform: uppercase; color: var(--gray-600); margin: 0 0 1.2rem; }
+.day-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1.2rem; }
+.day-cell { position: relative; }
+.day-btn { display: flex; width: 100%; flex-direction: column; align-items: center; gap: .6rem; border: none; border-radius: var(--radius); background: var(--gray-50); padding: 1.4rem .6rem; text-align: center; }
+.day-btn:hover { background: var(--gray-100); }
+.day-name { font-size: 1.3rem; font-weight: 500; color: var(--gray-700); }
+.bar-track { width: 100%; height: .6rem; border-radius: 2px; background: var(--gray-200); overflow: hidden; }
+.bar-fill { display: block; height: 100%; border-radius: 2px; }
+.bar-fill.green { background: var(--primary-500); }
+.bar-fill.yellow { background: var(--yellow-300); }
+.bar-fill.red { background: var(--red-500); }
+.pct-pill { border-radius: 999px; padding: .2rem .8rem; font-size: 1.2rem; }
+.pct-pill.empty { background: var(--gray-100); color: var(--gray-600); }
+.pct-pill.green { background: var(--green-100); color: var(--green-800); }
+.pct-pill.yellow { background: var(--yellow-100); color: var(--yellow-800); }
+.pct-pill.red { background: var(--red-100); color: var(--red-700); }
+.shot-tile { display: flex; width: 100%; height: 6rem; align-items: center; justify-content: center; border-radius: 4px; background: var(--gray-200); }
+.shot-tile.empty { background: var(--gray-100); }
+.shot-tile .material-symbols-rounded { font-size: 2rem; color: var(--gray-400); }
+.shot-count { border-radius: 999px; background: var(--gray-100); color: var(--gray-600); font-size: 1.1rem; padding: .2rem .8rem; }
+.reveal { display: none; align-items: center; justify-content: space-between; gap: 1.2rem; margin-top: 1.2rem; border-radius: var(--radius); border: 1px solid var(--gray-200); background: var(--gray-50); padding: 1rem; }
+.reveal.is-open { display: flex; }
+.reveal p { margin: 0; font-size: 1.3rem; color: var(--gray-700); }
+.callout { position: absolute; z-index: 10; width: max-content; max-width: 20rem; border-radius: var(--radius); background: var(--primary-900); color: var(--white); font-size: 1.2rem; font-weight: 500; padding: .6rem 1rem; box-shadow: 0 4px 10px rgba(17,24,39,.2); display: none; }
+.callout.is-visible { display: block; }
+.callout::after { content: ""; position: absolute; left: 50%; width: .8rem; height: .8rem; background: var(--primary-900); transform: translateX(-50%) rotate(45deg); }
+.callout.above { bottom: calc(100% + .8rem); }
+.callout.above::after { top: 100%; margin-top: -.4rem; }
+.callout.below { top: calc(100% + .8rem); }
+.callout.below::after { bottom: 100%; margin-bottom: -.4rem; }
+.member-row .callout { left: 50%; transform: translateX(-50%); }
+.day-cell .callout { left: 50%; transform: translateX(-50%); }
+
+/* create-org done-scene */
+.done-scene .top-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 1.6rem; flex-wrap: wrap; margin-bottom: 3rem; }
+.done-scene .top-row h2 { font-size: 1.8rem; font-weight: 600; margin: 0; }
+.done-scene .top-row p { font-size: 1.4rem; color: var(--gray-500); margin: .4rem 0 0; }
+
+/* welcome card */
+/* Renata, 2026-09-30: "remove the CTAs on the welcome screen" — V3 gets the
+   same no-decision, auto-advancing card the Kit source's `trimmed` state
+   already gives A2/A3 (see app.js renderWelcome() / the auto-advance timer
+   next to data-enter-app's removal). min-height, not a flat height: all 6
+   checklist rows now render in the mini-card (was 4, hardcoded) and a flat
+   29rem clipped them in the Kit version until that became min-height too —
+   this file never had `overflow:hidden` here so it wasn't clipping, but a
+   flat height still would have left the extra rows cramped under the
+   shorter old list's spacing. */
+.welcome-backdrop { min-height: calc(100vh - 48px); isolation: isolate; background: radial-gradient(ellipse at 50% 0%, var(--primary-200) 0%, var(--primary-100) 30%, var(--primary-50) 62%); display: flex; align-items: center; justify-content: center; padding: 3.2rem 1.5rem; }
+.welcome-card { width: 100%; max-width: 64rem; background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,.05); }
+.welcome-scene { min-height: 25.4rem; padding-block: 4rem !important; background: linear-gradient(180deg, var(--white), var(--primary-50)); border-bottom: 1px solid var(--gray-200); display: flex; align-items: center; justify-content: center; padding: 1.6rem; }
+.welcome-scene .mini-card { width: 30rem; border-radius: var(--radius-lg); border: 1px solid var(--gray-200); background: var(--white); box-shadow: 0 4px 10px rgba(17,24,39,.1); }
+.welcome-scene .mini-head { display: flex; align-items: center; justify-content: space-between; gap: .8rem; border-bottom: 1px solid var(--gray-200); padding: .8rem 1rem; font-size: 1.3rem; font-weight: 600; }
+.welcome-scene .mini-progress { height: .4rem; background: var(--gray-200); margin: 0 1rem; border-radius: 999px; overflow: hidden; }
+.welcome-scene .mini-progress > span { display: block; height: 100%; background: var(--primary-500); }
+.welcome-scene .mini-rows { list-style: none; margin: 0; padding: .6rem; }
+.welcome-scene .mini-rows li { display: flex; align-items: center; gap: .8rem; padding: .6rem; font-size: 1.2rem; color: var(--gray-600); }
+.welcome-body { padding: 2rem 2.4rem 2.4rem; }
+.welcome-body h1 { font-size: 2rem; font-weight: 600; margin: 0; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.welcome-body p { color: var(--gray-500); margin: .8rem 0 0; max-width: 50ch; }
+.welcome-actions { display: flex; gap: .8rem; margin-top: 2rem; flex-wrap: wrap; }
+.welcome-loading { display: flex; align-items: center; gap: .8rem; margin-top: 1.6rem; font-size: 1.4rem; color: var(--gray-400); }
+.welcome-loading .material-symbols-rounded { animation: co-spin .9s linear infinite; }
+@keyframes co-spin { to { transform: rotate(360deg); } }
+
+/* dashboard */
+.dash-state { min-height: calc(100vh - 48px); padding: 6rem 1.5rem; text-align: center; }
+.dash-state .disc { width: 5.6rem; height: 5.6rem; border-radius: 999px; background: var(--primary-50); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.6rem; }
+.dash-state .disc .material-symbols-rounded { font-size: 2.8rem; color: var(--primary-700); }
+.dash-state h2 { font-size: 2.4rem; font-weight: 600; margin: 0; }
+.dash-state p { color: var(--gray-600); max-width: 36.8rem; margin: 1rem auto 0; }
+.dash-state .actions { margin-top: 2.4rem; display: flex; flex-direction: column; align-items: center; gap: 1.2rem; }
+
+/* success */
+.success-card { text-align: center; padding: 4rem 2rem; }
+.success-card .medallion { width: 8rem; height: 8rem; border-radius: 999px; background: var(--green-100); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.6rem; }
+.success-card .medallion .material-symbols-rounded { font-size: 4rem; color: var(--green-400); }
+.success-card h2 { font-size: 2.4rem; font-weight: 600; margin: 0; }
+.success-actions { display: flex; justify-content: center; gap: 1.2rem; margin-top: 2rem; flex-wrap: wrap; }
+
+/* modal */
+.modal-overlay { display: none; position: fixed; inset: 0; z-index: 2000; background: color-mix(in srgb, var(--black) 30%, transparent); align-items: flex-start; justify-content: center; overflow: auto; padding: 8rem 1.5rem 4rem; }
+.modal-overlay.is-open { display: flex; }
+.modal-panel { position: relative; width: 100%; max-width: 48rem; background: var(--white); border-radius: var(--radius-lg); padding: 2rem; }
+.modal-panel .close-btn { position: absolute; top: 1.6rem; right: 1.2rem; border: none; background: none; color: var(--gray-500); border-radius: 4px; padding: .6rem; }
+.modal-panel .close-btn:hover { background: var(--gray-100); }
+.modal-panel h1 { font-size: 1.8rem; font-weight: 600; margin: 0 0 1.6rem; }
+.field { margin-bottom: 1.6rem; }
+.field .lbl-row { display: flex; align-items: center; gap: .4rem; margin-bottom: .6rem; }
+.field label { font-size: 1.2rem; font-weight: 500; text-transform: uppercase; color: var(--gray-600); }
+.field input, .field select { width: 100%; border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 1rem 1.2rem; }
+.field .hint { font-size: 1.2rem; color: var(--gray-400); margin-top: .4rem; }
+.toggle-row { display: flex; align-items: center; gap: .8rem; }
+.toggle-track { width: 4.8rem; height: 2.4rem; border-radius: 999px; background: var(--gray-300); position: relative; border: none; padding: 0; }
+.toggle-track::after { content: ""; position: absolute; top: .2rem; left: .2rem; width: 2rem; height: 2rem; border-radius: 999px; background: var(--white); transition: transform .15s ease; }
+.toggle-track.on { background: var(--blue-600); }
+.toggle-track.on::after { transform: translateX(2.4rem); }
+.toggle-track:focus-visible { outline: none; box-shadow: 0 0 0 4px var(--primary-300); }
+.modal-footer { display: flex; justify-content: flex-end; gap: 1.2rem; margin-top: 1rem; }
+
+/* toast */
+.toast { position: fixed; top: 6.4rem; right: 2.4rem; z-index: 50; width: 28rem; border-radius: var(--radius-lg); border: 1px solid var(--green-100); background: var(--green-100); padding: 1.2rem; box-shadow: 0 8px 20px rgba(0,0,0,.12); display: none; }
+.toast.is-visible { display: block; }
+.toast .row { display: flex; align-items: center; gap: .8rem; }
+.toast .material-symbols-rounded.check { color: var(--green-400); }
+.toast p { margin: .4rem 0 0; font-size: 1.4rem; color: var(--green-800); }
+.toast .close-btn { margin-left: auto; border: none; background: none; color: var(--green-800); opacity: .6; }
+
+/* Container query on `.qs-wrap` itself, not a viewport media query: a plain
+   `@media(max-width:860px)` only reflows this when the whole BROWSER WINDOW
+   narrows, so a wide window with the sidebar eating into the pane's actual
+   rendered width (e.g. ~700-860px window, pane squeezed to ~350px) kept the
+   4-column metric grid regardless — 48px icons in an ~85px column is the
+   same kind of overflow the Kit version hit. Querying the row's own size
+   reacts to what actually changed. */
+@container (max-width: 860px) {
+  .qs-wrap { flex-direction: column; }
+  .rail { max-width: none; }
+  .metric-grid { grid-template-columns: repeat(2, 1fr); }
+  .day-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* ========================================================================
+   V1/V2/V4 additions (Renata, 2026-10-01 — this file was V3-only before).
+   ======================================================================== */
+
+/* V1/V2 compact rail header (V3/V4 keep the rich header above). */
+.rail-header--compact .rail-header-row { display: flex; align-items: center; justify-content: space-between; gap: 1.2rem; }
+.pct-badge { flex-shrink: 0; border-radius: 999px; background: var(--primary-100); color: var(--primary-800); font-size: 1.2rem; font-weight: 500; padding: .4rem 1.2rem; }
+
+/* V2 welcome card: steps-left pill beside the title, count badge in the
+   mini-card header, CTA row (reuses the existing .welcome-actions class,
+   previously unused now that V3's own welcome card has no CTAs to put in it). */
+.pill-primary { display: inline-flex; align-items: center; border-radius: 999px; background: var(--primary-100); color: var(--primary-800); font-size: 1.2rem; padding: .4rem .8rem; }
+.mini-count { border-radius: 999px; background: var(--gray-100); color: var(--gray-500); font-size: 1.2rem; font-weight: 500; padding: .2rem .8rem; }
+
+/* V1/V2 create-org done-scene: the original hand-drawn illustration (ported
+   verbatim from the Kit source's SVG + qs-node/qs-draw/qs-grow/qs-float/
+   qs-blink keyframes) instead of V3/V4's animated dashboard preview. Plays
+   once and rests; the loops (qs-float/qs-blink) are the only infinite
+   animations, since the card has no other movement once landed. */
+@keyframes qs-node { from { opacity: 0; transform: scale(.35); } to { opacity: 1; transform: scale(1); } }
+@keyframes qs-draw { from { stroke-dashoffset: var(--len, 80); } to { stroke-dashoffset: 0; } }
+@keyframes qs-grow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@keyframes qs-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+@keyframes qs-blink { 0%, 100% { opacity: .3; } 50% { opacity: 1; } }
+.qs-node { animation: qs-node .42s cubic-bezier(.34, 1.56, .64, 1) both; animation-delay: var(--d, 0s); transform-box: fill-box; transform-origin: center; }
+.qs-draw { stroke-dasharray: var(--len, 80); animation: qs-draw .45s ease-out both; animation-delay: var(--d, 0s); }
+.qs-grow { transform-box: fill-box; transform-origin: bottom; animation: qs-grow .55s cubic-bezier(.34, 1.56, .64, 1) both; animation-delay: var(--d, 0s); }
+.qs-float { animation: qs-float 4.5s ease-in-out var(--d, 0s) infinite; }
+.qs-blink { animation: qs-blink 1.4s ease-in-out var(--d, 0s) infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .qs-node, .qs-draw, .qs-grow { animation: none; opacity: 1; stroke-dashoffset: 0; transform: none; }
+  .qs-float, .qs-blink { animation: none; opacity: 1; transform: none; }
+}
+.done-scene--illustration { display: flex; flex-direction: column; align-items: center; gap: 2.4rem; text-align: center; padding: 2rem 0; }
+.done-illustration { width: 100%; max-width: 34rem; aspect-ratio: 264 / 180; }
+.done-illustration svg { width: 100%; height: 100%; }
+.done-illustration-body .title { font-size: 1.6rem; font-weight: 600; margin: 0; }
+.done-illustration-body .desc { font-size: 1.4rem; color: var(--gray-500); margin: .6rem 0 0; max-width: 40ch; }
+.done-illustration-body .btn { margin-top: 1.6rem; }
+
+/* V4 project-setup: Project name/Client reuse .field (already built for the
+   payment modal); the two toggles get their own bordered card since the
+   reference boxes them with an icon, a Recommended/Free pill and a
+   description — content .field/.toggle-row alone don't carry. */
+.toggle-card { border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 1.6rem; margin-bottom: 1.6rem; }
+.toggle-card.disabled { opacity: .6; pointer-events: none; }
+.toggle-card .head { display: flex; align-items: center; justify-content: space-between; gap: 1.2rem; }
+.toggle-card .left { display: flex; align-items: center; gap: .8rem; }
+.toggle-card .name { font-size: 1.4rem; font-weight: 500; color: var(--gray-900); }
+.toggle-card .badge { border-radius: 999px; background: var(--primary-100); color: var(--primary-800); font-size: 1.2rem; font-weight: 400; padding: .4rem .8rem; }
+.toggle-card p { margin: 1rem 0 0; font-size: 1.4rem; color: var(--gray-500); }
+
+/* V2 only — Integrations card + "Get 1:1 setup walkthroughs" banner, below
+   the checklist (restored 2026-10-01; see data.js's window.ASIDE note). */
+.aside-stack { margin: 2.4rem 0 0; padding: 0 6rem 6rem; display: flex; flex-direction: column; gap: 1.6rem; }
+.aside-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 2rem; }
+.aside-card-head { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 1.6rem; }
+.aside-card-head h2 { font-size: 1.8rem; font-weight: 600; margin: 0; }
+.aside-card-head p { font-size: 1.4rem; color: var(--gray-500); margin: .4rem 0 0; }
+.tool-row { display: flex; flex-wrap: wrap; align-items: center; gap: .8rem; margin-top: 1.6rem; }
+.tool-pill { display: inline-flex; align-items: center; gap: .8rem; border-radius: 999px; border: 1px solid var(--gray-200); background: var(--white); padding: .6rem 1.6rem .6rem .6rem; font-size: 1.4rem; font-weight: 500; color: var(--gray-700); }
+.tool-logo { width: 2.4rem; height: 2.4rem; flex-shrink: 0; }
+.avatar-stack-head { display: flex; align-items: center; gap: 1rem; }
+.avatar-stack { display: flex; align-items: center; }
+.avatar-stack img { width: 3.2rem; height: 3.2rem; border-radius: 999px; border: 1.5px solid var(--white); object-fit: cover; margin-right: -8px; }
+.avatar-stack img:last-child { margin-right: 0; }
+.topic-grid { display: flex; flex-wrap: wrap; align-items: stretch; gap: 1.2rem; margin-top: 1.6rem; }
+.topic-tile { display: flex; flex: 1; min-width: 20rem; align-items: flex-start; gap: .8rem; border-radius: var(--radius-lg); background: var(--gray-50); padding: 1.2rem; }
+.topic-tile .material-symbols-rounded { font-size: 2.4rem; color: var(--primary-700); flex-shrink: 0; }
+.topic-tile .title { font-size: 1.5rem; font-weight: 600; color: var(--gray-800, var(--gray-900)); margin: 0; }
+.topic-tile .desc { font-size: 1.3rem; color: var(--gray-600); margin: 0; }
+
+@container (max-width: 860px) {
+  .aside-card-head { flex-direction: column; }
+  .topic-grid { flex-direction: column; }
+}
+
+/* Welcome glow + glass chrome (ported from the Kit prototype / in-app-welcome-screen) */
+.welcome-wrap { position: relative; width: 100%; max-width: 64rem; }
+.welcome-wrap .welcome-card { max-width: none; }
+.welcome-glow { position: absolute; inset: -2.4rem; z-index: -1; border-radius: var(--radius-3xl); background: var(--primary-300); filter: blur(6.4rem); opacity: .3; pointer-events: none; animation: welcome-glow-pulse 5s ease-in-out infinite; }
+@keyframes welcome-glow-pulse { 0%, 100% { opacity: .3; transform: scale(1); } 50% { opacity: .45; transform: scale(1.06); } }
+.welcome-glass { border-radius: var(--radius-3xl); padding: 1.2rem; background: linear-gradient(180deg, color-mix(in srgb, var(--white) 75%, transparent), color-mix(in srgb, var(--white) 50%, transparent)); backdrop-filter: blur(2.4rem); -webkit-backdrop-filter: blur(2.4rem); border: 1px solid color-mix(in srgb, var(--white) 80%, transparent); }
+.mini-lit { display: inline-flex; align-items: center; justify-content: center; width: 2.4rem; height: 2.4rem; border-radius: 999px; background: var(--gray-100); color: var(--gray-300); animation: mini-lit 320ms cubic-bezier(.16,1,.3,1) both; }
+.mini-lit .material-symbols-rounded { font-size: 1.6rem; }
+@keyframes mini-lit { from { background: var(--gray-100); color: var(--gray-300); } to { background: var(--primary-100); color: var(--primary-700); } }
+@media (prefers-reduced-motion: reduce) { .welcome-glow { animation: none; } .mini-lit { animation: none; background: var(--primary-100); color: var(--primary-700); } }
+
+/* ---- 2026-10-01 sync with the Kit source ---- */
+/* Outline CTA shared by payroll providers and template cards: outlined
+   primary → muted gray once chosen. */
+.cta-outline { position: relative; display: inline-flex; flex-shrink: 0; align-items: center; justify-content: center; gap: .8rem; height: 3.2rem; padding: 0 1.2rem; border: 1px solid var(--primary-500); background: none; color: var(--primary-500); border-radius: var(--radius); font-size: 1.4rem; font-weight: 400; }
+.cta-outline:hover { background: var(--primary-100); }
+.cta-outline.done { border-color: var(--gray-300); background: var(--white); color: var(--gray-600); }
+.cta-outline.done:hover { background: var(--gray-100); }
+.cta-outline[aria-disabled="true"] { opacity: .5; cursor: not-allowed; }
+.cta-outline[aria-disabled="true"]:hover { background: none; }
+
+/* Connect to payroll: one full-width card per provider, stacked. */
+.provider-list { display: flex; flex-direction: column; gap: 1.2rem; }
+.provider-card { display: flex; align-items: center; gap: 1.2rem; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); background: var(--white); padding: 1.6rem; }
+.provider-card .logo { width: 2.4rem; height: 2.4rem; border-radius: 4px; flex-shrink: 0; }
+.provider-card .txt { flex: 1; min-width: 0; }
+.provider-card .name { margin: 0; font-size: 1.4rem; font-weight: 500; color: var(--gray-900); }
+.provider-card .hint { margin: 0; font-size: 1.2rem; color: var(--gray-500); }
+@container (max-width: 520px) { .provider-card { flex-wrap: wrap; } .provider-card .cta-outline { margin-left: 3.6rem; } }
+
+/* Declined via "I pay outside Hubstaff": struck through, same gray as pending. */
+.step-row.declined .label { text-decoration: line-through; }
+
+/* Zone Toggle, Small — 32x16 track, 3px inset, 10px thumb, 16px travel
+   (Growth Central node 21077:50973). */
+.toggle-track--sm { width: 3.2rem; height: 1.6rem; flex-shrink: 0; }
+.toggle-track--sm::after { top: .3rem; left: .3rem; width: 1rem; height: 1rem; }
+.toggle-track--sm.on::after { transform: translateX(1.6rem); }
+
+/* V4 "Customize your first project": two-up on the pane's own width. */
+.pane-container { container-type: inline-size; }
+.project-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+.project-grid .field, .project-grid .toggle-card { margin-bottom: 0; }
+@container (min-width: 480px) { .project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* Download app timer scene (pill mirrors the shell's .hs-timer when idle). */
+.dl-scene { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.6rem; padding: 4rem 1.6rem; border: 1px solid var(--gray-100); border-radius: var(--radius-lg); background: var(--gray-50); }
+.dl-pill { display: inline-flex; align-items: center; gap: .8rem; padding: .6rem 1.2rem .6rem 1rem; border-radius: 999px; background: var(--white); border: 1px solid var(--gray-300); transition: background .3s, border-color .3s; }
+.dl-pill-icon { font-size: 1.8rem; color: var(--gray-700); }
+.dl-pill-time { font-size: 1.4rem; color: var(--primary-500); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.dl-pill-arrow { font-size: 1.4rem; color: var(--primary-500); }
+.dl-pill.running { background: var(--primary-700); border-color: var(--primary-700); }
+.dl-pill.running .dl-pill-time { color: var(--white); font-weight: 600; }
+.dl-pill.running .dl-pill-icon { color: var(--white); font-size: 1.4rem; background: color-mix(in srgb, var(--black) 10%, transparent); border-radius: 999px; padding: .5rem; order: 3; }
+.dl-pill.running .dl-pill-arrow { display: none; }
+.dl-row { display: flex; align-items: center; gap: .8rem; width: 26rem; max-width: 100%; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); background: var(--white); padding: 1rem 1.2rem; box-shadow: 0 1px 2px rgba(0,0,0,.05); }
+.dl-row-folder { font-size: 1.6rem; color: var(--gray-400); }
+.dl-row-name { flex: 1; min-width: 0; font-size: 1.4rem; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dl-row-play { display: inline-flex; align-items: center; justify-content: center; width: 2rem; height: 2rem; border-radius: 999px; background: var(--primary-700); color: var(--white); flex-shrink: 0; }
+.dl-row-play .material-symbols-rounded { font-size: 1.2rem; font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 20; }
+.dl-row-time { width: 3.6rem; text-align: right; font-size: 1.2rem; color: var(--gray-500); font-variant-numeric: tabular-nums; }
+
+/* Token-named colour utilities (mirror the Tailwind classes the Kit uses). */
+.fill-gray-100 { fill: var(--gray-100); } .stroke-gray-100 { stroke: var(--gray-100); }
+.fill-gray-200 { fill: var(--gray-200); } .stroke-gray-200 { stroke: var(--gray-200); }
+.fill-white { fill: var(--white); } .stroke-white { stroke: var(--white); }
+.fill-primary-50 { fill: var(--primary-50); } .stroke-primary-50 { stroke: var(--primary-50); }
+.fill-primary-100 { fill: var(--primary-100); } .stroke-primary-100 { stroke: var(--primary-100); }
+.fill-primary-200 { fill: var(--primary-200); } .stroke-primary-200 { stroke: var(--primary-200); }
+.fill-primary-500 { fill: var(--primary-500); } .stroke-primary-500 { stroke: var(--primary-500); }
+.fill-primary-700 { fill: var(--primary-700); } .stroke-primary-700 { stroke: var(--primary-700); }
+.fill-primary-900 { fill: var(--primary-900); } .stroke-primary-900 { stroke: var(--primary-900); }
+.fill-green-400 { fill: var(--green-400); } .stroke-green-400 { stroke: var(--green-400); }
+.fill-green-500 { fill: var(--green-500); } .stroke-green-500 { stroke: var(--green-500); }
+.fill-green-700 { fill: var(--green-700); } .stroke-green-700 { stroke: var(--green-700); }
+.fill-red-500 { fill: var(--red-500); } .stroke-red-500 { stroke: var(--red-500); }
+.fill-orange-400 { fill: var(--orange-400); } .stroke-orange-400 { stroke: var(--orange-400); }
+.bg-primary-500 { background: var(--primary-500); }
+.bg-primary-700 { background: var(--primary-700); }
+.bg-green-400 { background: var(--green-400); }
+.bg-purple-400 { background: var(--purple-400); }
+.bg-yellow-400 { background: var(--yellow-400); }
+.bg-red-700 { background: var(--red-700); }
