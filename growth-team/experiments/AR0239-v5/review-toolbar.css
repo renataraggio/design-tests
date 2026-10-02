@@ -1,0 +1,285 @@
+/* Review toolbar — the review BAND, and the page frame below it.
+ *
+ * Consolidates what used to be two hand-copied files: Guilherme's `review-tools.css`
+ * normaliser (the shared segment shape) and `toolbar.css` (the three-in-line
+ * overrides). They were split because the first was treated as an installed
+ * dependency — but both were authored here, and the split is what let the active
+ * -state rules rot against selectors the engines never set. One file now.
+ *
+ * The controls ship from four engines that don't agree on styling: the comments index
+ * floats at 9px 14px with a shadow, Dev Mode sits inline at 5px 8px, and their
+ * radii differ. This normalises them into one control group.
+ *
+ * Each engine injects its OWN base CSS from JS (`#da-css`, `#dm-css`, `#pc-style`,
+ * `#vs-style`), so this file is purely the composition + override layer — there is
+ * no separate "installed" stylesheet to leave alone. Load order doesn't matter for
+ * the engines' injected CSS (these selectors are more specific); it does matter
+ * that this file loads once, which `review-toolbar.js` guarantees by importing it.
+ *
+ * Deliberately token-free: prototypes load it under both the Zone and legacy
+ * themes, so it can't depend on either token system.
+ */
+
+/* ── The band ───────────────────────────────────────────────────────────────
+ * Review chrome owns a strip across the top of the window; the prototype owns
+ * everything below it. They never share space, so review controls can no longer
+ * cover product UI — which is the point: you cannot judge a layout that a
+ * floating pill is sitting on top of.
+ */
+.review-toolbar {
+  position: fixed;
+  z-index: 1150;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--rt-band, 44px);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 12px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  box-sizing: border-box;
+}
+
+/* Version-switcher slot. Shrinks first — the tools group must never be pushed
+   off a narrow window. */
+.review-toolbar > .rt-left {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  overflow: hidden;
+}
+
+/* The tools group keeps the pill treatment, so the four segments still read as
+   one control rather than four loose buttons on the band. */
+.review-toolbar > .rt-tools {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: stretch;
+  height: 30px;
+  border-radius: 9999px;
+  background: #ffffff;
+  box-shadow: inset 0 0 0 1px #e5e7eb;
+  overflow: hidden;
+}
+
+/* ── The page frame ─────────────────────────────────────────────────────────
+ * Set up by review-toolbar.core.js. `transform` makes this the containing block
+ * for the shell's `position: fixed` topbar and sidebar, so they pin to the frame
+ * and clear the band for free — no overrides against hubstaff-shell.js, which is
+ * a dependency we don't edit. Its own `overflow: auto` is what keeps that
+ * pinning honest: without it, a fixed descendant of a transformed ancestor
+ * scrolls away with the page.
+ *
+ * The frame simply fills the window below the band. It used to accept a
+ * `--pc-w` clamp from the Conditions screen axis; that axis was removed, so
+ * there is nothing left to narrow it.
+ */
+#rt-page {
+  position: fixed;
+  top: var(--rt-band, 44px);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin-inline: auto;
+  overflow: auto;
+  /* Clip the x axis. The shell parks its off-canvas panels to the RIGHT of the
+     viewport with positive offsets (`#hs-wn-drawer` sits at `right: -460px`
+     with `width: 440px`), which extends this scroll container's scrollWidth
+     instead of being hidden. At 390px that pushed scrollWidth to 835px, so a
+     prototype's own responsive layout was laid out ~2x too wide and then
+     clipped — every page looked broken on mobile through no fault of its own.
+     overflow-y stays `auto` from the shorthand above, so vertical scrolling is
+     unaffected, and the drawers still slide in correctly (they animate to
+     `right: 0`, which is inside the box). */
+  overflow-x: hidden;
+  transform: translateZ(0);
+  background: #f9fafb;
+}
+
+
+/* The content scrolls, not the frame. A `fixed` child of a transformed element
+   pins to that element's box — but if that element is ALSO the scroller, the
+   box's content scrolls and the "fixed" topbar + sidebar scroll away with it
+   (a sticky page header at `top: 48px` then floats under an empty gap). So the
+   frame stays still (`overflow: hidden`) and #shell-content becomes the
+   scroller: full frame height, starting at the frame's top, so content scrolls
+   UNDER the topbar exactly as the window does in production, and
+   `sticky; top: 48px` headers land where they do there. The topbar's 48px is a
+   ::before spacer, NOT padding — sticky offsets are measured inside a
+   scroller's padding, so padding would push every sticky header 48px low.
+   The shell's own left margin (64 / 240 / 0 on phones) is untouched. */
+body.rt-banded #rt-page { overflow: hidden; }
+body.rt-banded #shell-content {
+  height: 100%;
+  min-height: 0;
+  margin-top: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+body.rt-banded #shell-content::before { content: ''; display: block; height: 48px; }
+
+/* The sidebar does not fill the frame on a long page. #hs-sidebar is `fixed`,
+   but this element's transform re-bases it here AND this element is the
+   scroller — so the sidebar is only as tall as the visible frame and its grey
+   panel scrolls away, leaving a bare strip down the left of everything below
+   the fold. Painting the same column as a background on the scroller fixes it:
+   backgrounds of a scroll container are laid against its border box and do NOT
+   scroll with the content, so the column is always continuous behind the real
+   sidebar. Mirrors #hs-sidebar's own `background:#F3F4F6` and
+   `border-right:1px solid #e5e7eb` at both widths (64px, 240px expanded).
+   Guarded to >=768px, where the sidebar is a column rather than a phone
+   drawer — below that `hs-expanded` means "drawer open", not "wide rail". */
+@media (min-width: 768px) {
+  body.rt-banded #rt-page {
+    background-image: linear-gradient(
+      to right,
+      #f3f4f6 0 64px,
+      #e5e7eb 64px 65px,
+      #f9fafb 65px
+    );
+  }
+
+  body.rt-banded.hs-expanded #rt-page {
+    background-image: linear-gradient(
+      to right,
+      #f3f4f6 0 240px,
+      #e5e7eb 240px 241px,
+      #f9fafb 241px
+    );
+  }
+}
+
+/* ── Segments ───────────────────────────────────────────────────────────────
+ * All four share one shape. `.da-fab` is included because review-toolbar.core.js
+ * moves that node into the band after init — the Annotations engine appends it
+ * straight to <body> as a dark floating pill and offers no mount option.
+ */
+body .rt-tools > .da-fab,
+body .rt-tools > .da-tc-btn,
+body .rt-tools > .dm-tc-btn,
+body .rt-tools > #pc-toggle {
+  position: static;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 100%;
+  margin: 0;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #374151;
+  box-shadow: none;
+  transform: none;
+  font: 500 12px/1 Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  cursor: pointer;
+}
+
+body .rt-tools > .da-fab:hover,
+body .rt-tools > .da-tc-btn:hover,
+body .rt-tools > .dm-tc-btn:hover,
+body .rt-tools > #pc-toggle:hover {
+  background: #f9fafb;
+  color: #111827;
+  transform: none;
+}
+
+/* Google Fonts ships an unlayered `.material-symbols-rounded{font-size:24px}`,
+   which beats layered Tailwind utilities — `text-sm` etc. will NOT resize an
+   icon. Size icons explicitly. (See the Kit CLAUDE.md gotcha.) */
+body .rt-tools > * .material-symbols-rounded { font-size: 16px !important; }
+
+/* Dividers fall BETWEEN clusters, not between every pair. A rule after every
+   button made four peers of controls that aren't peers; grouping them —
+   Conditions | Comments · Design annotations | Dev Mode — shows at a glance that the
+   middle two are two views of one thing. `rt-seg-start` is set by
+   review-toolbar.core.js on the first segment of each cluster. */
+body .rt-tools > * { box-shadow: none; }
+body .rt-tools > .rt-seg-start:not(:first-child) {
+  box-shadow: inset 1px 0 0 #e5e7eb;
+  margin-left: 3px;
+  padding-left: 15px;
+}
+
+/* ── Active states ──────────────────────────────────────────────────────────
+ * Each engine tracks "open" on the PANEL it opens, never on the button that
+ * opened it — `#da-fab` gets no `.is-open` and no `aria-expanded`, and
+ * `#da-tc-btn` gets nothing either. Only Dev Mode and Conditions mark their own
+ * button. So two of the four are driven off the panel via `:has()`, which keeps
+ * the engines untouched.
+ *
+ * Do NOT "simplify" the `:has()` pairs to `.da-fab.is-open` /
+ * `[aria-expanded="true"]` — those selectors never match, which is exactly the
+ * dead-code bug this replaces.
+ */
+body:has(.da-panel.is-open) .rt-tools > .da-fab,
+body:has(.da-tc-modal.is-open) .rt-tools > .da-tc-btn,
+body .rt-tools > .dm-tc-btn.is-active,
+body .rt-tools > #pc-toggle.is-active {
+  background: #f0f7ff;
+  color: #1a56db;
+}
+
+/* ── Version switcher ───────────────────────────────────────────────────────
+ * core.js mounts the pill into `.rt-left`, so the engine's own floating group
+ * (`.vs-float`) is never created. Its PANEL still positions itself: the engine
+ * pins it centred at `top:60px`, which was right for a floating centred pill and
+ * is wrong for one docked at the left of the band. Re-anchor it here — never
+ * edit version-switcher.js.
+ */
+body .vs-panel {
+  top: calc(var(--rt-band, 44px) + 8px);
+  left: 12px;
+  transform: translate(0, -6px);
+}
+body .vs-panel.vs-open { transform: translate(0, 0); }
+
+/* Name the control. The engine paints the pill as "A \u00b7 Current", which reads as a
+   status, not as something you can change — you cannot tell it switches VERSIONS
+   until you click it. Prefix it here rather than in version-switcher.js: `_paint()`
+   rewrites `.vs-pill-label`'s textContent on every switch, so a DOM edit would be
+   wiped and a CSS one cannot be. core.js sets the matching `aria-label`, since
+   generated content is not a reliable accessible name. */
+body .review-toolbar .vs-pill .vs-pill-label::before {
+  content: "Version ";
+  color: #6b7280;
+  font-weight: 400;
+}
+
+/* Defensive: if a prototype mounts the switcher itself and gets the floating
+   group, keep it out of the band rather than under it. */
+body .vs-float { top: calc(var(--rt-band, 0px) + 12px); }
+
+/* Keep a floating Annotations button clear of a collapsed shell sidebar — only
+   applies when the button was NOT swept into the band (toolbar disabled). */
+body:not(.rt-banded) .da-fab { top: 20px; left: 84px; bottom: auto; }
+
+/* ── Name the two drawer sections for what they hold ──────────────────────
+ * design-annotations.js hardcodes "Required changes" and "Suggestions", and it
+ * is a dependency, not source — so, exactly like the version pill above, the
+ * relabelling happens here where `updateDrawer()` cannot wipe it.
+ *
+ * WHY RELABEL. Every LIVE comment the authoring layer pushes is
+ * `kind: 'suggestion'`, so that section is not a list of suggestions, it is the
+ * comment thread list — which is what made the two sections read as one muddled
+ * pile: a design note and somebody's comment are different objects with
+ * different next actions. "Decisions needed" is a question waiting on an
+ * answer; "Comments" is what people said. The counts, colours and grouping are
+ * the engine's and are untouched.
+ *
+ * `font-size: 0` collapses the original text node and `::after` supplies the
+ * new one at the engine's own size. The DOM text stays "Required changes" /
+ * "Suggestions", so a screen reader hears the old wording — accepted, because
+ * the pairs are synonymous and the headings are recreated on every drawer
+ * update, which would wipe any aria-label set from JS. */
+body .da-section .da-section-label { font-size: 0; }
+body .da-section .da-section-label::after {
+  font-size: 10px;
+  letter-spacing: .08em;
+}
+body .da-section--req .da-section-label::after { content: "Decisions needed"; }
+body .da-section--sug .da-section-label::after { content: "Comments"; }
