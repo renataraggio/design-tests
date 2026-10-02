@@ -2,7 +2,8 @@
 
 Vanilla-JS, no-build port of **V5** of the Kit prototype
 (`product-team/product/squads/growth/experiments/AR0239/prototype/`, `#v=v5`). Open `index.html`
-from any static server. Sibling folder `../AR0239-v3` is the older V3-only port, left untouched.
+from any static server. Sibling folder `../AR0239` (formerly `AR0239-v3`) is the all-four-direction standalone V1–V4, left untouched.
+This folder carries its 2026-10-02 Zone token audit (palette, radius scale, button/pill/toggle specs, token-named colour classes).
 
 **What V5 is** (details and rationale in the Kit's README § "V5 + V4 follow-ups (2026-10-02)"):
 - Welcome = Figma `step-1-welcome-screen` (AR0219 node 10113:293), animated, no auto-advance;

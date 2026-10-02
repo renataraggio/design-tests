@@ -139,7 +139,7 @@ function renderCoPreview() {
       <div class="callout above ${state.coPreviewPhase === 'membersHint' ? 'is-visible' : ''}">View other members</div>
       ${TEAM.map((row) => `
         <button type="button" class="member-pill ${row.name === state.coPreviewId ? 'is-active' : ''}" data-co-select="${esc(row.name)}">
-          <span class="avatar" style="width:2.4rem;height:2.4rem;font-size:1.1rem;background:${row.color}">${esc(row.initials)}</span>
+          <span class="avatar bg-${row.color}" style="width:2.4rem;height:2.4rem;font-size:1.1rem">${esc(row.initials)}</span>
           <span>${esc(row.name)}</span>
         </button>
       `).join('')}
@@ -147,13 +147,12 @@ function renderCoPreview() {
     <div class="card" style="border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:2rem;">
       <div class="co-profile-row">
         <div class="co-profile-id">
-          <span class="avatar" style="width:4.8rem;height:4.8rem;font-size:1.6rem;background:${m.color}">${esc(m.initials)}</span>
+          <span class="avatar bg-${m.color}" style="width:4.8rem;height:4.8rem;font-size:1.6rem">${esc(m.initials)}</span>
           <div>
             <p class="name">${esc(m.name)}</p>
             <span class="working-on">Working on <b>${esc(m.workingOn)}</b></span>
           </div>
         </div>
-        <button type="button" class="btn btn-outline" style="font-size:1.2rem;padding:.4rem .8rem;"><span class="material-symbols-rounded">image</span>View latest screenshot</button>
       </div>
       <div class="metric-grid">
         ${metrics.map((mt) => `
@@ -244,7 +243,7 @@ function renderForm(s) {
     <div class="limits-section">
       <h4>Global limits</h4>
       <div class="limits-row">
-        <div class="who"><span class="avatar" style="background:var(--primary-500)"><span class="material-symbols-rounded" style="font-size:1.6rem">groups</span></span>All members</div>
+        <div class="who"><span class="avatar bg-primary-500"><span class="material-symbols-rounded" style="font-size:1.6rem">groups</span></span>All members</div>
         <div class="limits-fields">
           <div><input type="text" id="global-weekly" value="${esc(s.values.weekly)}" /><span class="suffix">hours / week</span></div>
           <div><input type="text" id="global-daily" value="${esc(s.values.daily)}" /><span class="suffix">hours / day</span></div>
@@ -254,7 +253,7 @@ function renderForm(s) {
       <h4>Individual limits</h4>
       ${TEAM.map((m) => `
         <div class="limits-row">
-          <div class="who"><span class="avatar" style="background:${m.color}">${esc(m.initials)}</span>${esc(m.name)}</div>
+          <div class="who"><span class="avatar bg-${m.color}">${esc(m.initials)}</span>${esc(m.name)}</div>
           <div class="limits-fields">
             <div><input type="text" data-ind-weekly="${esc(m.name)}" value="${esc(s.individualLimits[m.name].weekly)}" placeholder="${esc(s.values.weekly)}" /><span class="suffix">hours / week</span></div>
             <div><input type="text" data-ind-daily="${esc(m.name)}" value="${esc(s.individualLimits[m.name].daily)}" placeholder="${esc(s.values.daily)}" /><span class="suffix">hours / day</span></div>
@@ -274,7 +273,7 @@ function renderPaymentTable(s) {
           const pd = state.paymentData[m.name];
           return `
             <tr>
-              <td><div class="who-cell"><span class="avatar" style="background:${m.color}">${esc(m.initials)}</span><div><div>${esc(m.name)}</div><div class="email">${esc(m.email)}</div></div></div></td>
+              <td><div class="who-cell"><span class="avatar bg-${m.color}">${esc(m.initials)}</span><div><div>${esc(m.name)}</div><div class="email">${esc(m.email)}</div></div></div></td>
               <td>${pd.saved ? `${esc(pd.payRate || '0.00')} USD/hr` : 'Details not set'}</td>
               <td style="text-align:right;"><button type="button" class="btn btn-secondary" style="font-size:1.2rem;padding:.5rem 1rem;" data-open-payment="${esc(m.name)}">See details</button></td>
             </tr>
